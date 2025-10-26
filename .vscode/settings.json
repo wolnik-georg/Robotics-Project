@@ -1,5 +1,6 @@
 {
     "python.analysis.extraPaths": [
-        "./Introduction-Week1/acoustic_sensing_starter_kit/zita_tools/zita-jacktools"
+        "./Introduction-Week1/acoustic_sensing_starter_kit/zita_tools/zita-jacktools",
+        "./franka_ws/src/franka_ros2/franka_bringup/utils"
     ]
 }
