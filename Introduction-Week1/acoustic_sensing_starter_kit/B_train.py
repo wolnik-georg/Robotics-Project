@@ -103,7 +103,7 @@ def save_sensor_model(path, clf, filename):
         pickle.dump(clf, f, protocol=PICKLE_PROTOCOL)
 
 
-def plot_spectra(spectra, labels):
+def plot_spectra(spectra, labels, save_path=None):
     from matplotlib import pyplot
 
     fig, ax = pyplot.subplots(1)
@@ -118,6 +118,9 @@ def plot_spectra(spectra, labels):
     legend_labels = list(cdict.keys())
     ax.legend(legend_lines, legend_labels)
 
+    if save_path:
+        fig.savefig(save_path)
+        print(f"Spectra plot saved to {save_path}")
     fig.show()
 
 
@@ -143,6 +146,46 @@ def plot_confusion_matrix(y_true, y_pred, classes, save_path=None):
     pyplot.show()
 
 
+def plot_frequency_spectrum(spectrum, save_path=None):
+    """Plot frequency spectrum for presentations."""
+    fig, ax = pyplot.subplots()
+    ax.plot(spectrum.index, spectrum.values)
+    ax.set_xlabel("Frequency (Hz)")
+    ax.set_ylabel("Amplitude")
+    ax.set_title("Frequency Spectrum of Active Sound")
+    ax.grid(True)
+    if save_path:
+        fig.savefig(save_path)
+        print(f"Frequency spectrum saved to {save_path}")
+    pyplot.show()
+
+
+def plot_recorded_spectra(data_dir, classes, save_path=None):
+    """Plot frequency spectra of recorded samples for presentations."""
+    fig, ax = pyplot.subplots()
+    color_list = pyplot.rcParams["axes.prop_cycle"].by_key()["color"]
+    cdict = dict(zip(classes, color_list[: len(classes)]))
+
+    for cls in classes:
+        # Find first file for this class
+        files = [f for f in os.listdir(data_dir) if f.startswith("1_") and cls in f]
+        if files:
+            file_path = os.path.join(data_dir, files[0])
+            audio = preprocessing.load_audio(file_path, sr=SR)
+            spectrum = preprocessing.audio_to_features(audio)
+            ax.plot(spectrum.index, spectrum.values, label=cls, color=cdict[cls])
+
+    ax.set_xlabel("Frequency (Hz)")
+    ax.set_ylabel("Amplitude")
+    ax.set_title("Frequency Spectra of Recorded Samples")
+    ax.legend()
+    ax.grid(True)
+    if save_path:
+        fig.savefig(save_path)
+        print(f"Recorded spectra saved to {save_path}")
+    pyplot.show()
+
+
 def main():
     print("Running for model '{}'".format(MODEL_NAME))
     global DATA_DIR
@@ -163,7 +206,9 @@ def main():
     classes = list(set(labels))
 
     if SHOW_PLOTS:
-        plot_spectra(spectra, labels)
+        plot_spectra(
+            spectra, labels, save_path=os.path.join(DATA_DIR, "spectra_plot.png")
+        )
 
     if TEST_SIZE > 0:
         X_train, X_test, y_train, y_test = train_test_split(
