@@ -1,6 +1,6 @@
 {
     "active_model": "knn",
-    "tune_hyperparameters": true,
+    "tune_hyperparameters": false,
     "cv_folds": 5,
     "models": {
         "knn": {
