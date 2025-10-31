@@ -21,12 +21,16 @@ import librosa
 import os
 import pandas
 import pickle
+import json
 
-from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.svm import SVC
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import classification_report, confusion_matrix
 from matplotlib import pyplot
 
 from A_record import MODEL_NAME
+import preprocessing
 
 # ==================
 # USER SETTINGS
@@ -34,13 +38,16 @@ from A_record import MODEL_NAME
 BASE_DIR = "."
 SENSORMODEL_FILENAME = "sensor_model.pkl"
 TEST_SIZE = (
-    0  # percentage of samples left out of training and used for reporting test score
+    2  # percentage of samples left out of training and used for reporting test score
 )
 SHOW_PLOTS = True
 # ==================
 
 SR = 48000
+
 PICKLE_PROTOCOL = pickle.HIGHEST_PROTOCOL
+SOUND_NAME = None
+DATA_DIR = None
 
 
 def get_num_and_label(filename):
@@ -72,7 +79,7 @@ def load_sounds(path):
             global SOUND_NAME
             SOUND_NAME = label
         else:
-            sound = librosa.load(os.path.join(path, fn), sr=SR)[0]
+            sound = preprocessing.load_audio(os.path.join(path, fn), sr=SR)
             sounds.append(sound)
             labels.append(label)
     print(f"Loaded **{len(sounds)}** sounds with \nlabels: {sorted(set(labels))}")
@@ -87,18 +94,6 @@ def sound_to_spectrum(sound):
     freqs = numpy.fft.rfftfreq(len(sound), d)
     index = pandas.Index(freqs)
     series = pandas.Series(amplitude_spectrum, index=index)
-    return series
-
-
-def sound_to_spectrum_stft(sound, n_fft=4096, in_dB=False):
-    spectrogram = numpy.abs(librosa.stft(sound, n_fft=n_fft))
-    spectrum = spectrogram.sum(axis=1)
-    if in_dB:
-        # convert to decibel scale
-        spectrum = librosa.amplitude_to_db(spectrum, ref=numpy.max)
-    freqs = librosa.fft_frequencies(sr=SR, n_fft=n_fft)
-    index = pandas.Index(freqs)
-    series = pandas.Series(spectrum, index=index)
     return series
 
 
@@ -126,14 +121,43 @@ def plot_spectra(spectra, labels):
     fig.show()
 
 
+def plot_confusion_matrix(y_true, y_pred, classes, save_path=None):
+    """Plot confusion matrix for evaluation."""
+    cm = confusion_matrix(y_true, y_pred, labels=classes)
+    fig, ax = pyplot.subplots()
+    im = ax.imshow(cm, interpolation="nearest", cmap=pyplot.cm.Blues)
+    ax.figure.colorbar(im, ax=ax)
+    ax.set(
+        xticks=numpy.arange(cm.shape[1]),
+        yticks=numpy.arange(cm.shape[0]),
+        xticklabels=classes,
+        yticklabels=classes,
+        ylabel="True label",
+        xlabel="Predicted label",
+    )
+    pyplot.setp(ax.get_xticklabels(), rotation=45, ha="right", rotation_mode="anchor")
+    fig.tight_layout()
+    if save_path:
+        fig.savefig(save_path)
+        print(f"Confusion matrix saved to {save_path}")
+    pyplot.show()
+
+
 def main():
     print("Running for model '{}'".format(MODEL_NAME))
     global DATA_DIR
     DATA_DIR = os.path.join(BASE_DIR, MODEL_NAME)
 
+    # Load config
+    config_path = "config.json"
+    with open(config_path, "r") as f:
+        config = json.load(f)
+    model_type = config["active_model"]
+    params = config["models"][model_type]
+
     sounds, labels = load_sounds(DATA_DIR)
     # spectra = [sound_to_spectrum(sound) for sound in sounds]
-    spectra = [sound_to_spectrum_stft(sound) for sound in sounds]
+    spectra = [preprocessing.audio_to_features(sound) for sound in sounds]
     classes = list(set(labels))
 
     if SHOW_PLOTS:
@@ -146,7 +170,16 @@ def main():
     else:
         X_train, y_train = (spectra, labels)
 
-    clf = KNeighborsClassifier()  # using default KNN classifier
+    # Instantiate classifier based on config
+    if model_type == "knn":
+        clf = KNeighborsClassifier(**params)
+    elif model_type == "svm":
+        clf = SVC(**params)
+    else:
+        raise ValueError(f"Unsupported model: {model_type}")
+
+    print(f"Using model: {model_type} with params: {params}")
+
     clf.fit(X_train, y_train)
     train_score = clf.score(X_train, y_train)
     print("Fitted sensor model to data!")
@@ -155,6 +188,18 @@ def main():
     if TEST_SIZE > 0:
         test_score = clf.score(X_test, y_test)
         print("Test score: {:.2f}".format(test_score))
+
+        y_pred = clf.predict(X_test)
+        print("\nClassification Report:")
+        print(classification_report(y_test, y_pred))
+
+        if SHOW_PLOTS:
+            plot_confusion_matrix(
+                y_test,
+                y_pred,
+                sorted(classes),
+                save_path=os.path.join(DATA_DIR, "confusion_matrix.png"),
+            )
 
     save_sensor_model(DATA_DIR, clf, SENSORMODEL_FILENAME)
     print("\nSaved model to '{}'".format(os.path.join(DATA_DIR, SENSORMODEL_FILENAME)))

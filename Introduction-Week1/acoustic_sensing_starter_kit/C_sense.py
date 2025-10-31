@@ -31,7 +31,7 @@ from matplotlib.widgets import Button
 
 from A_record import MODEL_NAME
 from B_train import SENSORMODEL_FILENAME
-from B_train import sound_to_spectrum, sound_to_spectrum_stft
+import preprocessing
 
 # ==================
 # USER SETTINGS
@@ -42,6 +42,9 @@ CONTINUOUSLY = True  # chose between continuous sensing or manually triggered
 
 CHANNELS = 1
 SR = 48000
+
+DATA_DIR = None
+predictor = None
 
 is_paused = False
 
@@ -57,7 +60,9 @@ class LiveAcousticSensor(object):
         # load sound from file (starts with "0_")
         active_sound_filename = [fn for fn in os.listdir(DATA_DIR) if fn[:2] == "0_"][0]
         self.sound = (
-            librosa.load(os.path.join(DATA_DIR, active_sound_filename), sr=SR)[0]
+            preprocessing.load_audio(
+                os.path.join(DATA_DIR, active_sound_filename), sr=SR
+            )
             .reshape(-1)
             .astype(numpy.float32)
         )
@@ -104,7 +109,7 @@ class LiveAcousticSensor(object):
         ax2.set_title("Amplitude spectrum", size=20)
         ax2.set_xlabel("Frequency [Hz]")
         (self.wavelines,) = ax1.plot(self.Ains[0])
-        (self.spectrumlines,) = ax2.plot(sound_to_spectrum_stft(self.Ains[0]))
+        (self.spectrumlines,) = ax2.plot(preprocessing.audio_to_features(self.Ains[0]))
         ax2.set_ylim([0, 250])
 
         ax3 = f.add_subplot(2, 1, 2)
@@ -127,7 +132,7 @@ class LiveAcousticSensor(object):
     def predict(self):
         for i in range(CHANNELS):
             # spectrum = self.sound_to_spectrum(self.Ains[i])
-            spectrum = sound_to_spectrum_stft(self.Ains[i])
+            spectrum = preprocessing.audio_to_features(self.Ains[i])
             prediction = self.clf.predict([spectrum])
         self.wavelines.set_ydata(self.Ains[0].reshape(-1))
         self.spectrumlines.set_ydata(spectrum)

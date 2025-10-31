@@ -43,11 +43,10 @@ SAMPLES_PER_CLASS = 50
 MODEL_NAME = "material_tapping_demo"
 SHUFFLE_RECORDING_ORDER = False
 APPEND_TO_EXISTING_FILES = True
-# ==================
-
-
 CHANNELS = 1
 SR = 48000
+# ==================
+
 
 # Example sounds
 RECORDING_DELAY_SILENCE = numpy.zeros(
