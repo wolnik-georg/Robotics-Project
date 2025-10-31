@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 Example script for the "Acoustic Sensing Starter Kit"
-[Zöller, Gabriel, Vincent Wall, and Oliver Brock. “Active Acoustic Contact Sensing for Soft Pneumatic Actuators.” In Proceedings of the IEEE International Conference on Robotics and Automation (ICRA). IEEE, 2020.]
+[Zöller, Gabriel, Vincent Wall, and Oliver Brock. "Active Acoustic Contact Sensing for Soft Pneumatic Actuators." In Proceedings of the IEEE International Conference on Robotics and Automation (ICRA). IEEE, 2020.]
 
 This script _records_ data samples for different classes, e.g. contact locations.
 
@@ -104,24 +104,39 @@ def main():
 
 
 def setup_experiment():
-    global label_list
-    global current_idx
+    global label_order
+    global samples_remaining
+    global current_label_idx
+    global current_label
+    global sample_id
 
-    label_list = []
-    for label in DEMO_CLASS_LABELS:
-        label_list.extend([label] * SAMPLES_PER_CLASS)
     if SHUFFLE_RECORDING_ORDER:
-        random.shuffle(label_list)
-    current_idx = 0
+        label_order = random.sample(DEMO_CLASS_LABELS, len(DEMO_CLASS_LABELS))
+    else:
+        label_order = DEMO_CLASS_LABELS[:]
+
+    samples_remaining = {label: SAMPLES_PER_CLASS for label in DEMO_CLASS_LABELS}
+    sample_id = {label: 0 for label in DEMO_CLASS_LABELS}
+    current_label_idx = 0
+    current_label = label_order[0] if label_order else None
 
     if APPEND_TO_EXISTING_FILES:
         existing_files = glob(DATA_DIR + "/*.wav")
-        if existing_files:
-            max_id = max([int(x.split("/")[-1].split("_")[0]) for x in existing_files])
-            label_list = [""] * max_id + label_list
-            current_idx = max_id
-        else:
-            max_id = 0
+        for f in existing_files:
+            basename = os.path.basename(f)
+            if basename.endswith(".wav"):
+                parts = basename[:-4].split("_", 1)
+                if len(parts) == 2:
+                    id_str, label = parts
+                    try:
+                        id_num = int(id_str)
+                        if label in samples_remaining:
+                            sample_id[label] = max(sample_id[label], id_num + 1)
+                            samples_remaining[label] = max(
+                                0, samples_remaining[label] - 1
+                            )
+                    except ValueError:
+                        pass
 
 
 def setup_jack(sound_name):
@@ -178,68 +193,72 @@ def on_key(event):
         back(event)
 
 
-def l(i):
-    try:
-        return label_list[i]
-    except IndexError:
-        # print("current_idx: {}, i: {}".format(current_idx, i))
-        return ""
-
-
 def get_current_title():
     name = "Model: {}".format(MODEL_NAME.replace("_", " "))
-    labels = "previous: {}   current: [{}]   next: {}".format(
-        l(current_idx - 1), l(current_idx), l(current_idx + 1)
+    prev_label = label_order[current_label_idx - 1] if current_label_idx > 0 else ""
+    next_label = (
+        label_order[current_label_idx + 1]
+        if current_label_idx + 1 < len(label_order)
+        else ""
     )
-    number = "#{}/{}: {}".format(current_idx + 1, len(label_list), l(current_idx))
-    if current_idx >= len(label_list):
-        number += "DONE!"
+    labels = "previous: {}   current: [{}]   next: {}".format(
+        prev_label, current_label or "", next_label
+    )
+    remaining = samples_remaining.get(current_label, 0) if current_label else 0
+    number = "Remaining for {}: {}".format(current_label or "", remaining)
+    if current_label_idx >= len(label_order):
+        number += " DONE!"
     title = "{}\n{}\n{}".format(name, labels, number)
     return title
 
 
 def back(event):
-    global current_idx
-    # switch to previous
-    current_idx = max(0, current_idx - 1)
+    global current_label_idx
+    global current_label
+    # Go back to previous label
+    current_label_idx = max(0, current_label_idx - 1)
+    current_label = (
+        label_order[current_label_idx] if current_label_idx < len(label_order) else None
+    )
     update()
 
 
 def record(event):
-    global current_idx
-    if current_idx >= len(label_list):
-        print(
-            "current_idx: {}  >= len(label_list): {}".format(
-                current_idx, len(label_list)
-            )
-        )
+    global current_label_idx
+    global current_label
+    if not label_order or current_label_idx >= len(label_order):
+        print("All recordings completed.")
         return
 
-    global J
-    global Ains
-    # touch object and start sound
-    # wait for recording
-    # store current sound
-    # plot current sound
-    # switch to next label
-    print(
-        f"Recording for '{l(current_idx)}' - {'Tap on the surface' if l(current_idx) == 'tap' else 'Do NOT tap - let sound play'} and get ready..."
-    )
-    for i in range(3, 0, -1):
-        print(f"{i}...")
-        time.sleep(1)
-    print("NOW!")
-    J.process()
-    J.wait()
-    LINES.set_ydata(Ains[0].reshape(-1))
-    store()
-    current_idx += 1
+    while samples_remaining[current_label] > 0:
+        print(
+            f"Recording for '{current_label}' - {'Tap on the surface' if current_label == 'tap' else 'Do NOT tap - let sound play'} and get ready..."
+        )
+        for i in range(1, 0, -1):
+            print(f"{i}...")
+            time.sleep(1)
+        print("NOW!")
+        J.process()
+        J.wait()
+        LINES.set_ydata(Ains[0].reshape(-1))
+        store()
+        samples_remaining[current_label] -= 1
+        pyplot.draw()
+
+    # Advance to next label
+    current_label_idx += 1
+    if current_label_idx < len(label_order):
+        current_label = label_order[current_label_idx]
+    else:
+        current_label = None
     update()
 
 
 def store():
+    global sample_id
+    sample_id[current_label] += 1
     sound_file = os.path.join(
-        DATA_DIR, "{}_{}.wav".format(current_idx + 1, l(current_idx))
+        DATA_DIR, "{}_{}.wav".format(sample_id[current_label], current_label)
     )
     scipy.io.wavfile.write(sound_file, SR, Ains[0])
 
