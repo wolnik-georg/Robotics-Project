@@ -25,7 +25,7 @@ import json
 
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import SVC
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, GridSearchCV, cross_val_score
 from sklearn.metrics import classification_report, confusion_matrix
 from matplotlib import pyplot
 
@@ -154,6 +154,8 @@ def main():
         config = json.load(f)
     model_type = config["active_model"]
     params = config["models"][model_type]
+    tune = config.get("tune_hyperparameters", False)
+    param_grid = config.get("param_grids", {}).get(model_type, {})
 
     sounds, labels = load_sounds(DATA_DIR)
     # spectra = [sound_to_spectrum(sound) for sound in sounds]
@@ -172,24 +174,32 @@ def main():
 
     # Instantiate classifier based on config
     if model_type == "knn":
-        clf = KNeighborsClassifier(**params)
+        base_clf = KNeighborsClassifier(**params)
     elif model_type == "svm":
-        clf = SVC(**params)
+        base_clf = SVC(**params)
     else:
         raise ValueError(f"Unsupported model: {model_type}")
 
-    print(f"Using model: {model_type} with params: {params}")
+    if tune and param_grid:
+        print(f"Tuning hyperparameters for {model_type} with grid: {param_grid}")
+        clf = GridSearchCV(base_clf, param_grid, cv=5, scoring="accuracy")
+        clf.fit(X_train, y_train)
+        best_clf = clf.best_estimator_
+        print(f"Best params: {clf.best_params_}")
+    else:
+        best_clf = base_clf
+        best_clf.fit(X_train, y_train)
 
-    clf.fit(X_train, y_train)
-    train_score = clf.score(X_train, y_train)
+    print(f"Using model: {model_type} with final params: {best_clf.get_params()}")
+    train_score = best_clf.score(X_train, y_train)
     print("Fitted sensor model to data!")
     print("Training score: {:.2f}".format(train_score))
 
     if TEST_SIZE > 0:
-        test_score = clf.score(X_test, y_test)
+        test_score = best_clf.score(X_test, y_test)
         print("Test score: {:.2f}".format(test_score))
 
-        y_pred = clf.predict(X_test)
+        y_pred = best_clf.predict(X_test)
         print("\nClassification Report:")
         print(classification_report(y_test, y_pred))
 
@@ -201,7 +211,7 @@ def main():
                 save_path=os.path.join(DATA_DIR, "confusion_matrix.png"),
             )
 
-    save_sensor_model(DATA_DIR, clf, SENSORMODEL_FILENAME)
+    save_sensor_model(DATA_DIR, best_clf, SENSORMODEL_FILENAME)
     print("\nSaved model to '{}'".format(os.path.join(DATA_DIR, SENSORMODEL_FILENAME)))
 
     if SHOW_PLOTS:
