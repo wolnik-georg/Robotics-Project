@@ -23,6 +23,7 @@ import os
 import sys
 import pandas
 import pickle
+import json
 
 from sklearn.neighbors import KNeighborsClassifier
 from jacktools.jacksignal import JackSignal
@@ -96,6 +97,12 @@ class LiveAcousticSensor(object):
             self.clf = pickle.load(f)
         print(self.clf.classes_)
 
+        # Load feature method from config
+        config_path = os.path.join(os.path.dirname(__file__), "config.json")
+        with open(config_path, "r") as f:
+            config = json.load(f)
+        self.feature_method = config.get("feature_method", "stft")
+
     def setup_window(self):
         f = plt.figure(1)
         f.clear()
@@ -132,7 +139,9 @@ class LiveAcousticSensor(object):
     def predict(self):
         for i in range(CHANNELS):
             # spectrum = self.sound_to_spectrum(self.Ains[i])
-            spectrum = preprocessing.audio_to_features(self.Ains[i])
+            spectrum = preprocessing.audio_to_features(
+                self.Ains[i], method=self.feature_method
+            )
             prediction = self.clf.predict([spectrum])
         self.wavelines.set_ydata(self.Ains[0].reshape(-1))
         self.spectrumlines.set_ydata(spectrum)

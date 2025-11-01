@@ -274,16 +274,21 @@ def main():
     params = config["models"][model_type]
     tune = config.get("tune_hyperparameters", False)
     param_grid = config.get("param_grids", {}).get(model_type, {})
+    feature_method = config.get("feature_method", "stft")
 
     sounds, labels = load_sounds(os.path.join(DATA_DIR))
     # spectra = [sound_to_spectrum(sound) for sound in sounds]
-    spectra = [preprocessing.audio_to_features(sound) for sound in sounds]
+    spectra = [
+        preprocessing.audio_to_features(sound, method=feature_method)
+        for sound in sounds
+    ]
     classes = list(set(labels))
 
     if SHOW_PLOTS:
-        plot_spectra(
-            spectra, labels, save_path=os.path.join(DATA_DIR, "spectra_plot.png")
-        )
+        if feature_method == "stft":
+            plot_spectra(
+                spectra, labels, save_path=os.path.join(DATA_DIR, "spectra_plot.png")
+            )
         plot_waveforms(
             os.path.join(DATA_DIR),
             classes,

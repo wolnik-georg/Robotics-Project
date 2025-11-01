@@ -8,6 +8,7 @@ ensuring consistency across training and inference.
 import librosa
 import numpy as np
 import pandas
+import scipy.signal
 
 SR = 48000  # Default sample rate
 
@@ -32,13 +33,13 @@ def audio_to_features(audio, method="stft", n_fft=4096, in_dB=False, sr=SR):
 
     Args:
         audio (np.ndarray): Audio waveform.
-        method (str): Feature extraction method ('stft' for now).
+        method (str): Feature extraction method ('stft', 'mfcc', 'envelope', 'combined').
         n_fft (int): FFT size for STFT.
-        in_dB (bool): Convert to dB scale.
+        in_dB (bool): Convert to dB scale (for STFT).
         sr (int): Sample rate.
 
     Returns:
-        pandas.Series: Feature series with frequency index.
+        pandas.Series or np.ndarray: Feature series/array.
     """
     if method == "stft":
         spectrogram = np.abs(librosa.stft(audio, n_fft=n_fft))
@@ -48,5 +49,25 @@ def audio_to_features(audio, method="stft", n_fft=4096, in_dB=False, sr=SR):
         freqs = librosa.fft_frequencies(sr=sr, n_fft=n_fft)
         index = pandas.Index(freqs)
         return pandas.Series(features, index=index)
+    elif method == "mfcc":
+        mfccs = librosa.feature.mfcc(y=audio, sr=sr, n_mfcc=13)
+        # Return mean MFCCs across time for simplicity
+        return np.mean(mfccs, axis=1)
+    elif method == "envelope":
+        # Hilbert envelope
+        analytic_signal = scipy.signal.hilbert(audio)
+        envelope = np.abs(analytic_signal)
+        # Return summary stats or full envelope; here, mean and std
+        return np.array([envelope.mean(), envelope.std()])
+    elif method == "combined":
+        # Combine STFT, MFCC, and envelope
+        stft_features = audio_to_features(
+            audio, method="stft", n_fft=n_fft, in_dB=in_dB, sr=sr
+        ).values
+        mfcc_features = audio_to_features(audio, method="mfcc", sr=sr)
+        envelope_features = audio_to_features(audio, method="envelope", sr=sr)
+        # Concatenate
+        combined = np.concatenate([stft_features, mfcc_features, envelope_features])
+        return combined
     else:
         raise ValueError(f"Unsupported method: {method}")

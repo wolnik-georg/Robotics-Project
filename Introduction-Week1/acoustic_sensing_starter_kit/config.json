@@ -2,7 +2,7 @@
     "active_model": "knn",
     "tune_hyperparameters": false,
     "cv_folds": 5,
-    "feature_method": "stft",
+    "feature_method": "combined",
     "models": {
         "knn": {
             "n_neighbors": 5
