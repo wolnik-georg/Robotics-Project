@@ -186,10 +186,85 @@ def plot_recorded_spectra(data_dir, classes, save_path=None):
     pyplot.show()
 
 
+def plot_waveforms(data_dir, classes, save_path=None):
+    """Plot waveforms for one example per class."""
+    fig, axes = pyplot.subplots(
+        len(classes), 1, figsize=(10, 5 * len(classes)), sharex=True
+    )
+    if len(classes) == 1:
+        axes = [axes]
+
+    for i, cls in enumerate(classes):
+        files = [f for f in os.listdir(data_dir) if f.startswith("1_") and cls in f]
+        if files:
+            audio = preprocessing.load_audio(os.path.join(data_dir, files[0]), sr=SR)
+            axes[i].plot(audio)
+            axes[i].set_title(f"Waveform for class '{cls}'")
+            axes[i].set_ylabel("Amplitude")
+
+    axes[-1].set_xlabel("Time (samples)")
+    pyplot.tight_layout()
+    if save_path:
+        fig.savefig(save_path)
+        print(f"Waveforms saved to {save_path}")
+    pyplot.show()
+
+
+def plot_class_spectra(data_dir, classes, save_path=None):
+    """Plot frequency spectra for one example per class."""
+    fig, axes = pyplot.subplots(
+        len(classes), 1, figsize=(10, 5 * len(classes)), sharex=True
+    )
+    if len(classes) == 1:
+        axes = [axes]
+
+    for i, cls in enumerate(classes):
+        files = [f for f in os.listdir(data_dir) if f.startswith("1_") and cls in f]
+        if files:
+            audio = preprocessing.load_audio(os.path.join(data_dir, files[0]), sr=SR)
+            spectrum = preprocessing.audio_to_features(audio)
+            axes[i].plot(spectrum.index, spectrum.values)
+            axes[i].set_title(f"Frequency Spectrum for class '{cls}'")
+            axes[i].set_ylabel("Amplitude")
+
+    axes[-1].set_xlabel("Frequency (Hz)")
+    pyplot.tight_layout()
+    if save_path:
+        fig.savefig(save_path)
+        print(f"Class spectra saved to {save_path}")
+    pyplot.show()
+
+
+def plot_spectrograms(data_dir, classes, save_path=None):
+    """Plot spectrograms for one example per class."""
+    fig, axes = pyplot.subplots(
+        len(classes), 1, figsize=(10, 5 * len(classes)), sharex=True
+    )
+    if len(classes) == 1:
+        axes = [axes]
+
+    for i, cls in enumerate(classes):
+        files = [f for f in os.listdir(data_dir) if f.startswith("1_") and cls in f]
+        if files:
+            audio = preprocessing.load_audio(os.path.join(data_dir, files[0]), sr=SR)
+            D = librosa.amplitude_to_db(numpy.abs(librosa.stft(audio)), ref=numpy.max)
+            img = librosa.display.specshow(
+                D, x_axis="time", y_axis="log", ax=axes[i], sr=SR
+            )
+            axes[i].set_title(f"Spectrogram for class '{cls}'")
+            fig.colorbar(img, ax=axes[i], format="%+2.0f dB")
+
+    pyplot.tight_layout()
+    if save_path:
+        fig.savefig(save_path)
+        print(f"Spectrograms saved to {save_path}")
+    pyplot.show()
+
+
 def main():
     print("Running for model '{}'".format(MODEL_NAME))
     global DATA_DIR
-    DATA_DIR = os.path.join(BASE_DIR, MODEL_NAME)
+    DATA_DIR = os.path.join(f"data/{BASE_DIR}", MODEL_NAME)
 
     # Load config
     config_path = "config.json"
@@ -200,7 +275,7 @@ def main():
     tune = config.get("tune_hyperparameters", False)
     param_grid = config.get("param_grids", {}).get(model_type, {})
 
-    sounds, labels = load_sounds(DATA_DIR)
+    sounds, labels = load_sounds(os.path.join(DATA_DIR))
     # spectra = [sound_to_spectrum(sound) for sound in sounds]
     spectra = [preprocessing.audio_to_features(sound) for sound in sounds]
     classes = list(set(labels))
@@ -208,6 +283,21 @@ def main():
     if SHOW_PLOTS:
         plot_spectra(
             spectra, labels, save_path=os.path.join(DATA_DIR, "spectra_plot.png")
+        )
+        plot_waveforms(
+            os.path.join(DATA_DIR),
+            classes,
+            save_path=os.path.join(DATA_DIR, "waveforms.png"),
+        )
+        plot_class_spectra(
+            os.path.join(DATA_DIR),
+            classes,
+            save_path=os.path.join(DATA_DIR, "class_spectra.png"),
+        )
+        plot_spectrograms(
+            os.path.join(DATA_DIR),
+            classes,
+            save_path=os.path.join(DATA_DIR, "spectrograms.png"),
         )
 
     if TEST_SIZE > 0:

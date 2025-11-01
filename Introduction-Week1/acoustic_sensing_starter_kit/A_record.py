@@ -95,7 +95,7 @@ def main():
     # check if data was previously recorded
     # ask if want to load or re-record and overwrite
     global DATA_DIR
-    DATA_DIR = mkpath(BASE_DIR, MODEL_NAME)
+    DATA_DIR = mkpath(f"data/{BASE_DIR}", MODEL_NAME)
 
     setup_experiment()
     setup_jack(SOUND_NAME)
@@ -120,7 +120,7 @@ def setup_experiment():
     current_label = label_order[0] if label_order else None
 
     if APPEND_TO_EXISTING_FILES:
-        existing_files = glob(DATA_DIR + "/*.wav")
+        existing_files = glob(os.path.join(DATA_DIR, "*.wav"))
         for f in existing_files:
             basename = os.path.basename(f)
             if basename.endswith(".wav"):
@@ -161,7 +161,8 @@ def setup_jack(sound_name):
         J.set_input_data(i, Ains[i])
 
     # store active sound for reference
-    sound_file = os.path.join(DATA_DIR, "{}_{}.wav".format(0, sound_name))
+    sound_file = os.path.join(DATA_DIR, "data", "{}_{}.wav".format(0, sound_name))
+    os.makedirs(os.path.dirname(sound_file), exist_ok=True)
     scipy.io.wavfile.write(sound_file, SR, sound)
     return J, Aouts, Ains
 
@@ -257,8 +258,9 @@ def store():
     global sample_id
     sample_id[current_label] += 1
     sound_file = os.path.join(
-        DATA_DIR, "{}_{}.wav".format(sample_id[current_label], current_label)
+        DATA_DIR, "data", "{}_{}.wav".format(sample_id[current_label], current_label)
     )
+    os.makedirs(os.path.dirname(sound_file), exist_ok=True)
     scipy.io.wavfile.write(sound_file, SR, Ains[0])
 
 
