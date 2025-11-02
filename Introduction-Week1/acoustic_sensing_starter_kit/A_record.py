@@ -38,9 +38,23 @@ from glob import glob
 BASE_DIR = "."
 SOUND_NAME = "sweep"  # sound to use
 CLASS_LABELS = ["tip", "middle", "base", "back", "none"]  # classes to train
-DEMO_CLASS_LABELS = ["tap", "no_tap"]
+DEMO_CLASS_LABELS = [
+    "10 Hz",
+    "100 Hz",
+    "200 Hz",
+    "300 Hz",
+    "400 Hz",
+    "500 Hz",
+    "600 Hz",
+    "700 Hz",
+    "800 Hz",
+    "900 Hz",
+    "1000 Hz",
+    "19000 Hz",
+    "20000 Hz",
+]
 SAMPLES_PER_CLASS = 50
-MODEL_NAME = "material_tapping_demo"
+MODEL_NAME = "diverse_frequency_sensing_demo"
 SHUFFLE_RECORDING_ORDER = False
 APPEND_TO_EXISTING_FILES = True
 CHANNELS = 1

@@ -38,7 +38,7 @@ import preprocessing
 BASE_DIR = "."
 SENSORMODEL_FILENAME = "sensor_model.pkl"
 TEST_SIZE = (
-    2  # percentage of samples left out of training and used for reporting test score
+    0.2  # percentage of samples left out of training and used for reporting test score
 )
 SHOW_PLOTS = True
 # ==================
@@ -164,7 +164,11 @@ def plot_recorded_spectra(data_dir, classes, save_path=None):
     """Plot frequency spectra of recorded samples for presentations."""
     fig, ax = pyplot.subplots()
     color_list = pyplot.rcParams["axes.prop_cycle"].by_key()["color"]
-    cdict = dict(zip(classes, color_list[: len(classes)]))
+
+    # Cycle through colors if we have more classes than colors
+    cdict = {}
+    for i, cls in enumerate(classes):
+        cdict[cls] = color_list[i % len(color_list)]
 
     for cls in classes:
         # Find first file for this class
@@ -183,11 +187,11 @@ def plot_recorded_spectra(data_dir, classes, save_path=None):
     if save_path:
         fig.savefig(save_path)
         print(f"Recorded spectra saved to {save_path}")
-    pyplot.show()
+    # pyplot.show()  # Removed to avoid conflicts with main pyplot.show()
 
 
 def plot_waveforms(data_dir, classes, save_path=None):
-    """Plot waveforms for one example per class."""
+    """Plot average waveforms for each class."""
     fig, axes = pyplot.subplots(
         len(classes), 1, figsize=(10, 5 * len(classes)), sharex=True
     )
@@ -197,10 +201,20 @@ def plot_waveforms(data_dir, classes, save_path=None):
     for i, cls in enumerate(classes):
         files = [f for f in os.listdir(data_dir) if f.startswith("1_") and cls in f]
         if files:
-            audio = preprocessing.load_audio(os.path.join(data_dir, files[0]), sr=SR)
-            axes[i].plot(audio)
-            axes[i].set_title(f"Waveform for class '{cls}'")
+            audios = [
+                preprocessing.load_audio(os.path.join(data_dir, f), sr=SR)
+                for f in files
+            ]
+            avg_audio = numpy.mean(audios, axis=0)  # Average across samples
+            print(
+                f"Plotting average waveform for class '{cls}' from {len(files)} files"
+            )
+            axes[i].plot(avg_audio, label=f"Class: {cls} (avg of {len(files)})")
+            axes[i].set_title(f"Average Waveform for class '{cls}'")
             axes[i].set_ylabel("Amplitude")
+            axes[i].legend()
+        else:
+            print(f"No files found for class '{cls}' in {data_dir}")
 
     axes[-1].set_xlabel("Time (samples)")
     pyplot.tight_layout()
@@ -221,11 +235,26 @@ def plot_class_spectra(data_dir, classes, save_path=None):
     for i, cls in enumerate(classes):
         files = [f for f in os.listdir(data_dir) if f.startswith("1_") and cls in f]
         if files:
-            audio = preprocessing.load_audio(os.path.join(data_dir, files[0]), sr=SR)
-            spectrum = preprocessing.audio_to_features(audio)
-            axes[i].plot(spectrum.index, spectrum.values)
-            axes[i].set_title(f"Frequency Spectrum for class '{cls}'")
+            spectra = []
+            for f in files:
+                audio = preprocessing.load_audio(os.path.join(data_dir, f), sr=SR)
+                spectrum = preprocessing.audio_to_features(audio)
+                spectra.append(spectrum.values)
+            avg_spectrum = numpy.mean(spectra, axis=0)
+            print(
+                f"Plotting average spectrum for class '{cls}' from {len(files)} files"
+            )
+            # Assuming spectrum.index is the same for all
+            axes[i].plot(
+                spectrum.index,
+                avg_spectrum,
+                label=f"Class: {cls} (avg of {len(files)})",
+            )
+            axes[i].set_title(f"Average Frequency Spectrum for class '{cls}'")
             axes[i].set_ylabel("Amplitude")
+            axes[i].legend()
+        else:
+            print(f"No files found for class '{cls}' in {data_dir}")
 
     axes[-1].set_xlabel("Frequency (Hz)")
     pyplot.tight_layout()
@@ -246,13 +275,19 @@ def plot_spectrograms(data_dir, classes, save_path=None):
     for i, cls in enumerate(classes):
         files = [f for f in os.listdir(data_dir) if f.startswith("1_") and cls in f]
         if files:
-            audio = preprocessing.load_audio(os.path.join(data_dir, files[0]), sr=SR)
+            file_path = os.path.join(data_dir, files[0])
+            print(
+                f"Plotting spectrogram for class '{cls}' from file: {file_path} (showing one example)"
+            )
+            audio = preprocessing.load_audio(file_path, sr=SR)
             D = librosa.amplitude_to_db(numpy.abs(librosa.stft(audio)), ref=numpy.max)
             img = librosa.display.specshow(
                 D, x_axis="time", y_axis="log", ax=axes[i], sr=SR
             )
             axes[i].set_title(f"Spectrogram for class '{cls}'")
             fig.colorbar(img, ax=axes[i], format="%+2.0f dB")
+        else:
+            print(f"No files found for class '{cls}' in {data_dir}")
 
     pyplot.tight_layout()
     if save_path:
@@ -276,7 +311,7 @@ def main():
     param_grid = config.get("param_grids", {}).get(model_type, {})
     feature_method = config.get("feature_method", "stft")
 
-    sounds, labels = load_sounds(os.path.join(DATA_DIR))
+    sounds, labels = load_sounds(os.path.join(DATA_DIR, "data"))
     # spectra = [sound_to_spectrum(sound) for sound in sounds]
     spectra = [
         preprocessing.audio_to_features(sound, method=feature_method)
@@ -289,25 +324,30 @@ def main():
             plot_spectra(
                 spectra, labels, save_path=os.path.join(DATA_DIR, "spectra_plot.png")
             )
+        plot_recorded_spectra(
+            os.path.join(DATA_DIR, "data"),
+            classes,
+            save_path=os.path.join(DATA_DIR, "recorded_spectra.png"),
+        )
         plot_waveforms(
-            os.path.join(DATA_DIR),
+            os.path.join(DATA_DIR, "data"),
             classes,
             save_path=os.path.join(DATA_DIR, "waveforms.png"),
         )
         plot_class_spectra(
-            os.path.join(DATA_DIR),
+            os.path.join(DATA_DIR, "data"),
             classes,
             save_path=os.path.join(DATA_DIR, "class_spectra.png"),
         )
         plot_spectrograms(
-            os.path.join(DATA_DIR),
+            os.path.join(DATA_DIR, "data"),
             classes,
             save_path=os.path.join(DATA_DIR, "spectrograms.png"),
         )
 
     if TEST_SIZE > 0:
         X_train, X_test, y_train, y_test = train_test_split(
-            spectra, labels, test_size=TEST_SIZE
+            spectra, labels, test_size=TEST_SIZE, stratify=labels, random_state=42
         )
     else:
         X_train, y_train = (spectra, labels)

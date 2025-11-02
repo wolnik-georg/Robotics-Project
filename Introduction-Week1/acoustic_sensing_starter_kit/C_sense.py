@@ -59,10 +59,12 @@ if sys.version_info.major == 2:
 class LiveAcousticSensor(object):
     def __init__(self):
         # load sound from file (starts with "0_")
-        active_sound_filename = [fn for fn in os.listdir(DATA_DIR) if fn[:2] == "0_"][0]
+        active_sound_filename = [
+            fn for fn in os.listdir(os.path.join(DATA_DIR, "data")) if fn[:2] == "0_"
+        ][0]
         self.sound = (
             preprocessing.load_audio(
-                os.path.join(DATA_DIR, active_sound_filename), sr=SR
+                os.path.join(DATA_DIR, "data", active_sound_filename), sr=SR
             )
             .reshape(-1)
             .astype(numpy.float32)
@@ -116,7 +118,9 @@ class LiveAcousticSensor(object):
         ax2.set_title("Amplitude spectrum", size=20)
         ax2.set_xlabel("Frequency [Hz]")
         (self.wavelines,) = ax1.plot(self.Ains[0])
-        (self.spectrumlines,) = ax2.plot(preprocessing.audio_to_features(self.Ains[0]))
+        (self.spectrumlines,) = ax2.plot(
+            preprocessing.audio_to_features(self.Ains[0], method="stft")
+        )
         ax2.set_ylim([0, 250])
 
         ax3 = f.add_subplot(2, 1, 2)
@@ -143,8 +147,12 @@ class LiveAcousticSensor(object):
                 self.Ains[i], method=self.feature_method
             )
             prediction = self.clf.predict([spectrum])
+
+        # Use STFT for visualization (more interpretable than combined features)
+        display_spectrum = preprocessing.audio_to_features(self.Ains[0], method="stft")
+
         self.wavelines.set_ydata(self.Ains[0].reshape(-1))
-        self.spectrumlines.set_ydata(spectrum)
+        self.spectrumlines.set_ydata(display_spectrum)
 
         self.predictiontext.set_text(prediction[0])
 
@@ -182,7 +190,7 @@ def on_key(event):
 
 def main():
     global DATA_DIR
-    DATA_DIR = os.path.join(BASE_DIR, MODEL_NAME)
+    DATA_DIR = os.path.join(f"data/{BASE_DIR}", MODEL_NAME)
     global predictor
     predictor = LiveAcousticSensor()
     predictor.run()
