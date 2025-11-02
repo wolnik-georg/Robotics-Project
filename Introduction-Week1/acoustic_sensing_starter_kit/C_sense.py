@@ -39,6 +39,8 @@ import preprocessing
 # ==================
 BASE_DIR = "."
 CONTINUOUSLY = True  # chose between continuous sensing or manually triggered
+LOG_DATA = True  # enable data logging for reconstruction
+LOG_FILE = "sensing_log.csv"  # file to save sensing data
 # ==================
 
 CHANNELS = 1
@@ -49,9 +51,7 @@ predictor = None
 
 is_paused = False
 
-plt.ion()
-# plt.xkcd()
-
+# Python 2/3 compatibility - raw_input was renamed to input in Python 3
 if sys.version_info.major == 2:
     input = raw_input
 
@@ -109,7 +109,7 @@ class LiveAcousticSensor(object):
         f = plt.figure(1, figsize=(16, 10))
         f.clear()
         f.suptitle(
-            "Acoustic Contact Sensing - Real-time Classification",
+            "Acoustic Sensing for Geometric Reconstruction",
             size=16,
             fontweight="bold",
         )
@@ -128,6 +128,17 @@ class LiveAcousticSensor(object):
         ax2.set_ylim([0, 250])
         ax2.grid(True, alpha=0.3)
 
+        # Initialize plot lines for real-time updates
+        # Initialize with dummy data - will be updated in predict()
+        (self.wavelines,) = ax1.plot(
+            numpy.arange(48000), numpy.zeros(48000), "b-", linewidth=1
+        )
+        # For spectrum, use frequency range 0-24000 Hz (Nyquist frequency at 48kHz)
+        freq_bins = numpy.linspace(0, 24000, 2049)  # 2049 is typical for n_fft=4096
+        (self.spectrumlines,) = ax2.plot(
+            freq_bins, numpy.zeros(len(freq_bins)), "r-", linewidth=1
+        )
+
         # Audio level indicator
         ax3 = f.add_subplot(2, 3, 3)
         ax3.set_title("Audio Level", size=14, fontweight="bold")
@@ -140,8 +151,8 @@ class LiveAcousticSensor(object):
             0.5, 0.5, "0%", ha="center", va="center", fontsize=12, fontweight="bold"
         )
 
-        # Prediction display
-        ax4 = f.add_subplot(2, 1, 2)
+        # Classification results (bottom row - spans 3 columns properly)
+        ax4 = f.add_subplot(2, 3, (4, 6))
         ax4.set_title("Classification Results", size=14, fontweight="bold")
         ax4.axis("off")
         ax4.text(0.02, 0.8, "Current Prediction:", fontsize=16, fontweight="bold")
@@ -171,17 +182,10 @@ class LiveAcousticSensor(object):
         ax4.text(
             0.02,
             0.1,
-            "Controls: [P]ause • [Q]uit",
-            fontsize=10,
+            f"Data Logging: {'Enabled' if LOG_DATA else 'Disabled'} • Controls: [P]ause • [Q]uit",
+            fontsize=9,
             style="italic",
-            color="gray",
-        )
-
-        (self.wavelines,) = ax1.plot(self.Ains[0], color="#1f77b4", linewidth=1.5)
-        (self.spectrumlines,) = ax2.plot(
-            preprocessing.audio_to_features(self.Ains[0], method="stft"),
-            color="#ff7f0e",
-            linewidth=1.5,
+            color="blue" if LOG_DATA else "gray",
         )
 
         # Pause button
@@ -192,7 +196,10 @@ class LiveAcousticSensor(object):
         # Connect keyboard events
         cid = f.canvas.mpl_connect("key_press_event", on_key)
 
-        f.tight_layout()
+        # Use manual layout instead of tight_layout to avoid compatibility issues
+        f.subplots_adjust(
+            left=0.05, right=0.95, top=0.9, bottom=0.1, wspace=0.3, hspace=0.4
+        )
         f.show()
         plt.draw()
         plt.pause(0.00001)
@@ -237,13 +244,56 @@ class LiveAcousticSensor(object):
             fontweight="bold",
         )
 
-        self.wavelines.set_ydata(self.Ains[0].reshape(-1))
-        self.spectrumlines.set_ydata(display_spectrum)
+        self.wavelines.set_data(
+            numpy.arange(len(self.Ains[0])), self.Ains[0].reshape(-1)
+        )
+        self.spectrumlines.set_data(display_spectrum.index, display_spectrum.values)
 
         self.predictiontext.set_text(prediction_text)
 
+        # Log data for reconstruction if enabled
+        if LOG_DATA:
+            self.log_sensing_data(prediction_text, confidence)
+
         plt.draw()
         plt.pause(0.00001)
+
+    def log_sensing_data(self, prediction, confidence):
+        """Log sensing data for geometric reconstruction analysis"""
+        import time
+        import csv
+        import os
+
+        # Create log entry
+        timestamp = time.time()
+        log_entry = {
+            "timestamp": timestamp,
+            "prediction": (
+                prediction.split("\n")[0] if "\n" in prediction else prediction
+            ),  # Extract just the frequency
+            "confidence": confidence if confidence is not None else 0.0,
+            "audio_level": numpy.sqrt(numpy.mean(self.Ains[0] ** 2)),
+            "feature_method": self.feature_method,
+        }
+
+        # Write to CSV
+        log_path = os.path.join(DATA_DIR, LOG_FILE)
+        file_exists = os.path.isfile(log_path)
+
+        with open(log_path, "a", newline="") as csvfile:
+            fieldnames = [
+                "timestamp",
+                "prediction",
+                "confidence",
+                "audio_level",
+                "feature_method",
+            ]
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+
+            if not file_exists:
+                writer.writeheader()
+
+            writer.writerow(log_entry)
 
     def run(self):
         if CONTINUOUSLY:
