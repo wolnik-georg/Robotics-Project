@@ -96,8 +96,23 @@ class LiveAcousticSensor(object):
     def setup_model(self):
         model_path = os.path.join(DATA_DIR, SENSORMODEL_FILENAME)
         with open(model_path, "rb") as f:
-            self.clf = pickle.load(f)
-        print(self.clf.classes_)
+            model_data = pickle.load(f)
+
+        # Handle both old format (just model) and new format (model + classes)
+        if isinstance(model_data, dict) and "model" in model_data:
+            self.clf = model_data["model"]
+            if "classes" in model_data and model_data["classes"] is not None:
+                # Ensure classes are in the expected order
+                self.model_classes = model_data["classes"]
+                print(f"Model classes (consistent order): {self.model_classes}")
+            else:
+                self.model_classes = list(self.clf.classes_)
+        else:
+            # Backward compatibility with old model format
+            self.clf = model_data
+            self.model_classes = list(self.clf.classes_)
+
+        print(f"Classifier classes: {self.clf.classes_}")
 
         # Load feature method from config
         config_path = os.path.join(os.path.dirname(__file__), "config.json")

@@ -43,6 +43,9 @@ TEST_SIZE = (
 SHOW_PLOTS = True
 # ==================
 
+# Class ordering: Set "class_order" in config.json to a custom array like ["void", "contact"]
+# for specific ordering. Set to null for automatic sorting (numerical for frequencies, alphabetical otherwise)
+
 SR = 48000
 
 PICKLE_PROTOCOL = pickle.HIGHEST_PROTOCOL
@@ -97,10 +100,11 @@ def sound_to_spectrum(sound):
     return series
 
 
-def save_sensor_model(path, clf, filename):
-    """Saves sensor model to disk"""
+def save_sensor_model(path, clf, filename, classes=None):
+    """Saves sensor model to disk with class information for consistent ordering"""
+    model_data = {"model": clf, "classes": classes, "version": "1.0"}
     with open(os.path.join(path, filename), "wb") as f:
-        pickle.dump(clf, f, protocol=PICKLE_PROTOCOL)
+        pickle.dump(model_data, f, protocol=PICKLE_PROTOCOL)
 
 
 def plot_spectra(spectra, labels, save_path=None):
@@ -121,7 +125,7 @@ def plot_spectra(spectra, labels, save_path=None):
         "#A52A2A",
         "#808080",
         "#000000",
-        "#FFFFFF",
+        "#8B4513",
         "#800000",
         "#808000",
         "#008000",
@@ -242,7 +246,7 @@ def plot_recorded_spectra(data_dir, classes, save_path=None):
         "#A52A2A",
         "#808080",
         "#000000",
-        "#FFFFFF",
+        "#8B4513",
         "#800000",
         "#808000",
         "#008000",
@@ -311,9 +315,12 @@ def plot_recorded_spectra(data_dir, classes, save_path=None):
 
 
 def plot_waveforms(data_dir, classes, save_path=None):
-    """Plot average waveforms for all classes in one plot."""
-    # High-quality single plot settings
-    fig, ax = pyplot.subplots(figsize=(14, 8), dpi=150)  # Single plot, high quality
+    """Plot average waveforms for each class in separate subplots."""
+    fig, axes = pyplot.subplots(
+        len(classes), 1, figsize=(14, 6 * len(classes)), sharex=False, dpi=150
+    )
+    if len(classes) == 1:
+        axes = [axes]
 
     # Use maximally distinct colors for optimal class differentiation
     color_list = [
@@ -329,7 +336,7 @@ def plot_waveforms(data_dir, classes, save_path=None):
         "#A52A2A",
         "#808080",
         "#000000",
-        "#FFFFFF",
+        "#FF1493",
         "#800000",
         "#808000",
         "#008000",
@@ -344,7 +351,8 @@ def plot_waveforms(data_dir, classes, save_path=None):
     for i, cls in enumerate(classes):
         cdict[cls] = color_list[i % len(color_list)]
 
-    for cls in classes:
+    for i, cls in enumerate(classes):
+        ax = axes[i]
         files = [f for f in os.listdir(data_dir) if f.startswith("1_") and cls in f]
         if files:
             audios = [
@@ -355,43 +363,30 @@ def plot_waveforms(data_dir, classes, save_path=None):
             print(
                 f"Plotting average waveform for class '{cls}' from {len(files)} files"
             )
-            # Plot all waveforms in one plot with different colors
+            # Plot waveform for this class
+            time_axis = numpy.arange(len(avg_audio)) / SR  # Convert samples to seconds
             ax.plot(
+                time_axis,
                 avg_audio,
-                label=f"Class: {cls} (avg of {len(files)})",
                 linewidth=2,
                 alpha=0.8,
                 color=cdict[cls],
             )
+            ax.set_ylabel("Amplitude", fontsize=12, fontweight="bold")
+            ax.set_title(f"Class: {cls}", fontsize=14, fontweight="bold", pad=10)
+            ax.set_xlabel("Time (seconds)", fontsize=14, fontweight="bold")
+            ax.grid(True, alpha=0.3)
         else:
             print(f"No files found for class '{cls}' in {data_dir}")
+            ax.set_ylabel("Amplitude", fontsize=12, fontweight="bold")
+            ax.set_title(f"Class: {cls}", fontsize=14, fontweight="bold", pad=10)
+            ax.set_xlabel("Time (seconds)", fontsize=14, fontweight="bold")
 
-    # Improved styling for single plot
-    ax.set_xlabel("Time (samples)", fontsize=14, fontweight="bold")
-    ax.set_ylabel("Amplitude", fontsize=14, fontweight="bold")
-    ax.set_title(
-        "Average Waveforms of Recorded Samples", fontsize=16, fontweight="bold", pad=20
-    )
+    # Overall title
+    fig.suptitle("Waveform per Class", fontsize=16, fontweight="bold", y=0.93)
 
-    # Better legend
-    ax.legend(
-        bbox_to_anchor=(1.05, 1),
-        loc="upper left",
-        fontsize=12,
-        frameon=True,
-        fancybox=True,
-        shadow=True,
-    )
-
-    # Improved grid
-    ax.grid(True, alpha=0.3, linestyle="--")
-
-    # Better axis styling
-    ax.tick_params(axis="both", which="major", labelsize=12)
-    ax.spines["top"].set_visible(False)
-    ax.spines["right"].set_visible(False)
-
-    pyplot.tight_layout()
+    # Adjust spacing to ensure x-axis label is clearly visible
+    fig.subplots_adjust(left=0.08, right=0.95, top=0.92, bottom=0.3, hspace=0.4)
 
     if save_path:
         fig.savefig(
@@ -507,6 +502,7 @@ def main():
     tune = config.get("tune_hyperparameters", False)
     param_grid = config.get("param_grids", {}).get(model_type, {})
     feature_method = config.get("feature_method", "stft")
+    custom_class_order = config.get("class_order", None)
 
     sounds, labels = load_sounds(os.path.join(DATA_DIR, "data"))
     # spectra = [sound_to_spectrum(sound) for sound in sounds]
@@ -514,7 +510,33 @@ def main():
         preprocessing.audio_to_features(sound, method=feature_method)
         for sound in sounds
     ]
-    classes = list(set(labels))
+
+    # Ensure consistent class ordering for reproducible results
+    unique_labels = list(set(labels))
+
+    if custom_class_order:
+        # Use custom order specified in config
+        classes = custom_class_order
+        # Validate that all classes are present
+        missing_classes = set(unique_labels) - set(custom_class_order)
+        extra_classes = set(custom_class_order) - set(unique_labels)
+        if missing_classes:
+            print(f"Warning: Custom class order missing classes: {missing_classes}")
+        if extra_classes:
+            print(f"Warning: Custom class order has extra classes: {extra_classes}")
+    else:
+        # Sort classes: try numerical sorting for frequency-based labels, otherwise alphabetical
+        try:
+            # Try to sort numerically (works for "100 Hz", "200 Hz", etc.)
+            classes = sorted(
+                unique_labels,
+                key=lambda x: float(x.split()[0]) if x.split()[0].isdigit() else x,
+            )
+        except (ValueError, IndexError):
+            # Fall back to alphabetical sorting
+            classes = sorted(unique_labels)
+
+    print(f"Classes (in consistent order): {classes}")
 
     if SHOW_PLOTS:
         if feature_method == "stft":
@@ -579,11 +601,11 @@ def main():
             plot_confusion_matrix(
                 y_test,
                 y_pred,
-                sorted(classes),
+                classes,  # Use the consistently ordered classes
                 save_path=os.path.join(DATA_DIR, "confusion_matrix.png"),
             )
 
-    save_sensor_model(DATA_DIR, best_clf, SENSORMODEL_FILENAME)
+    save_sensor_model(DATA_DIR, best_clf, SENSORMODEL_FILENAME, classes)
     print("\nSaved model to '{}'".format(os.path.join(DATA_DIR, SENSORMODEL_FILENAME)))
 
     if SHOW_PLOTS:
