@@ -107,7 +107,29 @@ def plot_spectra(spectra, labels, save_path=None):
     from matplotlib import pyplot
 
     fig, ax = pyplot.subplots(1)
-    color_list = pyplot.rcParams["axes.prop_cycle"].by_key()["color"]
+    # Use maximally distinct colors for optimal class differentiation
+    color_list = [
+        "#FF0000",
+        "#00FF00",
+        "#0000FF",
+        "#FFFF00",
+        "#FF00FF",
+        "#00FFFF",
+        "#FFA500",
+        "#800080",
+        "#FFC0CB",
+        "#A52A2A",
+        "#808080",
+        "#000000",
+        "#FFFFFF",
+        "#800000",
+        "#808000",
+        "#008000",
+        "#008080",
+        "#000080",
+        "#FF6347",
+        "#32CD32",
+    ]
     cdict = dict(zip(sorted(list(set(labels))), color_list))
     for i, (s, l) in enumerate(zip(spectra, labels)):
         ax.plot(s, c=cdict[l])
@@ -127,9 +149,17 @@ def plot_spectra(spectra, labels, save_path=None):
 def plot_confusion_matrix(y_true, y_pred, classes, save_path=None):
     """Plot confusion matrix for evaluation."""
     cm = confusion_matrix(y_true, y_pred, labels=classes)
-    fig, ax = pyplot.subplots()
-    im = ax.imshow(cm, interpolation="nearest", cmap=pyplot.cm.Blues)
-    ax.figure.colorbar(im, ax=ax)
+    fig, ax = pyplot.subplots(figsize=(12, 10), dpi=150)
+
+    # Create heatmap with better styling
+    im = ax.imshow(cm, interpolation="nearest", cmap="Blues", alpha=0.8)
+
+    # Add colorbar with better formatting
+    cbar = ax.figure.colorbar(im, ax=ax, shrink=0.8, aspect=20)
+    cbar.ax.tick_params(labelsize=11)
+    cbar.set_label("Number of Samples", fontsize=12, fontweight="bold")
+
+    # Configure axes
     ax.set(
         xticks=numpy.arange(cm.shape[1]),
         yticks=numpy.arange(cm.shape[0]),
@@ -137,13 +167,46 @@ def plot_confusion_matrix(y_true, y_pred, classes, save_path=None):
         yticklabels=classes,
         ylabel="True label",
         xlabel="Predicted label",
+        title="Confusion Matrix",
     )
-    pyplot.setp(ax.get_xticklabels(), rotation=45, ha="right", rotation_mode="anchor")
+
+    # Rotate x-axis labels for better readability
+    pyplot.setp(
+        ax.get_xticklabels(),
+        rotation=45,
+        ha="right",
+        rotation_mode="anchor",
+        fontsize=10,
+    )
+    pyplot.setp(ax.get_yticklabels(), fontsize=10)
+
+    # Add text annotations on the confusion matrix
+    thresh = cm.max() / 2.0
+    for i in range(cm.shape[0]):
+        for j in range(cm.shape[1]):
+            ax.text(
+                j,
+                i,
+                format(cm[i, j], "d"),
+                ha="center",
+                va="center",
+                color="white" if cm[i, j] > thresh else "black",
+                fontsize=11,
+                fontweight="bold",
+            )
+
+    # Improve title and axis labels
+    ax.set_title("Confusion Matrix", fontsize=16, fontweight="bold", pad=20)
+    ax.set_xlabel("Predicted label", fontsize=14, fontweight="bold")
+    ax.set_ylabel("True label", fontsize=14, fontweight="bold")
+
     fig.tight_layout()
     if save_path:
-        fig.savefig(save_path)
+        fig.savefig(
+            save_path, dpi=300, bbox_inches="tight", facecolor="white", edgecolor="none"
+        )
         print(f"Confusion matrix saved to {save_path}")
-    pyplot.show()
+    # pyplot.show()  # Removed to avoid conflicts with main pyplot.show()
 
 
 def plot_frequency_spectrum(spectrum, save_path=None):
@@ -162,13 +225,37 @@ def plot_frequency_spectrum(spectrum, save_path=None):
 
 def plot_recorded_spectra(data_dir, classes, save_path=None):
     """Plot frequency spectra of recorded samples for presentations."""
-    fig, ax = pyplot.subplots()
-    color_list = pyplot.rcParams["axes.prop_cycle"].by_key()["color"]
+    # High-quality figure settings
+    fig, ax = pyplot.subplots(figsize=(12, 8), dpi=150)  # Larger size, higher DPI
 
-    # Cycle through colors if we have more classes than colors
+    # Use maximally distinct colors for optimal class differentiation
+    distinct_colors = [
+        "#FF0000",
+        "#00FF00",
+        "#0000FF",
+        "#FFFF00",
+        "#FF00FF",
+        "#00FFFF",
+        "#FFA500",
+        "#800080",
+        "#FFC0CB",
+        "#A52A2A",
+        "#808080",
+        "#000000",
+        "#FFFFFF",
+        "#800000",
+        "#808000",
+        "#008000",
+        "#008080",
+        "#000080",
+        "#FF6347",
+        "#32CD32",
+    ]
+
+    # Cycle through distinct colors if we have more classes than colors
     cdict = {}
     for i, cls in enumerate(classes):
-        cdict[cls] = color_list[i % len(color_list)]
+        cdict[cls] = distinct_colors[i % len(distinct_colors)]
 
     for cls in classes:
         # Find first file for this class
@@ -177,28 +264,87 @@ def plot_recorded_spectra(data_dir, classes, save_path=None):
             file_path = os.path.join(data_dir, files[0])
             audio = preprocessing.load_audio(file_path, sr=SR)
             spectrum = preprocessing.audio_to_features(audio)
-            ax.plot(spectrum.index, spectrum.values, label=cls, color=cdict[cls])
+            # Thicker lines for better visibility
+            ax.plot(
+                spectrum.index,
+                spectrum.values,
+                label=cls,
+                color=cdict[cls],
+                linewidth=2,
+                alpha=0.8,
+            )
 
-    ax.set_xlabel("Frequency (Hz)")
-    ax.set_ylabel("Amplitude")
-    ax.set_title("Frequency Spectra of Recorded Samples")
-    ax.legend()
-    ax.grid(True)
+    # Improved styling
+    ax.set_xlabel("Frequency (Hz)", fontsize=14, fontweight="bold")
+    ax.set_ylabel("Amplitude", fontsize=14, fontweight="bold")
+    ax.set_title(
+        "Frequency Spectra of Recorded Samples", fontsize=16, fontweight="bold", pad=20
+    )
+
+    # Better legend
+    ax.legend(
+        bbox_to_anchor=(1.05, 1),
+        loc="upper left",
+        fontsize=12,
+        frameon=True,
+        fancybox=True,
+        shadow=True,
+    )
+
+    # Improved grid
+    ax.grid(True, alpha=0.3, linestyle="--")
+
+    # Better axis styling
+    ax.tick_params(axis="both", which="major", labelsize=12)
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+
+    pyplot.tight_layout()
+
     if save_path:
-        fig.savefig(save_path)
-        print(f"Recorded spectra saved to {save_path}")
+        fig.savefig(
+            save_path, dpi=300, bbox_inches="tight", facecolor="white", edgecolor="none"
+        )
+        print(f"High-quality PNG saved to {save_path}")
+
     # pyplot.show()  # Removed to avoid conflicts with main pyplot.show()
 
 
 def plot_waveforms(data_dir, classes, save_path=None):
-    """Plot average waveforms for each class."""
-    fig, axes = pyplot.subplots(
-        len(classes), 1, figsize=(10, 5 * len(classes)), sharex=True
-    )
-    if len(classes) == 1:
-        axes = [axes]
+    """Plot average waveforms for all classes in one plot."""
+    # High-quality single plot settings
+    fig, ax = pyplot.subplots(figsize=(14, 8), dpi=150)  # Single plot, high quality
 
+    # Use maximally distinct colors for optimal class differentiation
+    color_list = [
+        "#FF0000",
+        "#00FF00",
+        "#0000FF",
+        "#FFFF00",
+        "#FF00FF",
+        "#00FFFF",
+        "#FFA500",
+        "#800080",
+        "#FFC0CB",
+        "#A52A2A",
+        "#808080",
+        "#000000",
+        "#FFFFFF",
+        "#800000",
+        "#808000",
+        "#008000",
+        "#008080",
+        "#000080",
+        "#FF6347",
+        "#32CD32",
+    ]
+
+    # Cycle through colors if we have more classes than colors
+    cdict = {}
     for i, cls in enumerate(classes):
+        cdict[cls] = color_list[i % len(color_list)]
+
+    for cls in classes:
         files = [f for f in os.listdir(data_dir) if f.startswith("1_") and cls in f]
         if files:
             audios = [
@@ -209,25 +355,57 @@ def plot_waveforms(data_dir, classes, save_path=None):
             print(
                 f"Plotting average waveform for class '{cls}' from {len(files)} files"
             )
-            axes[i].plot(avg_audio, label=f"Class: {cls} (avg of {len(files)})")
-            axes[i].set_title(f"Average Waveform for class '{cls}'")
-            axes[i].set_ylabel("Amplitude")
-            axes[i].legend()
+            # Plot all waveforms in one plot with different colors
+            ax.plot(
+                avg_audio,
+                label=f"Class: {cls} (avg of {len(files)})",
+                linewidth=2,
+                alpha=0.8,
+                color=cdict[cls],
+            )
         else:
             print(f"No files found for class '{cls}' in {data_dir}")
 
-    axes[-1].set_xlabel("Time (samples)")
+    # Improved styling for single plot
+    ax.set_xlabel("Time (samples)", fontsize=14, fontweight="bold")
+    ax.set_ylabel("Amplitude", fontsize=14, fontweight="bold")
+    ax.set_title(
+        "Average Waveforms of Recorded Samples", fontsize=16, fontweight="bold", pad=20
+    )
+
+    # Better legend
+    ax.legend(
+        bbox_to_anchor=(1.05, 1),
+        loc="upper left",
+        fontsize=12,
+        frameon=True,
+        fancybox=True,
+        shadow=True,
+    )
+
+    # Improved grid
+    ax.grid(True, alpha=0.3, linestyle="--")
+
+    # Better axis styling
+    ax.tick_params(axis="both", which="major", labelsize=12)
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+
     pyplot.tight_layout()
+
     if save_path:
-        fig.savefig(save_path)
+        fig.savefig(
+            save_path, dpi=300, bbox_inches="tight", facecolor="white", edgecolor="none"
+        )
         print(f"Waveforms saved to {save_path}")
-    pyplot.show()
+
+    # pyplot.show()  # Removed to avoid conflicts with main pyplot.show()
 
 
 def plot_class_spectra(data_dir, classes, save_path=None):
     """Plot frequency spectra for one example per class."""
     fig, axes = pyplot.subplots(
-        len(classes), 1, figsize=(10, 5 * len(classes)), sharex=True
+        len(classes), 1, figsize=(14, 6 * len(classes)), sharex=True, dpi=150
     )
     if len(classes) == 1:
         axes = [axes]
@@ -249,25 +427,35 @@ def plot_class_spectra(data_dir, classes, save_path=None):
                 spectrum.index,
                 avg_spectrum,
                 label=f"Class: {cls} (avg of {len(files)})",
+                linewidth=2,
+                alpha=0.8,
             )
-            axes[i].set_title(f"Average Frequency Spectrum for class '{cls}'")
-            axes[i].set_ylabel("Amplitude")
-            axes[i].legend()
+            axes[i].set_title(
+                f"Average Frequency Spectrum for class '{cls}'",
+                fontsize=14,
+                fontweight="bold",
+            )
+            axes[i].set_ylabel("Amplitude", fontsize=12, fontweight="bold")
+            axes[i].legend(fontsize=11)
+            axes[i].grid(True, alpha=0.3, linestyle="--")
+            axes[i].tick_params(axis="both", which="major", labelsize=11)
         else:
             print(f"No files found for class '{cls}' in {data_dir}")
 
-    axes[-1].set_xlabel("Frequency (Hz)")
+    axes[-1].set_xlabel("Frequency (Hz)", fontsize=12, fontweight="bold")
     pyplot.tight_layout()
     if save_path:
-        fig.savefig(save_path)
+        fig.savefig(
+            save_path, dpi=300, bbox_inches="tight", facecolor="white", edgecolor="none"
+        )
         print(f"Class spectra saved to {save_path}")
-    pyplot.show()
+    # pyplot.show()  # Removed to avoid conflicts with main pyplot.show()
 
 
 def plot_spectrograms(data_dir, classes, save_path=None):
     """Plot spectrograms for one example per class."""
     fig, axes = pyplot.subplots(
-        len(classes), 1, figsize=(10, 5 * len(classes)), sharex=True
+        len(classes), 1, figsize=(14, 6 * len(classes)), sharex=True, dpi=150
     )
     if len(classes) == 1:
         axes = [axes]
@@ -282,18 +470,27 @@ def plot_spectrograms(data_dir, classes, save_path=None):
             audio = preprocessing.load_audio(file_path, sr=SR)
             D = librosa.amplitude_to_db(numpy.abs(librosa.stft(audio)), ref=numpy.max)
             img = librosa.display.specshow(
-                D, x_axis="time", y_axis="log", ax=axes[i], sr=SR
+                D, x_axis="time", y_axis="log", ax=axes[i], sr=SR, cmap="viridis"
             )
-            axes[i].set_title(f"Spectrogram for class '{cls}'")
-            fig.colorbar(img, ax=axes[i], format="%+2.0f dB")
+            axes[i].set_title(
+                f"Spectrogram for class '{cls}'", fontsize=14, fontweight="bold"
+            )
+            # Add colorbar with better formatting
+            cbar = fig.colorbar(
+                img, ax=axes[i], format="%+2.0f dB", shrink=0.8, aspect=20
+            )
+            cbar.ax.tick_params(labelsize=10)
+            cbar.set_label("Amplitude (dB)", fontsize=11, fontweight="bold")
         else:
             print(f"No files found for class '{cls}' in {data_dir}")
 
     pyplot.tight_layout()
     if save_path:
-        fig.savefig(save_path)
+        fig.savefig(
+            save_path, dpi=300, bbox_inches="tight", facecolor="white", edgecolor="none"
+        )
         print(f"Spectrograms saved to {save_path}")
-    pyplot.show()
+    # pyplot.show()  # Removed to avoid conflicts with main pyplot.show()
 
 
 def main():
@@ -333,11 +530,6 @@ def main():
             os.path.join(DATA_DIR, "data"),
             classes,
             save_path=os.path.join(DATA_DIR, "waveforms.png"),
-        )
-        plot_class_spectra(
-            os.path.join(DATA_DIR, "data"),
-            classes,
-            save_path=os.path.join(DATA_DIR, "class_spectra.png"),
         )
         plot_spectrograms(
             os.path.join(DATA_DIR, "data"),
