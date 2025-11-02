@@ -1,8 +1,8 @@
 /franka_ws/build/
 /franka_ws/install/
 /franka_ws/log/
-Introduction-Week1/acoustic_sensing_starter_kit/material_tapping/
-Introduction-Week1/acoustic_sensing_starter_kit/tap_no_tap/
-Introduction-Week1/acoustic_sensing_starter_kit/wood_metall/
-Introduction-Week1/acoustic_sensing_starter_kit/material_tapping_demo/
-Introduction-Week1/acoustic_sensing_starter_kit/data/
+acoustic_sensing_starter_kit/material_tapping/
+acoustic_sensing_starter_kit/tap_no_tap/
+acoustic_sensing_starter_kit/wood_metall/
+acoustic_sensing_starter_kit/material_tapping_demo/
+acoustic_sensing_starter_kit/data/
