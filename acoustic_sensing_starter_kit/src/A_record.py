@@ -39,8 +39,6 @@ BASE_DIR = "."
 SOUND_NAME = "sweep"  # sound to use
 CLASS_LABELS = ["tip", "middle", "base", "back", "none"]  # classes to train
 DEMO_CLASS_LABELS = [
-    "10 Hz",
-    "100 Hz",
     "200 Hz",
     "300 Hz",
     "400 Hz",
@@ -48,10 +46,6 @@ DEMO_CLASS_LABELS = [
     "600 Hz",
     "700 Hz",
     "800 Hz",
-    "900 Hz",
-    "1000 Hz",
-    "19000 Hz",
-    "20000 Hz",
 ]
 SAMPLES_PER_CLASS = 50
 MODEL_NAME = "diverse_frequency_sensing_demo"
@@ -109,7 +103,7 @@ def main():
     # check if data was previously recorded
     # ask if want to load or re-record and overwrite
     global DATA_DIR
-    DATA_DIR = mkpath(f"data/{BASE_DIR}", MODEL_NAME)
+    DATA_DIR = mkpath(BASE_DIR, "data", MODEL_NAME)
 
     setup_experiment()
     setup_jack(SOUND_NAME)

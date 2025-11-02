@@ -115,7 +115,7 @@ class LiveAcousticSensor(object):
         print(f"Classifier classes: {self.clf.classes_}")
 
         # Load feature method from config
-        config_path = os.path.join(os.path.dirname(__file__), "config.json")
+        config_path = os.path.join(os.path.dirname(__file__), "../configs/config.json")
         with open(config_path, "r") as f:
             config = json.load(f)
         self.feature_method = config.get("feature_method", "stft")
@@ -352,7 +352,7 @@ def on_key(event):
 
 def main():
     global DATA_DIR
-    DATA_DIR = os.path.join(f"data/{BASE_DIR}", MODEL_NAME)
+    DATA_DIR = os.path.join(BASE_DIR, "data", MODEL_NAME)
     global predictor
     predictor = LiveAcousticSensor()
     predictor.run()

@@ -491,10 +491,10 @@ def plot_spectrograms(data_dir, classes, save_path=None):
 def main():
     print("Running for model '{}'".format(MODEL_NAME))
     global DATA_DIR
-    DATA_DIR = os.path.join(f"data/{BASE_DIR}", MODEL_NAME)
+    DATA_DIR = os.path.join(BASE_DIR, "data", MODEL_NAME)
 
     # Load config
-    config_path = "config.json"
+    config_path = os.path.join(os.path.dirname(__file__), "../configs/config.json")
     with open(config_path, "r") as f:
         config = json.load(f)
     model_type = config["active_model"]
