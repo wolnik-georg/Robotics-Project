@@ -106,36 +106,93 @@ class LiveAcousticSensor(object):
         self.feature_method = config.get("feature_method", "stft")
 
     def setup_window(self):
-        f = plt.figure(1)
+        f = plt.figure(1, figsize=(16, 10))
         f.clear()
-        f.suptitle("Acoustic Contact Sensing", size=30)
-        ax1 = f.add_subplot(2, 2, 1)
-        ax1.set_title("Recorded sound (waveform)", size=20)
-        ax1.set_xlabel("Time [samples]")
-        ax1.set_ylim([-1, 1])
-
-        ax2 = f.add_subplot(2, 2, 2)
-        ax2.set_title("Amplitude spectrum", size=20)
-        ax2.set_xlabel("Frequency [Hz]")
-        (self.wavelines,) = ax1.plot(self.Ains[0])
-        (self.spectrumlines,) = ax2.plot(
-            preprocessing.audio_to_features(self.Ains[0], method="stft")
+        f.suptitle(
+            "Acoustic Contact Sensing - Real-time Classification",
+            size=16,
+            fontweight="bold",
         )
-        ax2.set_ylim([0, 250])
 
-        ax3 = f.add_subplot(2, 1, 2)
-        ax3.text(0.0, 0.8, "Sensing result:", dict(size=40))
-        self.predictiontext = ax3.text(0.25, 0.25, "", dict(size=70))
+        ax1 = f.add_subplot(2, 3, 1)
+        ax1.set_title("Input Waveform", size=14, fontweight="bold")
+        ax1.set_xlabel("Time [samples]", fontsize=10)
+        ax1.set_ylabel("Amplitude", fontsize=10)
+        ax1.set_ylim([-1, 1])
+        ax1.grid(True, alpha=0.3)
+
+        ax2 = f.add_subplot(2, 3, 2)
+        ax2.set_title("Frequency Spectrum (STFT)", size=14, fontweight="bold")
+        ax2.set_xlabel("Frequency [Hz]", fontsize=10)
+        ax2.set_ylabel("Magnitude", fontsize=10)
+        ax2.set_ylim([0, 250])
+        ax2.grid(True, alpha=0.3)
+
+        # Audio level indicator
+        ax3 = f.add_subplot(2, 3, 3)
+        ax3.set_title("Audio Level", size=14, fontweight="bold")
+        ax3.set_xlim([0, 1])
+        ax3.set_ylim([0, 1])
         ax3.set_xticklabels([])
         ax3.set_yticklabels([])
-        # ax3.set_title("Contact location")
-        ax3.axis("off")
+        self.level_bar = ax3.barh([0.5], [0], height=0.8, color="#1f77b4", alpha=0.7)
+        ax3.text(
+            0.5, 0.5, "0%", ha="center", va="center", fontsize=12, fontweight="bold"
+        )
 
-        ax_pause = plt.axes([0.91, 0.025, 0.05, 0.075])
-        self.b_pause = Button(ax_pause, "[P]ause")
+        # Prediction display
+        ax4 = f.add_subplot(2, 1, 2)
+        ax4.set_title("Classification Results", size=14, fontweight="bold")
+        ax4.axis("off")
+        ax4.text(0.02, 0.8, "Current Prediction:", fontsize=16, fontweight="bold")
+        self.predictiontext = ax4.text(
+            0.02,
+            0.6,
+            "Waiting...",
+            fontsize=24,
+            fontweight="bold",
+            bbox=dict(boxstyle="round,pad=0.3", facecolor="#2ca02c", alpha=0.1),
+        )
+
+        # Status and keyboard shortcuts
+        ax4.text(
+            0.02,
+            0.3,
+            "Status: Running",
+            fontsize=12,
+            fontweight="bold",
+            color="green",
+            bbox=dict(boxstyle="round,pad=0.2", facecolor="lightgreen", alpha=0.3),
+        )
+        self.status_text = ax4.text(
+            0.02, 0.3, "Status: Running", fontsize=12, fontweight="bold", color="green"
+        )
+
+        ax4.text(
+            0.02,
+            0.1,
+            "Controls: [P]ause • [Q]uit",
+            fontsize=10,
+            style="italic",
+            color="gray",
+        )
+
+        (self.wavelines,) = ax1.plot(self.Ains[0], color="#1f77b4", linewidth=1.5)
+        (self.spectrumlines,) = ax2.plot(
+            preprocessing.audio_to_features(self.Ains[0], method="stft"),
+            color="#ff7f0e",
+            linewidth=1.5,
+        )
+
+        # Pause button
+        ax_pause = plt.axes([0.85, 0.02, 0.12, 0.06])
+        self.b_pause = Button(ax_pause, "[P]ause", color="lightgray", hovercolor="gray")
         self.b_pause.on_clicked(toggle_pause)
+
+        # Connect keyboard events
         cid = f.canvas.mpl_connect("key_press_event", on_key)
 
+        f.tight_layout()
         f.show()
         plt.draw()
         plt.pause(0.00001)
@@ -148,13 +205,42 @@ class LiveAcousticSensor(object):
             )
             prediction = self.clf.predict([spectrum])
 
+            # Get prediction confidence if available
+            try:
+                probabilities = self.clf.predict_proba([spectrum])[0]
+                confidence = max(probabilities) * 100
+                prediction_text = f"{prediction[0]}\n({confidence:.1f}% confidence)"
+            except:
+                # Fallback if predict_proba not available
+                prediction_text = prediction[0]
+
         # Use STFT for visualization (more interpretable than combined features)
         display_spectrum = preprocessing.audio_to_features(self.Ains[0], method="stft")
+
+        # Update audio level indicator
+        audio_level = numpy.sqrt(numpy.mean(self.Ains[0] ** 2))  # RMS level
+        normalized_level = min(audio_level * 10, 1.0)  # Scale for visualization
+        self.level_bar[0].set_width(normalized_level)
+
+        # Update level text
+        level_text = f"{normalized_level*100:.1f}%"
+        # Clear previous text and add new
+        for txt in self.level_bar[0].axes.texts:
+            txt.remove()
+        self.level_bar[0].axes.text(
+            0.5,
+            0.5,
+            level_text,
+            ha="center",
+            va="center",
+            fontsize=12,
+            fontweight="bold",
+        )
 
         self.wavelines.set_ydata(self.Ains[0].reshape(-1))
         self.spectrumlines.set_ydata(display_spectrum)
 
-        self.predictiontext.set_text(prediction[0])
+        self.predictiontext.set_text(prediction_text)
 
         plt.draw()
         plt.pause(0.00001)
@@ -179,6 +265,17 @@ class LiveAcousticSensor(object):
 def toggle_pause(event):
     global is_paused
     is_paused = not is_paused
+    # Update button text based on pause state
+    if hasattr(predictor, "b_pause"):
+        if is_paused:
+            predictor.b_pause.label.set_text("[R]esume")
+            predictor.status_text.set_text("Status: Paused")
+            predictor.status_text.set_color("orange")
+        else:
+            predictor.b_pause.label.set_text("[P]ause")
+            predictor.status_text.set_text("Status: Running")
+            predictor.status_text.set_color("green")
+        plt.draw()
 
 
 def on_key(event):
