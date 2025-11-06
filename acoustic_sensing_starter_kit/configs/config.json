@@ -3,15 +3,7 @@
     "tune_hyperparameters": false,
     "cv_folds": 5,
     "feature_method": "stft",
-    "class_order": [
-        "200 Hz",
-        "300 Hz",
-        "400 Hz",
-        "500 Hz",
-        "600 Hz",
-        "700 Hz",
-        "800 Hz"
-    ],
+    "class_order": ["metal", "no metal"],
     "models": {
         "knn": {
             "n_neighbors": 5

@@ -36,19 +36,12 @@ from glob import glob
 # USER SETTINGS
 # ==================
 BASE_DIR = "."
-SOUND_NAME = "sweep"  # sound to use
+SOUND_NAME = "long_sweep"  # sound to use
 CLASS_LABELS = ["tip", "middle", "base", "back", "none"]  # classes to train
-DEMO_CLASS_LABELS = [
-    "200 Hz",
-    "300 Hz",
-    "400 Hz",
-    "500 Hz",
-    "600 Hz",
-    "700 Hz",
-    "800 Hz",
-]
+# DEMO_CLASS_LABELS = ["finger tip", "finger middle", "finger bottom", "finger blank"]
+DEMO_CLASS_LABELS = ["metal", "no metal"]
 SAMPLES_PER_CLASS = 50
-MODEL_NAME = "diverse_frequency_sensing_demo"
+MODEL_NAME = "soft_finger_batch_4"
 SHUFFLE_RECORDING_ORDER = False
 APPEND_TO_EXISTING_FILES = True
 CHANNELS = 1
@@ -65,6 +58,14 @@ SOUNDS = dict(
         "sweep": numpy.hstack(
             [
                 scipy.signal.chirp(numpy.arange(SR) / SR, 20, 1, 20000).astype(
+                    "float32"
+                ),
+                RECORDING_DELAY_SILENCE,
+            ]
+        ),
+        "long_sweep": numpy.hstack(
+            [
+                scipy.signal.chirp(numpy.arange(int(SR * 2)) / SR, 20, 2, 20000).astype(
                     "float32"
                 ),
                 RECORDING_DELAY_SILENCE,
