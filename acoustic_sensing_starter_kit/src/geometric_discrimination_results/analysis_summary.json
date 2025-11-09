@@ -1,0 +1,34 @@
+{
+  "dataset_info": {
+    "total_samples": 400,
+    "n_features": 38,
+    "n_classes": 4,
+    "classes": [
+      "base",
+      "middle",
+      "none",
+      "tip"
+    ],
+    "batches_analyzed": [
+      "soft_finger_batch_1",
+      "soft_finger_batch_2",
+      "soft_finger_batch_3",
+      "soft_finger_batch_4"
+    ]
+  },
+  "tsne_info": {
+    "optimal_perplexity": 50.0,
+    "separability_score": 0.00857642199844122,
+    "separation_ratio": 1.1735582152501223
+  },
+  "pca_info": {
+    "n_components": 10,
+    "explained_variance": 0.9588481685942785,
+    "separability_score": 0.03625543429234935
+  },
+  "discrimination_evidence": {
+    "significant_features_ratio": 0.5789473684210527,
+    "fisher_discriminant_ratio": 0.09050205800712598,
+    "best_classification_accuracy": 0.9724999999999999
+  }
+}
