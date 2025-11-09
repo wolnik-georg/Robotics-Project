@@ -1,0 +1,128 @@
+{
+  "batch_name": "soft_finger_batch_4",
+  "config": {
+    "experiment": "material_detection",
+    "description": "Material Property Detection",
+    "expected_classes": [
+      "no metal",
+      "metal"
+    ],
+    "research_question": "Can acoustic signals distinguish material properties?",
+    "class_mapping": {
+      "_metal": "metal",
+      "_no metal": "no_metal"
+    }
+  },
+  "model_performance": {
+    "random_forest": {
+      "train_accuracy": 1.0,
+      "test_accuracy": 0.9,
+      "cv_accuracy_mean": 0.86,
+      "cv_accuracy_std": 0.03741657386773941
+    },
+    "logistic_regression": {
+      "train_accuracy": 0.925,
+      "test_accuracy": 0.8,
+      "cv_accuracy_mean": 0.8099999999999999,
+      "cv_accuracy_std": 0.09695359714832658
+    },
+    "decision_tree": {
+      "train_accuracy": 1.0,
+      "test_accuracy": 0.7,
+      "cv_accuracy_mean": 0.74,
+      "cv_accuracy_std": 0.058309518948453015
+    },
+    "svm_linear": {
+      "train_accuracy": 0.95,
+      "test_accuracy": 0.8,
+      "cv_accuracy_mean": 0.8,
+      "cv_accuracy_std": 0.09486832980505137
+    }
+  },
+  "top_features": {
+    "rf_builtin": {
+      "feature_names": [
+        "env_std",
+        "burst_rms",
+        "env_mean",
+        "low_energy_ratio",
+        "spectral_bandwidth",
+        "temporal_centroid",
+        "low_mid_ratio",
+        "spectral_centroid",
+        "env_kurtosis",
+        "env_max"
+      ],
+      "values": [
+        0.13508894781562453,
+        0.12893571258306283,
+        0.09128793544886767,
+        0.08182141777101946,
+        0.06088101000667673,
+        0.05580179322844666,
+        0.051599042030862116,
+        0.03302618139116947,
+        0.027637527804690212,
+        0.024688797039370748
+      ]
+    },
+    "rf_permutation": {
+      "feature_names": [
+        "temporal_centroid",
+        "env_std",
+        "burst_rms",
+        "env_mean",
+        "low_energy_ratio",
+        "spectral_bandwidth",
+        "low_mid_ratio",
+        "spectral_centroid",
+        "env_kurtosis",
+        "env_max"
+      ],
+      "values": [
+        0.003749999999999987,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "score_drop": {
+      "feature_names": [
+        "env_std",
+        "burst_rms",
+        "temporal_centroid",
+        "env_mean",
+        "low_energy_ratio",
+        "spectral_bandwidth",
+        "low_mid_ratio",
+        "spectral_centroid",
+        "env_kurtosis",
+        "env_max"
+      ],
+      "values": [
+        0.009899999999999909,
+        0.007899999999999907,
+        0.005299999999999971,
+        -4.440892098500626e-16,
+        -4.440892098500626e-16,
+        -4.440892098500626e-16,
+        -4.440892098500626e-16,
+        -4.440892098500626e-16,
+        -4.440892098500626e-16,
+        -4.440892098500626e-16
+      ]
+    }
+  },
+  "analysis_summary": {
+    "significant_features": {
+      "count": 0,
+      "percentage": 0.0
+    }
+  }
+}

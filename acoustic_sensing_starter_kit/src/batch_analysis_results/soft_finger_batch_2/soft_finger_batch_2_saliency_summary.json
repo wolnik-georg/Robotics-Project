@@ -1,0 +1,132 @@
+{
+  "batch_name": "soft_finger_batch_2",
+  "config": {
+    "experiment": "contact_position",
+    "description": "Contact Position Discrimination (Batch 2)",
+    "expected_classes": [
+      "finger tip",
+      "finger middle",
+      "finger bottom",
+      "finger blank"
+    ],
+    "research_question": "Can acoustic signals distinguish WHERE on the finger contact occurs?",
+    "class_mapping": {
+      "finger tip": "tip",
+      "finger middle": "middle",
+      "finger bottom": "base",
+      "finger blank": "none"
+    }
+  },
+  "model_performance": {
+    "random_forest": {
+      "train_accuracy": 1.0,
+      "test_accuracy": 1.0,
+      "cv_accuracy_mean": 0.99,
+      "cv_accuracy_std": 0.012247448713915901
+    },
+    "logistic_regression": {
+      "train_accuracy": 1.0,
+      "test_accuracy": 0.975,
+      "cv_accuracy_mean": 0.9199999999999999,
+      "cv_accuracy_std": 0.06964194138592061
+    },
+    "decision_tree": {
+      "train_accuracy": 1.0,
+      "test_accuracy": 0.975,
+      "cv_accuracy_mean": 0.975,
+      "cv_accuracy_std": 0.02738612787525829
+    },
+    "svm_linear": {
+      "train_accuracy": 1.0,
+      "test_accuracy": 1.0,
+      "cv_accuracy_mean": 0.925,
+      "cv_accuracy_std": 0.05244044240850757
+    }
+  },
+  "top_features": {
+    "rf_builtin": {
+      "feature_names": [
+        "ultra_high_energy_ratio",
+        "spectral_centroid",
+        "high_energy_ratio",
+        "mid_energy_ratio",
+        "ultra_high_ratio",
+        "low_mid_ratio",
+        "damping_ratio",
+        "temporal_centroid",
+        "env_skew",
+        "burst_rms"
+      ],
+      "values": [
+        0.12907174497704954,
+        0.12461587133810799,
+        0.11859032917523198,
+        0.10126101798046735,
+        0.08885979576439934,
+        0.08361928680276515,
+        0.05732336576719421,
+        0.05417686391451726,
+        0.046356114938479916,
+        0.03345306451535051
+      ]
+    },
+    "rf_permutation": {
+      "feature_names": [
+        "ultra_high_energy_ratio",
+        "spectral_centroid",
+        "high_energy_ratio",
+        "mid_energy_ratio",
+        "ultra_high_ratio",
+        "low_mid_ratio",
+        "damping_ratio",
+        "temporal_centroid",
+        "env_skew",
+        "burst_rms"
+      ],
+      "values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "score_drop": {
+      "feature_names": [
+        "high_energy_ratio",
+        "ultra_high_energy_ratio",
+        "spectral_centroid",
+        "mid_energy_ratio",
+        "ultra_high_ratio",
+        "low_mid_ratio",
+        "damping_ratio",
+        "temporal_centroid",
+        "env_skew",
+        "burst_rms"
+      ],
+      "values": [
+        0.0010999999999999899,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "analysis_summary": {
+    "significant_features": {
+      "count": 0,
+      "percentage": 0.0
+    }
+  }
+}

@@ -1,0 +1,128 @@
+{
+  "batch_name": "soft_finger_batch_3",
+  "config": {
+    "experiment": "edge_detection",
+    "description": "Geometric Edge Detection",
+    "expected_classes": [
+      "contact edge",
+      "no contact"
+    ],
+    "research_question": "Can acoustic signals detect geometric edges/transitions?",
+    "class_mapping": {
+      "contact edge": "edge",
+      "no contact": "no_edge"
+    }
+  },
+  "model_performance": {
+    "random_forest": {
+      "train_accuracy": 1.0,
+      "test_accuracy": 1.0,
+      "cv_accuracy_mean": 0.9933333333333334,
+      "cv_accuracy_std": 0.01333333333333333
+    },
+    "logistic_regression": {
+      "train_accuracy": 1.0,
+      "test_accuracy": 0.9666666666666667,
+      "cv_accuracy_mean": 0.9933333333333334,
+      "cv_accuracy_std": 0.01333333333333333
+    },
+    "decision_tree": {
+      "train_accuracy": 1.0,
+      "test_accuracy": 1.0,
+      "cv_accuracy_mean": 0.9933333333333334,
+      "cv_accuracy_std": 0.01333333333333333
+    },
+    "svm_linear": {
+      "train_accuracy": 1.0,
+      "test_accuracy": 0.9666666666666667,
+      "cv_accuracy_mean": 0.9933333333333334,
+      "cv_accuracy_std": 0.01333333333333333
+    }
+  },
+  "top_features": {
+    "rf_builtin": {
+      "feature_names": [
+        "spectral_bandwidth",
+        "high_energy_ratio",
+        "spectral_centroid",
+        "ultra_high_energy_ratio",
+        "ultra_high_ratio",
+        "mid_energy_ratio",
+        "low_mid_ratio",
+        "damping_ratio",
+        "spectral_flatness",
+        "resonance_high_ratio"
+      ],
+      "values": [
+        0.17644738064026522,
+        0.13726468474447084,
+        0.13604917591224608,
+        0.12285935396539091,
+        0.08706071789430984,
+        0.07608795576035411,
+        0.06480285288797288,
+        0.04785227396201252,
+        0.04494073391682573,
+        0.024456101005825848
+      ]
+    },
+    "rf_permutation": {
+      "feature_names": [
+        "spectral_bandwidth",
+        "high_energy_ratio",
+        "spectral_centroid",
+        "ultra_high_energy_ratio",
+        "ultra_high_ratio",
+        "mid_energy_ratio",
+        "low_mid_ratio",
+        "damping_ratio",
+        "spectral_flatness",
+        "resonance_high_ratio"
+      ],
+      "values": [
+        0.005833333333333313,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "score_drop": {
+      "feature_names": [
+        "spectral_bandwidth",
+        "high_energy_ratio",
+        "spectral_centroid",
+        "ultra_high_energy_ratio",
+        "ultra_high_ratio",
+        "mid_energy_ratio",
+        "low_mid_ratio",
+        "damping_ratio",
+        "spectral_flatness",
+        "resonance_high_ratio"
+      ],
+      "values": [
+        0.006266666666666532,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "analysis_summary": {
+    "significant_features": {
+      "count": 0,
+      "percentage": 0.0
+    }
+  }
+}

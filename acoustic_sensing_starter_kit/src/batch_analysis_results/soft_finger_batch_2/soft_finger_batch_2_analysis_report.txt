@@ -1,1 +1,58 @@
-================================================================================\nBATCH-SPECIFIC ACOUSTIC DISCRIMINATION ANALYSIS\nBatch: soft_finger_batch_2\n================================================================================\n\nEXPERIMENT: Contact Position Discrimination (Batch 2)\nResearch Question: Can acoustic signals distinguish WHERE on the finger contact occurs?\n\nDATASET SUMMARY\n----------------------------------------\nSamples: 200\nFeatures: 38\nClasses: 4 (base, middle, none, tip)\n\nClass Distribution:\n  base: 50 samples (25.0%)\n  middle: 50 samples (25.0%)\n  none: 50 samples (25.0%)\n  tip: 50 samples (25.0%)\n\nSTATISTICAL ANALYSIS\n----------------------------------------\nStatistically significant features: 30/38 (78.9%)\nFisher discriminant ratio: 0.438\nLDA explained variance: 1.000\nNumber of discriminant functions: 3\n\nCLASSIFICATION PERFORMANCE\n----------------------------------------\nBest classifier: Linear Discriminant Analysis\nCross-validation accuracy: 0.985\nCross-validation F1-score: 0.985\n\nAll Classifiers:\n  Random Forest: Accuracy=0.970±0.040, F1=0.970±0.041\n  SVM (RBF): Accuracy=0.940±0.037, F1=0.939±0.039\n  SVM (Linear): Accuracy=0.940±0.020, F1=0.940±0.020\n  K-Nearest Neighbors: Accuracy=0.945±0.024, F1=0.945±0.025\n  Logistic Regression: Accuracy=0.925±0.027, F1=0.926±0.027\n  Linear Discriminant Analysis: Accuracy=0.985±0.020, F1=0.985±0.020\n\nEMBEDDING ANALYSIS\n----------------------------------------\nt-SNE separability score: 0.388\nPCA separability score: 0.447\nt-SNE separation ratio: 3.788\n\nCONCLUSIONS\n----------------------------------------\n✓ STRONG DISCRIMINATION CAPABILITY CONFIRMED\n\nEvidence:\n  • High classification accuracy: 0.985\n  • Significant features: 78.9%\n  • Research question: Can acoustic signals distinguish WHERE on the finger contact occurs?\n  • ANSWER: YES - Acoustic signals reliably discriminate the tested conditions\n\n================================================================================
+================================================================================
+BATCH-SPECIFIC ACOUSTIC DISCRIMINATION ANALYSIS
+Batch: soft_finger_batch_2
+================================================================================
+
+EXPERIMENT: Contact Position Discrimination (Batch 2)
+Research Question: Can acoustic signals distinguish WHERE on the finger contact occurs?
+
+DATASET SUMMARY
+----------------------------------------
+Samples: 200
+Features: 38
+Classes: 4 (base, middle, none, tip)
+
+Class Distribution:
+  base: 50 samples (25.0%)
+  middle: 50 samples (25.0%)
+  none: 50 samples (25.0%)
+  tip: 50 samples (25.0%)
+
+STATISTICAL ANALYSIS
+----------------------------------------
+Statistically significant features: 30/38 (78.9%)
+Fisher discriminant ratio: 0.438
+LDA explained variance: 1.000
+Number of discriminant functions: 3
+
+CLASSIFICATION PERFORMANCE
+----------------------------------------
+Best classifier: Linear Discriminant Analysis
+Cross-validation accuracy: 0.985
+Cross-validation F1-score: 0.985
+
+All Classifiers:
+  Random Forest: Accuracy=0.970±0.040, F1=0.970±0.041
+  SVM (RBF): Accuracy=0.940±0.037, F1=0.939±0.039
+  SVM (Linear): Accuracy=0.940±0.020, F1=0.940±0.020
+  K-Nearest Neighbors: Accuracy=0.945±0.024, F1=0.945±0.025
+  Logistic Regression: Accuracy=0.925±0.027, F1=0.926±0.027
+  Linear Discriminant Analysis: Accuracy=0.985±0.020, F1=0.985±0.020
+
+EMBEDDING ANALYSIS
+----------------------------------------
+t-SNE separability score: 0.388
+PCA separability score: 0.447
+t-SNE separation ratio: 3.788
+
+CONCLUSIONS
+----------------------------------------
+✓ STRONG DISCRIMINATION CAPABILITY CONFIRMED
+
+Evidence:
+  • High classification accuracy: 0.985
+  • Significant features: 78.9%
+  • Research question: Can acoustic signals distinguish WHERE on the finger contact occurs?
+  • ANSWER: YES - Acoustic signals reliably discriminate the tested conditions
+
+================================================================================

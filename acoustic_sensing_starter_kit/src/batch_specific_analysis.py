@@ -699,7 +699,7 @@ class BatchSpecificAnalyzer:
 
         report_lines.extend(["", "=" * 80])
 
-        return "\\n".join(report_lines)
+        return "\n".join(report_lines)
 
     def _save_batch_results(
         self,
@@ -813,24 +813,24 @@ class BatchSpecificAnalyzer:
         summary_path = self.output_base / "combined_analysis_summary.txt"
 
         with open(summary_path, "w") as f:
-            f.write("COMBINED BATCH ANALYSIS SUMMARY\\n")
-            f.write("=" * 80 + "\\n\\n")
+            f.write("COMBINED BATCH ANALYSIS SUMMARY\n")
+            f.write("=" * 80 + "\n\n")
 
             for batch_name, result in results.items():
                 config = result["config"]
-                f.write(f"BATCH: {batch_name}\\n")
-                f.write(f"Experiment: {config['description']}\\n")
-                f.write(f"Research Question: {config['research_question']}\\n")
+                f.write(f"BATCH: {batch_name}\n")
+                f.write(f"Experiment: {config['description']}\n")
+                f.write(f"Research Question: {config['research_question']}\n")
                 f.write(
-                    f"Samples: {result['n_samples']}, Features: {result['n_features']}\\n"
+                    f"Samples: {result['n_samples']}, Features: {result['n_features']}\n"
                 )
-                f.write(f"Classes: {result['classes']}\\n")
-                f.write(f"Best Accuracy: {result['best_accuracy']:.3f}\\n")
+                f.write(f"Classes: {result['classes']}\n")
+                f.write(f"Best Accuracy: {result['best_accuracy']:.3f}\n")
                 f.write(
-                    f"Significant Features: {result['significant_features_ratio']*100:.1f}%\\n"
+                    f"Significant Features: {result['significant_features_ratio']*100:.1f}%\n"
                 )
-                f.write(f"t-SNE Separability: {result['tsne_separability']:.3f}\\n")
-                f.write("\\n")
+                f.write(f"t-SNE Separability: {result['tsne_separability']:.3f}\n")
+                f.write("\n")
 
         print(f"📊 Combined summary saved to: {summary_path}")
 
