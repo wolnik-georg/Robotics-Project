@@ -18,115 +18,56 @@
     }
   },
   "model_performance": {
-    "random_forest": {
-      "train_accuracy": 1.0,
-      "test_accuracy": 1.0,
-      "cv_accuracy_mean": 0.99,
-      "cv_accuracy_std": 0.012247448713915901
-    },
-    "logistic_regression": {
-      "train_accuracy": 1.0,
-      "test_accuracy": 0.975,
-      "cv_accuracy_mean": 0.9199999999999999,
-      "cv_accuracy_std": 0.06964194138592061
-    },
-    "decision_tree": {
-      "train_accuracy": 1.0,
-      "test_accuracy": 0.975,
-      "cv_accuracy_mean": 0.975,
-      "cv_accuracy_std": 0.02738612787525829
-    },
-    "svm_linear": {
-      "train_accuracy": 1.0,
-      "test_accuracy": 1.0,
-      "cv_accuracy_mean": 0.925,
-      "cv_accuracy_std": 0.05244044240850757
-    }
+    "features": 1.0
   },
   "top_features": {
-    "rf_builtin": {
-      "feature_names": [
-        "ultra_high_energy_ratio",
-        "spectral_centroid",
-        "high_energy_ratio",
-        "mid_energy_ratio",
-        "ultra_high_ratio",
-        "low_mid_ratio",
-        "damping_ratio",
-        "temporal_centroid",
-        "env_skew",
-        "burst_rms"
-      ],
-      "values": [
-        0.12907174497704954,
-        0.12461587133810799,
-        0.11859032917523198,
-        0.10126101798046735,
-        0.08885979576439934,
-        0.08361928680276515,
-        0.05732336576719421,
-        0.05417686391451726,
-        0.046356114938479916,
-        0.03345306451535051
-      ]
-    },
-    "rf_permutation": {
-      "feature_names": [
-        "ultra_high_energy_ratio",
-        "spectral_centroid",
-        "high_energy_ratio",
-        "mid_energy_ratio",
-        "ultra_high_ratio",
-        "low_mid_ratio",
-        "damping_ratio",
-        "temporal_centroid",
-        "env_skew",
-        "burst_rms"
-      ],
-      "values": [
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0
-      ]
-    },
-    "score_drop": {
-      "feature_names": [
-        "high_energy_ratio",
-        "ultra_high_energy_ratio",
-        "spectral_centroid",
-        "mid_energy_ratio",
-        "ultra_high_ratio",
-        "low_mid_ratio",
-        "damping_ratio",
-        "temporal_centroid",
-        "env_skew",
-        "burst_rms"
-      ],
-      "values": [
-        0.0010999999999999899,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0
-      ]
-    }
-  },
-  "analysis_summary": {
-    "significant_features": {
-      "count": 0,
-      "percentage": 0.0
-    }
+    "gradient_top_10": [
+      14,
+      34,
+      17,
+      23,
+      0,
+      35,
+      33,
+      37,
+      31,
+      36
+    ],
+    "integrated_gradients_top_10": [
+      31,
+      0,
+      14,
+      34,
+      27,
+      17,
+      35,
+      33,
+      37,
+      36
+    ],
+    "gradient_values_top_10": [
+      0.6952850818634033,
+      0.7585119009017944,
+      0.7865048050880432,
+      0.8007087707519531,
+      0.8237074613571167,
+      0.8802329301834106,
+      0.9908618927001953,
+      1.0170762538909912,
+      1.0266927480697632,
+      1.086625576019287
+    ],
+    "integrated_gradients_values_top_10": [
+      0.3814085125923157,
+      0.5359684228897095,
+      0.5448079109191895,
+      0.5966786742210388,
+      0.5970817804336548,
+      0.6747905015945435,
+      0.676491379737854,
+      0.7415269613265991,
+      0.8537871241569519,
+      0.948510468006134
+    ]
   }
 }

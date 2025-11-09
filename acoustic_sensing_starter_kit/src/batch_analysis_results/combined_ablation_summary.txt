@@ -1,0 +1,58 @@
+COMBINED FEATURE ABLATION ANALYSIS SUMMARY
+================================================================================
+
+MOST CONSISTENTLY IMPORTANT FEATURES ACROSS BATCHES
+------------------------------------------------------------
+spectral_bandwidth        | Batches: 3 | Avg importance: 0.0111
+    Appears in: soft_finger_batch_1, soft_finger_batch_3, soft_finger_batch_4
+spectral_centroid         | Batches: 3 | Avg importance: 0.0094
+    Appears in: soft_finger_batch_1, soft_finger_batch_3, soft_finger_batch_4
+high_energy_ratio         | Batches: 3 | Avg importance: 0.0083
+    Appears in: soft_finger_batch_1, soft_finger_batch_2, soft_finger_batch_4
+env_max                   | Batches: 3 | Avg importance: 0.0072
+    Appears in: soft_finger_batch_2, soft_finger_batch_3, soft_finger_batch_4
+temporal_centroid         | Batches: 3 | Avg importance: 0.0072
+    Appears in: soft_finger_batch_2, soft_finger_batch_3, soft_finger_batch_4
+high_freq_decay_rate      | Batches: 3 | Avg importance: 0.0072
+    Appears in: soft_finger_batch_2, soft_finger_batch_3, soft_finger_batch_4
+time_to_peak              | Batches: 3 | Avg importance: 0.0072
+    Appears in: soft_finger_batch_2, soft_finger_batch_3, soft_finger_batch_4
+high_freq_slope           | Batches: 3 | Avg importance: 0.0072
+    Appears in: soft_finger_batch_2, soft_finger_batch_3, soft_finger_batch_4
+resonance_peak_amp        | Batches: 2 | Avg importance: 0.0133
+    Appears in: soft_finger_batch_3, soft_finger_batch_4
+zero_crossing_rate        | Batches: 2 | Avg importance: 0.0083
+    Appears in: soft_finger_batch_3, soft_finger_batch_4
+spectral_contrast_0       | Batches: 2 | Avg importance: 0.0083
+    Appears in: soft_finger_batch_3, soft_finger_batch_4
+spectral_contrast_2       | Batches: 2 | Avg importance: 0.0083
+    Appears in: soft_finger_batch_3, soft_finger_batch_4
+resonance_q_factor        | Batches: 2 | Avg importance: 0.0083
+    Appears in: soft_finger_batch_3, soft_finger_batch_4
+resonance_peak_freq       | Batches: 2 | Avg importance: 0.0083
+    Appears in: soft_finger_batch_3, soft_finger_batch_4
+spectral_contrast_1       | Batches: 2 | Avg importance: 0.0083
+    Appears in: soft_finger_batch_3, soft_finger_batch_4
+
+OPTIMAL MINIMAL FEATURE SETS BY BATCH
+--------------------------------------------------
+
+soft_finger_batch_1:
+  Baseline accuracy: 0.9700
+  95% baseline (0.921): 1 features
+  90% baseline (0.873): 1 features
+
+soft_finger_batch_2:
+  Baseline accuracy: 0.9900
+  95% baseline (0.941): 1 features
+  90% baseline (0.891): 1 features
+
+soft_finger_batch_3:
+  Baseline accuracy: 0.9933
+  95% baseline (0.944): 1 features
+  90% baseline (0.894): 1 features
+
+soft_finger_batch_4:
+  Baseline accuracy: 0.8600
+  95% baseline (0.817): 2 features
+  90% baseline (0.774): 1 features
