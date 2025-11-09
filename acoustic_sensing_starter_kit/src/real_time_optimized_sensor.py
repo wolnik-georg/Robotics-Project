@@ -170,10 +170,7 @@ class OptimizedRealTimeSensor:
         
         try:
             # Extract optimized features (5 features only)
-            features = self.feature_extractor.extract_features(
-                audio_data, 
-                self.config.sample_rate
-            )
+            features = self.feature_extractor.extract_from_audio(audio_data)
             
             # Make prediction
             prediction = self.model.predict(features.reshape(1, -1))[0]
@@ -310,9 +307,7 @@ class OptimizedRealTimeSensor:
         # Extract features for all calibration data
         all_features = []
         for audio_chunk in calibration_data:
-            features = self.feature_extractor.extract_features(
-                audio_chunk, self.config.sample_rate
-            )
+            features = self.feature_extractor.extract_from_audio(audio_chunk)
             all_features.append(features)
             
         all_features = np.array(all_features)

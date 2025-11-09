@@ -287,9 +287,7 @@ class IntegratedAcousticSystem:
             
             # Time the processing
             start_time = time.perf_counter()
-            features = self.real_time_sensor.feature_extractor.extract_features(
-                audio_chunk, self.real_time_sensor.config.sample_rate
-            )
+            features = self.real_time_sensor.feature_extractor.extract_from_audio(audio_chunk)
             prediction = self.real_time_sensor.model.predict(features.reshape(1, -1))
             end_time = time.perf_counter()
             
