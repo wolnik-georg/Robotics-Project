@@ -395,15 +395,25 @@ class FeatureAblationAnalyzer:
 
         # Load existing feature importance ranking if available
         importance_file = (
-            self.results_dir / batch_name / f"{batch_name}_feature_saliency.csv"
+            self.results_dir / batch_name / f"{batch_name}_saliency_maps.csv"
         )
         if importance_file.exists():
             importance_df = pd.read_csv(importance_file)
-            # Assuming the CSV has 'feature_name' and 'rf_builtin' columns
-            feature_ranking = []
-            for _, row in importance_df.iterrows():
-                if row["feature_name"] in feature_names:
-                    feature_ranking.append(feature_names.index(row["feature_name"]))
+            # Use gradient saliency for ranking
+            if "gradient_saliency" in importance_df.columns:
+                # Sort by gradient saliency (descending)
+                sorted_df = importance_df.sort_values(
+                    "gradient_saliency", ascending=False
+                )
+                feature_ranking = []
+                for _, row in sorted_df.iterrows():
+                    if "feature_name" in row and row["feature_name"] in feature_names:
+                        feature_ranking.append(feature_names.index(row["feature_name"]))
+                    elif "feature_index" in row:
+                        feature_ranking.append(int(row["feature_index"]))
+            else:
+                # Fallback: use feature indices directly
+                feature_ranking = list(range(len(feature_names)))
         else:
             # Fallback: compute quick feature importance
             clf = RandomForestClassifier(n_estimators=100, random_state=42)
@@ -659,9 +669,8 @@ class FeatureAblationAnalyzer:
         n_feat_optimal = []
         acc_optimal = []
         for key, data in cum_results.items():
-            if data["n_features"] in [5, 10, 15, 20]:
-                n_feat_optimal.append(data["n_features"])
-                acc_optimal.append(data["mean_accuracy"])
+            n_feat_optimal.append(data["n_features"])
+            acc_optimal.append(data["mean_accuracy"])
 
         n_feat_random = []
         acc_random = []
