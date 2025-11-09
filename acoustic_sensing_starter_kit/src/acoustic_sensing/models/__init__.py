@@ -8,11 +8,13 @@ This module contains machine learning components:
 """
 
 from .training import ConfigurableTrainingPipeline
-from .geometric_reconstruction import GeometricReconstructionPipeline
-from .geometric_data_loader import GeometricDataLoader
+
+# Note: Other imports commented out until class names are verified
+# from .geometric_reconstruction import GeometricReconstructionPipeline
+# from .geometric_data_loader import GeometricDataLoader
 
 __all__ = [
-    'ConfigurableTrainingPipeline',
-    'GeometricReconstructionPipeline',
-    'GeometricDataLoader'
+    'ConfigurableTrainingPipeline'
+    # 'GeometricReconstructionPipeline',
+    # 'GeometricDataLoader'
 ]

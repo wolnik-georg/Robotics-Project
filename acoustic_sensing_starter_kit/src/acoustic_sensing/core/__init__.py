@@ -7,16 +7,9 @@ This module contains the fundamental building blocks for acoustic sensing:
 - Data management utilities
 """
 
-from .feature_extraction import extract_features, AudioFeatureExtractor
-from .preprocessing import load_audio, audio_to_features
-from .data_management import DatasetLoader, GeometricDatasetManager, load_audio as load_audio_dm
+# Minimal imports to avoid class name conflicts
+# Individual modules can be imported as needed
 
 __all__ = [
-    'extract_features',
-    'AudioFeatureExtractor',
-    'load_audio',
-    'audio_to_features',
-    'DatasetLoader', 
-    'GeometricDatasetManager',
-    'load_audio_dm'
+    # Will be populated as class names are verified
 ]

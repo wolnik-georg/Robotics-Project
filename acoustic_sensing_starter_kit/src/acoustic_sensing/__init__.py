@@ -25,21 +25,10 @@ __version__ = "1.0.0"
 __author__ = "Georg Wolnik"
 __email__ = "georg.wolnik@example.com"
 
-# Core imports for easy access
-from .core.feature_extraction import extract_features, AudioFeatureExtractor
-from .core.preprocessing import preprocess_audio_signal
-from .features.optimized_sets import OptimizedFeatureExtractor, FeatureSetConfig
-from .sensors.real_time_sensor import OptimizedRealTimeSensor
-from .sensors.sensor_config import SensorConfig  
-from .models.training import ConfigurableTrainingPipeline
+# Main exports - import the key classes directly when needed
+# This avoids import chain issues during initial setup
 
 __all__ = [
-    'extract_features',
-    'AudioFeatureExtractor',
-    'preprocess_audio_signal',
-    'OptimizedFeatureExtractor',
-    'FeatureSetConfig',
-    'OptimizedRealTimeSensor',
-    'SensorConfig',
-    'ConfigurableTrainingPipeline',
+    # Key classes available but need to be imported directly from submodules
+    # Example: from acoustic_sensing.features import OptimizedFeatureExtractor
 ]
