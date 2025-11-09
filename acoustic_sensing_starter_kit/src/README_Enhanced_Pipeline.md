@@ -172,6 +172,58 @@ The pipeline automatically detects and analyzes:
 
 This maps to your geometric discrimination goals of distinguishing contact locations on the acoustic finger sensor.
 
+## Advanced Saliency Analysis (Optional)
+
+For deep interpretability and feature importance analysis, the pipeline includes advanced saliency analysis capabilities:
+
+### Core Saliency Modules
+
+```python
+# PyTorch CNN-based saliency analysis
+from saliency_analysis import AcousticSaliencyAnalyzer, AdvancedAcousticCNN
+
+# Traditional ML interpretability (SHAP/LIME)  
+from feature_saliency_analysis import SklearnFeatureSaliencyAnalyzer
+```
+
+### Quick Saliency Analysis
+
+```python
+# Setup saliency analyzer
+from batch_specific_analysis import BatchSpecificAnalyzer
+saliency_analyzer = AcousticSaliencyAnalyzer(
+    BatchSpecificAnalyzer().batch_configs, 
+    BatchSpecificAnalyzer().base_dir
+)
+
+# Train CNN and compute gradient saliency
+batch_name = 'soft_finger_batch_1'
+accuracy = saliency_analyzer.train_model(batch_name, epochs=30)
+grad_saliency = saliency_analyzer.compute_gradient_saliency(batch_name, 'features', 0)
+
+# Traditional interpretability with SHAP/LIME
+interpretable_analyzer = SklearnFeatureSaliencyAnalyzer(
+    BatchSpecificAnalyzer().batch_configs,
+    BatchSpecificAnalyzer().base_dir
+)
+model_results = interpretable_analyzer.train_interpretable_models(batch_name)
+shap_results = interpretable_analyzer.compute_shap_values(batch_name)
+```
+
+### Key Findings from Saliency Analysis
+
+**Most Important Features Across All Batches:**
+- `spectral_centroid` - Universal discriminator (frequency "brightness") 
+- `ultra_high_energy_ratio` - Critical for edge/contact detection (>8kHz energy)
+- `spectral_bandwidth` - Essential for position discrimination (frequency spread)
+
+**Performance:**
+- CNN models: 65-85% accuracy
+- Random Forest: 97-100% accuracy on geometric tasks
+- SHAP/LIME provide detailed explanations for all 38 acoustic features
+
+See `SALIENCY_ANALYSIS_SUMMARY.md` for comprehensive findings and geometric reconstruction implications.
+
 ---
 
 This enhanced pipeline provides rigorous statistical proof of geometric discrimination capability in your acoustic sensing data, going far beyond the original t-SNE visualization to provide comprehensive evidence for publication or further development.
