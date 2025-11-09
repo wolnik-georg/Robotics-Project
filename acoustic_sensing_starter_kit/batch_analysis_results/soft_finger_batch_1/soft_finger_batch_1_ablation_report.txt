@@ -25,7 +25,7 @@ MOST CRITICAL FEATURES (Top 10 by accuracy drop when removed)
 
 MINIMAL FEATURE SETS
 ------------------------------
-≥95% baseline: 3 features (accuracy: 0.9950)
+≥95% baseline: 3 features (accuracy: 0.9900)
 ≥90% baseline: 1 features (accuracy: 0.8950)
 ≥85% baseline: 1 features (accuracy: 0.8950)
 

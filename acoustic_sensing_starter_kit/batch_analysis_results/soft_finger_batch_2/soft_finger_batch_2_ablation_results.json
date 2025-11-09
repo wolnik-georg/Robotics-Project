@@ -356,62 +356,62 @@
       "mean_accuracy": 0.99,
       "std_accuracy": 0.020000000000000018,
       "removed_features": [
-        "resonance_high_ratio"
+        "low_mid_ratio"
       ],
       "n_remaining_features": 37
     },
     "remove_top_2": {
-      "mean_accuracy": 0.985,
+      "mean_accuracy": 0.99,
       "std_accuracy": 0.020000000000000018,
       "removed_features": [
-        "resonance_high_ratio",
-        "high_energy_ratio"
+        "low_mid_ratio",
+        "resonance_high_ratio"
       ],
       "n_remaining_features": 36
     },
     "remove_top_3": {
-      "mean_accuracy": 0.985,
+      "mean_accuracy": 0.99,
       "std_accuracy": 0.020000000000000018,
       "removed_features": [
+        "low_mid_ratio",
         "resonance_high_ratio",
-        "high_energy_ratio",
-        "ultra_high_energy_ratio"
+        "high_energy_ratio"
       ],
       "n_remaining_features": 35
     },
     "remove_top_4": {
-      "mean_accuracy": 0.985,
+      "mean_accuracy": 0.99,
       "std_accuracy": 0.020000000000000018,
       "removed_features": [
+        "low_mid_ratio",
         "resonance_high_ratio",
         "high_energy_ratio",
-        "ultra_high_energy_ratio",
         "mid_energy_ratio"
       ],
       "n_remaining_features": 34
     },
     "remove_top_5": {
-      "mean_accuracy": 0.985,
+      "mean_accuracy": 0.99,
       "std_accuracy": 0.020000000000000018,
       "removed_features": [
+        "low_mid_ratio",
         "resonance_high_ratio",
         "high_energy_ratio",
-        "ultra_high_energy_ratio",
         "mid_energy_ratio",
         "ultra_high_ratio"
       ],
       "n_remaining_features": 33
     },
     "remove_top_6": {
-      "mean_accuracy": 0.9800000000000001,
-      "std_accuracy": 0.029154759474226483,
+      "mean_accuracy": 0.99,
+      "std_accuracy": 0.020000000000000018,
       "removed_features": [
+        "low_mid_ratio",
         "resonance_high_ratio",
         "high_energy_ratio",
-        "ultra_high_energy_ratio",
         "mid_energy_ratio",
         "ultra_high_ratio",
-        "damping_ratio"
+        "low_energy_ratio"
       ],
       "n_remaining_features": 32
     },
@@ -419,13 +419,13 @@
       "mean_accuracy": 0.9800000000000001,
       "std_accuracy": 0.029154759474226483,
       "removed_features": [
+        "low_mid_ratio",
         "resonance_high_ratio",
         "high_energy_ratio",
-        "ultra_high_energy_ratio",
         "mid_energy_ratio",
         "ultra_high_ratio",
-        "damping_ratio",
-        "low_energy_ratio"
+        "low_energy_ratio",
+        "ultra_high_energy_ratio"
       ],
       "n_remaining_features": 31
     },
@@ -433,47 +433,47 @@
       "mean_accuracy": 0.97,
       "std_accuracy": 0.03674234614174766,
       "removed_features": [
+        "low_mid_ratio",
         "resonance_high_ratio",
         "high_energy_ratio",
-        "ultra_high_energy_ratio",
         "mid_energy_ratio",
         "ultra_high_ratio",
-        "damping_ratio",
         "low_energy_ratio",
-        "low_mid_ratio"
+        "ultra_high_energy_ratio",
+        "damping_ratio"
       ],
       "n_remaining_features": 30
     },
     "remove_top_9": {
-      "mean_accuracy": 0.9650000000000001,
-      "std_accuracy": 0.03741657386773941,
+      "mean_accuracy": 0.96,
+      "std_accuracy": 0.04636809247747852,
       "removed_features": [
+        "low_mid_ratio",
         "resonance_high_ratio",
         "high_energy_ratio",
-        "ultra_high_energy_ratio",
         "mid_energy_ratio",
         "ultra_high_ratio",
-        "damping_ratio",
         "low_energy_ratio",
-        "low_mid_ratio",
-        "env_min"
+        "ultra_high_energy_ratio",
+        "damping_ratio",
+        "temporal_centroid"
       ],
       "n_remaining_features": 29
     },
     "remove_top_10": {
-      "mean_accuracy": 0.9650000000000001,
-      "std_accuracy": 0.03741657386773941,
+      "mean_accuracy": 0.97,
+      "std_accuracy": 0.03674234614174766,
       "removed_features": [
+        "low_mid_ratio",
         "resonance_high_ratio",
         "high_energy_ratio",
-        "ultra_high_energy_ratio",
         "mid_energy_ratio",
         "ultra_high_ratio",
-        "damping_ratio",
         "low_energy_ratio",
-        "low_mid_ratio",
-        "env_min",
-        "time_to_peak"
+        "ultra_high_energy_ratio",
+        "damping_ratio",
+        "temporal_centroid",
+        "env_min"
       ],
       "n_remaining_features": 28
     }
@@ -547,65 +547,65 @@
   },
   "cumulative_addition": {
     "top_1": {
-      "mean_accuracy": 0.865,
-      "std_accuracy": 0.04636809247747853,
+      "mean_accuracy": 0.9199999999999999,
+      "std_accuracy": 0.04847679857416328,
       "selected_features": [
-        "resonance_high_ratio"
+        "low_mid_ratio"
       ],
       "n_features": 1
     },
     "top_2": {
-      "mean_accuracy": 0.975,
-      "std_accuracy": 0.02738612787525829,
+      "mean_accuracy": 0.9349999999999999,
+      "std_accuracy": 0.053851648071345036,
       "selected_features": [
-        "resonance_high_ratio",
-        "high_energy_ratio"
+        "low_mid_ratio",
+        "resonance_high_ratio"
       ],
       "n_features": 2
     },
     "top_3": {
-      "mean_accuracy": 0.9800000000000001,
-      "std_accuracy": 0.029154759474226483,
+      "mean_accuracy": 0.97,
+      "std_accuracy": 0.03674234614174766,
       "selected_features": [
+        "low_mid_ratio",
         "resonance_high_ratio",
-        "high_energy_ratio",
-        "ultra_high_energy_ratio"
+        "high_energy_ratio"
       ],
       "n_features": 3
     },
     "top_4": {
-      "mean_accuracy": 0.9800000000000001,
-      "std_accuracy": 0.029154759474226483,
+      "mean_accuracy": 0.97,
+      "std_accuracy": 0.03674234614174766,
       "selected_features": [
+        "low_mid_ratio",
         "resonance_high_ratio",
         "high_energy_ratio",
-        "ultra_high_energy_ratio",
         "mid_energy_ratio"
       ],
       "n_features": 4
     },
     "top_5": {
-      "mean_accuracy": 0.9800000000000001,
-      "std_accuracy": 0.029154759474226483,
+      "mean_accuracy": 0.97,
+      "std_accuracy": 0.03674234614174766,
       "selected_features": [
+        "low_mid_ratio",
         "resonance_high_ratio",
         "high_energy_ratio",
-        "ultra_high_energy_ratio",
         "mid_energy_ratio",
         "ultra_high_ratio"
       ],
       "n_features": 5
     },
     "top_6": {
-      "mean_accuracy": 0.9800000000000001,
-      "std_accuracy": 0.029154759474226483,
+      "mean_accuracy": 0.97,
+      "std_accuracy": 0.03674234614174766,
       "selected_features": [
+        "low_mid_ratio",
         "resonance_high_ratio",
         "high_energy_ratio",
-        "ultra_high_energy_ratio",
         "mid_energy_ratio",
         "ultra_high_ratio",
-        "damping_ratio"
+        "low_energy_ratio"
       ],
       "n_features": 6
     },
@@ -613,13 +613,13 @@
       "mean_accuracy": 0.9800000000000001,
       "std_accuracy": 0.029154759474226483,
       "selected_features": [
+        "low_mid_ratio",
         "resonance_high_ratio",
         "high_energy_ratio",
-        "ultra_high_energy_ratio",
         "mid_energy_ratio",
         "ultra_high_ratio",
-        "damping_ratio",
-        "low_energy_ratio"
+        "low_energy_ratio",
+        "ultra_high_energy_ratio"
       ],
       "n_features": 7
     },
@@ -627,14 +627,14 @@
       "mean_accuracy": 0.9800000000000001,
       "std_accuracy": 0.029154759474226483,
       "selected_features": [
+        "low_mid_ratio",
         "resonance_high_ratio",
         "high_energy_ratio",
-        "ultra_high_energy_ratio",
         "mid_energy_ratio",
         "ultra_high_ratio",
-        "damping_ratio",
         "low_energy_ratio",
-        "low_mid_ratio"
+        "ultra_high_energy_ratio",
+        "damping_ratio"
       ],
       "n_features": 8
     },
@@ -642,32 +642,32 @@
       "mean_accuracy": 0.9800000000000001,
       "std_accuracy": 0.029154759474226483,
       "selected_features": [
+        "low_mid_ratio",
         "resonance_high_ratio",
         "high_energy_ratio",
-        "ultra_high_energy_ratio",
         "mid_energy_ratio",
         "ultra_high_ratio",
-        "damping_ratio",
         "low_energy_ratio",
-        "low_mid_ratio",
-        "env_min"
+        "ultra_high_energy_ratio",
+        "damping_ratio",
+        "temporal_centroid"
       ],
       "n_features": 9
     },
     "top_10": {
-      "mean_accuracy": 0.985,
-      "std_accuracy": 0.02999999999999998,
+      "mean_accuracy": 0.9800000000000001,
+      "std_accuracy": 0.029154759474226483,
       "selected_features": [
+        "low_mid_ratio",
         "resonance_high_ratio",
         "high_energy_ratio",
-        "ultra_high_energy_ratio",
         "mid_energy_ratio",
         "ultra_high_ratio",
-        "damping_ratio",
         "low_energy_ratio",
-        "low_mid_ratio",
-        "env_min",
-        "time_to_peak"
+        "ultra_high_energy_ratio",
+        "damping_ratio",
+        "temporal_centroid",
+        "env_min"
       ],
       "n_features": 10
     },
@@ -675,122 +675,122 @@
       "mean_accuracy": 0.975,
       "std_accuracy": 0.03872983346207416,
       "selected_features": [
+        "low_mid_ratio",
         "resonance_high_ratio",
         "high_energy_ratio",
-        "ultra_high_energy_ratio",
         "mid_energy_ratio",
         "ultra_high_ratio",
-        "damping_ratio",
         "low_energy_ratio",
-        "low_mid_ratio",
+        "ultra_high_energy_ratio",
+        "damping_ratio",
+        "temporal_centroid",
         "env_min",
-        "time_to_peak",
-        "temporal_centroid"
+        "time_to_peak"
       ],
       "n_features": 11
     },
     "top_12": {
-      "mean_accuracy": 0.9800000000000001,
-      "std_accuracy": 0.029154759474226483,
+      "mean_accuracy": 0.985,
+      "std_accuracy": 0.02999999999999998,
       "selected_features": [
+        "low_mid_ratio",
         "resonance_high_ratio",
         "high_energy_ratio",
-        "ultra_high_energy_ratio",
         "mid_energy_ratio",
         "ultra_high_ratio",
-        "damping_ratio",
         "low_energy_ratio",
-        "low_mid_ratio",
+        "ultra_high_energy_ratio",
+        "damping_ratio",
+        "temporal_centroid",
         "env_min",
         "time_to_peak",
-        "temporal_centroid",
-        "spectral_contrast_4"
+        "spectral_centroid"
       ],
       "n_features": 12
     },
     "top_13": {
-      "mean_accuracy": 0.985,
-      "std_accuracy": 0.02999999999999998,
+      "mean_accuracy": 0.9800000000000001,
+      "std_accuracy": 0.029154759474226483,
       "selected_features": [
+        "low_mid_ratio",
         "resonance_high_ratio",
         "high_energy_ratio",
-        "ultra_high_energy_ratio",
         "mid_energy_ratio",
         "ultra_high_ratio",
-        "damping_ratio",
         "low_energy_ratio",
-        "low_mid_ratio",
+        "ultra_high_energy_ratio",
+        "damping_ratio",
+        "temporal_centroid",
         "env_min",
         "time_to_peak",
-        "temporal_centroid",
-        "spectral_contrast_4",
-        "spectral_flatness"
+        "spectral_centroid",
+        "env_mean"
       ],
       "n_features": 13
     },
     "top_14": {
-      "mean_accuracy": 0.9800000000000001,
-      "std_accuracy": 0.029154759474226483,
+      "mean_accuracy": 0.985,
+      "std_accuracy": 0.02999999999999998,
       "selected_features": [
+        "low_mid_ratio",
         "resonance_high_ratio",
         "high_energy_ratio",
-        "ultra_high_energy_ratio",
         "mid_energy_ratio",
         "ultra_high_ratio",
-        "damping_ratio",
         "low_energy_ratio",
-        "low_mid_ratio",
+        "ultra_high_energy_ratio",
+        "damping_ratio",
+        "temporal_centroid",
         "env_min",
         "time_to_peak",
-        "temporal_centroid",
-        "spectral_contrast_4",
-        "spectral_flatness",
-        "spectral_centroid"
+        "spectral_centroid",
+        "env_mean",
+        "high_freq_decay_rate"
       ],
       "n_features": 14
     },
     "top_15": {
-      "mean_accuracy": 0.985,
-      "std_accuracy": 0.02999999999999998,
+      "mean_accuracy": 0.9800000000000001,
+      "std_accuracy": 0.029154759474226483,
       "selected_features": [
+        "low_mid_ratio",
         "resonance_high_ratio",
         "high_energy_ratio",
-        "ultra_high_energy_ratio",
         "mid_energy_ratio",
         "ultra_high_ratio",
-        "damping_ratio",
         "low_energy_ratio",
-        "low_mid_ratio",
+        "ultra_high_energy_ratio",
+        "damping_ratio",
+        "temporal_centroid",
         "env_min",
         "time_to_peak",
-        "temporal_centroid",
-        "spectral_contrast_4",
-        "spectral_flatness",
         "spectral_centroid",
-        "resonance_skewness"
+        "env_mean",
+        "high_freq_decay_rate",
+        "high_freq_slope"
       ],
       "n_features": 15
     },
     "top_16": {
-      "mean_accuracy": 0.9800000000000001,
-      "std_accuracy": 0.029154759474226483,
+      "mean_accuracy": 0.985,
+      "std_accuracy": 0.02999999999999998,
       "selected_features": [
+        "low_mid_ratio",
         "resonance_high_ratio",
         "high_energy_ratio",
-        "ultra_high_energy_ratio",
         "mid_energy_ratio",
         "ultra_high_ratio",
-        "damping_ratio",
         "low_energy_ratio",
-        "low_mid_ratio",
+        "ultra_high_energy_ratio",
+        "damping_ratio",
+        "temporal_centroid",
         "env_min",
         "time_to_peak",
-        "temporal_centroid",
-        "spectral_contrast_4",
-        "spectral_flatness",
         "spectral_centroid",
-        "resonance_skewness",
-        "env_kurtosis"
+        "env_mean",
+        "high_freq_decay_rate",
+        "high_freq_slope",
+        "spectral_contrast_4"
       ],
       "n_features": 16
     },
@@ -798,101 +798,101 @@
       "mean_accuracy": 0.9800000000000001,
       "std_accuracy": 0.029154759474226483,
       "selected_features": [
+        "low_mid_ratio",
         "resonance_high_ratio",
         "high_energy_ratio",
-        "ultra_high_energy_ratio",
         "mid_energy_ratio",
         "ultra_high_ratio",
-        "damping_ratio",
         "low_energy_ratio",
-        "low_mid_ratio",
+        "ultra_high_energy_ratio",
+        "damping_ratio",
+        "temporal_centroid",
         "env_min",
         "time_to_peak",
-        "temporal_centroid",
-        "spectral_contrast_4",
-        "spectral_flatness",
         "spectral_centroid",
-        "resonance_skewness",
-        "env_kurtosis",
-        "burst_rms"
+        "env_mean",
+        "high_freq_decay_rate",
+        "high_freq_slope",
+        "spectral_contrast_4",
+        "spectral_flatness"
       ],
       "n_features": 17
     },
     "top_18": {
-      "mean_accuracy": 0.985,
-      "std_accuracy": 0.02999999999999998,
+      "mean_accuracy": 0.9800000000000001,
+      "std_accuracy": 0.029154759474226483,
       "selected_features": [
+        "low_mid_ratio",
         "resonance_high_ratio",
         "high_energy_ratio",
-        "ultra_high_energy_ratio",
         "mid_energy_ratio",
         "ultra_high_ratio",
-        "damping_ratio",
         "low_energy_ratio",
-        "low_mid_ratio",
+        "ultra_high_energy_ratio",
+        "damping_ratio",
+        "temporal_centroid",
         "env_min",
         "time_to_peak",
-        "temporal_centroid",
+        "spectral_centroid",
+        "env_mean",
+        "high_freq_decay_rate",
+        "high_freq_slope",
         "spectral_contrast_4",
         "spectral_flatness",
-        "spectral_centroid",
-        "resonance_skewness",
-        "env_kurtosis",
-        "burst_rms",
-        "burst_crest_factor"
+        "env_kurtosis"
       ],
       "n_features": 18
     },
     "top_19": {
-      "mean_accuracy": 0.9800000000000001,
-      "std_accuracy": 0.029154759474226483,
+      "mean_accuracy": 0.99,
+      "std_accuracy": 0.020000000000000018,
       "selected_features": [
+        "low_mid_ratio",
         "resonance_high_ratio",
         "high_energy_ratio",
-        "ultra_high_energy_ratio",
         "mid_energy_ratio",
         "ultra_high_ratio",
-        "damping_ratio",
         "low_energy_ratio",
-        "low_mid_ratio",
+        "ultra_high_energy_ratio",
+        "damping_ratio",
+        "temporal_centroid",
         "env_min",
         "time_to_peak",
-        "temporal_centroid",
+        "spectral_centroid",
+        "env_mean",
+        "high_freq_decay_rate",
+        "high_freq_slope",
         "spectral_contrast_4",
         "spectral_flatness",
-        "spectral_centroid",
-        "resonance_skewness",
         "env_kurtosis",
-        "burst_rms",
-        "burst_crest_factor",
-        "spectral_contrast_1"
+        "resonance_energy_ratio"
       ],
       "n_features": 19
     },
     "top_20": {
       "mean_accuracy": 0.985,
-      "std_accuracy": 0.020000000000000018,
+      "std_accuracy": 0.02999999999999998,
       "selected_features": [
+        "low_mid_ratio",
         "resonance_high_ratio",
         "high_energy_ratio",
-        "ultra_high_energy_ratio",
         "mid_energy_ratio",
         "ultra_high_ratio",
-        "damping_ratio",
         "low_energy_ratio",
-        "low_mid_ratio",
+        "ultra_high_energy_ratio",
+        "damping_ratio",
+        "temporal_centroid",
         "env_min",
         "time_to_peak",
-        "temporal_centroid",
+        "spectral_centroid",
+        "env_mean",
+        "high_freq_decay_rate",
+        "high_freq_slope",
         "spectral_contrast_4",
         "spectral_flatness",
-        "spectral_centroid",
-        "resonance_skewness",
         "env_kurtosis",
-        "burst_rms",
-        "burst_crest_factor",
-        "spectral_contrast_1",
-        "env_skew"
+        "resonance_energy_ratio",
+        "env_decay_rate"
       ],
       "n_features": 20
     }

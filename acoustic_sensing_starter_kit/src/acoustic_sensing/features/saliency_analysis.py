@@ -158,7 +158,7 @@ class AcousticSaliencyAnalyzer:
 
     def __init__(self, batch_configs: Dict, base_data_dir: Path):
         self.batch_configs = batch_configs
-        self.base_data_dir = base_data_dir
+        self.base_data_dir = Path(base_data_dir)
         self.models = {}
         self.label_encoders = {}
         self.scalers = {}
@@ -499,39 +499,57 @@ class AcousticSaliencyAnalyzer:
         ]  # Start with features, can extend to raw_audio, spectrograms
 
         for data_type in data_types:
+            print(f"🔄 Processing {data_type} data for {batch_name}")
             try:
                 accuracy = self.train_model(batch_name, data_type)
                 results["model_performance"][data_type] = accuracy
+                print(f"✅ Model trained successfully with {accuracy:.3f} accuracy")
 
                 # Compute saliency for multiple samples
                 gradient_saliencies = []
                 integrated_grad_saliencies = []
 
-                for i in range(
-                    min(
-                        num_samples,
-                        len(self.models[f"{batch_name}_{data_type}"]["test_data"][0]),
-                    )
-                ):
-                    # Gradient-based saliency
-                    grad_sal = self.compute_gradient_saliency(batch_name, data_type, i)
-                    gradient_saliencies.append(grad_sal)
+                model_key = f"{batch_name}_{data_type}"
+                if model_key not in self.models:
+                    print(f"❌ Model key {model_key} not found in models")
+                    continue
 
-                    # Integrated gradients
-                    int_grad_sal = self.compute_integrated_gradients(
-                        batch_name, data_type, i
-                    )
-                    integrated_grad_saliencies.append(int_grad_sal)
+                test_data_length = len(self.models[model_key]["test_data"][0])
+                samples_to_analyze = min(num_samples, test_data_length)
+                print(f"📊 Analyzing saliency for {samples_to_analyze} samples")
 
-                # Average saliency maps
-                results["saliency_maps"][data_type] = {
-                    "gradient": np.mean(gradient_saliencies, axis=0),
-                    "integrated_gradients": np.mean(integrated_grad_saliencies, axis=0),
-                    "gradient_std": np.std(gradient_saliencies, axis=0),
-                    "integrated_gradients_std": np.std(
-                        integrated_grad_saliencies, axis=0
-                    ),
-                }
+                for i in range(samples_to_analyze):
+                    try:
+                        # Gradient-based saliency
+                        grad_sal = self.compute_gradient_saliency(
+                            batch_name, data_type, i
+                        )
+                        gradient_saliencies.append(grad_sal)
+
+                        # Integrated gradients
+                        int_grad_sal = self.compute_integrated_gradients(
+                            batch_name, data_type, i
+                        )
+                        integrated_grad_saliencies.append(int_grad_sal)
+                    except Exception as e:
+                        print(f"⚠️ Error computing saliency for sample {i}: {e}")
+                        continue
+
+                if gradient_saliencies and integrated_grad_saliencies:
+                    # Average saliency maps
+                    results["saliency_maps"][data_type] = {
+                        "gradient": np.mean(gradient_saliencies, axis=0),
+                        "integrated_gradients": np.mean(
+                            integrated_grad_saliencies, axis=0
+                        ),
+                        "gradient_std": np.std(gradient_saliencies, axis=0),
+                        "integrated_gradients_std": np.std(
+                            integrated_grad_saliencies, axis=0
+                        ),
+                    }
+                    print(f"✅ Successfully computed saliency maps for {data_type}")
+                else:
+                    print(f"❌ No valid saliency maps computed for {data_type}")
 
                 # LIME explanation for features
                 if data_type == "features" and LIME_AVAILABLE:
@@ -540,11 +558,15 @@ class AcousticSaliencyAnalyzer:
                         results["feature_importance"]["lime"] = lime_result[
                             "feature_importance"
                         ]
+                        print("✅ LIME analysis completed")
                     except Exception as e:
-                        print(f"Warning: LIME analysis failed: {e}")
+                        print(f"⚠️ LIME analysis failed: {e}")
 
             except Exception as e:
-                print(f"Error analyzing {data_type} for {batch_name}: {e}")
+                print(f"❌ Error analyzing {data_type} for {batch_name}: {e}")
+                import traceback
+
+                traceback.print_exc()
 
         self.saliency_results[batch_name] = results
         return results
@@ -553,11 +575,16 @@ class AcousticSaliencyAnalyzer:
         """
         Create comprehensive saliency visualizations.
         """
+        print(f"🎨 Creating saliency visualizations for {batch_name}")
+
         if batch_name not in self.saliency_results:
-            print(f"No saliency results for {batch_name}")
+            print(f"❌ No saliency results for {batch_name}")
+            print(f"Available results: {list(self.saliency_results.keys())}")
             return
 
         results = self.saliency_results[batch_name]
+        print(f"✅ Found saliency results for {batch_name}")
+        print(f"Saliency maps available: {list(results['saliency_maps'].keys())}")
 
         # Set up the plot
         fig, axes = plt.subplots(2, 2, figsize=(15, 10))
@@ -713,7 +740,7 @@ class AcousticSaliencyAnalyzer:
             # Save detailed feature importance
             self._save_detailed_results(batch_name, save_dir)
 
-        plt.show()
+        plt.close()
 
     def _save_detailed_results(self, batch_name: str, save_dir: Path):
         """Save detailed saliency results to files."""

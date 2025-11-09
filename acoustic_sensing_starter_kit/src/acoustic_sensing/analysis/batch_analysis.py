@@ -38,6 +38,12 @@ from acoustic_sensing.analysis.dimensionality_analysis import (
 from acoustic_sensing.analysis.discrimination_analysis import (
     GeometricDiscriminationAnalyzer,
 )
+from acoustic_sensing.features.saliency_analysis import (
+    AcousticSaliencyAnalyzer,
+)
+from acoustic_sensing.features.ablation_analysis import (
+    FeatureAblationAnalyzer,
+)
 
 
 class BatchSpecificAnalyzer:
@@ -352,8 +358,27 @@ class BatchSpecificAnalyzer:
             X_feat.shape[1],
         )
 
+        # Advanced feature analysis
+        print(f"\\n7. ADVANCED FEATURE ANALYSIS...")
+        print("-" * 40)
+
+        # Saliency analysis (neural network feature importance)
+        print("Running saliency analysis...")
+        saliency_analyzer = AcousticSaliencyAnalyzer(
+            self.batch_configs, str(self.base_dir)
+        )
+        saliency_results = saliency_analyzer.analyze_batch_saliency(batch_name)
+        saliency_analyzer.visualize_saliency_maps(batch_name, batch_output)
+
+        # Ablation analysis (systematic feature testing)
+        print("Running ablation analysis...")
+        ablation_analyzer = FeatureAblationAnalyzer(
+            self.batch_configs, str(self.base_dir)
+        )
+        ablation_results = ablation_analyzer.analyze_batch_ablation(batch_name)
+
         # Save results
-        print(f"\\n6. SAVING RESULTS...")
+        print(f"\\n8. SAVING RESULTS...")
         print("-" * 40)
 
         self._save_batch_results(
@@ -862,12 +887,13 @@ def main():
     # Run analysis on all batches
     results = analyzer.analyze_all_batches(max_samples_per_class=None)
 
-    print("🎉 BATCH-SPECIFIC ANALYSIS COMPLETE!")
+    print("🎉 COMPREHENSIVE ACOUSTIC ANALYSIS COMPLETE!")
     print(f"Results saved in: {analyzer.output_base}")
     print("")
     print("Key outputs:")
-    print("• Individual batch analysis reports and visualizations")
-    print("• Enhanced plots with detailed dimension labels")
+    print("• Core analysis: discrimination, dimensionality reduction, visualizations")
+    print("• Advanced analysis: saliency maps, ablation testing, feature importance")
+    print("• Individual batch analysis reports and enhanced plots")
     print("• Separate CSV files for each experimental condition")
     print("• Combined summary across all experiments")
 
