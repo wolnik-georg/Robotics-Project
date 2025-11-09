@@ -19,10 +19,10 @@ from pathlib import Path
 import logging
 
 # Import our optimized components
-from optimized_feature_sets import OptimizedFeatureExtractor, FeatureSetConfig
-from training_integration import ConfigurableTrainingPipeline
-from real_time_optimized_sensor import OptimizedRealTimeSensor, SensorConfig
-from geometric_reconstruction_example import GeometricReconstructionPipeline
+from ..features.optimized_sets import OptimizedFeatureExtractor, FeatureSetConfig
+from ..models.training import ConfigurableTrainingPipeline
+from ..sensors.real_time_sensor import OptimizedRealTimeSensor, SensorConfig
+from ..models.geometric_reconstruction import GeometricReconstructionPipeline
 
 
 class IntegratedAcousticSystem:
