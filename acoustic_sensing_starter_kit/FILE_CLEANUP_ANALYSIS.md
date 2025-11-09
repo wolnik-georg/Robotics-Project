@@ -31,6 +31,7 @@ src/acoustic_sensing/visualization/publication_plots.py     # ⭐ Scientific plo
 ```
 data/soft_finger_batch_1/          # Test data (keep at least one batch)
 configs/config.json                # Configuration
+external/zita_tools/               # ⭐ CRITICAL: Audio recording tools for new data
 ```
 
 ---
@@ -41,14 +42,14 @@ configs/config.json                # Configuration
 ```bash
 # Remove all __pycache__ directories
 find . -name "__pycache__" -type d -exec rm -rf {} +
-# Saves: ~50MB of cache files
+# Saves: ~5MB of cache files
 ```
 
 ### **📊 Old Analysis Results** (15MB - can regenerate)
 ```bash
 # Remove old batch analysis results (can regenerate with analysis scripts)
 rm -rf src/batch_analysis_results/
-# Saves: 15MB
+# Saves: ~10MB
 
 # Keep only essential summaries if needed:
 # src/batch_analysis_results/combined_ablation_summary.txt
@@ -82,8 +83,8 @@ rm -rf batch_analysis_results/     # Minimal content
 
 ### **🔌 External Tools** (Not core to acoustic sensing)
 ```bash
-# Zita tools (audio processing - not core to your ML analysis)
-rm -rf external/zita_tools/        # ~50MB of compiled audio tools
+# ❌ DO NOT REMOVE - These are audio RECORDING tools needed for data collection!
+# external/zita_tools/ - KEEP THIS! Required for recording new acoustic data
 ```
 
 ---
@@ -92,12 +93,14 @@ rm -rf external/zita_tools/        # ~50MB of compiled audio tools
 
 | Category | Size | Action |
 |----------|------|--------|
-| **__pycache__** | ~50MB | 🗑️ **REMOVE** |
-| **Old Analysis Results** | 15MB | 🗑️ **REMOVE** |
-| **Duplicate Docs** | ~500KB | 🗑️ **REMOVE** |
-| **Utility Scripts** | ~50KB | 🗑️ **REMOVE** |
-| **External Tools** | ~50MB | 🗑️ **REMOVE** |
-| **TOTAL SAVINGS** | **~115MB** | ✅ **SAFE TO REMOVE** |
+| **__pycache__** | ~5MB | ✅ **REMOVED** |
+| **Old Analysis Results** | ~10MB | ✅ **REMOVED** |
+| **Duplicate Docs** | ~2MB | ✅ **REMOVED** |
+| **Utility Scripts** | ~1MB | ✅ **REMOVED** |
+| **Cleanup Script** | ~0.1MB | ✅ **REMOVED** |
+| **Data Directory** | ~342MB | ❌ **KEPT** (essential for testing) |
+| **External Tools** | ~2.6MB | ❌ **KEPT** (recording tools) |
+| **TOTAL SAVINGS** | **~18MB** | ✅ **CLEANUP COMPLETE** |
 
 ---
 
@@ -195,12 +198,12 @@ rm -rf scripts/
 rm cleanup_restructure.py
 
 # Remove external tools
-rm -rf external/
+# ❌ DO NOT REMOVE: rm -rf external/  # Contains zita_tools for recording!
 
 # Remove empty directories
 rm -rf batch_analysis_results/
 
-echo "✅ Cleanup complete! Saved ~115MB of disk space."
+echo "✅ Cleanup complete! Saved ~18MB of disk space."
 ```
 
 ---
@@ -214,7 +217,8 @@ acoustic_sensing_starter_kit/
 ├── 📦 setup.py & requirements.txt     # Package installation
 ├── ⚙️ configs/config.json             # Configuration
 ├── 📊 data/soft_finger_batch_1/       # Test data
-├── 🎯 src/acoustic_sensing/           # ⭐ CORE PACKAGE
+├── �️ external/zita_tools/            # ⭐ Audio recording tools
+├── �🎯 src/acoustic_sensing/           # ⭐ CORE PACKAGE
 │   ├── features/optimized_sets.py    # ⭐ 98% accuracy, 5 features
 │   ├── sensors/                      # ⚡ Real-time sensing
 │   ├── analysis/dimensionality_analysis.py  # 📊 PCA, t-SNE
@@ -227,7 +231,7 @@ acoustic_sensing_starter_kit/
 └── 📚 README_RESTRUCTURED.md         # Main documentation
 ```
 
-**Total size after cleanup: ~5MB (vs ~120MB before)**
+**Total size after cleanup: ~345MB (data directory is ~342MB)**
 
 ---
 
