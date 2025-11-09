@@ -3,7 +3,7 @@ Core acoustic sensing functionality
 
 This module contains the fundamental building blocks for acoustic sensing:
 - Feature extraction algorithms
-- Audio preprocessing pipelines  
+- Audio preprocessing pipelines
 - Data management utilities
 """
 

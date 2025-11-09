@@ -9,8 +9,4 @@ This module contains the original acoustic sensing scripts:
 These are preserved for backwards compatibility and reference.
 """
 
-__all__ = [
-    'A_record',
-    'B_train', 
-    'C_sense'
-]
+__all__ = ["A_record", "B_train", "C_sense"]

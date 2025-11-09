@@ -1,0 +1,4 @@
+[console_scripts]
+acoustic-record = acoustic_sensing.legacy.A_record:main
+acoustic-sense = acoustic_sensing.legacy.C_sense:main
+acoustic-train = acoustic_sensing.legacy.B_train:main

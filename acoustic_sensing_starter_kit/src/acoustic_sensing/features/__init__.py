@@ -14,8 +14,8 @@ from .optimized_sets import OptimizedFeatureExtractor, FeatureSetConfig
 # from .saliency_analysis import SaliencyAnalyzer
 
 __all__ = [
-    'OptimizedFeatureExtractor',
-    'FeatureSetConfig'
+    "OptimizedFeatureExtractor",
+    "FeatureSetConfig",
     # 'FeatureAblationAnalyzer',
     # 'SaliencyAnalyzer'
 ]

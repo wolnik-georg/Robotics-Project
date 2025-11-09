@@ -14,7 +14,7 @@ from .training import ConfigurableTrainingPipeline
 # from .geometric_data_loader import GeometricDataLoader
 
 __all__ = [
-    'ConfigurableTrainingPipeline'
+    "ConfigurableTrainingPipeline"
     # 'GeometricReconstructionPipeline',
     # 'GeometricDataLoader'
 ]
