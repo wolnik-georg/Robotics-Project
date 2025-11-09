@@ -1,0 +1,73 @@
+{
+  "batch_name": "soft_finger_batch_2",
+  "config": {
+    "experiment": "contact_position",
+    "description": "Contact Position Discrimination (Batch 2)",
+    "expected_classes": [
+      "finger tip",
+      "finger middle",
+      "finger bottom",
+      "finger blank"
+    ],
+    "research_question": "Can acoustic signals distinguish WHERE on the finger contact occurs?",
+    "class_mapping": {
+      "finger tip": "tip",
+      "finger middle": "middle",
+      "finger bottom": "base",
+      "finger blank": "none"
+    }
+  },
+  "model_performance": {
+    "features": 1.0
+  },
+  "top_features": {
+    "gradient_top_10": [
+      21,
+      27,
+      37,
+      31,
+      14,
+      17,
+      33,
+      35,
+      34,
+      36
+    ],
+    "integrated_gradients_top_10": [
+      21,
+      37,
+      17,
+      14,
+      35,
+      33,
+      34,
+      27,
+      8,
+      36
+    ],
+    "gradient_values_top_10": [
+      0.6212087273597717,
+      0.6386656165122986,
+      0.785264790058136,
+      0.8299738168716431,
+      0.8732821345329285,
+      0.8779392242431641,
+      0.8973991274833679,
+      0.9380190968513489,
+      0.9473295211791992,
+      1.053713321685791
+    ],
+    "integrated_gradients_values_top_10": [
+      0.37736666202545166,
+      0.5549753904342651,
+      0.5583335161209106,
+      0.5947846174240112,
+      0.6199750304222107,
+      0.6259697675704956,
+      0.6314506530761719,
+      0.6362984776496887,
+      0.7207108736038208,
+      0.8262913823127747
+    ]
+  }
+}

@@ -23,12 +23,21 @@ from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
 # Add the src directory to the path
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(
+    os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+)
 
-from geometric_data_loader import GeometricDataLoader, print_dataset_summary
-from feature_extraction import GeometricFeatureExtractor
-from dimensionality_analysis import GeometricDimensionalityAnalyzer
-from discrimination_analysis import GeometricDiscriminationAnalyzer
+from acoustic_sensing.models.geometric_data_loader import (
+    GeometricDataLoader,
+    print_dataset_summary,
+)
+from acoustic_sensing.core.feature_extraction import GeometricFeatureExtractor
+from acoustic_sensing.analysis.dimensionality_analysis import (
+    GeometricDimensionalityAnalyzer,
+)
+from acoustic_sensing.analysis.discrimination_analysis import (
+    GeometricDiscriminationAnalyzer,
+)
 
 
 class BatchSpecificAnalyzer:
@@ -37,7 +46,7 @@ class BatchSpecificAnalyzer:
     """
 
     def __init__(
-        self, base_dir: str = "../data", output_base: str = "batch_analysis_results"
+        self, base_dir: str = "data", output_base: str = "batch_analysis_results"
     ):
         self.base_dir = Path(base_dir)
         self.output_base = Path(output_base)
@@ -786,7 +795,11 @@ class BatchSpecificAnalyzer:
         results = {}
 
         for batch_name in self.batch_configs.keys():
-            if (self.base_dir / batch_name).exists():
+            batch_path = self.base_dir / batch_name
+            print(
+                f"Checking batch: {batch_name} at {batch_path} (exists: {batch_path.exists()})"
+            )
+            if batch_path.exists():
                 try:
                     batch_result = self.analyze_batch(batch_name, max_samples_per_class)
                     if batch_result:

@@ -10,7 +10,31 @@ geometric reconstruction workflow.
 import numpy as np
 import matplotlib.pyplot as plt
 from ..features.optimized_sets import FeatureSetConfig, OptimizedFeatureExtractor
-from training_integration import ConfigurableTrainingPipeline
+from .training import ConfigurableTrainingPipeline
+
+
+class GeometricReconstructionPipeline:
+    """
+    Pipeline for geometric reconstruction using optimized features.
+    """
+
+    def __init__(self, feature_config="OPTIMAL", model_path=None):
+        self.feature_config = feature_config
+        self.model_path = model_path
+        self.trained_models = {}
+
+    def train(self, data_path, save_path=None):
+        """Train the geometric reconstruction model."""
+        print(
+            f"Training geometric reconstruction with {self.feature_config} features..."
+        )
+        # Placeholder - would implement actual training
+        return {"status": "trained", "accuracy": 0.95}
+
+    def predict(self, features):
+        """Make predictions using trained model."""
+        # Placeholder - would implement actual prediction
+        return {"prediction": "sample_output", "confidence": 0.9}
 
 
 def geometric_reconstruction_example():

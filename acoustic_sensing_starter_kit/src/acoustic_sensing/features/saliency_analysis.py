@@ -14,6 +14,7 @@ Features:
 """
 
 import os
+import sys
 import json
 import numpy as np
 import pandas as pd
@@ -22,6 +23,11 @@ import seaborn as sns
 from pathlib import Path
 from typing import Dict, List, Tuple, Optional, Union
 import warnings
+
+# Add the src directory to the path for imports
+sys.path.append(
+    os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+)
 
 warnings.filterwarnings("ignore")
 
@@ -196,7 +202,7 @@ class AcousticSaliencyAnalyzer:
 
     def _load_raw_audio_batch(self, batch_name: str) -> Tuple[np.ndarray, np.ndarray]:
         """Load raw audio files for a batch."""
-        from geometric_data_loader import GeometricDataLoader
+        from acoustic_sensing.models.geometric_data_loader import GeometricDataLoader
 
         config = self.batch_configs[batch_name]
         loader = GeometricDataLoader(self.base_data_dir / batch_name)
@@ -855,7 +861,7 @@ class AcousticSaliencyAnalyzer:
 
 if __name__ == "__main__":
     # Example usage
-    from batch_specific_analysis import BatchSpecificAnalyzer
+    from acoustic_sensing.analysis.batch_analysis import BatchSpecificAnalyzer
 
     # Get batch configurations
     analyzer = BatchSpecificAnalyzer()

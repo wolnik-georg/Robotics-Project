@@ -1,0 +1,69 @@
+{
+  "batch_name": "soft_finger_batch_3",
+  "config": {
+    "experiment": "edge_detection",
+    "description": "Geometric Edge Detection",
+    "expected_classes": [
+      "contact edge",
+      "no contact"
+    ],
+    "research_question": "Can acoustic signals detect geometric edges/transitions?",
+    "class_mapping": {
+      "contact edge": "edge",
+      "no contact": "no_edge"
+    }
+  },
+  "model_performance": {
+    "features": 0.9666666666666667
+  },
+  "top_features": {
+    "gradient_top_10": [
+      37,
+      36,
+      34,
+      24,
+      14,
+      35,
+      30,
+      33,
+      0,
+      1
+    ],
+    "integrated_gradients_top_10": [
+      3,
+      36,
+      17,
+      14,
+      35,
+      37,
+      34,
+      33,
+      0,
+      1
+    ],
+    "gradient_values_top_10": [
+      0.6693785190582275,
+      0.6780222654342651,
+      0.7054513096809387,
+      0.7125389575958252,
+      0.7153822779655457,
+      0.7202004790306091,
+      0.7519626617431641,
+      0.7558867335319519,
+      1.1015986204147339,
+      1.3760555982589722
+    ],
+    "integrated_gradients_values_top_10": [
+      0.504401683807373,
+      0.5385700464248657,
+      0.6190809607505798,
+      0.6599986553192139,
+      0.6825652122497559,
+      0.6871143579483032,
+      0.6907099485397339,
+      0.7526111006736755,
+      1.1070911884307861,
+      1.3825757503509521
+    ]
+  }
+}

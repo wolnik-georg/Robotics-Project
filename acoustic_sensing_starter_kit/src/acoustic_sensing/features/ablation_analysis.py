@@ -16,6 +16,7 @@ Ablation tests included:
 """
 
 import os
+import sys
 import json
 import numpy as np
 import pandas as pd
@@ -23,6 +24,11 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from pathlib import Path
 from typing import Dict, List, Tuple, Optional, Union
+
+# Add the src directory to the path for imports
+sys.path.append(
+    os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+)
 import warnings
 from itertools import combinations
 import random
@@ -808,7 +814,7 @@ class FeatureAblationAnalyzer:
 
 if __name__ == "__main__":
     # Run feature ablation analysis
-    from batch_specific_analysis import BatchSpecificAnalyzer
+    from acoustic_sensing.analysis.batch_analysis import BatchSpecificAnalyzer
 
     # Get batch configurations
     analyzer = BatchSpecificAnalyzer()

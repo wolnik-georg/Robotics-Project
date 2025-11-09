@@ -1,0 +1,39 @@
+================================================================================
+FEATURE ABLATION ANALYSIS REPORT: soft_finger_batch_2
+================================================================================
+
+DATASET SUMMARY
+Samples: 200
+Features: 38
+Classes: 4
+
+BASELINE PERFORMANCE (All Features)
+Random Forest Accuracy: 0.9900 ± 0.0122
+
+MOST CRITICAL FEATURES (Top 10 by accuracy drop when removed)
+------------------------------------------------------------
+ 1. spectral_rolloff          | Drop: 0.0050 | Acc without: 0.9850
+ 2. high_freq_slope           | Drop: 0.0050 | Acc without: 0.9850
+ 3. high_freq_decay_rate      | Drop: 0.0050 | Acc without: 0.9850
+ 4. burst_rms                 | Drop: 0.0050 | Acc without: 0.9850
+ 5. time_to_peak              | Drop: 0.0050 | Acc without: 0.9850
+ 6. temporal_centroid         | Drop: 0.0050 | Acc without: 0.9850
+ 7. env_std                   | Drop: 0.0050 | Acc without: 0.9850
+ 8. env_max                   | Drop: 0.0050 | Acc without: 0.9850
+ 9. high_energy_ratio         | Drop: 0.0050 | Acc without: 0.9850
+10. ultra_high_energy_ratio   | Drop: 0.0050 | Acc without: 0.9850
+
+MINIMAL FEATURE SETS
+------------------------------
+≥95% baseline: 1 features (accuracy: 0.9750)
+≥90% baseline: 1 features (accuracy: 0.9750)
+≥85% baseline: 1 features (accuracy: 0.9750)
+
+FEATURE GROUP IMPORTANCE
+----------------------------------------
+temporal             | Drop: 0.0100 | Features removed: 5
+energy_ratios        | Drop: 0.0050 | Features removed: 5
+burst_analysis       | Drop: 0.0050 | Features removed: 1
+spectral             | Drop: 0.0000 | Features removed: 4
+frequency_bands      | Drop: 0.0000 | Features removed: 1
+damping              | Drop: 0.0000 | Features removed: 1

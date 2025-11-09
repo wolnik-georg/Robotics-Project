@@ -8,11 +8,11 @@ This module contains various analysis tools:
 """
 
 from .batch_analysis import BatchSpecificAnalyzer
-from .discrimination_analysis import DiscriminationAnalyzer  
-from .dimensionality_analysis import DimensionalityAnalyzer
+from .discrimination_analysis import GeometricDiscriminationAnalyzer
+from .dimensionality_analysis import GeometricDimensionalityAnalyzer
 
 __all__ = [
-    'BatchSpecificAnalyzer',
-    'DiscriminationAnalyzer',
-    'DimensionalityAnalyzer'
+    "BatchSpecificAnalyzer",
+    "GeometricDiscriminationAnalyzer",
+    "GeometricDimensionalityAnalyzer",
 ]

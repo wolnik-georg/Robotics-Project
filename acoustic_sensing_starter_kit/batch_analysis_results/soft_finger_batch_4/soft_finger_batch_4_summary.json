@@ -1,0 +1,32 @@
+{
+  "batch_info": {
+    "experiment": "material_detection",
+    "description": "Material Property Detection",
+    "expected_classes": [
+      "no metal",
+      "metal"
+    ],
+    "research_question": "Can acoustic signals distinguish material properties?",
+    "class_mapping": {
+      "_metal": "metal",
+      "_no metal": "no_metal"
+    }
+  },
+  "dataset_summary": {
+    "n_samples": 100,
+    "n_features": 38,
+    "classes": [
+      "metal",
+      "no metal"
+    ],
+    "class_distribution": {
+      "metal": 50,
+      "no metal": 50
+    }
+  },
+  "performance_summary": {
+    "significant_features_ratio": 0.5263157894736842,
+    "fisher_discriminant_ratio": 0.1270224690046734,
+    "best_classification_accuracy": 0.8800000000000001
+  }
+}

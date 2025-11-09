@@ -17,12 +17,27 @@ import matplotlib.pyplot as plt
 import time
 from pathlib import Path
 import logging
+import sys
+import os
+
+# Add the src directory to the path for imports
+sys.path.append(
+    os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+)
 
 # Import our optimized components
-from ..features.optimized_sets import OptimizedFeatureExtractor, FeatureSetConfig
-from ..models.training import ConfigurableTrainingPipeline
-from ..sensors.real_time_sensor import OptimizedRealTimeSensor, SensorConfig
-from ..models.geometric_reconstruction import GeometricReconstructionPipeline
+from acoustic_sensing.features.optimized_sets import (
+    OptimizedFeatureExtractor,
+    FeatureSetConfig,
+)
+from acoustic_sensing.models.training import ConfigurableTrainingPipeline
+from acoustic_sensing.sensors.real_time_sensor import (
+    OptimizedRealTimeSensor,
+    SensorConfig,
+)
+from acoustic_sensing.models.geometric_reconstruction import (
+    GeometricReconstructionPipeline,
+)
 
 
 class IntegratedAcousticSystem:

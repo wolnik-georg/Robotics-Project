@@ -28,6 +28,11 @@ import argparse
 import time
 import json
 
+# Add the src directory to the path for imports
+sys.path.append(
+    os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+)
+
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.svm import SVC
@@ -36,11 +41,14 @@ from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.metrics import classification_report, accuracy_score
 
 # Import our optimized feature sets
-from ..features.optimized_sets import FeatureSetConfig, OptimizedFeatureExtractor
+from acoustic_sensing.features.optimized_sets import (
+    FeatureSetConfig,
+    OptimizedFeatureExtractor,
+)
 
 # Import existing pipeline components
 try:
-    from batch_specific_analysis import BatchSpecificAnalyzer
+    from acoustic_sensing.analysis.batch_analysis import BatchSpecificAnalyzer
     from geometric_data_loader import GeometricDataLoader
 except ImportError:
     print("Warning: Could not import existing pipeline components")
@@ -52,9 +60,37 @@ class ConfigurableTrainingPipeline:
     Integrates with your existing batch analysis system.
     """
 
-    def __init__(self, batch_configs: Dict, base_data_dir: str):
-        self.batch_configs = batch_configs
-        self.base_data_dir = base_data_dir
+    def __init__(
+        self,
+        batch_configs: Dict = None,
+        base_data_dir: str = None,
+        data_path: str = None,
+        output_dir: str = None,
+    ):
+        # Support both old and new calling conventions
+        if data_path is not None:
+            # New calling convention from integrated demo
+            self.base_data_dir = str(data_path)
+            self.output_dir = output_dir or "batch_analysis_results"
+            # Create minimal batch configs for demo
+            self.batch_configs = {
+                "soft_finger_batch_1": {
+                    "data_dir": f"{self.base_data_dir}/soft_finger_batch_1"
+                },
+                "soft_finger_batch_2": {
+                    "data_dir": f"{self.base_data_dir}/soft_finger_batch_2"
+                },
+                "soft_finger_batch_3": {
+                    "data_dir": f"{self.base_data_dir}/soft_finger_batch_3"
+                },
+                "soft_finger_batch_4": {
+                    "data_dir": f"{self.base_data_dir}/soft_finger_batch_4"
+                },
+            }
+        else:
+            # Original calling convention
+            self.batch_configs = batch_configs
+            self.base_data_dir = base_data_dir
         self.results_dir = Path("batch_analysis_results")
         self.results_dir.mkdir(exist_ok=True)
 
@@ -340,6 +376,11 @@ class ConfigurableTrainingPipeline:
         plt.close()
 
         print(f"📊 Comparison plot saved to: {plot_file}")
+
+    def train_with_feature_set(self, mode: str) -> Dict:
+        """Train all batches with the specified feature set mode."""
+        self.set_feature_mode(mode)
+        return self.train_all_batches()
 
 
 def main():

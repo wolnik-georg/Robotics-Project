@@ -9,6 +9,7 @@ This version works with your existing pipeline and doesn't require PyTorch.
 """
 
 import os
+import sys
 import json
 import numpy as np
 import pandas as pd
@@ -17,6 +18,11 @@ import seaborn as sns
 from pathlib import Path
 from typing import Dict, List, Tuple, Optional, Union
 import warnings
+
+# Add the src directory to the path for imports
+sys.path.append(
+    os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+)
 
 warnings.filterwarnings("ignore")
 
@@ -902,7 +908,7 @@ class SklearnFeatureSaliencyAnalyzer:
 
 if __name__ == "__main__":
     # Example usage
-    from batch_specific_analysis import BatchSpecificAnalyzer
+    from acoustic_sensing.analysis.batch_analysis import BatchSpecificAnalyzer
 
     # Get batch configurations
     analyzer = BatchSpecificAnalyzer()

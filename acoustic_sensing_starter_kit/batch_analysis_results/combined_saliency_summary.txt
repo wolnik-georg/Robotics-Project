@@ -1,0 +1,35 @@
+COMBINED SALIENCY ANALYSIS SUMMARY
+================================================================================
+
+BATCH: soft_finger_batch_1
+Experiment: Contact Position Discrimination
+Research Question: Can acoustic signals distinguish WHERE on the finger contact occurs?
+Model Accuracy: 0.925
+Top Gradient Features: [13, 16, 17, 4, 1]
+Top Int. Grad Features: [11, 13, 15, 16, 1]
+Saliency Consistency (corr): 0.821
+
+BATCH: soft_finger_batch_2
+Experiment: Contact Position Discrimination (Batch 2)
+Research Question: Can acoustic signals distinguish WHERE on the finger contact occurs?
+Model Accuracy: 1.000
+Top Gradient Features: [17, 33, 35, 34, 36]
+Top Int. Grad Features: [33, 34, 27, 8, 36]
+Saliency Consistency (corr): 0.888
+
+BATCH: soft_finger_batch_3
+Experiment: Geometric Edge Detection
+Research Question: Can acoustic signals detect geometric edges/transitions?
+Model Accuracy: 0.967
+Top Gradient Features: [35, 30, 33, 0, 1]
+Top Int. Grad Features: [37, 34, 33, 0, 1]
+Saliency Consistency (corr): 0.931
+
+BATCH: soft_finger_batch_4
+Experiment: Material Property Detection
+Research Question: Can acoustic signals distinguish material properties?
+Model Accuracy: 0.900
+Top Gradient Features: [24, 31, 12, 1, 13]
+Top Int. Grad Features: [23, 13, 18, 24, 1]
+Saliency Consistency (corr): 0.909
+
