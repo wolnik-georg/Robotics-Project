@@ -368,7 +368,7 @@ if __name__ == "__main__":
     if loader.get_available_batches():
         batch_name = loader.get_available_batches()[0]
         audio_data, labels, metadata = loader.load_batch_data(
-            batch_name, max_samples_per_class=5  # Limit for testing
+            batch_name, max_samples_per_class=50  # Limit for testing
         )
 
         print_dataset_summary(audio_data, labels, metadata)

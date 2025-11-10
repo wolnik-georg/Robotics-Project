@@ -361,21 +361,21 @@
       "n_remaining_features": 37
     },
     "remove_top_2": {
-      "mean_accuracy": 0.8400000000000001,
-      "std_accuracy": 0.037416573867739396,
+      "mean_accuracy": 0.85,
+      "std_accuracy": 0.031622776601683784,
       "removed_features": [
         "resonance_skewness",
-        "temporal_centroid"
+        "env_std"
       ],
       "n_remaining_features": 36
     },
     "remove_top_3": {
-      "mean_accuracy": 0.86,
-      "std_accuracy": 0.020000000000000018,
+      "mean_accuracy": 0.8699999999999999,
+      "std_accuracy": 0.024494897427831803,
       "removed_features": [
         "resonance_skewness",
-        "temporal_centroid",
-        "env_std"
+        "env_std",
+        "low_energy_ratio"
       ],
       "n_remaining_features": 35
     },
@@ -384,95 +384,95 @@
       "std_accuracy": 0.020000000000000018,
       "removed_features": [
         "resonance_skewness",
-        "temporal_centroid",
         "env_std",
-        "resonance_q_factor"
+        "low_energy_ratio",
+        "temporal_centroid"
       ],
       "n_remaining_features": 34
     },
     "remove_top_5": {
-      "mean_accuracy": 0.86,
-      "std_accuracy": 0.03741657386773941,
+      "mean_accuracy": 0.8699999999999999,
+      "std_accuracy": 0.024494897427831803,
       "removed_features": [
         "resonance_skewness",
-        "temporal_centroid",
         "env_std",
-        "resonance_q_factor",
-        "low_mid_ratio"
+        "low_energy_ratio",
+        "temporal_centroid",
+        "zero_crossing_rate"
       ],
       "n_remaining_features": 33
     },
     "remove_top_6": {
-      "mean_accuracy": 0.85,
-      "std_accuracy": 0.05477225575051661,
+      "mean_accuracy": 0.86,
+      "std_accuracy": 0.020000000000000018,
       "removed_features": [
         "resonance_skewness",
-        "temporal_centroid",
         "env_std",
-        "resonance_q_factor",
-        "low_mid_ratio",
-        "spectral_flatness"
+        "low_energy_ratio",
+        "temporal_centroid",
+        "zero_crossing_rate",
+        "low_mid_ratio"
       ],
       "n_remaining_features": 32
     },
     "remove_top_7": {
-      "mean_accuracy": 0.86,
-      "std_accuracy": 0.020000000000000018,
-      "removed_features": [
-        "resonance_skewness",
-        "temporal_centroid",
-        "env_std",
-        "resonance_q_factor",
-        "low_mid_ratio",
-        "spectral_flatness",
-        "spectral_contrast_2"
-      ],
-      "n_remaining_features": 31
-    },
-    "remove_top_8": {
-      "mean_accuracy": 0.86,
-      "std_accuracy": 0.020000000000000018,
-      "removed_features": [
-        "resonance_skewness",
-        "temporal_centroid",
-        "env_std",
-        "resonance_q_factor",
-        "low_mid_ratio",
-        "spectral_flatness",
-        "spectral_contrast_2",
-        "spectral_bandwidth"
-      ],
-      "n_remaining_features": 30
-    },
-    "remove_top_9": {
       "mean_accuracy": 0.85,
       "std_accuracy": 0.031622776601683784,
       "removed_features": [
         "resonance_skewness",
-        "temporal_centroid",
         "env_std",
-        "resonance_q_factor",
+        "low_energy_ratio",
+        "temporal_centroid",
+        "zero_crossing_rate",
         "low_mid_ratio",
-        "spectral_flatness",
-        "spectral_contrast_2",
+        "spectral_bandwidth"
+      ],
+      "n_remaining_features": 31
+    },
+    "remove_top_8": {
+      "mean_accuracy": 0.85,
+      "std_accuracy": 0.0,
+      "removed_features": [
+        "resonance_skewness",
+        "env_std",
+        "low_energy_ratio",
+        "temporal_centroid",
+        "zero_crossing_rate",
+        "low_mid_ratio",
         "spectral_bandwidth",
-        "env_skew"
+        "resonance_q_factor"
+      ],
+      "n_remaining_features": 30
+    },
+    "remove_top_9": {
+      "mean_accuracy": 0.86,
+      "std_accuracy": 0.020000000000000018,
+      "removed_features": [
+        "resonance_skewness",
+        "env_std",
+        "low_energy_ratio",
+        "temporal_centroid",
+        "zero_crossing_rate",
+        "low_mid_ratio",
+        "spectral_bandwidth",
+        "resonance_q_factor",
+        "spectral_contrast_2"
       ],
       "n_remaining_features": 29
     },
     "remove_top_10": {
       "mean_accuracy": 0.86,
-      "std_accuracy": 0.03741657386773941,
+      "std_accuracy": 0.020000000000000018,
       "removed_features": [
         "resonance_skewness",
-        "temporal_centroid",
         "env_std",
-        "resonance_q_factor",
+        "low_energy_ratio",
+        "temporal_centroid",
+        "zero_crossing_rate",
         "low_mid_ratio",
-        "spectral_flatness",
-        "spectral_contrast_2",
         "spectral_bandwidth",
-        "env_skew",
+        "resonance_q_factor",
+        "spectral_contrast_2",
         "burst_rms"
       ],
       "n_remaining_features": 28
@@ -555,291 +555,291 @@
       "n_features": 1
     },
     "top_2": {
-      "mean_accuracy": 0.6599999999999999,
-      "std_accuracy": 0.019999999999999976,
+      "mean_accuracy": 0.8699999999999999,
+      "std_accuracy": 0.05099019513592783,
       "selected_features": [
         "resonance_skewness",
-        "temporal_centroid"
+        "env_std"
       ],
       "n_features": 2
     },
     "top_3": {
-      "mean_accuracy": 0.85,
-      "std_accuracy": 0.04472135954999579,
+      "mean_accuracy": 0.86,
+      "std_accuracy": 0.06633249580710798,
       "selected_features": [
         "resonance_skewness",
-        "temporal_centroid",
-        "env_std"
+        "env_std",
+        "low_energy_ratio"
       ],
       "n_features": 3
     },
     "top_4": {
-      "mean_accuracy": 0.86,
-      "std_accuracy": 0.03741657386773941,
+      "mean_accuracy": 0.82,
+      "std_accuracy": 0.060000000000000005,
       "selected_features": [
         "resonance_skewness",
-        "temporal_centroid",
         "env_std",
-        "resonance_q_factor"
+        "low_energy_ratio",
+        "temporal_centroid"
       ],
       "n_features": 4
     },
     "top_5": {
-      "mean_accuracy": 0.8399999999999999,
-      "std_accuracy": 0.037416573867739396,
+      "mean_accuracy": 0.8200000000000001,
+      "std_accuracy": 0.03999999999999999,
       "selected_features": [
         "resonance_skewness",
-        "temporal_centroid",
         "env_std",
-        "resonance_q_factor",
-        "low_mid_ratio"
+        "low_energy_ratio",
+        "temporal_centroid",
+        "zero_crossing_rate"
       ],
       "n_features": 5
     },
     "top_6": {
-      "mean_accuracy": 0.85,
-      "std_accuracy": 0.05477225575051661,
+      "mean_accuracy": 0.8400000000000001,
+      "std_accuracy": 0.05830951894845301,
       "selected_features": [
         "resonance_skewness",
-        "temporal_centroid",
         "env_std",
-        "resonance_q_factor",
-        "low_mid_ratio",
-        "spectral_flatness"
+        "low_energy_ratio",
+        "temporal_centroid",
+        "zero_crossing_rate",
+        "low_mid_ratio"
       ],
       "n_features": 6
     },
     "top_7": {
       "mean_accuracy": 0.8400000000000001,
-      "std_accuracy": 0.019999999999999976,
+      "std_accuracy": 0.037416573867739396,
       "selected_features": [
         "resonance_skewness",
-        "temporal_centroid",
         "env_std",
-        "resonance_q_factor",
+        "low_energy_ratio",
+        "temporal_centroid",
+        "zero_crossing_rate",
         "low_mid_ratio",
-        "spectral_flatness",
-        "spectral_contrast_2"
+        "spectral_bandwidth"
       ],
       "n_features": 7
     },
     "top_8": {
-      "mean_accuracy": 0.8799999999999999,
-      "std_accuracy": 0.024494897427831803,
+      "mean_accuracy": 0.8300000000000001,
+      "std_accuracy": 0.039999999999999994,
       "selected_features": [
         "resonance_skewness",
-        "temporal_centroid",
         "env_std",
-        "resonance_q_factor",
+        "low_energy_ratio",
+        "temporal_centroid",
+        "zero_crossing_rate",
         "low_mid_ratio",
-        "spectral_flatness",
-        "spectral_contrast_2",
-        "spectral_bandwidth"
+        "spectral_bandwidth",
+        "resonance_q_factor"
       ],
       "n_features": 8
     },
     "top_9": {
-      "mean_accuracy": 0.85,
-      "std_accuracy": 0.031622776601683784,
+      "mean_accuracy": 0.8400000000000001,
+      "std_accuracy": 0.037416573867739396,
       "selected_features": [
         "resonance_skewness",
-        "temporal_centroid",
         "env_std",
-        "resonance_q_factor",
+        "low_energy_ratio",
+        "temporal_centroid",
+        "zero_crossing_rate",
         "low_mid_ratio",
-        "spectral_flatness",
-        "spectral_contrast_2",
         "spectral_bandwidth",
-        "env_skew"
+        "resonance_q_factor",
+        "spectral_contrast_2"
       ],
       "n_features": 9
     },
     "top_10": {
       "mean_accuracy": 0.8400000000000001,
-      "std_accuracy": 0.019999999999999976,
+      "std_accuracy": 0.037416573867739396,
       "selected_features": [
         "resonance_skewness",
-        "temporal_centroid",
         "env_std",
-        "resonance_q_factor",
+        "low_energy_ratio",
+        "temporal_centroid",
+        "zero_crossing_rate",
         "low_mid_ratio",
-        "spectral_flatness",
-        "spectral_contrast_2",
         "spectral_bandwidth",
-        "env_skew",
+        "resonance_q_factor",
+        "spectral_contrast_2",
         "burst_rms"
       ],
       "n_features": 10
     },
     "top_11": {
-      "mean_accuracy": 0.8400000000000001,
-      "std_accuracy": 0.019999999999999976,
+      "mean_accuracy": 0.85,
+      "std_accuracy": 0.04472135954999579,
       "selected_features": [
         "resonance_skewness",
-        "temporal_centroid",
         "env_std",
-        "resonance_q_factor",
+        "low_energy_ratio",
+        "temporal_centroid",
+        "zero_crossing_rate",
         "low_mid_ratio",
-        "spectral_flatness",
-        "spectral_contrast_2",
         "spectral_bandwidth",
-        "env_skew",
+        "resonance_q_factor",
+        "spectral_contrast_2",
         "burst_rms",
-        "zero_crossing_rate"
+        "env_skew"
       ],
       "n_features": 11
     },
     "top_12": {
-      "mean_accuracy": 0.8400000000000001,
-      "std_accuracy": 0.019999999999999976,
-      "selected_features": [
-        "resonance_skewness",
-        "temporal_centroid",
-        "env_std",
-        "resonance_q_factor",
-        "low_mid_ratio",
-        "spectral_flatness",
-        "spectral_contrast_2",
-        "spectral_bandwidth",
-        "env_skew",
-        "burst_rms",
-        "zero_crossing_rate",
-        "spectral_contrast_4"
-      ],
-      "n_features": 12
-    },
-    "top_13": {
-      "mean_accuracy": 0.85,
-      "std_accuracy": 0.031622776601683784,
-      "selected_features": [
-        "resonance_skewness",
-        "temporal_centroid",
-        "env_std",
-        "resonance_q_factor",
-        "low_mid_ratio",
-        "spectral_flatness",
-        "spectral_contrast_2",
-        "spectral_bandwidth",
-        "env_skew",
-        "burst_rms",
-        "zero_crossing_rate",
-        "spectral_contrast_4",
-        "spectral_centroid"
-      ],
-      "n_features": 13
-    },
-    "top_14": {
       "mean_accuracy": 0.8300000000000001,
       "std_accuracy": 0.024494897427831747,
       "selected_features": [
         "resonance_skewness",
-        "temporal_centroid",
         "env_std",
-        "resonance_q_factor",
-        "low_mid_ratio",
-        "spectral_flatness",
-        "spectral_contrast_2",
-        "spectral_bandwidth",
-        "env_skew",
-        "burst_rms",
+        "low_energy_ratio",
+        "temporal_centroid",
         "zero_crossing_rate",
-        "spectral_contrast_4",
+        "low_mid_ratio",
+        "spectral_bandwidth",
+        "resonance_q_factor",
+        "spectral_contrast_2",
+        "burst_rms",
+        "env_skew",
+        "spectral_centroid"
+      ],
+      "n_features": 12
+    },
+    "top_13": {
+      "mean_accuracy": 0.8400000000000001,
+      "std_accuracy": 0.037416573867739396,
+      "selected_features": [
+        "resonance_skewness",
+        "env_std",
+        "low_energy_ratio",
+        "temporal_centroid",
+        "zero_crossing_rate",
+        "low_mid_ratio",
+        "spectral_bandwidth",
+        "resonance_q_factor",
+        "spectral_contrast_2",
+        "burst_rms",
+        "env_skew",
         "spectral_centroid",
-        "low_energy_ratio"
+        "env_max"
+      ],
+      "n_features": 13
+    },
+    "top_14": {
+      "mean_accuracy": 0.85,
+      "std_accuracy": 0.031622776601683784,
+      "selected_features": [
+        "resonance_skewness",
+        "env_std",
+        "low_energy_ratio",
+        "temporal_centroid",
+        "zero_crossing_rate",
+        "low_mid_ratio",
+        "spectral_bandwidth",
+        "resonance_q_factor",
+        "spectral_contrast_2",
+        "burst_rms",
+        "env_skew",
+        "spectral_centroid",
+        "env_max",
+        "spectral_contrast_4"
       ],
       "n_features": 14
     },
     "top_15": {
       "mean_accuracy": 0.8400000000000001,
-      "std_accuracy": 0.019999999999999976,
+      "std_accuracy": 0.037416573867739396,
       "selected_features": [
         "resonance_skewness",
-        "temporal_centroid",
         "env_std",
-        "resonance_q_factor",
-        "low_mid_ratio",
-        "spectral_flatness",
-        "spectral_contrast_2",
-        "spectral_bandwidth",
-        "env_skew",
-        "burst_rms",
-        "zero_crossing_rate",
-        "spectral_contrast_4",
-        "spectral_centroid",
         "low_energy_ratio",
-        "env_max"
+        "temporal_centroid",
+        "zero_crossing_rate",
+        "low_mid_ratio",
+        "spectral_bandwidth",
+        "resonance_q_factor",
+        "spectral_contrast_2",
+        "burst_rms",
+        "env_skew",
+        "spectral_centroid",
+        "env_max",
+        "spectral_contrast_4",
+        "resonance_high_ratio"
       ],
       "n_features": 15
     },
     "top_16": {
       "mean_accuracy": 0.8400000000000001,
-      "std_accuracy": 0.019999999999999976,
+      "std_accuracy": 0.037416573867739396,
       "selected_features": [
         "resonance_skewness",
-        "temporal_centroid",
         "env_std",
-        "resonance_q_factor",
-        "low_mid_ratio",
-        "spectral_flatness",
-        "spectral_contrast_2",
-        "spectral_bandwidth",
-        "env_skew",
-        "burst_rms",
-        "zero_crossing_rate",
-        "spectral_contrast_4",
-        "spectral_centroid",
         "low_energy_ratio",
+        "temporal_centroid",
+        "zero_crossing_rate",
+        "low_mid_ratio",
+        "spectral_bandwidth",
+        "resonance_q_factor",
+        "spectral_contrast_2",
+        "burst_rms",
+        "env_skew",
+        "spectral_centroid",
         "env_max",
-        "mid_energy_ratio"
+        "spectral_contrast_4",
+        "resonance_high_ratio",
+        "burst_peak"
       ],
       "n_features": 16
     },
     "top_17": {
       "mean_accuracy": 0.8400000000000001,
-      "std_accuracy": 0.037416573867739396,
+      "std_accuracy": 0.019999999999999976,
       "selected_features": [
         "resonance_skewness",
-        "temporal_centroid",
         "env_std",
-        "resonance_q_factor",
-        "low_mid_ratio",
-        "spectral_flatness",
-        "spectral_contrast_2",
-        "spectral_bandwidth",
-        "env_skew",
-        "burst_rms",
-        "zero_crossing_rate",
-        "spectral_contrast_4",
-        "spectral_centroid",
         "low_energy_ratio",
+        "temporal_centroid",
+        "zero_crossing_rate",
+        "low_mid_ratio",
+        "spectral_bandwidth",
+        "resonance_q_factor",
+        "spectral_contrast_2",
+        "burst_rms",
+        "env_skew",
+        "spectral_centroid",
         "env_max",
-        "mid_energy_ratio",
+        "spectral_contrast_4",
+        "resonance_high_ratio",
+        "burst_peak",
         "env_mean"
       ],
       "n_features": 17
     },
     "top_18": {
       "mean_accuracy": 0.8400000000000001,
-      "std_accuracy": 0.019999999999999976,
+      "std_accuracy": 0.048989794855663564,
       "selected_features": [
         "resonance_skewness",
-        "temporal_centroid",
         "env_std",
-        "resonance_q_factor",
-        "low_mid_ratio",
-        "spectral_flatness",
-        "spectral_contrast_2",
-        "spectral_bandwidth",
-        "env_skew",
-        "burst_rms",
-        "zero_crossing_rate",
-        "spectral_contrast_4",
-        "spectral_centroid",
         "low_energy_ratio",
+        "temporal_centroid",
+        "zero_crossing_rate",
+        "low_mid_ratio",
+        "spectral_bandwidth",
+        "resonance_q_factor",
+        "spectral_contrast_2",
+        "burst_rms",
+        "env_skew",
+        "spectral_centroid",
         "env_max",
-        "mid_energy_ratio",
+        "spectral_contrast_4",
+        "resonance_high_ratio",
+        "burst_peak",
         "env_mean",
-        "damping_ratio"
+        "resonance_peak_freq"
       ],
       "n_features": 18
     },
@@ -848,51 +848,51 @@
       "std_accuracy": 0.031622776601683784,
       "selected_features": [
         "resonance_skewness",
-        "temporal_centroid",
         "env_std",
-        "resonance_q_factor",
-        "low_mid_ratio",
-        "spectral_flatness",
-        "spectral_contrast_2",
-        "spectral_bandwidth",
-        "env_skew",
-        "burst_rms",
-        "zero_crossing_rate",
-        "spectral_contrast_4",
-        "spectral_centroid",
         "low_energy_ratio",
+        "temporal_centroid",
+        "zero_crossing_rate",
+        "low_mid_ratio",
+        "spectral_bandwidth",
+        "resonance_q_factor",
+        "spectral_contrast_2",
+        "burst_rms",
+        "env_skew",
+        "spectral_centroid",
         "env_max",
-        "mid_energy_ratio",
+        "spectral_contrast_4",
+        "resonance_high_ratio",
+        "burst_peak",
         "env_mean",
-        "damping_ratio",
-        "burst_peak"
+        "resonance_peak_freq",
+        "mid_energy_ratio"
       ],
       "n_features": 19
     },
     "top_20": {
-      "mean_accuracy": 0.8400000000000001,
-      "std_accuracy": 0.019999999999999976,
+      "mean_accuracy": 0.86,
+      "std_accuracy": 0.03741657386773941,
       "selected_features": [
         "resonance_skewness",
-        "temporal_centroid",
         "env_std",
-        "resonance_q_factor",
-        "low_mid_ratio",
-        "spectral_flatness",
-        "spectral_contrast_2",
-        "spectral_bandwidth",
-        "env_skew",
-        "burst_rms",
-        "zero_crossing_rate",
-        "spectral_contrast_4",
-        "spectral_centroid",
         "low_energy_ratio",
+        "temporal_centroid",
+        "zero_crossing_rate",
+        "low_mid_ratio",
+        "spectral_bandwidth",
+        "resonance_q_factor",
+        "spectral_contrast_2",
+        "burst_rms",
+        "env_skew",
+        "spectral_centroid",
         "env_max",
-        "mid_energy_ratio",
-        "env_mean",
-        "damping_ratio",
+        "spectral_contrast_4",
+        "resonance_high_ratio",
         "burst_peak",
-        "burst_crest_factor"
+        "env_mean",
+        "resonance_peak_freq",
+        "mid_energy_ratio",
+        "env_min"
       ],
       "n_features": 20
     }

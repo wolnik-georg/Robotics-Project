@@ -186,7 +186,7 @@ class BatchSpecificAnalyzer:
         batch_output.mkdir(exist_ok=True, parents=True)
 
         # Load data with detected classes
-        print(f"\\n1. LOADING DATA FROM {batch_name}...")
+        print(f"\n1. LOADING DATA FROM {batch_name}...")
         print("-" * 40)
 
         data_loader = GeometricDataLoader(base_dir=str(self.base_dir), sr=48000)
@@ -217,7 +217,7 @@ class BatchSpecificAnalyzer:
             return None
 
         # Feature extraction
-        print(f"\\n2. FEATURE EXTRACTION...")
+        print(f"\n2. FEATURE EXTRACTION...")
         print("-" * 40)
 
         feature_extractor = GeometricFeatureExtractor(sr=48000)
@@ -248,7 +248,7 @@ class BatchSpecificAnalyzer:
         print(f"Failed extractions: {failed_count}")
 
         # Dimensionality reduction
-        print(f"\\n3. DIMENSIONALITY REDUCTION...")
+        print(f"\n3. DIMENSIONALITY REDUCTION...")
         print("-" * 40)
 
         dim_analyzer = GeometricDimensionalityAnalyzer(random_state=42)
@@ -268,7 +268,7 @@ class BatchSpecificAnalyzer:
         print(f"t-SNE: Optimal perplexity = {optimal_perplexity}")
 
         # Statistical analysis
-        print(f"\\n4. DISCRIMINATION ANALYSIS...")
+        print(f"\n4. DISCRIMINATION ANALYSIS...")
         print("-" * 40)
 
         # Check if we have multiple classes for discrimination analysis
@@ -331,7 +331,7 @@ class BatchSpecificAnalyzer:
             )
 
         # Create enhanced visualizations
-        print(f"\\n5. CREATING VISUALIZATIONS...")
+        print(f"\n5. CREATING VISUALIZATIONS...")
         print("-" * 40)
 
         self._create_enhanced_visualizations(
@@ -358,27 +358,8 @@ class BatchSpecificAnalyzer:
             X_feat.shape[1],
         )
 
-        # Advanced feature analysis
-        print(f"\\n7. ADVANCED FEATURE ANALYSIS...")
-        print("-" * 40)
-
-        # Saliency analysis (neural network feature importance)
-        print("Running saliency analysis...")
-        saliency_analyzer = AcousticSaliencyAnalyzer(
-            self.batch_configs, str(self.base_dir)
-        )
-        saliency_results = saliency_analyzer.analyze_batch_saliency(batch_name)
-        saliency_analyzer.visualize_saliency_maps(batch_name, batch_output)
-
-        # Ablation analysis (systematic feature testing)
-        print("Running ablation analysis...")
-        ablation_analyzer = FeatureAblationAnalyzer(
-            self.batch_configs, str(self.base_dir)
-        )
-        ablation_results = ablation_analyzer.analyze_batch_ablation(batch_name)
-
-        # Save results
-        print(f"\\n8. SAVING RESULTS...")
+        # Save core results FIRST (before advanced analysis needs them)
+        print(f"\n6. SAVING CORE RESULTS...")
         print("-" * 40)
 
         self._save_batch_results(
@@ -397,6 +378,35 @@ class BatchSpecificAnalyzer:
             report,
         )
 
+        # Advanced feature analysis (now files exist)
+        print(f"\n7. ADVANCED FEATURE ANALYSIS...")
+        print("-" * 40)
+
+        # Saliency analysis (neural network feature importance)
+        print("Running saliency analysis...")
+        try:
+            saliency_analyzer = AcousticSaliencyAnalyzer(
+                self.batch_configs, str(self.base_dir)
+            )
+            saliency_results = saliency_analyzer.analyze_batch_saliency(batch_name)
+            saliency_analyzer.visualize_saliency_maps(batch_name, batch_output)
+            print(f"✅ Saliency analysis completed for {batch_name}")
+        except Exception as e:
+            print(f"⚠️ Saliency analysis failed for {batch_name}: {e}")
+            saliency_results = None
+
+        # Ablation analysis (systematic feature testing)
+        print("Running ablation analysis...")
+        try:
+            ablation_analyzer = FeatureAblationAnalyzer(
+                self.batch_configs, str(self.base_dir)
+            )
+            ablation_results = ablation_analyzer.analyze_batch_ablation(batch_name)
+            print(f"✅ Ablation analysis completed for {batch_name}")
+        except Exception as e:
+            print(f"⚠️ Ablation analysis failed for {batch_name}: {e}")
+            ablation_results = None
+
         return {
             "batch_name": batch_name,
             "config": config,
@@ -411,6 +421,8 @@ class BatchSpecificAnalyzer:
                 else 0
             ),
             "significant_features_ratio": sep_results["significant_feature_ratio"],
+            "saliency_results": saliency_results,
+            "ablation_results": ablation_results,
         }
 
     def _create_enhanced_visualizations(
@@ -449,16 +461,16 @@ class BatchSpecificAnalyzer:
             )
 
         ax_main.set_title(
-            f'{config["description"]}\\nt-SNE Visualization',
+            f'{config["description"]}\nt-SNE Visualization',
             fontsize=14,
             fontweight="bold",
         )
         ax_main.set_xlabel(
-            "t-SNE Dimension 1\\n(Non-linear combination of acoustic features)",
+            "t-SNE Dimension 1\n(Non-linear combination of acoustic features)",
             fontsize=12,
         )
         ax_main.set_ylabel(
-            "t-SNE Dimension 2\\n(Non-linear combination of acoustic features)",
+            "t-SNE Dimension 2\n(Non-linear combination of acoustic features)",
             fontsize=12,
         )
         ax_main.legend(bbox_to_anchor=(1.05, 1), loc="upper left")
@@ -468,7 +480,7 @@ class BatchSpecificAnalyzer:
         ax_main.text(
             0.02,
             0.98,
-            f'Research Question:\\n{config["research_question"]}',
+            f'Research Question:\n{config["research_question"]}',
             transform=ax_main.transAxes,
             fontsize=10,
             verticalalignment="top",
@@ -535,10 +547,10 @@ class BatchSpecificAnalyzer:
         pca_var_1 = pca_results["explained_variance_ratio"][0] * 100
         pca_var_2 = pca_results["explained_variance_ratio"][1] * 100
         ax_pca.set_xlabel(
-            f"PC1 ({pca_var_1:.1f}% variance)\\n(Linear combination of acoustic features)"
+            f"PC1 ({pca_var_1:.1f}% variance)\n(Linear combination of acoustic features)"
         )
         ax_pca.set_ylabel(
-            f"PC2 ({pca_var_2:.1f}% variance)\\n(Linear combination of acoustic features)"
+            f"PC2 ({pca_var_2:.1f}% variance)\n(Linear combination of acoustic features)"
         )
         ax_pca.legend()
         ax_pca.grid(True, alpha=0.3)
@@ -557,8 +569,8 @@ class BatchSpecificAnalyzer:
             )
 
         ax_tsne.set_title("t-SNE: Non-linear Dimensionality Reduction")
-        ax_tsne.set_xlabel("t-SNE 1\\n(Non-linear manifold dimension)")
-        ax_tsne.set_ylabel("t-SNE 2\\n(Non-linear manifold dimension)")
+        ax_tsne.set_xlabel("t-SNE 1\n(Non-linear manifold dimension)")
+        ax_tsne.set_ylabel("t-SNE 2\n(Non-linear manifold dimension)")
         ax_tsne.legend()
         ax_tsne.grid(True, alpha=0.3)
 
