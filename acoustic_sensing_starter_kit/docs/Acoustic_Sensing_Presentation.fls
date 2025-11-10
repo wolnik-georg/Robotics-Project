@@ -3,7 +3,7 @@ INPUT /etc/texmf/web2c/texmf.cnf
 INPUT /usr/share/texmf/web2c/texmf.cnf
 INPUT /usr/share/texlive/texmf-dist/web2c/texmf.cnf
 INPUT /var/lib/texmf/web2c/pdftex/pdflatex.fmt
-INPUT Acoustic_Sensing_Presentation.tex
+INPUT /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/docs/Acoustic_Sensing_Presentation.tex
 OUTPUT Acoustic_Sensing_Presentation.log
 INPUT /usr/share/texlive/texmf-dist/tex/latex/beamer/beamer.cls
 INPUT /usr/share/texlive/texmf-dist/tex/latex/beamer/beamer.cls
