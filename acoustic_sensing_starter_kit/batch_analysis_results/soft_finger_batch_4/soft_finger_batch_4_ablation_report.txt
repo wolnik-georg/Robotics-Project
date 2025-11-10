@@ -4,24 +4,24 @@ FEATURE ABLATION ANALYSIS REPORT: soft_finger_batch_4
 
 DATASET SUMMARY
 Samples: 100
-Features: 38
+Features: 53
 Classes: 2
 
 BASELINE PERFORMANCE (All Features)
-Random Forest Accuracy: 0.8600 ± 0.0374
+Random Forest Accuracy: 0.8500 ± 0.0316
 
 MOST CRITICAL FEATURES (Top 10 by accuracy drop when removed)
 ------------------------------------------------------------
- 1. resonance_peak_amp        | Drop: 0.0200 | Acc without: 0.8400
- 2. low_energy_ratio          | Drop: 0.0200 | Acc without: 0.8400
- 3. low_mid_ratio             | Drop: 0.0200 | Acc without: 0.8400
- 4. spectral_centroid         | Drop: 0.0100 | Acc without: 0.8500
- 5. spectral_bandwidth        | Drop: 0.0100 | Acc without: 0.8500
- 6. spectral_rolloff          | Drop: 0.0100 | Acc without: 0.8500
- 7. spectral_flatness         | Drop: 0.0100 | Acc without: 0.8500
- 8. spectral_contrast_0       | Drop: 0.0100 | Acc without: 0.8500
- 9. spectral_contrast_1       | Drop: 0.0100 | Acc without: 0.8500
-10. spectral_contrast_2       | Drop: 0.0100 | Acc without: 0.8500
+ 1. freq_response_spread      | Drop: 0.0200 | Acc without: 0.8300
+ 2. high_freq_energy          | Drop: 0.0200 | Acc without: 0.8300
+ 3. high_freq_damping         | Drop: 0.0200 | Acc without: 0.8300
+ 4. low_energy_ratio          | Drop: 0.0100 | Acc without: 0.8400
+ 5. resonance_energy_ratio    | Drop: 0.0100 | Acc without: 0.8400
+ 6. mid_energy_ratio          | Drop: 0.0100 | Acc without: 0.8400
+ 7. high_energy_ratio         | Drop: 0.0100 | Acc without: 0.8400
+ 8. ultra_high_energy_ratio   | Drop: 0.0100 | Acc without: 0.8400
+ 9. resonance_high_ratio      | Drop: 0.0100 | Acc without: 0.8400
+10. low_mid_ratio             | Drop: 0.0100 | Acc without: 0.8400
 
 MINIMAL FEATURE SETS
 ------------------------------
@@ -29,9 +29,9 @@ MINIMAL FEATURE SETS
 
 FEATURE GROUP IMPORTANCE
 ----------------------------------------
-temporal             | Drop: 0.0200 | Features removed: 5
-frequency_bands      | Drop: 0.0200 | Features removed: 1
-spectral             | Drop: 0.0100 | Features removed: 4
-energy_ratios        | Drop: 0.0100 | Features removed: 5
-damping              | Drop: 0.0100 | Features removed: 1
+temporal             | Drop: 0.0100 | Features removed: 5
+frequency_bands      | Drop: 0.0100 | Features removed: 1
+spectral             | Drop: 0.0000 | Features removed: 4
 burst_analysis       | Drop: 0.0000 | Features removed: 1
+damping              | Drop: 0.0000 | Features removed: 1
+energy_ratios        | Drop: -0.0100 | Features removed: 5

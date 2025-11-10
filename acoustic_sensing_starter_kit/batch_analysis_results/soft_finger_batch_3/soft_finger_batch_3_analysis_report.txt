@@ -9,7 +9,7 @@ Research Question: Can acoustic signals detect geometric edges/transitions?
 DATASET SUMMARY
 ----------------------------------------
 Samples: 150
-Features: 38
+Features: 53
 Classes: 3 (contact, edge, no_edge)
 
 Class Distribution:
@@ -19,38 +19,38 @@ Class Distribution:
 
 STATISTICAL ANALYSIS
 ----------------------------------------
-Statistically significant features: 25/38 (65.8%)
-Fisher discriminant ratio: 0.207
+Statistically significant features: 34/53 (64.2%)
+Fisher discriminant ratio: 0.167
 LDA explained variance: 1.000
 Number of discriminant functions: 2
 
 CLASSIFICATION PERFORMANCE
 ----------------------------------------
-Best classifier: Linear Discriminant Analysis
-Cross-validation accuracy: 1.000
-Cross-validation F1-score: 1.000
+Best classifier: Random Forest
+Cross-validation accuracy: 0.993
+Cross-validation F1-score: 0.993
 
 All Classifiers:
   Random Forest: Accuracy=0.993±0.013, F1=0.993±0.013
-  SVM (RBF): Accuracy=0.973±0.025, F1=0.973±0.025
+  SVM (RBF): Accuracy=0.960±0.025, F1=0.960±0.025
   SVM (Linear): Accuracy=0.993±0.013, F1=0.993±0.013
-  K-Nearest Neighbors: Accuracy=0.947±0.054, F1=0.945±0.056
-  Logistic Regression: Accuracy=0.993±0.013, F1=0.993±0.013
-  Linear Discriminant Analysis: Accuracy=1.000±0.000, F1=1.000±0.000
+  K-Nearest Neighbors: Accuracy=0.873±0.057, F1=0.871±0.060
+  Logistic Regression: Accuracy=0.987±0.016, F1=0.987±0.016
+  Linear Discriminant Analysis: Accuracy=0.993±0.013, F1=0.993±0.013
 
 EMBEDDING ANALYSIS
 ----------------------------------------
-t-SNE separability score: 0.481
-PCA separability score: 0.487
-t-SNE separation ratio: 3.095
+t-SNE separability score: 0.388
+PCA separability score: 0.472
+t-SNE separation ratio: 2.566
 
 CONCLUSIONS
 ----------------------------------------
 ✓ STRONG DISCRIMINATION CAPABILITY CONFIRMED
 
 Evidence:
-  • High classification accuracy: 1.000
-  • Significant features: 65.8%
+  • High classification accuracy: 0.993
+  • Significant features: 64.2%
   • Research question: Can acoustic signals detect geometric edges/transitions?
   • ANSWER: YES - Acoustic signals reliably discriminate the tested conditions
 

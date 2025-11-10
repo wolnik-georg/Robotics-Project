@@ -4,36 +4,36 @@ COMBINED BATCH ANALYSIS SUMMARY
 BATCH: soft_finger_batch_1
 Experiment: Contact Position Discrimination
 Research Question: Can acoustic signals distinguish WHERE on the finger contact occurs?
-Samples: 200, Features: 38
+Samples: 200, Features: 53
 Classes: [np.str_('base'), np.str_('middle'), np.str_('none'), np.str_('tip')]
 Best Accuracy: 0.970
-Significant Features: 81.6%
-t-SNE Separability: 0.164
+Significant Features: 83.0%
+t-SNE Separability: 0.181
 
 BATCH: soft_finger_batch_2
 Experiment: Contact Position Discrimination (Batch 2)
 Research Question: Can acoustic signals distinguish WHERE on the finger contact occurs?
-Samples: 200, Features: 38
+Samples: 200, Features: 53
 Classes: [np.str_('base'), np.str_('middle'), np.str_('none'), np.str_('tip')]
 Best Accuracy: 0.985
-Significant Features: 78.9%
-t-SNE Separability: 0.388
+Significant Features: 77.4%
+t-SNE Separability: 0.429
 
 BATCH: soft_finger_batch_3
 Experiment: Geometric Edge Detection
 Research Question: Can acoustic signals detect geometric edges/transitions?
-Samples: 150, Features: 38
+Samples: 150, Features: 53
 Classes: [np.str_('contact'), np.str_('edge'), np.str_('no_edge')]
-Best Accuracy: 1.000
-Significant Features: 65.8%
-t-SNE Separability: 0.481
+Best Accuracy: 0.993
+Significant Features: 64.2%
+t-SNE Separability: 0.388
 
 BATCH: soft_finger_batch_4
 Experiment: Material Property Detection
 Research Question: Can acoustic signals distinguish material properties?
-Samples: 100, Features: 38
+Samples: 100, Features: 53
 Classes: [np.str_('metal'), np.str_('no metal')]
 Best Accuracy: 0.880
-Significant Features: 52.6%
-t-SNE Separability: 0.365
+Significant Features: 47.2%
+t-SNE Separability: 0.245
 

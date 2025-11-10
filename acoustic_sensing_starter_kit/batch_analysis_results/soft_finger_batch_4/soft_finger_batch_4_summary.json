@@ -14,7 +14,7 @@
   },
   "dataset_summary": {
     "n_samples": 100,
-    "n_features": 38,
+    "n_features": 53,
     "classes": [
       "metal",
       "no metal"
@@ -25,8 +25,8 @@
     }
   },
   "performance_summary": {
-    "significant_features_ratio": 0.5263157894736842,
-    "fisher_discriminant_ratio": 0.1270224690046734,
+    "significant_features_ratio": 0.4716981132075472,
+    "fisher_discriminant_ratio": 0.09975669475797222,
     "best_classification_accuracy": 0.8800000000000001
   }
 }

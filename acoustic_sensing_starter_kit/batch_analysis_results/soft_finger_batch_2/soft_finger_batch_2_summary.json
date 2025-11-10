@@ -18,7 +18,7 @@
   },
   "dataset_summary": {
     "n_samples": 200,
-    "n_features": 38,
+    "n_features": 53,
     "classes": [
       "base",
       "middle",
@@ -33,8 +33,8 @@
     }
   },
   "performance_summary": {
-    "significant_features_ratio": 0.7894736842105263,
-    "fisher_discriminant_ratio": 0.43836621464801057,
+    "significant_features_ratio": 0.7735849056603774,
+    "fisher_discriminant_ratio": 0.3212510050713767,
     "best_classification_accuracy": 0.985
   }
 }

@@ -44,6 +44,9 @@ from acoustic_sensing.features.saliency_analysis import (
 from acoustic_sensing.features.ablation_analysis import (
     FeatureAblationAnalyzer,
 )
+from acoustic_sensing.analysis.impulse_response_analysis import (
+    ImpulseResponseAnalyzer,
+)
 
 
 class BatchSpecificAnalyzer:
@@ -247,6 +250,151 @@ class BatchSpecificAnalyzer:
         print(f"Feature extraction complete: {X_feat.shape}")
         print(f"Failed extractions: {failed_count}")
 
+        # Impulse response analysis (deconvolution-based features)
+        print(f"\n2.5. IMPULSE RESPONSE ANALYSIS...")
+        print("-" * 40)
+
+        impulse_analyzer = ImpulseResponseAnalyzer(sr=48000)
+        impulse_features = []
+        impulse_failed_count = 0
+
+        # Find sweep signal file
+        sweep_path = None
+        data_dir = self.base_dir / batch_name / "data"
+        if data_dir.exists():
+            # Look for sweep file (usually named with 'sweep' or index 0)
+            for wav_file in data_dir.glob("*.wav"):
+                if "sweep" in wav_file.name.lower() or wav_file.name.startswith("0_"):
+                    sweep_path = wav_file
+                    break
+
+        if sweep_path:
+            print(f"Found sweep signal: {sweep_path}")
+
+            for i, audio in enumerate(audio_data):
+                try:
+                    # Create temporary response file path for analysis
+                    temp_response_path = data_dir / f"temp_response_{i}.wav"
+                    # Save current audio as temporary WAV for analysis
+                    import soundfile as sf
+
+                    # Ensure audio is a proper float array (convert from object array)
+                    audio_float = np.asarray(audio, dtype=np.float32)
+                    sf.write(temp_response_path, audio_float, 48000)
+
+                    # Analyze impulse response
+                    features = impulse_analyzer.analyze_measurement(
+                        sweep_path, temp_response_path
+                    )
+
+                    if features:  # Only append if we got valid features
+                        # Filter out metadata fields before converting to list
+                        filtered_features = {
+                            k: v for k, v in features.items() if not k.startswith("_")
+                        }
+                        impulse_features.append(list(filtered_features.values()))
+                    else:
+                        # If this is the first sample, we don't know the expected length yet
+                        # Append a placeholder that we'll fix later
+                        impulse_features.append(None)
+
+                    # Clean up temp file
+                    temp_response_path.unlink(missing_ok=True)
+
+                    if (i + 1) % 50 == 0:
+                        print(
+                            f"  Processed {i + 1}/{len(audio_data)} impulse responses"
+                        )
+
+                except Exception as e:
+                    print(
+                        f"  Warning: Failed to extract impulse features from sample {i}: {e}"
+                    )
+                    impulse_features.append(None)
+                    impulse_failed_count += 1
+
+            if impulse_features:
+                # Find the first valid feature set to determine expected length
+                expected_length = None
+                valid_features = []
+                impulse_feature_names = []
+
+            # Process impulse features to match the number of regular features
+            if impulse_features:
+                # Find the first valid feature set to determine expected length
+                expected_length = None
+                impulse_feature_names = []
+
+                # First pass: find expected length and feature names
+                for feat in impulse_features:
+                    if feat is not None and len(feat) > 0:
+                        expected_length = len(feat)
+                        # Create dummy impulse response to get feature names (already filtered)
+                        dummy_ir = np.random.randn(10000).astype(np.float32)
+                        all_feature_names = list(
+                            impulse_analyzer.extract_impulse_features(dummy_ir).keys()
+                        )
+                        impulse_feature_names = [
+                            name
+                            for name in all_feature_names
+                            if not name.startswith("_")
+                        ]
+                        break
+
+                if expected_length is None:
+                    print(
+                        "No valid impulse features found, using regular features only"
+                    )
+                else:
+                    # Second pass: create valid_features array matching X_feat shape
+                    valid_features = []
+                    for i, feat in enumerate(impulse_features):
+                        if feat is not None and len(feat) > 0:
+                            if len(feat) == expected_length:
+                                valid_features.append(feat)
+                            else:
+                                # Length mismatch - pad or truncate to expected length
+                                print(
+                                    f"Warning: Feature length mismatch {len(feat)} vs {expected_length}, adjusting..."
+                                )
+                                if len(feat) < expected_length:
+                                    feat.extend([0.0] * (expected_length - len(feat)))
+                                else:
+                                    feat = feat[:expected_length]
+                                valid_features.append(feat)
+                        else:
+                            # Replace invalid/None with zeros
+                            valid_features.append([0.0] * expected_length)
+
+                    # Ensure we have the same number of impulse features as regular features
+                    if len(valid_features) != len(X_feat):
+                        print(
+                            f"Warning: Impulse features ({len(valid_features)}) != regular features ({len(X_feat)}), padding..."
+                        )
+                        while len(valid_features) < len(X_feat):
+                            valid_features.append([0.0] * expected_length)
+
+                    X_impulse = np.array(
+                        valid_features[: len(X_feat)]
+                    )  # Truncate if necessary
+                    print(f"Impulse response analysis complete: {X_impulse.shape}")
+                    print(f"Failed impulse extractions: {impulse_failed_count}")
+
+                    # Combine regular and impulse features
+                    X_feat_combined = np.concatenate([X_feat, X_impulse], axis=1)
+                    feature_names_combined = feature_names + impulse_feature_names
+                    print(
+                        f"Combined features: {X_feat_combined.shape} (regular + impulse)"
+                    )
+
+                    # Use combined features for subsequent analysis
+                    X_feat = X_feat_combined
+                    feature_names = feature_names_combined
+            else:
+                print("No impulse features extracted, using regular features only")
+        else:
+            print("No sweep signal found, skipping impulse response analysis")
+
         # Dimensionality reduction
         print(f"\n3. DIMENSIONALITY REDUCTION...")
         print("-" * 40)
@@ -344,6 +492,7 @@ class BatchSpecificAnalyzer:
             feature_names,
             pca_results,
             batch_output,
+            audio_data,
         )
 
         # Generate comprehensive report
@@ -436,6 +585,7 @@ class BatchSpecificAnalyzer:
         feature_names: List[str],
         pca_results: Dict,
         output_dir: Path,
+        audio_data: List[np.ndarray],
     ):
         """Create enhanced visualizations with detailed dimension labels."""
 
@@ -582,6 +732,81 @@ class BatchSpecificAnalyzer:
             bbox_inches="tight",
         )
         plt.close(fig_comp)
+
+        # Impulse response visualization (if sweep signal available)
+        data_dir = self.base_dir / batch_name / "data"
+        sweep_path = None
+        if data_dir.exists():
+            for wav_file in data_dir.glob("*.wav"):
+                if "sweep" in wav_file.name.lower() or wav_file.name.startswith("0_"):
+                    sweep_path = wav_file
+                    break
+
+        if sweep_path:
+            try:
+                print("  Creating impulse response visualization...")
+                impulse_analyzer = ImpulseResponseAnalyzer(sr=48000)
+
+                # Use first response file as example for single visualization
+                response_files = [f for f in data_dir.glob("*.wav") if f != sweep_path]
+                if response_files:
+                    response_path = response_files[0]
+
+                    # Load signals
+                    sweep = impulse_analyzer.load_sweep_signal(sweep_path)
+                    response = impulse_analyzer.load_response_signal(response_path)
+
+                    # Generate inverse filter and deconvolve
+                    inv_filter = impulse_analyzer.generate_inverse_filter(sweep)
+                    impulse_response = impulse_analyzer.deconvolve_response(
+                        response, inv_filter
+                    )
+
+                    # Create single example visualization
+                    impulse_analyzer.visualize_analysis(
+                        sweep,
+                        response,
+                        impulse_response,
+                        save_path=output_dir
+                        / f"{batch_name}_impulse_response_analysis.png",
+                    )
+                    print(f"  ✓ Saved impulse response visualization")
+
+                # Create per-class transfer function comparison
+                print("  Creating per-class transfer function analysis...")
+                class_responses = {}
+
+                # Group responses by class
+                for audio, label in zip(audio_data, labels):
+                    class_name = label
+                    if class_name not in class_responses:
+                        class_responses[class_name] = []
+
+                    # Convert audio to proper format and add to class
+                    audio_float = np.asarray(audio, dtype=np.float32)
+                    class_responses[class_name].append(audio_float)
+
+                # Limit to first 10 samples per class for efficiency
+                for class_name in class_responses:
+                    class_responses[class_name] = class_responses[class_name][:10]
+
+                if class_responses and len(class_responses) > 1:
+                    # Load sweep signal
+                    sweep = impulse_analyzer.load_sweep_signal(sweep_path)
+
+                    # Create per-class transfer function visualization
+                    impulse_analyzer.visualize_class_transfer_functions(
+                        sweep,
+                        class_responses,
+                        save_path=output_dir
+                        / f"{batch_name}_class_transfer_functions.png",
+                    )
+                    print(f"  ✓ Saved per-class transfer function analysis")
+                else:
+                    print("  ⚠️ Not enough classes for transfer function comparison")
+
+            except Exception as e:
+                print(f"  ⚠️ Failed to create impulse response visualizations: {e}")
 
         print(f"  ✓ Saved enhanced visualizations to {output_dir}")
 

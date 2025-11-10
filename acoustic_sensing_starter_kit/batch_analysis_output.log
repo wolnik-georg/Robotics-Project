@@ -1,0 +1,676 @@
+Warning: Could not import existing pipeline components
+Testing per-class transfer function visualization...
+This analysis will separately examine each experimental batch:
+• Batch 1-2: Contact position discrimination (tip/middle/base/blank)
+• Batch 3:   Edge detection (edge/no_edge)
+• Batch 4:   Material detection (metal/no_metal)
+
+🔍 BATCH-SPECIFIC ACOUSTIC DISCRIMINATION ANALYSIS
+================================================================================
+Analyzing each experimental batch separately to address different research questions:
+
+Checking batch: soft_finger_batch_1 at data/soft_finger_batch_1 (exists: True)
+================================================================================
+ANALYZING BATCH: soft_finger_batch_1
+================================================================================
+Expected classes: ['finger tip', 'finger middle', 'finger bottom', 'finger blank']
+Detected classes: ['finger blank', 'finger bottom', 'finger middle', 'finger tip']
+Using class order: ['finger tip', 'finger middle', 'finger bottom', 'finger blank']
+Research question: Can acoustic signals distinguish WHERE on the finger contact occurs?
+
+1. LOADING DATA FROM soft_finger_batch_1...
+----------------------------------------
+Loading batch: soft_finger_batch_1
+Found 201 WAV files
+  Loading 50 files for 'finger tip'
+  finger tip:   0%|          | 0/50 [00:00<?, ?it/s]  finger tip:   2%|▏         | 1/50 [00:00<00:13,  3.73it/s]  finger tip: 100%|██████████| 50/50 [00:00<00:00, 180.81it/s]
+  Loading 50 files for 'finger middle'
+  finger middle:   0%|          | 0/50 [00:00<?, ?it/s]  finger middle: 100%|██████████| 50/50 [00:00<00:00, 6598.97it/s]
+  Loading 50 files for 'finger bottom'
+  finger bottom:   0%|          | 0/50 [00:00<?, ?it/s]  finger bottom: 100%|██████████| 50/50 [00:00<00:00, 6562.62it/s]
+  Loading 50 files for 'finger blank'
+  finger blank:   0%|          | 0/50 [00:00<?, ?it/s]  finger blank: 100%|██████████| 50/50 [00:00<00:00, 6857.70it/s]
+Loaded 200 samples
+  finger tip: 50 samples
+  finger middle: 50 samples
+  finger bottom: 50 samples
+  finger blank: 50 samples
+============================================================
+DATASET SUMMARY
+============================================================
+Total samples: 200
+Sample rate: 48000 Hz
+Audio duration: 1.150 ± 0.000 seconds
+Signal length: 55200 ± 0 samples
+
+Class distribution:
+  finger blank: 50 samples (25.0%)
+  finger bottom: 50 samples (25.0%)
+  finger middle: 50 samples (25.0%)
+  finger tip: 50 samples (25.0%)
+
+2. FEATURE EXTRACTION...
+----------------------------------------
+  Processed 50/200 samples
+  Processed 100/200 samples
+  Processed 150/200 samples
+  Processed 200/200 samples
+Feature extraction complete: (200, 38)
+Failed extractions: 0
+
+2.5. IMPULSE RESPONSE ANALYSIS...
+----------------------------------------
+Found sweep signal: data/soft_finger_batch_1/data/0_sweep.wav
+  Processed 50/200 impulse responses
+  Processed 100/200 impulse responses
+  Processed 150/200 impulse responses
+  Processed 200/200 impulse responses
+Impulse response analysis complete: (200, 15)
+Failed impulse extractions: 0
+Combined features: (200, 53) (regular + impulse)
+
+3. DIMENSIONALITY REDUCTION...
+----------------------------------------
+PCA: 17 components explain 0.956 variance
+t-SNE: Optimal perplexity = 50
+
+4. DISCRIMINATION ANALYSIS...
+----------------------------------------
+Analyzing 4 classes: [np.str_('base'), np.str_('middle'), np.str_('none'), np.str_('tip')]
+
+5. CREATING VISUALIZATIONS...
+----------------------------------------
+  Creating impulse response visualization...
+  ✓ Saved impulse response visualization
+  Creating per-class transfer function analysis...
+  ✓ Saved per-class transfer function analysis
+  ✓ Saved enhanced visualizations to batch_analysis_results/soft_finger_batch_1
+
+6. SAVING CORE RESULTS...
+----------------------------------------
+  ✓ Results saved to batch_analysis_results/soft_finger_batch_1
+
+7. ADVANCED FEATURE ANALYSIS...
+----------------------------------------
+Running saliency analysis...
+
+📊 SALIENCY ANALYSIS FOR soft_finger_batch_1
+============================================================
+🔄 Processing features data for soft_finger_batch_1
+
+🧠 TRAINING MODEL FOR soft_finger_batch_1 (features)
+--------------------------------------------------
+Data shape: (200, 53), Classes: ['base' 'middle' 'none' 'tip']
+Epoch 20/100, Loss: 0.5172
+Epoch 40/100, Loss: 0.1840
+Epoch 60/100, Loss: 0.1130
+Epoch 80/100, Loss: 0.0687
+Epoch 100/100, Loss: 0.0460
+✅ Test Accuracy: 0.900
+✅ Model trained successfully with 0.900 accuracy
+📊 Analyzing saliency for 10 samples
+✅ Successfully computed saliency maps for features
+✅ LIME analysis completed
+🎨 Creating saliency visualizations for soft_finger_batch_1
+✅ Found saliency results for soft_finger_batch_1
+Saliency maps available: ['features']
+✅ Saliency analysis completed for soft_finger_batch_1
+Running ablation analysis...
+
+============================================================
+FEATURE ABLATION ANALYSIS: soft_finger_batch_1
+============================================================
+Loading data for soft_finger_batch_1...
+  Loaded: 200 samples, 53 features, 4 classes
+  Classes: ['base', 'middle', 'none', 'tip']
+Computing baseline performance (all features)...
+  Baseline RF accuracy: 0.960 ± 0.025
+
+Running leave-one-out feature ablation...
+  Processed 1/53 features
+  Processed 11/53 features
+  Processed 21/53 features
+  Processed 31/53 features
+  Processed 41/53 features
+  Processed 51/53 features
+  Completed leave-one-out for 53 features
+
+Testing removal of top 10 features...
+  Removed top 1: 0.965 ± 0.025
+  Removed top 2: 0.965 ± 0.025
+  Removed top 3: 0.970 ± 0.029
+  Removed top 4: 0.960 ± 0.034
+  Removed top 5: 0.965 ± 0.025
+  Removed top 6: 0.960 ± 0.037
+  Removed top 7: 0.960 ± 0.034
+  Removed top 8: 0.960 ± 0.046
+  Removed top 9: 0.965 ± 0.025
+  Removed top 10: 0.965 ± 0.025
+
+Testing feature group ablation...
+  Removed spectral (4 features): 0.965 ± 0.025
+  Removed energy_ratios (5 features): 0.925 ± 0.016
+  Removed temporal (5 features): 0.970 ± 0.019
+  Removed frequency_bands (1 features): 0.980 ± 0.019
+  Removed burst_analysis (1 features): 0.975 ± 0.022
+  Removed damping (1 features): 0.975 ± 0.022
+
+Testing cumulative feature addition...
+  Top 1 features: 0.895 ± 0.048
+  Top 2 features: 0.925 ± 0.027
+  Top 3 features: 0.915 ± 0.030
+  Top 4 features: 0.915 ± 0.034
+  Top 5 features: 0.975 ± 0.016
+  Top 6 features: 0.960 ± 0.025
+  Top 7 features: 0.960 ± 0.025
+  Top 8 features: 0.955 ± 0.029
+  Top 9 features: 0.970 ± 0.019
+  Top 10 features: 0.965 ± 0.025
+  Top 15 features: 0.975 ± 0.022
+  Top 20 features: 0.980 ± 0.024
+
+Testing 20 random feature combinations...
+  Random 5 features: 0.852 ± 0.141 (range: 0.530-0.980)
+  Random 10 features: 0.913 ± 0.060 (range: 0.790-0.980)
+  Random 15 features: 0.938 ± 0.038 (range: 0.830-0.975)
+  Random 20 features: 0.945 ± 0.024 (range: 0.865-0.970)
+✅ Ablation analysis completed for soft_finger_batch_1
+✅ soft_finger_batch_1 analysis completed
+
+Checking batch: soft_finger_batch_2 at data/soft_finger_batch_2 (exists: True)
+================================================================================
+ANALYZING BATCH: soft_finger_batch_2
+================================================================================
+Expected classes: ['finger tip', 'finger middle', 'finger bottom', 'finger blank']
+Detected classes: ['finger blank', 'finger bottom', 'finger middle', 'finger tip']
+Using class order: ['finger tip', 'finger middle', 'finger bottom', 'finger blank']
+Research question: Can acoustic signals distinguish WHERE on the finger contact occurs?
+
+1. LOADING DATA FROM soft_finger_batch_2...
+----------------------------------------
+Loading batch: soft_finger_batch_2
+Found 201 WAV files
+  Loading 50 files for 'finger tip'
+  finger tip:   0%|          | 0/50 [00:00<?, ?it/s]  finger tip: 100%|██████████| 50/50 [00:00<00:00, 6608.33it/s]
+  Loading 50 files for 'finger middle'
+  finger middle:   0%|          | 0/50 [00:00<?, ?it/s]  finger middle: 100%|██████████| 50/50 [00:00<00:00, 7131.71it/s]
+  Loading 50 files for 'finger bottom'
+  finger bottom:   0%|          | 0/50 [00:00<?, ?it/s]  finger bottom: 100%|██████████| 50/50 [00:00<00:00, 7013.42it/s]
+  Loading 50 files for 'finger blank'
+  finger blank:   0%|          | 0/50 [00:00<?, ?it/s]  finger blank: 100%|██████████| 50/50 [00:00<00:00, 6522.62it/s]
+Loaded 200 samples
+  finger tip: 50 samples
+  finger middle: 50 samples
+  finger bottom: 50 samples
+  finger blank: 50 samples
+============================================================
+DATASET SUMMARY
+============================================================
+Total samples: 200
+Sample rate: 48000 Hz
+Audio duration: 2.150 ± 0.000 seconds
+Signal length: 103200 ± 0 samples
+
+Class distribution:
+  finger blank: 50 samples (25.0%)
+  finger bottom: 50 samples (25.0%)
+  finger middle: 50 samples (25.0%)
+  finger tip: 50 samples (25.0%)
+
+2. FEATURE EXTRACTION...
+----------------------------------------
+  Processed 50/200 samples
+  Processed 100/200 samples
+  Processed 150/200 samples
+  Processed 200/200 samples
+Feature extraction complete: (200, 38)
+Failed extractions: 0
+
+2.5. IMPULSE RESPONSE ANALYSIS...
+----------------------------------------
+Found sweep signal: data/soft_finger_batch_2/data/0_long_sweep.wav
+  Processed 50/200 impulse responses
+  Processed 100/200 impulse responses
+  Processed 150/200 impulse responses
+  Processed 200/200 impulse responses
+Impulse response analysis complete: (200, 15)
+Failed impulse extractions: 0
+Combined features: (200, 53) (regular + impulse)
+
+3. DIMENSIONALITY REDUCTION...
+----------------------------------------
+PCA: 18 components explain 0.958 variance
+t-SNE: Optimal perplexity = 50
+
+4. DISCRIMINATION ANALYSIS...
+----------------------------------------
+Analyzing 4 classes: [np.str_('base'), np.str_('middle'), np.str_('none'), np.str_('tip')]
+
+5. CREATING VISUALIZATIONS...
+----------------------------------------
+  Creating impulse response visualization...
+  ✓ Saved impulse response visualization
+  Creating per-class transfer function analysis...
+  ✓ Saved per-class transfer function analysis
+  ✓ Saved enhanced visualizations to batch_analysis_results/soft_finger_batch_2
+
+6. SAVING CORE RESULTS...
+----------------------------------------
+  ✓ Results saved to batch_analysis_results/soft_finger_batch_2
+
+7. ADVANCED FEATURE ANALYSIS...
+----------------------------------------
+Running saliency analysis...
+
+📊 SALIENCY ANALYSIS FOR soft_finger_batch_2
+============================================================
+🔄 Processing features data for soft_finger_batch_2
+
+🧠 TRAINING MODEL FOR soft_finger_batch_2 (features)
+--------------------------------------------------
+Data shape: (200, 53), Classes: ['base' 'middle' 'none' 'tip']
+Epoch 20/100, Loss: 0.4247
+Epoch 40/100, Loss: 0.0966
+Epoch 60/100, Loss: 0.0292
+Epoch 80/100, Loss: 0.0257
+Epoch 100/100, Loss: 0.0246
+✅ Test Accuracy: 0.975
+✅ Model trained successfully with 0.975 accuracy
+📊 Analyzing saliency for 10 samples
+✅ Successfully computed saliency maps for features
+✅ LIME analysis completed
+🎨 Creating saliency visualizations for soft_finger_batch_2
+✅ Found saliency results for soft_finger_batch_2
+Saliency maps available: ['features']
+✅ Saliency analysis completed for soft_finger_batch_2
+Running ablation analysis...
+
+============================================================
+FEATURE ABLATION ANALYSIS: soft_finger_batch_2
+============================================================
+Loading data for soft_finger_batch_2...
+  Loaded: 200 samples, 53 features, 4 classes
+  Classes: ['base', 'middle', 'none', 'tip']
+Computing baseline performance (all features)...
+  Baseline RF accuracy: 0.990 ± 0.020
+
+Running leave-one-out feature ablation...
+  Processed 1/53 features
+  Processed 11/53 features
+  Processed 21/53 features
+  Processed 31/53 features
+  Processed 41/53 features
+  Processed 51/53 features
+  Completed leave-one-out for 53 features
+
+Testing removal of top 10 features...
+  Removed top 1: 0.990 ± 0.012
+  Removed top 2: 0.990 ± 0.020
+  Removed top 3: 0.990 ± 0.020
+  Removed top 4: 0.985 ± 0.020
+  Removed top 5: 0.985 ± 0.020
+  Removed top 6: 0.990 ± 0.020
+  Removed top 7: 0.990 ± 0.020
+  Removed top 8: 0.990 ± 0.020
+  Removed top 9: 0.985 ± 0.030
+  Removed top 10: 0.985 ± 0.030
+
+Testing feature group ablation...
+  Removed spectral (4 features): 0.995 ± 0.010
+  Removed energy_ratios (5 features): 0.985 ± 0.020
+  Removed temporal (5 features): 0.990 ± 0.020
+  Removed frequency_bands (1 features): 0.985 ± 0.020
+  Removed burst_analysis (1 features): 0.990 ± 0.020
+  Removed damping (1 features): 0.990 ± 0.020
+
+Testing cumulative feature addition...
+  Top 1 features: 0.865 ± 0.046
+  Top 2 features: 0.935 ± 0.025
+  Top 3 features: 0.965 ± 0.012
+  Top 4 features: 0.980 ± 0.019
+  Top 5 features: 0.985 ± 0.030
+  Top 6 features: 0.985 ± 0.030
+  Top 7 features: 0.975 ± 0.039
+  Top 8 features: 0.980 ± 0.029
+  Top 9 features: 0.980 ± 0.029
+  Top 10 features: 0.980 ± 0.029
+  Top 15 features: 0.985 ± 0.030
+  Top 20 features: 0.980 ± 0.029
+
+Testing 20 random feature combinations...
+  Random 5 features: 0.954 ± 0.064 (range: 0.740-0.990)
+  Random 10 features: 0.978 ± 0.018 (range: 0.920-0.995)
+  Random 15 features: 0.984 ± 0.011 (range: 0.945-0.995)
+  Random 20 features: 0.988 ± 0.007 (range: 0.975-1.000)
+✅ Ablation analysis completed for soft_finger_batch_2
+✅ soft_finger_batch_2 analysis completed
+
+Checking batch: soft_finger_batch_3 at data/soft_finger_batch_3 (exists: True)
+================================================================================
+ANALYZING BATCH: soft_finger_batch_3
+================================================================================
+Expected classes: ['contact edge', 'no contact']
+Detected classes: ['contact', 'edge', 'no contact']
+Using class order: ['no contact', 'contact', 'edge']
+Research question: Can acoustic signals detect geometric edges/transitions?
+
+1. LOADING DATA FROM soft_finger_batch_3...
+----------------------------------------
+Loading batch: soft_finger_batch_3
+Found 151 WAV files
+  Loading 50 files for 'no contact'
+  no contact:   0%|          | 0/50 [00:00<?, ?it/s]  no contact: 100%|██████████| 50/50 [00:00<00:00, 6039.84it/s]
+  Loading 50 files for 'contact'
+  contact:   0%|          | 0/50 [00:00<?, ?it/s]  contact: 100%|██████████| 50/50 [00:00<00:00, 6676.49it/s]
+  Loading 50 files for 'edge'
+  edge:   0%|          | 0/50 [00:00<?, ?it/s]  edge: 100%|██████████| 50/50 [00:00<00:00, 6988.18it/s]
+Loaded 150 samples
+  no contact: 50 samples
+  contact: 50 samples
+  edge: 50 samples
+============================================================
+DATASET SUMMARY
+============================================================
+Total samples: 150
+Sample rate: 48000 Hz
+Audio duration: 2.150 ± 0.000 seconds
+Signal length: 103200 ± 0 samples
+
+Class distribution:
+  contact: 50 samples (33.3%)
+  edge: 50 samples (33.3%)
+  no contact: 50 samples (33.3%)
+
+2. FEATURE EXTRACTION...
+----------------------------------------
+  Processed 50/150 samples
+  Processed 100/150 samples
+  Processed 150/150 samples
+Feature extraction complete: (150, 38)
+Failed extractions: 0
+
+2.5. IMPULSE RESPONSE ANALYSIS...
+----------------------------------------
+Found sweep signal: data/soft_finger_batch_3/data/0_long_sweep.wav
+  Processed 50/150 impulse responses
+  Processed 100/150 impulse responses
+  Processed 150/150 impulse responses
+Impulse response analysis complete: (150, 15)
+Failed impulse extractions: 0
+Combined features: (150, 53) (regular + impulse)
+
+3. DIMENSIONALITY REDUCTION...
+----------------------------------------
+PCA: 22 components explain 0.953 variance
+t-SNE: Optimal perplexity = 50
+
+4. DISCRIMINATION ANALYSIS...
+----------------------------------------
+Analyzing 3 classes: [np.str_('contact'), np.str_('edge'), np.str_('no_edge')]
+
+5. CREATING VISUALIZATIONS...
+----------------------------------------
+  Creating impulse response visualization...
+  ✓ Saved impulse response visualization
+  Creating per-class transfer function analysis...
+  ✓ Saved per-class transfer function analysis
+  ✓ Saved enhanced visualizations to batch_analysis_results/soft_finger_batch_3
+
+6. SAVING CORE RESULTS...
+----------------------------------------
+  ✓ Results saved to batch_analysis_results/soft_finger_batch_3
+
+7. ADVANCED FEATURE ANALYSIS...
+----------------------------------------
+Running saliency analysis...
+
+📊 SALIENCY ANALYSIS FOR soft_finger_batch_3
+============================================================
+🔄 Processing features data for soft_finger_batch_3
+
+🧠 TRAINING MODEL FOR soft_finger_batch_3 (features)
+--------------------------------------------------
+Data shape: (150, 53), Classes: ['contact' 'edge' 'no_edge']
+Epoch 20/100, Loss: 0.1093
+Epoch 40/100, Loss: 0.0087
+Epoch 60/100, Loss: 0.0024
+Epoch 80/100, Loss: 0.0017
+Epoch 100/100, Loss: 0.0005
+✅ Test Accuracy: 0.967
+✅ Model trained successfully with 0.967 accuracy
+📊 Analyzing saliency for 10 samples
+✅ Successfully computed saliency maps for features
+✅ LIME analysis completed
+🎨 Creating saliency visualizations for soft_finger_batch_3
+✅ Found saliency results for soft_finger_batch_3
+Saliency maps available: ['features']
+✅ Saliency analysis completed for soft_finger_batch_3
+Running ablation analysis...
+
+============================================================
+FEATURE ABLATION ANALYSIS: soft_finger_batch_3
+============================================================
+Loading data for soft_finger_batch_3...
+  Loaded: 150 samples, 53 features, 3 classes
+  Classes: ['contact', 'edge', 'no_edge']
+Computing baseline performance (all features)...
+  Baseline RF accuracy: 0.993 ± 0.013
+
+Running leave-one-out feature ablation...
+  Processed 1/53 features
+  Processed 11/53 features
+  Processed 21/53 features
+  Processed 31/53 features
+  Processed 41/53 features
+  Processed 51/53 features
+  Completed leave-one-out for 53 features
+
+Testing removal of top 10 features...
+  Removed top 1: 0.987 ± 0.016
+  Removed top 2: 0.973 ± 0.033
+  Removed top 3: 0.973 ± 0.033
+  Removed top 4: 0.967 ± 0.030
+  Removed top 5: 0.980 ± 0.027
+  Removed top 6: 0.973 ± 0.025
+  Removed top 7: 0.973 ± 0.033
+  Removed top 8: 0.973 ± 0.025
+  Removed top 9: 0.940 ± 0.039
+  Removed top 10: 0.953 ± 0.027
+
+Testing feature group ablation...
+  Removed spectral (4 features): 0.967 ± 0.042
+  Removed energy_ratios (5 features): 1.000 ± 0.000
+  Removed temporal (5 features): 0.987 ± 0.016
+  Removed frequency_bands (1 features): 0.993 ± 0.013
+  Removed burst_analysis (1 features): 0.993 ± 0.013
+  Removed damping (1 features): 0.993 ± 0.013
+
+Testing cumulative feature addition...
+  Top 1 features: 1.000 ± 0.000
+  Top 2 features: 1.000 ± 0.000
+  Top 3 features: 1.000 ± 0.000
+  Top 4 features: 1.000 ± 0.000
+  Top 5 features: 0.993 ± 0.013
+  Top 6 features: 0.993 ± 0.013
+  Top 7 features: 1.000 ± 0.000
+  Top 8 features: 0.993 ± 0.013
+  Top 9 features: 0.993 ± 0.013
+  Top 10 features: 1.000 ± 0.000
+  Top 15 features: 0.993 ± 0.013
+  Top 20 features: 0.993 ± 0.013
+
+Testing 20 random feature combinations...
+  Random 5 features: 0.851 ± 0.210 (range: 0.380-1.000)
+  Random 10 features: 0.934 ± 0.109 (range: 0.600-1.000)
+  Random 15 features: 0.980 ± 0.024 (range: 0.900-1.000)
+  Random 20 features: 0.990 ± 0.010 (range: 0.967-1.000)
+✅ Ablation analysis completed for soft_finger_batch_3
+✅ soft_finger_batch_3 analysis completed
+
+Checking batch: soft_finger_batch_4 at data/soft_finger_batch_4 (exists: True)
+================================================================================
+ANALYZING BATCH: soft_finger_batch_4
+================================================================================
+Expected classes: ['no metal', 'metal']
+Detected classes: ['metal', 'no metal']
+Using class order: ['no metal', 'metal']
+Research question: Can acoustic signals distinguish material properties?
+
+1. LOADING DATA FROM soft_finger_batch_4...
+----------------------------------------
+Loading batch: soft_finger_batch_4
+Found 101 WAV files
+  Loading 50 files for 'no metal'
+  no metal:   0%|          | 0/50 [00:00<?, ?it/s]  no metal: 100%|██████████| 50/50 [00:00<00:00, 6905.57it/s]
+  Loading 50 files for 'metal'
+  metal:   0%|          | 0/50 [00:00<?, ?it/s]  metal: 100%|██████████| 50/50 [00:00<00:00, 7168.53it/s]
+Loaded 100 samples
+  no metal: 50 samples
+  metal: 50 samples
+============================================================
+DATASET SUMMARY
+============================================================
+Total samples: 100
+Sample rate: 48000 Hz
+Audio duration: 2.150 ± 0.000 seconds
+Signal length: 103200 ± 0 samples
+
+Class distribution:
+  metal: 50 samples (50.0%)
+  no metal: 50 samples (50.0%)
+
+2. FEATURE EXTRACTION...
+----------------------------------------
+  Processed 50/100 samples
+  Processed 100/100 samples
+Feature extraction complete: (100, 38)
+Failed extractions: 0
+
+2.5. IMPULSE RESPONSE ANALYSIS...
+----------------------------------------
+Found sweep signal: data/soft_finger_batch_4/data/0_long_sweep.wav
+  Processed 50/100 impulse responses
+  Processed 100/100 impulse responses
+Impulse response analysis complete: (100, 15)
+Failed impulse extractions: 0
+Combined features: (100, 53) (regular + impulse)
+
+3. DIMENSIONALITY REDUCTION...
+----------------------------------------
+PCA: 22 components explain 0.954 variance
+t-SNE: Optimal perplexity = 50
+
+4. DISCRIMINATION ANALYSIS...
+----------------------------------------
+Analyzing 2 classes: [np.str_('metal'), np.str_('no metal')]
+
+5. CREATING VISUALIZATIONS...
+----------------------------------------
+  Creating impulse response visualization...
+  ✓ Saved impulse response visualization
+  Creating per-class transfer function analysis...
+  ✓ Saved per-class transfer function analysis
+  ✓ Saved enhanced visualizations to batch_analysis_results/soft_finger_batch_4
+
+6. SAVING CORE RESULTS...
+----------------------------------------
+  ✓ Results saved to batch_analysis_results/soft_finger_batch_4
+
+7. ADVANCED FEATURE ANALYSIS...
+----------------------------------------
+Running saliency analysis...
+
+📊 SALIENCY ANALYSIS FOR soft_finger_batch_4
+============================================================
+🔄 Processing features data for soft_finger_batch_4
+
+🧠 TRAINING MODEL FOR soft_finger_batch_4 (features)
+--------------------------------------------------
+Data shape: (100, 53), Classes: ['metal' 'no metal']
+Epoch 20/100, Loss: 0.2182
+Epoch 40/100, Loss: 0.0349
+Epoch 60/100, Loss: 0.0099
+Epoch 80/100, Loss: 0.0008
+Epoch 100/100, Loss: 0.0005
+✅ Test Accuracy: 0.850
+✅ Model trained successfully with 0.850 accuracy
+📊 Analyzing saliency for 10 samples
+✅ Successfully computed saliency maps for features
+✅ LIME analysis completed
+🎨 Creating saliency visualizations for soft_finger_batch_4
+✅ Found saliency results for soft_finger_batch_4
+Saliency maps available: ['features']
+✅ Saliency analysis completed for soft_finger_batch_4
+Running ablation analysis...
+
+============================================================
+FEATURE ABLATION ANALYSIS: soft_finger_batch_4
+============================================================
+Loading data for soft_finger_batch_4...
+  Loaded: 100 samples, 53 features, 2 classes
+  Classes: ['metal', 'no metal']
+Computing baseline performance (all features)...
+  Baseline RF accuracy: 0.850 ± 0.032
+
+Running leave-one-out feature ablation...
+  Processed 1/53 features
+  Processed 11/53 features
+  Processed 21/53 features
+  Processed 31/53 features
+  Processed 41/53 features
+  Processed 51/53 features
+  Completed leave-one-out for 53 features
+
+Testing removal of top 10 features...
+  Removed top 1: 0.850 ± 0.032
+  Removed top 2: 0.850 ± 0.032
+  Removed top 3: 0.870 ± 0.024
+  Removed top 4: 0.850 ± 0.032
+  Removed top 5: 0.850 ± 0.032
+  Removed top 6: 0.850 ± 0.000
+  Removed top 7: 0.860 ± 0.020
+  Removed top 8: 0.850 ± 0.000
+  Removed top 9: 0.870 ± 0.024
+  Removed top 10: 0.830 ± 0.040
+
+Testing feature group ablation...
+  Removed spectral (4 features): 0.850 ± 0.032
+  Removed energy_ratios (5 features): 0.860 ± 0.020
+  Removed temporal (5 features): 0.840 ± 0.037
+  Removed frequency_bands (1 features): 0.840 ± 0.020
+  Removed burst_analysis (1 features): 0.850 ± 0.032
+  Removed damping (1 features): 0.850 ± 0.032
+
+Testing cumulative feature addition...
+  Top 1 features: 0.470 ± 0.060
+  Top 2 features: 0.850 ± 0.045
+  Top 3 features: 0.850 ± 0.071
+  Top 4 features: 0.830 ± 0.051
+  Top 5 features: 0.820 ± 0.060
+  Top 6 features: 0.830 ± 0.051
+  Top 7 features: 0.850 ± 0.032
+  Top 8 features: 0.850 ± 0.032
+  Top 9 features: 0.850 ± 0.032
+  Top 10 features: 0.840 ± 0.037
+  Top 15 features: 0.840 ± 0.049
+  Top 20 features: 0.840 ± 0.020
+
+Testing 20 random feature combinations...
+  Random 5 features: 0.709 ± 0.115 (range: 0.448-0.870)
+  Random 10 features: 0.792 ± 0.068 (range: 0.611-0.870)
+  Random 15 features: 0.828 ± 0.039 (range: 0.729-0.880)
+  Random 20 features: 0.843 ± 0.027 (range: 0.770-0.880)
+✅ Ablation analysis completed for soft_finger_batch_4
+✅ soft_finger_batch_4 analysis completed
+
+📊 Combined summary saved to: batch_analysis_results/combined_analysis_summary.txt
+🎉 COMPREHENSIVE ACOUSTIC ANALYSIS COMPLETE!
+Results saved in: batch_analysis_results
+
+Key outputs:
+• Core analysis: discrimination, dimensionality reduction, visualizations
+• Advanced analysis: saliency maps, ablation testing, feature importance
+• Individual batch analysis reports and enhanced plots
+• Separate CSV files for each experimental condition
+• Combined summary across all experiments
+Test completed successfully!

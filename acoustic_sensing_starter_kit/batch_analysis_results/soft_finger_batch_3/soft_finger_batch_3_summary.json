@@ -14,7 +14,7 @@
   },
   "dataset_summary": {
     "n_samples": 150,
-    "n_features": 38,
+    "n_features": 53,
     "classes": [
       "contact",
       "edge",
@@ -27,8 +27,8 @@
     }
   },
   "performance_summary": {
-    "significant_features_ratio": 0.6578947368421053,
-    "fisher_discriminant_ratio": 0.20698472800624426,
-    "best_classification_accuracy": 1.0
+    "significant_features_ratio": 0.6415094339622641,
+    "fisher_discriminant_ratio": 0.16724528853984058,
+    "best_classification_accuracy": 0.9933333333333334
   }
 }
