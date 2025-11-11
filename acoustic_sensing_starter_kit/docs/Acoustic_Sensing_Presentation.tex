@@ -18,7 +18,7 @@
 \definecolor{warningorange}{RGB}{255,193,7}
 
 % Title page information
-\title{Acoustic Sensing for Geometric Reconstruction}
+\title{Geometric Reconstruction using Acoustic Sensing}
 \author{Georg Wolnik}
 \date{November 10, 2025}
 
@@ -36,28 +36,6 @@
 
 % Section 1: Problem Definition
 \section{Research Motivation \& Questions}
-
-\begin{frame}{The Challenge: Geometric Reconstruction without Vision}
-\begin{columns}
-\column{0.6\textwidth}
-\textbf{Core Problem:}
-\begin{itemize}
-    \item Traditional tactile sensing limited to surface contact
-    \item Vision-based systems fail in occluded/dark environments
-    \item Need for \textcolor{primaryblue}{\textbf{remote geometric sensing}}
-\end{itemize}
-
-\vspace{1em}
-\textbf{Our Hypothesis:}
-\begin{itemize}
-    \item Acoustic signals contain \textcolor{successgreen}{\textbf{geometric information}}
-    \item Frequency analysis reveals \textcolor{successgreen}{\textbf{material \& shape properties}}
-    \item Machine learning can \textcolor{successgreen}{\textbf{decode acoustic signatures}}
-\end{itemize}
-
-\column{0.4\textwidth}
-\end{columns}
-\end{frame}
 
 \begin{frame}{Research Questions}
 \begin{enumerate}
@@ -125,7 +103,7 @@
     \item Spectral characteristics (centroid, bandwidth, rolloff)
     \item Temporal dynamics (zero crossings, envelope)
     \item Frequency domain analysis (MFCCs, spectral contrast)
-    \item High-frequency content (>8kHz signatures)
+    \item High-frequency content ($>$8kHz signatures)
 \end{itemize}
 
 \vspace{1em}
@@ -187,10 +165,10 @@ YES - 97-100\% accuracy across all geometric tasks proves signals contain comple
 \textbf{Top 6 Most Important Features:}
 \begin{enumerate}
     \item \texttt{spectral\_bandwidth} - Frequency spread
-    \item \textcolor{primaryblue}{\textbf{\ding{108} resonance\_skewness}} - Resonance asymmetry
-    \item \textcolor{primaryblue}{\textbf{\ding{108} freq\_response\_centroid}} - Response center
+    \item \textcolor{primaryblue}{\textbf{resonance\_skewness}} - Resonance asymmetry
+    \item \textcolor{primaryblue}{\textbf{freq\_response\_centroid}} - Response center
     \item \texttt{ultra\_high\_energy\_ratio} - High-freq content
-    \item \textcolor{primaryblue}{\textbf{\ding{108} decay\_amplitude}} - Impulse decay
+    \item \textcolor{primaryblue}{\textbf{decay\_amplitude}} - Impulse decay
     \item \texttt{ultra\_high\_ratio} - Surface properties
 \end{enumerate}
 
@@ -246,11 +224,6 @@ Mid-frequency spectral features (200-2000Hz) + impulse response characteristics 
     \node at (4.5,0.75) {\small Function};
 \end{tikzpicture}
 \end{columns}
-
-\vspace{0.5em}
-\begin{alertblock}{Breakthrough Discovery}
-Impulse response deconvolution reveals the pure acoustic "fingerprint" of geometric conditions, providing the missing link for reliable geometric reconstruction.
-\end{alertblock}
 \end{frame}
 
 \begin{frame}{Key Finding 4: Classifier Performance Comparison}
@@ -414,7 +387,7 @@ Comprehensive optimization strategy defined with quantitative validation across 
 \vspace{1em}
 \textbf{Performance Metrics:}
 \begin{itemize}
-    \item \textcolor{successgreen}{\textbf{Feature extraction:}} <1ms for critical features
+    \item \textcolor{successgreen}{\textbf{Feature extraction:}} $<$1ms for critical features
     \item \textcolor{successgreen}{\textbf{Classification:}} Real-time feasible
     \item \textcolor{successgreen}{\textbf{Update rate:}} 10+ Hz possible
     \item \textcolor{successgreen}{\textbf{Memory:}} Minimal (6 features sufficient)
@@ -425,16 +398,16 @@ Comprehensive optimization strategy defined with quantitative validation across 
     % Real-time pipeline
     \node[rectangle, draw, fill=blue!20, text width=4cm, text centered] at (0,6) {Audio Input 2s sweep};
     
-    \node[rectangle, draw, fill=green!20, text width=4cm, text centered] at (0,4.5) {Impulse Response <1ms};
+    \node[rectangle, draw, fill=green!20, text width=4cm, text centered] at (0,4.5) {Impulse Response $<$1ms};
     
-    \node[rectangle, draw, fill=orange!20, text width=4cm, text centered] at (0,3) {6 Features <1ms};
+    \node[rectangle, draw, fill=orange!20, text width=4cm, text centered] at (0,3) {6 Features $<$1ms};
     
-    \node[rectangle, draw, fill=red!20, text width=4cm, text centered] at (0,1.5) {Classification <1ms};
+    \node[rectangle, draw, fill=red!20, text width=4cm, text centered] at (0,1.5) {Classification $<$1ms};
     
     \node[rectangle, draw, fill=purple!20, text width=4cm, text centered] at (0,0) {Geometric Update};
     
     % Arrows
-    \foreach \y in {6.2,4.7,3.2,1.7,0} {
+    \foreach \y in {1.0, 2.5, 4.0, 5.5} {
         \draw[->] (0,\y) -- (0,\y-0.5);
     }
 \end{tikzpicture}
@@ -476,10 +449,8 @@ Comprehensive optimization strategy defined with quantitative validation across 
 \vspace{1em}
 \textbf{Next Experiments:}
 \begin{itemize}
-    \item 3D object reconstruction validation
-    \item Continuous parameter regression
-    \item Real-time mapping demonstrations
-    \item Complex geometry challenges
+    \item 2D surface reconstruction
+    \item testing limits on finger (how small can the detected delta between clases be?)
 \end{itemize}
 \end{columns}
 \end{frame}

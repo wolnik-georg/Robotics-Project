@@ -1520,6 +1520,7 @@ INPUT Acoustic_Sensing_Presentation.aux
 INPUT ./Acoustic_Sensing_Presentation.out
 INPUT ./Acoustic_Sensing_Presentation.out
 INPUT /home/georg/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/tcss1095.600pk
+INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb

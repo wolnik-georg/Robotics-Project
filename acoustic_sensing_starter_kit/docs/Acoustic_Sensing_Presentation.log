@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2025.11.10)  11 NOV 2025 09:59
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2025.11.10)  11 NOV 2025 14:33
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -797,21 +797,21 @@ Package pgfplots Warning: running in backwards compatibility mode (unsuitable ti
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./Acoustic_Sensing_Presentation.toc) [2
 
+] [3
+
 ]
-LaTeX Font Info:    Trying to load font information for U+msa on input line 60.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 96.
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 60.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 96.
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Trying to load font information for OT1+mathkerncmss on input line 60.
+LaTeX Font Info:    Trying to load font information for OT1+mathkerncmss on input line 96.
  (/usr/share/texlive/texmf-dist/tex/latex/sansmathaccent/ot1mathkerncmss.fd
 File: ot1mathkerncmss.fd 2020/01/31 Fontinst v1.933 font definitions for OT1/mathkerncmss.
-) [3
-
-] [4
+) [4
 
 ] [5
 
@@ -819,80 +819,74 @@ File: ot1mathkerncmss.fd 2020/01/31 Fontinst v1.933 font definitions for OT1/mat
 
 ] [7
 
-] [8
-
 ]
-LaTeX Font Info:    Trying to load font information for TS1+cmss on input line 254.
+LaTeX Font Info:    Trying to load font information for TS1+cmss on input line 227.
  (/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmss.fd
 File: ts1cmss.fd 2019/12/16 v2.5j Standard LaTeX font definitions
-)
-Overfull \vbox (43.78961pt too high) detected at line 254
+) [8
+
+]
+Overfull \vbox (0.80061pt too high) detected at line 257
  []
 
 [9
 
 ]
-Overfull \vbox (0.80061pt too high) detected at line 284
- []
-
-[10
-
-]
-<soft_finger_batch_2_comprehensive_analysis.png, id=387, 1003.1076pt x 715.473pt>
+<soft_finger_batch_2_comprehensive_analysis.png, id=349, 1003.1076pt x 715.473pt>
 File: soft_finger_batch_2_comprehensive_analysis.png Graphic file (type png)
 <use soft_finger_batch_2_comprehensive_analysis.png>
-Package pdftex.def Info: soft_finger_batch_2_comprehensive_analysis.png  used on input line 308.
+Package pdftex.def Info: soft_finger_batch_2_comprehensive_analysis.png  used on input line 281.
 (pdftex.def)             Requested size: 216.67201pt x 154.54424pt.
- [11
+ [10
 
  <./soft_finger_batch_2_comprehensive_analysis.png>]
-<soft_finger_batch_3_class_transfer_functions.png, id=416, 1004.553pt x 708.4869pt>
+<soft_finger_batch_3_class_transfer_functions.png, id=378, 1004.553pt x 708.4869pt>
 File: soft_finger_batch_3_class_transfer_functions.png Graphic file (type png)
 <use soft_finger_batch_3_class_transfer_functions.png>
-Package pdftex.def Info: soft_finger_batch_3_class_transfer_functions.png  used on input line 331.
+Package pdftex.def Info: soft_finger_batch_3_class_transfer_functions.png  used on input line 304.
 (pdftex.def)             Requested size: 216.67201pt x 152.80818pt.
- [12
+ [11
 
  <./soft_finger_batch_3_class_transfer_functions.png>]
-<soft_finger_batch_2_saliency_analysis.png, id=443, 1076.823pt x 711.8595pt>
+<soft_finger_batch_2_saliency_analysis.png, id=406, 1076.823pt x 711.8595pt>
 File: soft_finger_batch_2_saliency_analysis.png Graphic file (type png)
 <use soft_finger_batch_2_saliency_analysis.png>
-Package pdftex.def Info: soft_finger_batch_2_saliency_analysis.png  used on input line 354.
+Package pdftex.def Info: soft_finger_batch_2_saliency_analysis.png  used on input line 327.
 (pdftex.def)             Requested size: 216.67201pt x 143.22748pt.
- [13
+ [12
 
  <./soft_finger_batch_2_saliency_analysis.png>]
-Overfull \vbox (65.63966pt too high) detected at line 401
+Overfull \vbox (65.63966pt too high) detected at line 374
  []
 
-[14
+[13
 
-] [15
+] [14
 
 ]
-Overfull \vbox (39.68468pt too high) detected at line 485
+Overfull \vbox (7.09299pt too high) detected at line 456
+ []
+
+[15
+
+]
+Overfull \vbox (15.30292pt too high) detected at line 479
  []
 
 [16
 
 ]
-Overfull \vbox (15.30292pt too high) detected at line 508
+Underfull \hbox (badness 1248) in paragraph at lines 502--502
+[][]\OT1/cmss/bx/n/10 Task-specific place-ment[] \OT1/cmss/m/n/10 - Tip/middle/base op-ti-
  []
 
 [17
 
 ]
-Underfull \hbox (badness 1248) in paragraph at lines 531--531
-[][]\OT1/cmss/bx/n/10 Task-specific place-ment[] \OT1/cmss/m/n/10 - Tip/middle/base op-ti-
+Overfull \vbox (58.52794pt too high) detected at line 539
  []
 
 [18
-
-]
-Overfull \vbox (58.52794pt too high) detected at line 568
- []
-
-[19
 
 ]
 \tf@nav=\write6
@@ -909,18 +903,18 @@ Package rerunfilecheck Info: File `Acoustic_Sensing_Presentation.out' has not ch
 (rerunfilecheck)             Checksum: 122081D7B6A373433C9D5EA9795F6CCD;1113.
  ) 
 Here is how much of TeX's memory you used:
- 35273 strings out of 480247
- 850575 string characters out of 5896150
+ 35262 strings out of 480247
+ 850260 string characters out of 5896150
  1231281 words of memory out of 5000000
- 52500 multiletter control sequences out of 15000+600000
+ 52491 multiletter control sequences out of 15000+600000
  483551 words of font info for 79 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  128i,15n,122p,815b,967s stack positions out of 5000i,500n,10000p,200000b,80000s
- </home/georg/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/tcss1095.600pk></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/zapfding/uzdr.pfb>
-Output written on Acoustic_Sensing_Presentation.pdf (19 pages, 1982231 bytes).
+ </home/georg/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/tcss1095.600pk></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/zapfding/uzdr.pfb>
+Output written on Acoustic_Sensing_Presentation.pdf (18 pages, 1985654 bytes).
 PDF statistics:
- 728 PDF objects out of 1000 (max. 8388607)
- 613 compressed objects within 7 object streams
- 45 named destinations out of 1000 (max. 500000)
- 448 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 693 PDF objects out of 1000 (max. 8388607)
+ 584 compressed objects within 6 object streams
+ 43 named destinations out of 1000 (max. 500000)
+ 412 words of extra memory for PDF output out of 10000 (max. 10000000)
 
