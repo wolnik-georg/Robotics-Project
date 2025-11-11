@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2025.11.10)  10 NOV 2025 22:00
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2025.11.10)  11 NOV 2025 09:59
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -638,24 +638,24 @@ File: l3backend-pdftex.def 2022-01-12 L3 backend support: PDF output (pdfTeX)
 ) (./Acoustic_Sensing_Presentation.aux)
 \openout1 = `Acoustic_Sensing_Presentation.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -710,7 +710,7 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
  (/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
-Package hyperref Info: Link coloring OFF on input line 27.
+Package hyperref Info: Link coloring OFF on input line 25.
  (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
  (/usr/share/texlive/texmf-dist/tex/latex/refcount/refcount.sty
@@ -720,62 +720,62 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count356
 )
-LaTeX Info: Redefining \ref on input line 27.
-LaTeX Info: Redefining \pageref on input line 27.
-LaTeX Info: Redefining \nameref on input line 27.
+LaTeX Info: Redefining \ref on input line 25.
+LaTeX Info: Redefining \pageref on input line 25.
+LaTeX Info: Redefining \nameref on input line 25.
  (./Acoustic_Sensing_Presentation.out) (./Acoustic_Sensing_Presentation.out)
 \@outlinefile=\write5
 \openout5 = `Acoustic_Sensing_Presentation.out'.
 
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/cmr/m/n --> OT1/cmss/m/n on input line 27.
+(Font)                  OT1/cmr/m/n --> OT1/cmss/m/n on input line 25.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 27.
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 25.
 \symnumbers=\mathgroup6
 \sympureletters=\mathgroup7
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
-(Font)                  OT1/cmss/m/n --> OT1/cmr/m/n on input line 27.
-LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 27.
+(Font)                  OT1/cmss/m/n --> OT1/cmr/m/n on input line 25.
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 25.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 27.
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 25.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 27.
-LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 27.
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 25.
+LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 25.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> OT1/cmss/m/n on input line 27.
+(Font)                  OT1/cmss/m/n --> OT1/cmss/m/n on input line 25.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> OT1/cmss/m/n on input line 27.
-LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 27.
+(Font)                  OT1/cmss/bx/n --> OT1/cmss/m/n on input line 25.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 25.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/cmr/m/it --> OT1/cmss/m/it on input line 27.
+(Font)                  OT1/cmr/m/it --> OT1/cmss/m/it on input line 25.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmr/bx/it --> OT1/cmss/m/it on input line 27.
-LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 27.
+(Font)                  OT1/cmr/bx/it --> OT1/cmss/m/it on input line 25.
+LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 25.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 27.
+(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 25.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 27.
+(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 25.
 LaTeX Font Info:    Overwriting symbol font `numbers' in version `bold'
-(Font)                  OT1/cmss/m/n --> OT1/cmss/b/n on input line 27.
+(Font)                  OT1/cmss/m/n --> OT1/cmss/b/n on input line 25.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
-(Font)                  OT1/cmss/m/it --> OT1/cmss/b/it on input line 27.
+(Font)                  OT1/cmss/m/it --> OT1/cmss/b/it on input line 25.
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `bold'
-(Font)                  OT1/cmss/b/n --> OT1/cmr/b/n on input line 27.
+(Font)                  OT1/cmss/b/n --> OT1/cmr/b/n on input line 25.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  OT1/cmss/b/n --> OT1/cmss/b/n on input line 27.
+(Font)                  OT1/cmss/b/n --> OT1/cmss/b/n on input line 25.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/m/n --> OT1/cmss/b/n on input line 27.
+(Font)                  OT1/cmss/m/n --> OT1/cmss/b/n on input line 25.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmss/m/it --> OT1/cmss/b/it on input line 27.
+(Font)                  OT1/cmss/m/it --> OT1/cmss/b/it on input line 25.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> OT1/cmtt/b/n on input line 27.
-LaTeX Font Info:    Redeclaring symbol font `pureletters' on input line 27.
+(Font)                  OT1/cmtt/m/n --> OT1/cmtt/b/n on input line 25.
+LaTeX Font Info:    Redeclaring symbol font `pureletters' on input line 25.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `normal'
-(Font)                  OT1/cmss/m/it --> OT1/mathkerncmss/m/sl on input line 27.
+(Font)                  OT1/cmss/m/it --> OT1/mathkerncmss/m/sl on input line 25.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
-(Font)                  OT1/cmss/b/it --> OT1/mathkerncmss/m/sl on input line 27.
+(Font)                  OT1/cmss/b/it --> OT1/mathkerncmss/m/sl on input line 25.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
-(Font)                  OT1/mathkerncmss/m/sl --> OT1/mathkerncmss/bx/sl on input line 27.
+(Font)                  OT1/mathkerncmss/m/sl --> OT1/mathkerncmss/bx/sl on input line 25.
  (/usr/share/texlive/texmf-dist/tex/latex/translator/translator-basic-dictionary-English.dict
 Dictionary: translator-basic-dictionary, Language: English 
 ) (/usr/share/texlive/texmf-dist/tex/latex/translator/translator-bibliography-dictionary-English.dict
@@ -791,22 +791,22 @@ Dictionary: translator-theorem-dictionary, Language: English
 )
 
 Package pgfplots Warning: running in backwards compatibility mode (unsuitable tick labels; missing features). Consider writing \pgfplotsset{compat=1.18} into your preamble.
- on input line 27.
+ on input line 25.
 
 (./Acoustic_Sensing_Presentation.nav) [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./Acoustic_Sensing_Presentation.toc) [2
 
 ]
-LaTeX Font Info:    Trying to load font information for U+msa on input line 80.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 60.
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 80.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 60.
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Trying to load font information for OT1+mathkerncmss on input line 80.
+LaTeX Font Info:    Trying to load font information for OT1+mathkerncmss on input line 60.
  (/usr/share/texlive/texmf-dist/tex/latex/sansmathaccent/ot1mathkerncmss.fd
 File: ot1mathkerncmss.fd 2020/01/31 Fontinst v1.933 font definitions for OT1/mathkerncmss.
 ) [3
@@ -822,22 +822,17 @@ File: ot1mathkerncmss.fd 2020/01/31 Fontinst v1.933 font definitions for OT1/mat
 ] [8
 
 ]
-LaTeX Font Info:    Trying to load font information for TS1+cmss on input line 276.
+LaTeX Font Info:    Trying to load font information for TS1+cmss on input line 254.
  (/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmss.fd
 File: ts1cmss.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 )
-Overfull \hbox (13.31657pt too wide) in paragraph at lines 276--276
-[][]  
- []
-
-
-Overfull \vbox (43.78961pt too high) detected at line 276
+Overfull \vbox (43.78961pt too high) detected at line 254
  []
 
 [9
 
 ]
-Overfull \vbox (0.80061pt too high) detected at line 306
+Overfull \vbox (0.80061pt too high) detected at line 284
  []
 
 [10
@@ -846,7 +841,7 @@ Overfull \vbox (0.80061pt too high) detected at line 306
 <soft_finger_batch_2_comprehensive_analysis.png, id=387, 1003.1076pt x 715.473pt>
 File: soft_finger_batch_2_comprehensive_analysis.png Graphic file (type png)
 <use soft_finger_batch_2_comprehensive_analysis.png>
-Package pdftex.def Info: soft_finger_batch_2_comprehensive_analysis.png  used on input line 330.
+Package pdftex.def Info: soft_finger_batch_2_comprehensive_analysis.png  used on input line 308.
 (pdftex.def)             Requested size: 216.67201pt x 154.54424pt.
  [11
 
@@ -854,7 +849,7 @@ Package pdftex.def Info: soft_finger_batch_2_comprehensive_analysis.png  used on
 <soft_finger_batch_3_class_transfer_functions.png, id=416, 1004.553pt x 708.4869pt>
 File: soft_finger_batch_3_class_transfer_functions.png Graphic file (type png)
 <use soft_finger_batch_3_class_transfer_functions.png>
-Package pdftex.def Info: soft_finger_batch_3_class_transfer_functions.png  used on input line 353.
+Package pdftex.def Info: soft_finger_batch_3_class_transfer_functions.png  used on input line 331.
 (pdftex.def)             Requested size: 216.67201pt x 152.80818pt.
  [12
 
@@ -862,53 +857,42 @@ Package pdftex.def Info: soft_finger_batch_3_class_transfer_functions.png  used 
 <soft_finger_batch_2_saliency_analysis.png, id=443, 1076.823pt x 711.8595pt>
 File: soft_finger_batch_2_saliency_analysis.png Graphic file (type png)
 <use soft_finger_batch_2_saliency_analysis.png>
-Package pdftex.def Info: soft_finger_batch_2_saliency_analysis.png  used on input line 376.
+Package pdftex.def Info: soft_finger_batch_2_saliency_analysis.png  used on input line 354.
 (pdftex.def)             Requested size: 216.67201pt x 143.22748pt.
  [13
 
  <./soft_finger_batch_2_saliency_analysis.png>]
-Overfull \vbox (65.63966pt too high) detected at line 423
+Overfull \vbox (65.63966pt too high) detected at line 401
  []
 
 [14
 
-]
-Overfull \hbox (2.6808pt too wide) in paragraph at lines 464--464
- [][]\OT1/cmss/m/n/10.95 Classification 
- []
-
-[15
+] [15
 
 ]
-Overfull \vbox (39.68468pt too high) detected at line 507
+Overfull \vbox (39.68468pt too high) detected at line 485
  []
 
 [16
 
 ]
-Overfull \vbox (15.30292pt too high) detected at line 530
+Overfull \vbox (15.30292pt too high) detected at line 508
  []
 
 [17
 
 ]
-Underfull \hbox (badness 1248) in paragraph at lines 553--553
+Underfull \hbox (badness 1248) in paragraph at lines 531--531
 [][]\OT1/cmss/bx/n/10 Task-specific place-ment[] \OT1/cmss/m/n/10 - Tip/middle/base op-ti-
  []
 
 [18
 
 ]
-Overfull \vbox (58.52794pt too high) detected at line 590
+Overfull \vbox (58.52794pt too high) detected at line 568
  []
 
 [19
-
-]
-Overfull \vbox (18.57965pt too high) detected at line 615
- []
-
-[20
 
 ]
 \tf@nav=\write6
@@ -925,18 +909,18 @@ Package rerunfilecheck Info: File `Acoustic_Sensing_Presentation.out' has not ch
 (rerunfilecheck)             Checksum: 122081D7B6A373433C9D5EA9795F6CCD;1113.
  ) 
 Here is how much of TeX's memory you used:
- 35302 strings out of 480247
- 851090 string characters out of 5896150
+ 35273 strings out of 480247
+ 850575 string characters out of 5896150
  1231281 words of memory out of 5000000
- 52526 multiletter control sequences out of 15000+600000
- 484201 words of font info for 81 fonts, out of 8000000 for 9000
+ 52500 multiletter control sequences out of 15000+600000
+ 483551 words of font info for 79 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  128i,15n,122p,815b,967s stack positions out of 5000i,500n,10000p,200000b,80000s
- </home/georg/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/tcss1095.600pk></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/zapfding/uzdr.pfb>
-Output written on Acoustic_Sensing_Presentation.pdf (20 pages, 1997999 bytes).
+ </home/georg/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/tcss1095.600pk></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/zapfding/uzdr.pfb>
+Output written on Acoustic_Sensing_Presentation.pdf (19 pages, 1982231 bytes).
 PDF statistics:
- 759 PDF objects out of 1000 (max. 8388607)
- 641 compressed objects within 7 object streams
- 47 named destinations out of 1000 (max. 500000)
+ 728 PDF objects out of 1000 (max. 8388607)
+ 613 compressed objects within 7 object streams
+ 45 named destinations out of 1000 (max. 500000)
  448 words of extra memory for PDF output out of 10000 (max. 10000000)
 

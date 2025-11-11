@@ -19,9 +19,7 @@
 
 % Title page information
 \title{Acoustic Sensing for Geometric Reconstruction}
-\subtitle{A Data-Driven Approach to Tactile-Acoustic Object Recognition}
 \author{Georg Wolnik}
-\institute{Robotics Research Project}
 \date{November 10, 2025}
 
 \begin{document}
@@ -58,24 +56,6 @@
 \end{itemize}
 
 \column{0.4\textwidth}
-\begin{tikzpicture}[scale=0.8]
-    % Finger
-    \draw[thick, fill=orange!30] (0,0) ellipse (0.3 and 1);
-    \node at (0,-1.5) {\small Soft Finger};
-    
-    % Object
-    \draw[thick, fill=gray!30] (2,0) rectangle (3,1);
-    \node at (2.5,-0.5) {\small Object};
-    
-    % Sound waves
-    \foreach \y in {0.2,0.4,0.6} {
-        \draw[primaryblue, thick] (0.3,\y) to[out=0, in=180] (1.7,\y);
-    }
-    
-    % Microphone
-    \draw[thick, fill=red!30] (0,-0.5) circle (0.1);
-    \node at (-0.5,-0.5) {\tiny Mic};
-\end{tikzpicture}
 \end{columns}
 \end{frame}
 
@@ -86,8 +66,6 @@
     \item \textcolor{primaryblue}{\textbf{Signal Relevance:}} Which parts of the acoustic data are actually relevant for classification?
     
     \item \textcolor{primaryblue}{\textbf{Interaction Design:}} How should we design finger-object interactions for maximum information?
-    
-    \item \textcolor{primaryblue}{\textbf{Sensor Placement:}} Where on the finger should sensors be positioned?
     
     \item \textcolor{primaryblue}{\textbf{Signal Design:}} What acoustic signals should we transmit?
     
@@ -116,7 +94,7 @@
 \begin{itemize}
     \item \textcolor{successgreen}{\textbf{Contact Position}} (tip/middle/base)
     \item \textcolor{successgreen}{\textbf{Edge Detection}} (contact/edge/no-edge)
-    \item \textcolor{successgreen}{\textbf{Material Classification}} (metal/non-metal)
+    \item \textcolor{successgreen}{\textbf{Material Classification}} (paper clip/no paper clip)
 \end{itemize}
 
 \column{0.5\textwidth}
@@ -172,8 +150,8 @@
     \draw[->] (0,1.7) -- (0,1.3);
     \draw[->] (0,0.7) -- (0,0.3);
     
-    \node[right] at (0.5,2) {\tiny Impulse Response};
-    \node[right] at (0.5,1) {\tiny 53 Features};
+    \node[right] at (2.5,2) {\tiny Impulse Response};
+    \node[right] at (2.5,1) {\tiny 53 Features};
 \end{tikzpicture}
 \end{columns}
 \end{frame}
@@ -190,7 +168,7 @@
 \midrule
 Contact Position & 4 (tip/middle/base/none) & \textcolor{successgreen}{\textbf{98.5\%}} & Random Forest \\
 Edge Detection & 3 (contact/edge/no-edge) & \textcolor{successgreen}{\textbf{99.3\%}} & LDA \\
-Material Detection & 2 (metal/no-metal) & \textcolor{warningorange}{\textbf{88.0\%}} & SVM (RBF) \\
+Fine line Detection & 2 (paper clip/no paper clip) & \textcolor{warningorange}{\textbf{88.0\%}} & SVM (RBF) \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -262,10 +240,10 @@ Mid-frequency spectral features (200-2000Hz) + impulse response characteristics 
     \node at (0,1) {\small System Response};
     \draw[thick, red] (0,0.5) sin (0.5,0.8) cos (1,0.5) sin (1.5,0.2) cos (2,0.5) sin (2.5,0.8) cos (3,0.5);
     
-    \node at (4,1.25) {$\rightarrow$};
+    \node at (3.5,1.25) {$\rightarrow$};
     
-    \node at (5.5,1.25) {\small Transfer};
-    \node at (5.5,0.75) {\small Function};
+    \node at (4.5,1.25) {\small Transfer};
+    \node at (4.5,0.75) {\small Function};
 \end{tikzpicture}
 \end{columns}
 
@@ -445,19 +423,19 @@ Comprehensive optimization strategy defined with quantitative validation across 
 \column{0.4\textwidth}
 \begin{tikzpicture}[scale=0.7]
     % Real-time pipeline
-    \node[rectangle, draw, fill=blue!20, text width=2cm, text centered] at (0,4) {Audio Input 2s sweep};
+    \node[rectangle, draw, fill=blue!20, text width=4cm, text centered] at (0,6) {Audio Input 2s sweep};
     
-    \node[rectangle, draw, fill=green!20, text width=2cm, text centered] at (0,3) {Impulse Response <1ms};
+    \node[rectangle, draw, fill=green!20, text width=4cm, text centered] at (0,4.5) {Impulse Response <1ms};
     
-    \node[rectangle, draw, fill=orange!20, text width=2cm, text centered] at (0,2) {6 Features <1ms};
+    \node[rectangle, draw, fill=orange!20, text width=4cm, text centered] at (0,3) {6 Features <1ms};
     
-    \node[rectangle, draw, fill=red!20, text width=2cm, text centered] at (0,1) {Classification <1ms};
+    \node[rectangle, draw, fill=red!20, text width=4cm, text centered] at (0,1.5) {Classification <1ms};
     
-    \node[rectangle, draw, fill=purple!20, text width=2cm, text centered] at (0,0) {Geometric Update};
+    \node[rectangle, draw, fill=purple!20, text width=4cm, text centered] at (0,0) {Geometric Update};
     
     % Arrows
-    \foreach \y in {3.7,2.7,1.7,0.7} {
-        \draw[->] (0,\y) -- (0,\y-0.4);
+    \foreach \y in {6.2,4.7,3.2,1.7,0} {
+        \draw[->] (0,\y) -- (0,\y-0.5);
     }
 \end{tikzpicture}
 \end{columns}
@@ -556,7 +534,7 @@ Q7 & \textcolor{successgreen}{\textbf{Strong regression potential}} - Continuous
 \begin{columns}
 \column{0.6\textwidth}
 \begin{alertblock}{Project Status: VALIDATED \& READY}
-Your acoustic sensing approach is \textbf{scientifically validated} and \textbf{technically ready} for geometric reconstruction implementation.
+The acoustic sensing approach is \textbf{scientifically validated} and \textbf{technically ready} for geometric reconstruction implementation.
 \end{alertblock}
 
 \vspace{1em}
@@ -587,31 +565,6 @@ Your acoustic sensing approach is \textbf{scientifically validated} and \textbf{
 \begin{block}{Next Phase}
 \textcolor{primaryblue}{\textbf{Implement and validate full geometric reconstruction system with impulse response features.}} \checkmark
 \end{block}
-\end{frame}
-
-\begin{frame}{Thank You - Questions?}
-\begin{center}
-\Large
-\textbf{Acoustic Sensing for Geometric Reconstruction}
-
-\vspace{1em}
-\textcolor{primaryblue}{\textbf{97-100\% Accuracy Achieved}}
-
-\vspace{1em}
-\textcolor{successgreen}{\textbf{All Research Questions Answered}}
-
-\vspace{1em}
-\textcolor{warningorange}{\textbf{Ready for Implementation}}
-
-\vspace{2em}
-\normalsize
-Georg Wolnik \\
-November 10, 2025 \\
-Robotics Research Project
-
-\vspace{1em}
-\textit{Based on 4 experimental batches, 650 samples, 53 features, \\ comprehensive statistical validation}
-\end{center}
 \end{frame}
 
 \end{document}
