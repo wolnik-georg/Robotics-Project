@@ -1,0 +1,28 @@
+
+
+🎯 FREQUENCY BAND ABLATION ANALYSIS RESULTS
+============================================
+
+📊 PERFORMANCE RANKING (Random Forest):
+1. Full Spectrum (200-20000 Hz):     97.5% ± 2.7%  🏆 BEST
+2. High Combined (2000-20000 Hz):    96.5% ± 2.5%  🏆
+3. Extended (8000-20000 Hz):         96.0% ± 4.1%  🏆
+4. Low-Mid (200-500 Hz):             90.0% ± 3.5%  ✅
+5. Ultra-High (4000-8000 Hz):        86.5% ± 6.2%  ✅
+6. High (2000-4000 Hz):              82.5% ± 4.2%  ✅
+7. Mid-Combined (200-4000 Hz):       81.5% ± 3.4%  ✅
+8. High-Mid (1000-2000 Hz):          80.5% ± 4.3%  ✅
+9. Proposed (200-2000 Hz):           72.5% ± 2.2%  ⚠️ UNDERPERFORMS
+10. Mid (500-1000 Hz):               70.5% ± 5.1%  ⚠️
+
+🚨 KEY FINDINGS:
+• Your 200-2000Hz claim is INVALIDATED
+• Higher frequencies (>2000Hz) are MORE discriminative
+• 8000-20000Hz alone achieves 96% accuracy
+• Low-mid frequencies (200-500Hz) outperform your proposed range
+• Best performance uses full spectrum or high frequencies
+
+🔬 SCIENTIFIC CONCLUSION:
+The hypothesis that 200-2000Hz contains the most discriminative 
+information is NOT supported by experimental evidence.
+
