@@ -18,7 +18,7 @@
 \definecolor{warningorange}{RGB}{255,193,7}
 
 % Title page information
-\title{Geometric Reconstruction using Acoustic Sensing}
+\title{Geometrical Reconstruction using Acoustic Tactile Sensing}
 \author{Georg Wolnik}
 \date{November 11, 2025}
 
@@ -184,17 +184,7 @@
 \begin{itemize}
     \item PCA (left): Shows linear separability of classes
     \item t-SNE (right): Reveals nonlinear cluster structure
-    \item Contact position: 4 distinct clusters (tip/middle/base/no contact)
-    \item Edge detection: 3 well-separated groups
-    \item Paper clip detection: 2 classes with some overlap
-\end{itemize}
-
-\vspace{0.5em}
-\textbf{Key Insights:}
-\begin{itemize}
     \item Clear class separation indicates discriminative features
-    \item Nonlinear methods show tighter clusters
-    \item Consistent performance across visualization methods
 \end{itemize}
 
 \vspace{0.5em}
@@ -313,28 +303,8 @@ Transfer function is independent of the input signal - it characterizes the acou
 \end{frame}
 
 % Slide 12: Transfer Function - Example Result
-\begin{frame}{Transfer Function: System Response Analysis}
-\footnotesize
-\textbf{Complete System Response Analysis:}
-
-\vspace{0.5em}
-\textbf{What It Shows:}
-\begin{itemize}
-    \item Input sweep spectrum (top-left)
-    \item Response spectrum (top-right) 
-    \item System transfer function (bottom-left)
-    \item Corresponding time-domain waveform (bottom-right)
-\end{itemize}
-
-\vspace{0.5em}
-\textbf{Key Insights:}
-\begin{itemize}
-    \item Transfer function reveals frequency-dependent system behavior
-    \item Resonances and anti-resonances characterize contact geometry
-    \item Damping properties affect peak shapes and widths
-\end{itemize}
-
-\includegraphics[width=\textwidth, height=0.6\textheight]{soft_finger_batch_2_impulse_response_analysis.png}
+\begin{frame}
+\includegraphics[width=\textwidth, height=1\textheight]{soft_finger_batch_2_impulse_response_analysis.png}
 \end{frame}
 
 % Slide 13: Transfer Function - Additional Features
