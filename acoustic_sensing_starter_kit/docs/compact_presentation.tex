@@ -21,7 +21,6 @@
 \title{Geometrical Reconstruction using Acoustic Tactile Sensing}
 \author{Georg Wolnik}
 \date{November 11, 2025}
-
 \begin{document}
 
 % Title slide
@@ -31,28 +30,31 @@
 
 % Slide 1: Overview
 \begin{frame}{Overview}
-\textbf{Research Goal:} Use acoustic signals from a soft finger to classify geometric contact conditions
+\textbf{Goal:} How can we maximize the use of acoustic signals for geometrical reconstruciton
 
 \vspace{1em}
-\textbf{Tasks:}
+\textbf{Questions:}
 \begin{itemize}
-    \item Contact position classification (tip/middle/base/no contact)
-    \item Edge detection (contact/edge/no edge)
-    \item Fine feature detection (paper clip present/absent)
+    \item Can we replicate the classification results with our current setup?
+    \item What information specifically can we extract from the acoustic signals?
+    \item What features are most important?
 \end{itemize}
-
-\vspace{1em}
-\textbf{Method:} Extract acoustic features from broadband frequency sweeps and classify using machine learning
 \end{frame}
 
 % Slide 2: Data and Features
 \begin{frame}{Data and Features}
 \textbf{Dataset:}
 \begin{itemize}
-    \item 4 experimental batches, 650 total samples
-    \item Soft pneumatic finger with embedded speaker/microphone
+    \item 4 experimental batches, 650 total samples, 50 samples per class
     \item 2-second broadband chirp signals (20Hz-20kHz)
-    \item Controlled contact conditions
+\end{itemize}
+
+\vspace{1em}
+\textbf{Data:}
+\begin{itemize}
+    \item Contact position classification (tip/middle/base/no contact) (Batch 1+2)
+    \item Edge detection (contact/edge/no edge) (Batch 2)
+    \item Fine feature detection (paper clip present/absent) (Batch 3)
 \end{itemize}
 
 \vspace{1em}
@@ -84,7 +86,7 @@
     \item \texttt{envelope\_features} - Amplitude properties
 \end{itemize}
 
-\textbf{Reference:} Tzanetakis \& Cook (2002)
+\textbf{Reference:} Zöller et al. (2020) \cite{zoeller2020active}
 \end{frame}
 
 % Slide 4: Acoustic Features - MFCC and High-Freq
@@ -111,7 +113,7 @@
     \item Sensitive to geometric and material changes
 \end{itemize}
 
-\textbf{Reference:} Davis \& Mermelstein (1980)
+\textbf{Reference:} Wall et al. (2022) \cite{wall2022passive}
 \end{frame}
 
 % Slide 5: Impulse Response Features - Magnitude
@@ -128,7 +130,7 @@
     \item \texttt{resonance\_skewness} - Resonance distribution asymmetry
 \end{itemize}
 
-\textbf{Reference:} Oppenheim \& Schafer (2010)
+\textbf{Reference:} Zöller et al. (2020) \cite{zoeller2020active}
 \end{frame}
 
 % Slide 6: Impulse Response Features - Decay
@@ -148,6 +150,8 @@
     \item Captures physical properties: resonances, damping, stiffness
     \item Complements traditional acoustic features
 \end{itemize}
+
+\textbf{Reference:} Rompf (2019) \cite{rompf2019thesis}
 \end{frame}
 
 % Slide 7: Dimensionality Reduction Methods
@@ -173,7 +177,7 @@
 \end{itemize}
 \end{columns}
 
-\vspace{0.5em}
+\vspace{2em}
 \textbf{Purpose:} Reduce 53D feature space to 2D for visualization and assess class separability
 \end{frame}
 
@@ -239,16 +243,14 @@
 \begin{itemize}
     \item Microphone captures the acoustic response
     \item Signal is modified by finger-object interaction
-    \item Contains information about contact geometry
     \item Same duration as input signal (2 seconds)
 \end{itemize}
 
-\vspace{0.5em}
+\vspace{2em}
 \textbf{Key Observation:}
 \begin{itemize}
     \item Different contact conditions produce different responses
-    \item The modification reveals geometric properties
-    \item Direct analysis of this signal gives traditional acoustic features
+    \item More information (features) can be used for classification
 \end{itemize}
 \column{0.35\textwidth}
 \begin{tikzpicture}[scale=0.7]
@@ -286,15 +288,13 @@
 \begin{itemize}
     \item H(f) = Y(f) / X(f)
     \item Normalize by input spectrum
-    \item Apply windowing to reduce noise
 \end{itemize}
 
 \vspace{0.3em}
 \textbf{3. Result:}
 \begin{itemize}
     \item Transfer function H(f) shows how the system modifies each frequency
-    \item Magnitude |H(f)| reveals resonances and damping
-    \item Phase information available but not used here
+    \item Magnitude H(f) reveals resonances and damping
 \end{itemize}
 
 \begin{alertblock}{Key Advantage}
@@ -302,10 +302,6 @@ Transfer function is independent of the input signal - it characterizes the acou
 \end{alertblock}
 \end{frame}
 
-% Slide 12: Transfer Function - Example Result
-\begin{frame}
-\includegraphics[width=\textwidth, height=1\textheight]{soft_finger_batch_2_impulse_response_analysis.png}
-\end{frame}
 
 % Slide 13: Transfer Function - Additional Features
 \begin{frame}{Transfer Function: Additional Features}
@@ -327,12 +323,13 @@ Transfer function is independent of the input signal - it characterizes the acou
     \item Traditional acoustic features depend on input signal design
     \item Impulse response features characterize the physical system
     \item Provides complementary information to acoustic features
-    \item Enables more robust and generalizable classification
 \end{itemize}
 
 \begin{alertblock}{Result}
 Combined acoustic (38) + impulse response (15) = 53 total features for training
 \end{alertblock}
+
+\textbf{Reference:} Zöller et al. (2020) \cite{zoeller2020active}, Rompf (2019) \cite{rompf2019thesis}
 \end{frame}
 
 % Slide 14: Saliency Analysis - Input and Method
@@ -341,9 +338,7 @@ Combined acoustic (38) + impulse response (15) = 53 total features for training
 \textbf{Input to Saliency Analysis:}
 \begin{itemize}
     \item Complete dataset: 650 samples × 53 features each
-    \item Features from all experimental batches combined
     \item Includes both acoustic (38) and impulse response (15) features
-    \item Ground truth labels for contact position, edge detection, material classification
 \end{itemize}
 
 \vspace{0.5em}
@@ -360,8 +355,6 @@ Combined acoustic (38) + impulse response (15) = 53 total features for training
 \begin{itemize}
     \item TensorFlow/Keras implementation
     \item Multiple hidden layers for complex feature interactions
-    \item Gradient computation across all training samples
-    \item Statistical testing for significance (83\% features significant)
 \end{itemize}
 \end{frame}
 
@@ -383,8 +376,7 @@ Combined acoustic (38) + impulse response (15) = 53 total features for training
 \vspace{0.5em}
 \textbf{Key Results:}
 \begin{itemize}
-    \item 3 of top 5 features are impulse response derived
-    \item 83\% of all 53 features are statistically significant
+    \item 3 of top 6 features are impulse response derived
     \item Mixed importance between acoustic and impulse response features
 \end{itemize}
 
@@ -401,22 +393,12 @@ Combined acoustic (38) + impulse response (15) = 53 total features for training
     \item Impulse response features are among the most discriminative
     \item Acoustic features still provide crucial complementary information
     \item No single feature type dominates - combination is key
-    \item Feature importance varies by classification task
 \end{itemize}
 
-\vspace{0.5em}
-\textbf{Frequency Analysis Insights:}
-\begin{itemize}
-    \item Multi-band spectral features provide strong separation
-    \item Acoustic properties across frequency ranges are informative
-    \item High frequencies contribute alongside mid-range components
-\end{itemize}
-
-\vspace{0.5em}
+\vspace{2em}
 \textbf{Practical Implications:}
 \begin{itemize}
-    \item Minimal feature sets possible (4-6 features for 95\%+ accuracy)
-    \item Real-time implementation feasible with reduced feature sets
+    \item Minimal feature sets possible (6 features for around 95\% accuracy)
     \item Feature selection can optimize computational efficiency
 \end{itemize}
 \end{frame}
@@ -427,25 +409,19 @@ Combined acoustic (38) + impulse response (15) = 53 total features for training
 \textbf{Main Findings:}
 \begin{itemize}
     \item PCA and t-SNE show clear class separability
-    \item Transfer function provides acoustic fingerprints
+    \item Transfer function provides valuable impulse response features
     \item Saliency analysis identifies key features
-    \item High classification accuracy achieved
-\end{itemize}
-
-\vspace{0.5em}
-\textbf{Technical Validation:}
-\begin{itemize}
-    \item 97-100\% accuracy demonstrated
-    \item Feature importance measured
-    \item Real-time processing feasible
 \end{itemize}
 
 \vspace{0.5em}
 \textbf{Next Steps:}
 \begin{itemize}
-    \item Full geometric reconstruction
-    \item Continuous parameter regression
-    \item Multi-finger integration
+    \item Combine robot, finger and acoustic sensing pipeline -$>$ binary classification
+    \item Expend experiments/analysis further
+    \begin{itemize}
+        \item How can the input signal be optimized to provide more information?
+        \item Testing to the limits
+    \end{itemize}
 \end{itemize}
 \end{frame}
 
@@ -462,6 +438,15 @@ Tzanetakis, G., \& Cook, P. (2002). Musical genre classification of audio signal
 
 \bibitem{oppenheim2010discrete}
 Oppenheim, A. V., \& Schafer, R. W. (2010). \textit{Discrete-Time Signal Processing} (3rd ed.). Pearson.
+
+\bibitem{zoeller2020active}
+Zöller, G., Wall, V., \& Brock, O. (2020). Active acoustic contact sensing for soft pneumatic actuators. \textit{IEEE Robotics and Automation Letters}, 5(2), 2438-2445.
+
+\bibitem{wall2022passive}
+Wall, V., Zöller, G., \& Brock, O. (2022). Passive and active acoustic sensing for soft pneumatic actuators. \textit{The International Journal of Robotics Research}, 41(3), 260-277.
+
+\bibitem{rompf2019thesis}
+Rompf, R. A. (2019). Entwicklung eines akustischen Modells für einen weichen pneumatischen Aktuator [Master's thesis, Technische Universität Berlin].
 
 \end{thebibliography}
 \end{frame}
