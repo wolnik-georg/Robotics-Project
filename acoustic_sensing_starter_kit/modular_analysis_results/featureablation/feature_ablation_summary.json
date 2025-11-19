@@ -1,0 +1,43 @@
+{
+  "baseline_performance": 0.9892307692307692,
+  "top_consensus_features": [
+    17,
+    35,
+    28,
+    34,
+    1
+  ],
+  "key_insights": [
+    "Optimal performance achieved with 11 features out of 38 total"
+  ],
+  "leave_one_out_top_features": [
+    17,
+    35,
+    28,
+    23,
+    24,
+    34,
+    1,
+    20,
+    21,
+    25
+  ],
+  "max_performance_drop": 0.012314913282655215,
+  "optimal_num_features": 11,
+  "cumulative_top_features": [
+    35,
+    37,
+    34,
+    17,
+    33,
+    1,
+    0,
+    36,
+    28,
+    14
+  ],
+  "group_performance": {
+    "acoustic_only": 0.9892307692307692,
+    "without_impulse": 0.9892307692307692
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "model_performance": {
+    "overall_accuracy": 0.8615384697914124,
+    "per_class_accuracy": {
+      "0": 1.0,
+      "1": 0.800000011920929,
+      "2": 0.8500000238418579,
+      "3": 0.949999988079071,
+      "4": 0.6000000238418579,
+      "5": 0.800000011920929,
+      "6": 1.0
+    }
+  },
+  "consistently_important_features": [],
+  "num_consistently_important": 0,
+  "feature_group_analysis": {
+    "basic_gradients": {
+      "acoustic_importance": 0.14851528746811182,
+      "impulse_importance": 0.0,
+      "acoustic_vs_impulse_ratio": Infinity
+    }
+  },
+  "methods_used": [
+    "basic_gradients"
+  ],
+  "basic_gradients_top_features": [
+    15,
+    16,
+    17,
+    37,
+    33,
+    35,
+    27,
+    34,
+    0,
+    23
+  ]
+}

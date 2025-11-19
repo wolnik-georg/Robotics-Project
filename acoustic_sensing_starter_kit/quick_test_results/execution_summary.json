@@ -1,0 +1,20 @@
+{
+  "execution_timestamp": "2025-11-19T19:32:53.905402",
+  "config_path": "/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/configs/quick_test_config.yml",
+  "output_directory": "/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/quick_test_results",
+  "summary": {
+    "total_experiments": 1,
+    "successful_experiments": 0,
+    "failed_experiments": 1,
+    "skipped_experiments": 0,
+    "experiment_status": {
+      "data_processing": "unknown"
+    },
+    "execution_time": {},
+    "key_findings": []
+  },
+  "experiment_list": [
+    "data_processing",
+    "_execution_summary"
+  ]
+}
