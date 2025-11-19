@@ -20,7 +20,7 @@
 % Title page information
 \title{Geometrical Reconstruction using Acoustic Tactile Sensing}
 \author{Georg Wolnik}
-\date{November 11, 2025}
+\date{November 17, 2025}
 \begin{document}
 
 % Title slide
@@ -30,19 +30,19 @@
 
 % Slide 1: Overview
 \begin{frame}{Overview}
-\textbf{Goal:} How can we maximize the use of acoustic signals for geometrical reconstruciton
+\textbf{Goal:} How can we maximize the use of acoustic signals for geometrical reconstruction
 
-\vspace{1em}
+\vspace{2em}
 \textbf{Questions:}
 \begin{itemize}
-    \item Can we replicate the classification results with our current setup?
+    \item Can we discriminate between different contact conditions using acoustic signals?
     \item What information specifically can we extract from the acoustic signals?
     \item What features are most important?
 \end{itemize}
 \end{frame}
 
 % Slide 2: Data and Features
-\begin{frame}{Data and Features}
+\begin{frame}{Data}
 \textbf{Dataset:}
 \begin{itemize}
     \item 4 experimental batches, 650 total samples, 50 samples per class
@@ -53,108 +53,12 @@
 \textbf{Data:}
 \begin{itemize}
     \item Contact position classification (tip/middle/base/no contact) (Batch 1+2)
-    \item Edge detection (contact/edge/no edge) (Batch 2)
-    \item Fine feature detection (paper clip present/absent) (Batch 3)
-\end{itemize}
-
-\vspace{1em}
-\textbf{Features Extracted:}
-\begin{itemize}
-    \item 38 acoustic features (spectral, temporal, frequency domain)
-    \item 15 impulse response features (transfer function characteristics)
-    \item Total: 53 features per sample
+    \item Edge detection (contact/edge/no edge) (Batch 3)
+    \item Fine feature detection (paper clip present/absent) (Batch 4)
 \end{itemize}
 \end{frame}
 
-% Slide 3: Acoustic Features - Spectral
-\begin{frame}{Acoustic Features: Spectral (13)}
-\footnotesize
-\begin{itemize}
-    \item \texttt{spectral\_centroid} - Center of mass of spectrum
-    \item \texttt{spectral\_bandwidth} - Spread around centroid
-    \item \texttt{spectral\_rolloff} - 85\% energy frequency
-    \item \texttt{spectral\_flux} - Spectral change rate
-    \item \texttt{spectral\_flatness} - Noise vs tone measure
-    \item \texttt{spectral\_contrast} - Peak-to-valley differences
-\end{itemize}
-
-\vspace{0.5em}
-\textbf{Temporal Features (8):}
-\begin{itemize}
-    \item \texttt{zero\_crossing\_rate} - Signal noisiness
-    \item \texttt{rms\_energy} - Signal energy
-    \item \texttt{envelope\_features} - Amplitude properties
-\end{itemize}
-
-\textbf{Reference:} Zöller et al. (2020) \cite{zoeller2020active}
-\end{frame}
-
-% Slide 4: Acoustic Features - MFCC and High-Freq
-\begin{frame}{Acoustic Features: MFCC and High-Frequency}
-\footnotesize
-\textbf{MFCC Features (12):}
-\begin{itemize}
-    \item \texttt{mfcc\_0 to mfcc\_11} - Mel-scale cepstral coefficients
-    \item Perceptually relevant spectral representation
-    \item Capture timbre and spectral envelope
-\end{itemize}
-
-\vspace{0.5em}
-\textbf{High-Frequency Features (5):}
-\begin{itemize}
-    \item \texttt{ultra\_high\_energy\_ratio} - Energy >8kHz
-    \item \texttt{ultra\_high\_ratio} - High-freq to total energy
-    \item \texttt{high\_freq\_content} - High-frequency measures
-\end{itemize}
-
-\textbf{Why These Features?}
-\begin{itemize}
-    \item Standard in audio signal processing
-    \item Sensitive to geometric and material changes
-\end{itemize}
-
-\textbf{Reference:} Wall et al. (2022) \cite{wall2022passive}
-\end{frame}
-
-% Slide 5: Impulse Response Features - Magnitude
-\begin{frame}{Impulse Response Features: Magnitude (8)}
-\footnotesize
-\begin{itemize}
-    \item \texttt{freq\_response\_centroid} - Transfer function center of mass
-    \item \texttt{freq\_response\_bandwidth} - Transfer function spread
-    \item \texttt{freq\_response\_skewness} - Transfer function asymmetry
-    \item \texttt{freq\_response\_kurtosis} - Transfer function peakedness
-    \item \texttt{resonance\_peak\_magnitude} - Strongest resonance height
-    \item \texttt{resonance\_peak\_frequency} - Strongest resonance frequency
-    \item \texttt{resonance\_bandwidth} - Resonance peak width
-    \item \texttt{resonance\_skewness} - Resonance distribution asymmetry
-\end{itemize}
-
-\textbf{Reference:} Zöller et al. (2020) \cite{zoeller2020active}
-\end{frame}
-
-% Slide 6: Impulse Response Features - Decay
-\begin{frame}{Impulse Response Features: Decay and Damping (7)}
-\footnotesize
-\begin{itemize}
-    \item \texttt{decay\_amplitude} - Amplitude decay rate
-    \item \texttt{decay\_time} - Exponential decay time constant
-    \item \texttt{damping\_ratio} - System damping measure
-    \item \texttt{quality\_factor} - Resonance sharpness (Q-factor)
-\end{itemize}
-
-\vspace{0.5em}
-\textbf{Why Impulse Response Features?}
-\begin{itemize}
-    \item True system characterization independent of input
-    \item Captures physical properties: resonances, damping, stiffness
-    \item Complements traditional acoustic features
-\end{itemize}
-
-\textbf{Reference:} Rompf (2019) \cite{rompf2019thesis}
-\end{frame}
-
-% Slide 7: Dimensionality Reduction Methods
+% Slide 3: Dimensionality Reduction Methods
 \begin{frame}{Dimensionality Reduction: PCA and t-SNE}
 \footnotesize
 \begin{columns}
@@ -181,7 +85,7 @@
 \textbf{Purpose:} Reduce 53D feature space to 2D for visualization and assess class separability
 \end{frame}
 
-% Slide 8: PCA and t-SNE Results
+% Slide 4: PCA and t-SNE Results
 \begin{frame}{PCA and t-SNE: Class Discrimination}
 \footnotesize
 \textbf{Visualization Results:}
@@ -193,6 +97,94 @@
 
 \vspace{0.5em}
 \includegraphics[width=\textwidth, height=0.6\textheight]{soft_finger_batch_2_method_comparison.png}
+\end{frame}
+
+% Slide 5: Acoustic Features - Spectral
+\begin{frame}{Acoustic Features: Spectral (13)}
+\footnotesize
+\begin{itemize}
+    \item \texttt{spectral\_centroid} - Center of mass of spectrum
+    \item \texttt{spectral\_bandwidth} - Spread around centroid
+    \item \texttt{spectral\_rolloff} - 85\% energy frequency
+    \item \texttt{spectral\_flux} - Spectral change rate
+    \item \texttt{spectral\_flatness} - Noise vs tone measure
+    \item \texttt{spectral\_contrast} - Peak-to-valley differences
+\end{itemize}
+
+\vspace{0.5em}
+\textbf{Temporal Features (8):}
+\begin{itemize}
+    \item \texttt{zero\_crossing\_rate} - Signal noisiness
+    \item \texttt{rms\_energy} - Signal energy
+    \item \texttt{envelope\_features} - Amplitude properties
+\end{itemize}
+
+\textbf{Reference:} Standard audio features (Tzanetakis \& Cook, 2002), librosa implementation (McFee et al., 2015)
+\end{frame}
+
+% Slide 6: Acoustic Features - MFCC and High-Freq
+\begin{frame}{Acoustic Features: MFCC and High-Frequency}
+\footnotesize
+\textbf{MFCC Features (12):}
+\begin{itemize}
+    \item \texttt{mfcc\_0 to mfcc\_11} - Mel-scale cepstral coefficients
+    \item Perceptually relevant spectral representation
+    \item Capture timbre and spectral envelope
+\end{itemize}
+
+\vspace{0.5em}
+\textbf{High-Frequency Features (5):}
+\begin{itemize}
+    \item \texttt{ultra\_high\_energy\_ratio} - Energy >8kHz
+    \item \texttt{ultra\_high\_ratio} - High-freq to total energy
+    \item \texttt{high\_freq\_content} - High-frequency measures
+\end{itemize}
+
+\textbf{Why These Features?}
+\begin{itemize}
+    \item Standard in audio signal processing
+    \item Sensitive to geometric and material changes
+\end{itemize}
+
+\textbf{Reference:} MFCC theory (Logan, 2000; Davis \& Mermelstein, 1980)
+\end{frame}
+
+% Slide 7: Impulse Response Features - Magnitude
+\begin{frame}{Impulse Response Features: Magnitude (8)}
+\footnotesize
+\begin{itemize}
+    \item \texttt{freq\_response\_centroid} - Transfer function center of mass
+    \item \texttt{freq\_response\_bandwidth} - Transfer function spread
+    \item \texttt{freq\_response\_skewness} - Transfer function asymmetry
+    \item \texttt{freq\_response\_kurtosis} - Transfer function peakedness
+    \item \texttt{resonance\_peak\_magnitude} - Strongest resonance height
+    \item \texttt{resonance\_peak\_frequency} - Strongest resonance frequency
+    \item \texttt{resonance\_bandwidth} - Resonance peak width
+    \item \texttt{resonance\_skewness} - Resonance distribution asymmetry
+\end{itemize}
+
+\textbf{Reference:} Transfer function analysis (Oppenheim \& Schafer, 2010)
+\end{frame}
+
+% Slide 8: Impulse Response Features - Decay
+\begin{frame}{Impulse Response Features: Decay and Damping (7)}
+\footnotesize
+\begin{itemize}
+    \item \texttt{decay\_amplitude} - Amplitude decay rate
+    \item \texttt{decay\_time} - Exponential decay time constant
+    \item \texttt{damping\_ratio} - System damping measure
+    \item \texttt{quality\_factor} - Resonance sharpness (Q-factor)
+\end{itemize}
+
+\vspace{0.5em}
+\textbf{Why Impulse Response Features?}
+\begin{itemize}
+    \item True system characterization independent of input
+    \item Captures physical properties: resonances, damping, stiffness
+    \item Complements traditional acoustic features
+\end{itemize}
+
+\textbf{Reference:} Signal processing theory (Oppenheim \& Schafer, 2010)
 \end{frame}
 
 % Slide 9: Transfer Function - Input Signal
@@ -303,7 +295,7 @@ Transfer function is independent of the input signal - it characterizes the acou
 \end{frame}
 
 
-% Slide 13: Transfer Function - Additional Features
+% Slide 12: Transfer Function - Additional Features
 \begin{frame}{Transfer Function: Additional Features}
 \footnotesize
 \textbf{With Transfer Function, We Now Have Access To:}
@@ -329,10 +321,10 @@ Transfer function is independent of the input signal - it characterizes the acou
 Combined acoustic (38) + impulse response (15) = 53 total features for training
 \end{alertblock}
 
-\textbf{Reference:} Zöller et al. (2020) \cite{zoeller2020active}, Rompf (2019) \cite{rompf2019thesis}
+\textbf{Reference:} Oppenheim \& Schafer (2010) \cite{oppenheim2010discrete}, Zöller et al. (2020) \cite{zoeller2020active}
 \end{frame}
 
-% Slide 14: Saliency Analysis - Input and Method
+% Slide 13: Saliency Analysis - Input and Method
 \begin{frame}{Saliency Analysis: Input and How It Works}
 \footnotesize
 \textbf{Input to Saliency Analysis:}
@@ -358,7 +350,7 @@ Combined acoustic (38) + impulse response (15) = 53 total features for training
 \end{itemize}
 \end{frame}
 
-% Slide 15: Saliency Analysis - Results and Interpretation
+% Slide 14: Saliency Analysis - Results and Interpretation
 \begin{frame}{Saliency Analysis: Results and What They Mean}
 \footnotesize
 \begin{columns}
@@ -373,11 +365,10 @@ Combined acoustic (38) + impulse response (15) = 53 total features for training
     \item \texttt{ultra\_high\_ratio} - High-freq ratio (acoustic)
 \end{enumerate}
 
-\vspace{0.5em}
+\vspace{1em}
 \textbf{Key Results:}
 \begin{itemize}
     \item 3 of top 6 features are impulse response derived
-    \item Mixed importance between acoustic and impulse response features
 \end{itemize}
 
 \column{0.4\textwidth}
@@ -385,14 +376,14 @@ Combined acoustic (38) + impulse response (15) = 53 total features for training
 \end{columns}
 \end{frame}
 
-% Slide 16: Saliency Analysis - Insights
+% Slide 15: Saliency Analysis - Insights
 \begin{frame}{Saliency Analysis: Insights and Implications}
 \footnotesize
 \textbf{What These Results Tell Us:}
 \begin{itemize}
     \item Impulse response features are among the most discriminative
-    \item Acoustic features still provide crucial complementary information
-    \item No single feature type dominates - combination is key
+    \item Acoustic features provide crucial complementary information
+    \item No single feature type dominates
 \end{itemize}
 
 \vspace{2em}
@@ -403,25 +394,21 @@ Combined acoustic (38) + impulse response (15) = 53 total features for training
 \end{itemize}
 \end{frame}
 
-% Slide 17: Conclusions
+% Slide 16: Conclusions
 \begin{frame}{Conclusions}
 \footnotesize
 \textbf{Main Findings:}
 \begin{itemize}
-    \item PCA and t-SNE show clear class separability
+    \item PCA and t-SNE show class separability
     \item Transfer function provides valuable impulse response features
-    \item Saliency analysis identifies key features
+    \item Saliency analysis shows most important features
 \end{itemize}
 
 \vspace{0.5em}
 \textbf{Next Steps:}
 \begin{itemize}
     \item Combine robot, finger and acoustic sensing pipeline -$>$ binary classification
-    \item Expend experiments/analysis further
-    \begin{itemize}
-        \item How can the input signal be optimized to provide more information?
-        \item Testing to the limits
-    \end{itemize}
+    \item How can the input signal be optimized to provide more information?
 \end{itemize}
 \end{frame}
 
@@ -436,6 +423,12 @@ Davis, S., \& Mermelstein, P. (1980). Comparison of parametric representations f
 \bibitem{tzanetakis2002musical}
 Tzanetakis, G., \& Cook, P. (2002). Musical genre classification of audio signals. \textit{IEEE Transactions on Speech and Audio Processing}, 10(5), 293-302.
 
+\bibitem{mcfee2015librosa}
+McFee, B., Raffel, C., Liang, D., Ellis, D. P., McVicar, M., Battenberg, E., \& Nieto, O. (2015). librosa: Audio and music signal analysis in python. \textit{Proceedings of the 14th Python in Science Conference}, 8, 18-25.
+
+\bibitem{logan2000mel}
+Logan, B. (2000). Mel Frequency Cepstral Coefficients for Music Modeling. \textit{International Symposium on Music Information Retrieval}.
+
 \bibitem{oppenheim2010discrete}
 Oppenheim, A. V., \& Schafer, R. W. (2010). \textit{Discrete-Time Signal Processing} (3rd ed.). Pearson.
 
@@ -446,7 +439,7 @@ Zöller, G., Wall, V., \& Brock, O. (2020). Active acoustic contact sensing for 
 Wall, V., Zöller, G., \& Brock, O. (2022). Passive and active acoustic sensing for soft pneumatic actuators. \textit{The International Journal of Robotics Research}, 41(3), 260-277.
 
 \bibitem{rompf2019thesis}
-Rompf, R. A. (2019). Entwicklung eines akustischen Modells für einen weichen pneumatischen Aktuator [Master's thesis, Technische Universität Berlin].
+Rompf, R. A. (2019). \textit{Entwicklung eines akustischen Modells für einen weichen pneumatischen Aktuator}. Master's thesis, Technische Universität Berlin.
 
 \end{thebibliography}
 \end{frame}
