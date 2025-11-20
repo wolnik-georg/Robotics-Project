@@ -86,7 +86,7 @@
       "perplexity_5": {
         "perplexity": 5,
         "silhouette_score": 0.2994599938392639,
-        "kl_divergence": 0.8353525400161743
+        "kl_divergence": 0.8353524804115295
       },
       "perplexity_10": {
         "perplexity": 10,
@@ -96,7 +96,7 @@
       "perplexity_20": {
         "perplexity": 20,
         "silhouette_score": 0.359508752822876,
-        "kl_divergence": 0.5544524192810059
+        "kl_divergence": 0.5544523596763611
       },
       "perplexity_30": {
         "perplexity": 30,
@@ -106,7 +106,7 @@
       "perplexity_50": {
         "perplexity": 50,
         "silhouette_score": 0.3926026225090027,
-        "kl_divergence": 0.27291661500930786
+        "kl_divergence": 0.2729165852069855
       }
     }
   }
