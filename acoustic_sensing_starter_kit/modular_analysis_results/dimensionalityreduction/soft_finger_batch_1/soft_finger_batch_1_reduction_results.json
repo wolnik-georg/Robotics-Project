@@ -95,12 +95,12 @@
       "perplexity_20": {
         "perplexity": 20,
         "silhouette_score": 0.16614647209644318,
-        "kl_divergence": 0.5983900427818298
+        "kl_divergence": 0.5983901023864746
       },
       "perplexity_30": {
         "perplexity": 30,
         "silhouette_score": 0.1613691747188568,
-        "kl_divergence": 0.45983463525772095
+        "kl_divergence": 0.45983466506004333
       },
       "perplexity_50": {
         "perplexity": 50,

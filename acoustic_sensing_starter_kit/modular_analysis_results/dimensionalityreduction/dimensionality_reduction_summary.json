@@ -1,15 +1,15 @@
 {
   "pca_analysis": {
-    "avg_components_for_95_variance": 16.0,
-    "std_components_for_95_variance": 2.5495097567963922,
+    "avg_components_for_95_variance": 16.2,
+    "std_components_for_95_variance": 2.315167380558045,
     "min_components_needed": "13",
     "max_components_needed": "19"
   },
   "tsne_analysis": {
-    "avg_silhouette_score": 0.36889898777008057,
-    "std_silhouette_score": 0.1210152226583776,
+    "avg_silhouette_score": 0.2922014547511935,
+    "std_silhouette_score": 0.1877386310187076,
     "best_silhouette_score": 0.5022402405738831,
-    "worst_silhouette_score": 0.17225492000579834
+    "worst_silhouette_score": -0.014588677324354649
   },
   "batch_summaries": {
     "soft_finger_batch_2": {
@@ -39,9 +39,16 @@
       "pca_components_95": "18",
       "first_component_variance": 0.3042412118503048,
       "tsne_silhouette": 0.5022402405738831
+    },
+    "edge_detection_v1": {
+      "num_samples": 0,
+      "original_dimensions": 0,
+      "pca_components_95": "17",
+      "first_component_variance": 0.338140710379152,
+      "tsne_silhouette": -0.014588677324354649
     }
   },
-  "num_batches_analyzed": 4,
+  "num_batches_analyzed": 5,
   "per_batch_insights": {
     "soft_finger_batch_2": {
       "original_dimensions": 0,
@@ -70,6 +77,13 @@
       "pca_components_for_95_variance": "18",
       "first_component_variance": 0.3042412118503048,
       "tsne_silhouette_score": 0.5022402405738831
+    },
+    "edge_detection_v1": {
+      "original_dimensions": 0,
+      "num_samples": 0,
+      "pca_components_for_95_variance": "17",
+      "first_component_variance": 0.338140710379152,
+      "tsne_silhouette_score": -0.014588677324354649
     }
   }
 }

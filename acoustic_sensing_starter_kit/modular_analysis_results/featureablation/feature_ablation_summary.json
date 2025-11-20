@@ -1,15 +1,15 @@
 {
-  "overall_baseline_performance": 0.9495833333333332,
-  "baseline_std": 0.05916519951232593,
+  "overall_baseline_performance": 0.8917301587301587,
+  "baseline_std": 0.1272335486942351,
   "best_batch_performance": 0.9949999999999999,
-  "worst_batch_performance": 0.85,
+  "worst_batch_performance": 0.6603174603174603,
   "top_consensus_features": [
     0,
-    2,
     1,
+    25,
+    2,
     23,
     24,
-    25,
     26,
     27,
     37,
@@ -35,9 +35,14 @@
       "baseline_performance": 0.9933333333333334,
       "num_features": 38,
       "top_feature": 0
+    },
+    "edge_detection_v1": {
+      "baseline_performance": 0.6603174603174603,
+      "num_features": 38,
+      "top_feature": 1
     }
   },
-  "num_batches_analyzed": 4,
+  "num_batches_analyzed": 5,
   "per_batch_insights": {
     "soft_finger_batch_2": {
       "baseline_performance": 0.9949999999999999,
@@ -84,6 +89,19 @@
         1,
         36,
         3
+      ]
+    },
+    "edge_detection_v1": {
+      "baseline_performance": 0.6603174603174603,
+      "key_insights": [
+        "Optimal performance achieved with 11 features out of 38 total"
+      ],
+      "top_features": [
+        1,
+        0,
+        17,
+        35,
+        18
       ]
     }
   }

@@ -114,6 +114,17 @@ class BatchSpecificAnalyzer:
                 "research_question": "Can acoustic signals distinguish material properties?",
                 "class_mapping": {"_metal": "metal", "_no metal": "no_metal"},
             },
+            "edge_detection_v1": {
+                "experiment": "edge_detection",
+                "description": "Edge Detection with Contact Classification",
+                "expected_classes": ["contact", "edge", "no_contact"],
+                "research_question": "Can acoustic signals distinguish between contact states and detect geometric edges?",
+                "class_mapping": {
+                    "contact": "contact",
+                    "edge": "edge",
+                    "no_contact": "no_contact",
+                },
+            },
         }
 
     def detect_actual_classes(self, batch_name: str) -> List[str]:

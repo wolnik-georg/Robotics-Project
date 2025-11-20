@@ -1,0 +1,13 @@
+{
+  "batch_name": "edge_detection_v1",
+  "num_samples": 630,
+  "original_dimensions": 38,
+  "num_classes": 3,
+  "analysis_methods": [
+    "PCA",
+    "t-SNE"
+  ],
+  "pca_components_95": 17,
+  "first_component_variance": 0.338140710379152,
+  "best_tsne_silhouette": -0.014588677324354649
+}

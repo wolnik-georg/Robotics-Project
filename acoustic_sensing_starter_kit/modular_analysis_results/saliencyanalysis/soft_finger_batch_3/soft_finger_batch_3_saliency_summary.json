@@ -4,6 +4,12 @@
   "num_samples": 150,
   "num_classes": 3,
   "model_architecture": "SimpleClassifier",
-  "top_important_features": [],
+  "top_important_features": [
+    1,
+    30,
+    0,
+    12,
+    24
+  ],
   "feature_importance_stats": []
 }

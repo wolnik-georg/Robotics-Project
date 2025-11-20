@@ -1,12 +1,13 @@
 {
-  "total_samples": 650,
+  "total_samples": 1280,
   "total_features": 38,
-  "total_batches": 4,
+  "total_batches": 5,
   "batch_names": [
     "soft_finger_batch_2",
     "soft_finger_batch_4",
     "soft_finger_batch_1",
-    "soft_finger_batch_3"
+    "soft_finger_batch_3",
+    "edge_detection_v1"
   ],
   "per_batch_info": {
     "soft_finger_batch_2": {
@@ -65,6 +66,20 @@
         "contact": "50",
         "edge": "50",
         "no contact": "50"
+      }
+    },
+    "edge_detection_v1": {
+      "num_samples": 630,
+      "num_classes": 3,
+      "classes": [
+        "contact",
+        "edge",
+        "no_contact"
+      ],
+      "class_distribution": {
+        "contact": "210",
+        "edge": "210",
+        "no_contact": "210"
       }
     }
   }
