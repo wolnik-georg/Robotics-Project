@@ -234,29 +234,40 @@ class DimensionalityReductionExperiment(BaseExperiment):
             f"Batch {batch_name} reduction results saved to: {batch_output_dir}"
         )
 
-    def _create_batch_plots(self, batch_results: dict, batch_name: str, X: np.ndarray, y: np.ndarray, output_dir: str):
+    def _create_batch_plots(
+        self,
+        batch_results: dict,
+        batch_name: str,
+        X: np.ndarray,
+        y: np.ndarray,
+        output_dir: str,
+    ):
         """Create visualization plots for a specific batch."""
         # Create single-batch info structure for plotting methods
         batch_info = {batch_name: {"indices": np.arange(len(X))}}
-        
+
         # Create PCA plots if PCA was performed
         if "pca_results" in batch_results:
             pca_results = batch_results["pca_results"]
             X_pca = pca_results["pca_components"]
             explained_var = pca_results["explained_variance_ratio"]
             cumulative_var = pca_results["cumulative_variance"]
-            
-            self._create_batch_pca_plot(X_pca, y, explained_var, cumulative_var, batch_name, output_dir)
-        
-        # Create t-SNE plots if t-SNE was performed  
+
+            self._create_batch_pca_plot(
+                X_pca, y, explained_var, cumulative_var, batch_name, output_dir
+            )
+
+        # Create t-SNE plots if t-SNE was performed
         if "tsne_results" in batch_results:
             tsne_results = batch_results["tsne_results"]
             for method_name, tsne_data in tsne_results.items():
                 if isinstance(tsne_data, dict) and "embedding" in tsne_data:
                     X_tsne = tsne_data["embedding"]
                     perplexity = tsne_data.get("perplexity", "unknown")
-                    self._create_batch_tsne_plot(X_tsne, y, perplexity, batch_name, output_dir)
-        
+                    self._create_batch_tsne_plot(
+                        X_tsne, y, perplexity, batch_name, output_dir
+                    )
+
         # Create UMAP plots if UMAP was performed
         if "umap_results" in batch_results:
             umap_results = batch_results["umap_results"]
@@ -264,17 +275,24 @@ class DimensionalityReductionExperiment(BaseExperiment):
                 X_umap = umap_results["embedding"]
                 self._create_batch_umap_plot(X_umap, y, batch_name, output_dir)
 
-    def _create_batch_pca_plot(self, X_pca: np.ndarray, y: np.ndarray, explained_var: np.ndarray, 
-                              cumulative_var: np.ndarray, batch_name: str, output_dir: str):
+    def _create_batch_pca_plot(
+        self,
+        X_pca: np.ndarray,
+        y: np.ndarray,
+        explained_var: np.ndarray,
+        cumulative_var: np.ndarray,
+        batch_name: str,
+        output_dir: str,
+    ):
         """Create PCA visualization for a single batch."""
         fig, axes = plt.subplots(2, 2, figsize=(15, 12))
-        
+
         # Explained variance plot
         axes[0, 0].bar(range(1, len(explained_var) + 1), explained_var, alpha=0.7)
         axes[0, 0].set_xlabel("Principal Component")
         axes[0, 0].set_ylabel("Explained Variance Ratio")
         axes[0, 0].set_title(f"Explained Variance by Component - {batch_name}")
-        
+
         # Cumulative variance plot
         axes[0, 1].plot(range(1, len(cumulative_var) + 1), cumulative_var, "bo-")
         axes[0, 1].axhline(y=0.95, color="r", linestyle="--", label="95% Variance")
@@ -282,76 +300,112 @@ class DimensionalityReductionExperiment(BaseExperiment):
         axes[0, 1].set_ylabel("Cumulative Explained Variance")
         axes[0, 1].set_title(f"Cumulative Explained Variance - {batch_name}")
         axes[0, 1].legend()
-        
+
         # 2D PCA plot colored by class
         unique_classes = np.unique(y)
         colors = plt.cm.tab10(np.linspace(0, 1, len(unique_classes)))
-        
+
         for i, cls in enumerate(unique_classes):
             mask = y == cls
-            axes[1, 0].scatter(X_pca[mask, 0], X_pca[mask, 1], c=[colors[i]], label=cls, alpha=0.7)
+            axes[1, 0].scatter(
+                X_pca[mask, 0], X_pca[mask, 1], c=[colors[i]], label=cls, alpha=0.7
+            )
         axes[1, 0].set_xlabel("First Principal Component")
         axes[1, 0].set_ylabel("Second Principal Component")
         axes[1, 0].set_title(f"PCA Projection - {batch_name}")
         axes[1, 0].legend()
-        
+
         # Scree plot (alternative view)
-        axes[1, 1].plot(range(1, min(11, len(explained_var) + 1)), 
-                       explained_var[:min(10, len(explained_var))], "ro-")
+        axes[1, 1].plot(
+            range(1, min(11, len(explained_var) + 1)),
+            explained_var[: min(10, len(explained_var))],
+            "ro-",
+        )
         axes[1, 1].set_xlabel("Principal Component")
         axes[1, 1].set_ylabel("Explained Variance Ratio")
         axes[1, 1].set_title(f"Scree Plot (First 10 Components) - {batch_name}")
-        
+
         plt.tight_layout()
-        plt.savefig(os.path.join(output_dir, f"{batch_name}_pca_analysis.png"), 
-                   dpi=300, bbox_inches="tight")
+        plt.savefig(
+            os.path.join(output_dir, f"{batch_name}_pca_analysis.png"),
+            dpi=300,
+            bbox_inches="tight",
+        )
         plt.close()
 
-    def _create_batch_tsne_plot(self, X_tsne: np.ndarray, y: np.ndarray, perplexity: int, 
-                               batch_name: str, output_dir: str):
+    def _create_batch_tsne_plot(
+        self,
+        X_tsne: np.ndarray,
+        y: np.ndarray,
+        perplexity: int,
+        batch_name: str,
+        output_dir: str,
+    ):
         """Create t-SNE visualization for a single batch."""
         fig, ax = plt.subplots(1, 1, figsize=(10, 8))
-        
+
         # Plot colored by class
         unique_classes = np.unique(y)
         colors = plt.cm.tab10(np.linspace(0, 1, len(unique_classes)))
-        
+
         for i, cls in enumerate(unique_classes):
             mask = y == cls
-            ax.scatter(X_tsne[mask, 0], X_tsne[mask, 1], c=[colors[i]], label=cls, alpha=0.7, s=50)
-        
+            ax.scatter(
+                X_tsne[mask, 0],
+                X_tsne[mask, 1],
+                c=[colors[i]],
+                label=cls,
+                alpha=0.7,
+                s=50,
+            )
+
         ax.set_xlabel("t-SNE Dimension 1")
         ax.set_ylabel("t-SNE Dimension 2")
         ax.set_title(f"t-SNE Visualization (perplexity={perplexity}) - {batch_name}")
         ax.legend()
         ax.grid(True, alpha=0.3)
-        
+
         plt.tight_layout()
-        plt.savefig(os.path.join(output_dir, f"{batch_name}_tsne_perplexity_{perplexity}.png"),
-                   dpi=300, bbox_inches="tight")
+        plt.savefig(
+            os.path.join(output_dir, f"{batch_name}_tsne_perplexity_{perplexity}.png"),
+            dpi=300,
+            bbox_inches="tight",
+        )
         plt.close()
 
-    def _create_batch_umap_plot(self, X_umap: np.ndarray, y: np.ndarray, batch_name: str, output_dir: str):
+    def _create_batch_umap_plot(
+        self, X_umap: np.ndarray, y: np.ndarray, batch_name: str, output_dir: str
+    ):
         """Create UMAP visualization for a single batch."""
         fig, ax = plt.subplots(1, 1, figsize=(10, 8))
-        
+
         # Plot colored by class
         unique_classes = np.unique(y)
         colors = plt.cm.tab10(np.linspace(0, 1, len(unique_classes)))
-        
+
         for i, cls in enumerate(unique_classes):
             mask = y == cls
-            ax.scatter(X_umap[mask, 0], X_umap[mask, 1], c=[colors[i]], label=cls, alpha=0.7, s=50)
-        
+            ax.scatter(
+                X_umap[mask, 0],
+                X_umap[mask, 1],
+                c=[colors[i]],
+                label=cls,
+                alpha=0.7,
+                s=50,
+            )
+
         ax.set_xlabel("UMAP Dimension 1")
         ax.set_ylabel("UMAP Dimension 2")
         ax.set_title(f"UMAP Visualization - {batch_name}")
         ax.legend()
         ax.grid(True, alpha=0.3)
-        
+
         plt.tight_layout()
-        plt.savefig(os.path.join(output_dir, f"{batch_name}_umap_projection.png"),
-                   dpi=300, bbox_inches="tight")
+        plt.savefig(
+            os.path.join(output_dir, f"{batch_name}_umap_projection.png"),
+            dpi=300,
+            bbox_inches="tight",
+        )
         plt.close()
 
     def _aggregate_reduction_results(self, per_batch_results: dict) -> dict:

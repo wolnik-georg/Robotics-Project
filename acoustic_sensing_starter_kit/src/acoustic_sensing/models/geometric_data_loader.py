@@ -108,7 +108,10 @@ class GeometricDataLoader:
                 continue
 
             # Extract contact position from filename
-            for pos in contact_positions:
+            # Sort contact_positions by length (descending) to match longer strings first
+            # This prevents "contact" from matching "no contact" files
+            sorted_positions = sorted(contact_positions, key=len, reverse=True)
+            for pos in sorted_positions:
                 if pos in wav_file.name:
                     files_by_position[pos].append(wav_file)
                     break

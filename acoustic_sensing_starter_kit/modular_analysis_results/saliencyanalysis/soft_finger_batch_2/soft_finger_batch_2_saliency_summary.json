@@ -1,9 +1,0 @@
-{
-  "batch_name": "soft_finger_batch_2",
-  "test_accuracy": 0,
-  "num_samples": 200,
-  "num_classes": 4,
-  "model_architecture": "SimpleClassifier",
-  "top_important_features": [],
-  "feature_importance_stats": []
-}

@@ -146,7 +146,7 @@ class DataProcessingExperiment(BaseExperiment):
                     self._save_batch_data_processing_results(
                         batch_results[batch_name], batch_name
                     )
-                    
+
                     # Create batch-specific plots
                     self._create_batch_plots(batch_results[batch_name], batch_name)
                 else:
@@ -287,126 +287,173 @@ class DataProcessingExperiment(BaseExperiment):
             # Create batch-specific output directory
             batch_output_dir = os.path.join(self.experiment_output_dir, batch_name)
             os.makedirs(batch_output_dir, exist_ok=True)
-            
+
             # Create class distribution plot
-            self._create_class_distribution_plot(batch_data, batch_name, batch_output_dir)
-            
+            self._create_class_distribution_plot(
+                batch_data, batch_name, batch_output_dir
+            )
+
             # Create feature distribution plots
-            self._create_feature_distribution_plot(batch_data, batch_name, batch_output_dir)
-            
+            self._create_feature_distribution_plot(
+                batch_data, batch_name, batch_output_dir
+            )
+
             # Create feature correlation heatmap
-            self._create_feature_correlation_plot(batch_data, batch_name, batch_output_dir)
-            
+            self._create_feature_correlation_plot(
+                batch_data, batch_name, batch_output_dir
+            )
+
             # Create comprehensive data overview plot
             self._create_data_overview_plot(batch_data, batch_name, batch_output_dir)
-            
+
         except Exception as e:
             self.logger.warning(f"Failed to create plots for batch {batch_name}: {e}")
 
-    def _create_class_distribution_plot(self, batch_data: dict, batch_name: str, output_dir: str):
+    def _create_class_distribution_plot(
+        self, batch_data: dict, batch_name: str, output_dir: str
+    ):
         """Create class distribution visualization."""
         class_dist = batch_data["class_distribution"]
-        
+
         fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
-        
+
         # Bar plot
         classes = list(class_dist.keys())
         counts = list(class_dist.values())
         colors = plt.cm.Set3(np.linspace(0, 1, len(classes)))
-        
-        bars = ax1.bar(classes, counts, color=colors, alpha=0.7, edgecolor='black')
+
+        bars = ax1.bar(classes, counts, color=colors, alpha=0.7, edgecolor="black")
         ax1.set_xlabel("Classes")
         ax1.set_ylabel("Number of Samples")
         ax1.set_title(f"Class Distribution - {batch_name}")
-        ax1.tick_params(axis='x', rotation=45)
-        ax1.grid(axis='y', alpha=0.3)
-        
+        ax1.tick_params(axis="x", rotation=45)
+        ax1.grid(axis="y", alpha=0.3)
+
         # Add count labels on bars
         for bar, count in zip(bars, counts):
             height = bar.get_height()
-            ax1.text(bar.get_x() + bar.get_width()/2., height + 0.5,
-                    f'{count}', ha='center', va='bottom')
-        
+            ax1.text(
+                bar.get_x() + bar.get_width() / 2.0,
+                height + 0.5,
+                f"{count}",
+                ha="center",
+                va="bottom",
+            )
+
         # Pie chart
-        wedges, texts, autotexts = ax2.pie(counts, labels=classes, autopct='%1.1f%%', 
-                                          colors=colors, startangle=90)
+        wedges, texts, autotexts = ax2.pie(
+            counts, labels=classes, autopct="%1.1f%%", colors=colors, startangle=90
+        )
         ax2.set_title(f"Class Distribution Percentage - {batch_name}")
-        
+
         # Make percentage text bold
         for autotext in autotexts:
-            autotext.set_color('white')
-            autotext.set_fontweight('bold')
-        
+            autotext.set_color("white")
+            autotext.set_fontweight("bold")
+
         plt.tight_layout()
-        plt.savefig(os.path.join(output_dir, f"{batch_name}_class_distribution.png"),
-                   dpi=300, bbox_inches="tight")
+        plt.savefig(
+            os.path.join(output_dir, f"{batch_name}_class_distribution.png"),
+            dpi=300,
+            bbox_inches="tight",
+        )
         plt.close()
 
-    def _create_feature_distribution_plot(self, batch_data: dict, batch_name: str, output_dir: str):
+    def _create_feature_distribution_plot(
+        self, batch_data: dict, batch_name: str, output_dir: str
+    ):
         """Create feature distribution and statistics plots."""
         features = batch_data["features"]
         feature_stats = batch_data.get("feature_statistics", {})
-        
+
         # Create subplot grid
         fig = plt.figure(figsize=(16, 10))
         gs = fig.add_gridspec(2, 3, hspace=0.3, wspace=0.3)
-        
+
         # 1. Feature mean distribution
         ax1 = fig.add_subplot(gs[0, 0])
         if "feature_mean" in feature_stats:
-            ax1.hist(feature_stats["feature_mean"], bins=20, alpha=0.7, 
-                    color='skyblue', edgecolor='black')
+            ax1.hist(
+                feature_stats["feature_mean"],
+                bins=20,
+                alpha=0.7,
+                color="skyblue",
+                edgecolor="black",
+            )
             ax1.set_xlabel("Feature Mean Values")
             ax1.set_ylabel("Number of Features")
             ax1.set_title("Distribution of Feature Means")
             ax1.grid(alpha=0.3)
-        
+
         # 2. Feature standard deviation
         ax2 = fig.add_subplot(gs[0, 1])
         if "feature_std" in feature_stats:
-            ax2.hist(feature_stats["feature_std"], bins=20, alpha=0.7, 
-                    color='lightgreen', edgecolor='black')
+            ax2.hist(
+                feature_stats["feature_std"],
+                bins=20,
+                alpha=0.7,
+                color="lightgreen",
+                edgecolor="black",
+            )
             ax2.set_xlabel("Feature Standard Deviation")
             ax2.set_ylabel("Number of Features")
             ax2.set_title("Distribution of Feature Std Dev")
             ax2.grid(alpha=0.3)
-        
+
         # 3. Feature range (max - min)
         ax3 = fig.add_subplot(gs[0, 2])
         if "feature_min" in feature_stats and "feature_max" in feature_stats:
-            feature_ranges = np.array(feature_stats["feature_max"]) - np.array(feature_stats["feature_min"])
-            ax3.hist(feature_ranges, bins=20, alpha=0.7, 
-                    color='lightcoral', edgecolor='black')
+            feature_ranges = np.array(feature_stats["feature_max"]) - np.array(
+                feature_stats["feature_min"]
+            )
+            ax3.hist(
+                feature_ranges,
+                bins=20,
+                alpha=0.7,
+                color="lightcoral",
+                edgecolor="black",
+            )
             ax3.set_xlabel("Feature Range (Max - Min)")
             ax3.set_ylabel("Number of Features")
             ax3.set_title("Distribution of Feature Ranges")
             ax3.grid(alpha=0.3)
-        
+
         # 4. Feature vs Index scatter plot (first 10 samples)
         ax4 = fig.add_subplot(gs[1, :])
         if features.shape[0] > 0:
             # Show first 10 samples across all features
             n_samples_to_show = min(10, features.shape[0])
             for i in range(n_samples_to_show):
-                ax4.plot(features[i], alpha=0.7, label=f'Sample {i+1}' if n_samples_to_show <= 5 else None)
-            
+                ax4.plot(
+                    features[i],
+                    alpha=0.7,
+                    label=f"Sample {i+1}" if n_samples_to_show <= 5 else None,
+                )
+
             ax4.set_xlabel("Feature Index")
             ax4.set_ylabel("Feature Value")
-            ax4.set_title(f"Feature Values Across Indices (First {n_samples_to_show} Samples)")
+            ax4.set_title(
+                f"Feature Values Across Indices (First {n_samples_to_show} Samples)"
+            )
             ax4.grid(alpha=0.3)
             if n_samples_to_show <= 5:
                 ax4.legend()
-        
+
         plt.suptitle(f"Feature Statistics Overview - {batch_name}", fontsize=14, y=0.98)
         plt.tight_layout()
-        plt.savefig(os.path.join(output_dir, f"{batch_name}_feature_distribution.png"),
-                   dpi=300, bbox_inches="tight")
+        plt.savefig(
+            os.path.join(output_dir, f"{batch_name}_feature_distribution.png"),
+            dpi=300,
+            bbox_inches="tight",
+        )
         plt.close()
 
-    def _create_feature_correlation_plot(self, batch_data: dict, batch_name: str, output_dir: str):
+    def _create_feature_correlation_plot(
+        self, batch_data: dict, batch_name: str, output_dir: str
+    ):
         """Create feature correlation heatmap."""
         features = batch_data["features"]
-        
+
         # Sample features if there are too many (for readability)
         if features.shape[1] > 50:
             # Sample every nth feature to get around 20-30 features
@@ -416,45 +463,50 @@ class DataProcessingExperiment(BaseExperiment):
         else:
             sampled_features = features
             feature_indices = list(range(features.shape[1]))
-        
+
         # Calculate correlation matrix
         corr_matrix = np.corrcoef(sampled_features.T)
-        
+
         # Create heatmap
         fig, ax = plt.subplots(1, 1, figsize=(12, 10))
-        
-        im = ax.imshow(corr_matrix, cmap='RdBu_r', aspect='auto', vmin=-1, vmax=1)
-        
+
+        im = ax.imshow(corr_matrix, cmap="RdBu_r", aspect="auto", vmin=-1, vmax=1)
+
         # Set ticks and labels
         n_features = len(feature_indices)
         tick_spacing = max(1, n_features // 10)  # Show at most 10 tick labels
         tick_positions = list(range(0, n_features, tick_spacing))
-        tick_labels = [f'F{feature_indices[i]}' for i in tick_positions]
-        
+        tick_labels = [f"F{feature_indices[i]}" for i in tick_positions]
+
         ax.set_xticks(tick_positions)
         ax.set_yticks(tick_positions)
         ax.set_xticklabels(tick_labels, rotation=45)
         ax.set_yticklabels(tick_labels)
-        
+
         # Add colorbar
         cbar = plt.colorbar(im, ax=ax, shrink=0.8)
-        cbar.set_label('Correlation Coefficient', rotation=270, labelpad=15)
-        
+        cbar.set_label("Correlation Coefficient", rotation=270, labelpad=15)
+
         ax.set_title(f"Feature Correlation Matrix - {batch_name}")
         plt.tight_layout()
-        plt.savefig(os.path.join(output_dir, f"{batch_name}_feature_correlation.png"),
-                   dpi=300, bbox_inches="tight")
+        plt.savefig(
+            os.path.join(output_dir, f"{batch_name}_feature_correlation.png"),
+            dpi=300,
+            bbox_inches="tight",
+        )
         plt.close()
 
-    def _create_data_overview_plot(self, batch_data: dict, batch_name: str, output_dir: str):
+    def _create_data_overview_plot(
+        self, batch_data: dict, batch_name: str, output_dir: str
+    ):
         """Create comprehensive data overview plot."""
         features = batch_data["features"]
         labels = batch_data["labels"]
         class_dist = batch_data["class_distribution"]
-        
+
         fig = plt.figure(figsize=(16, 12))
         gs = fig.add_gridspec(3, 2, hspace=0.3, wspace=0.3)
-        
+
         # 1. Dataset summary statistics
         ax1 = fig.add_subplot(gs[0, 0])
         stats_text = f"""Dataset Summary:
@@ -468,80 +520,114 @@ Feature Statistics:
 • Std Range: [{np.std(features):.3f}]
 • Min Value: {np.min(features):.3f}
 • Max Value: {np.max(features):.3f}"""
-        
-        ax1.text(0.1, 0.9, stats_text, transform=ax1.transAxes, fontsize=10,
-                verticalalignment='top', fontfamily='monospace',
-                bbox=dict(boxstyle='round', facecolor='lightblue', alpha=0.8))
+
+        ax1.text(
+            0.1,
+            0.9,
+            stats_text,
+            transform=ax1.transAxes,
+            fontsize=10,
+            verticalalignment="top",
+            fontfamily="monospace",
+            bbox=dict(boxstyle="round", facecolor="lightblue", alpha=0.8),
+        )
         ax1.set_xlim(0, 1)
         ax1.set_ylim(0, 1)
-        ax1.axis('off')
-        ax1.set_title('Dataset Overview')
-        
+        ax1.axis("off")
+        ax1.set_title("Dataset Overview")
+
         # 2. Class distribution
         ax2 = fig.add_subplot(gs[0, 1])
         classes = list(class_dist.keys())
         counts = list(class_dist.values())
         colors = plt.cm.Set3(np.linspace(0, 1, len(classes)))
-        
-        bars = ax2.bar(classes, counts, color=colors, alpha=0.7, edgecolor='black')
+
+        bars = ax2.bar(classes, counts, color=colors, alpha=0.7, edgecolor="black")
         ax2.set_xlabel("Classes")
         ax2.set_ylabel("Sample Count")
         ax2.set_title("Class Distribution")
-        ax2.tick_params(axis='x', rotation=45)
-        ax2.grid(axis='y', alpha=0.3)
-        
+        ax2.tick_params(axis="x", rotation=45)
+        ax2.grid(axis="y", alpha=0.3)
+
         # Add count labels on bars
         for bar, count in zip(bars, counts):
             height = bar.get_height()
-            ax2.text(bar.get_x() + bar.get_width()/2., height + max(counts)*0.01,
-                    f'{count}', ha='center', va='bottom', fontsize=9)
-        
+            ax2.text(
+                bar.get_x() + bar.get_width() / 2.0,
+                height + max(counts) * 0.01,
+                f"{count}",
+                ha="center",
+                va="bottom",
+                fontsize=9,
+            )
+
         # 3. Feature value distribution by class
         ax3 = fig.add_subplot(gs[1, :])
         unique_labels = np.unique(labels)
         n_features_to_show = min(10, features.shape[1])
-        
+
         for i, label in enumerate(unique_labels):
             mask = labels == label
             class_features = features[mask]
-            
+
             # Calculate mean feature values for this class
             if len(class_features) > 0:
                 mean_features = np.mean(class_features[:, :n_features_to_show], axis=0)
-                ax3.plot(range(n_features_to_show), mean_features, 
-                        marker='o', label=f'Class: {label}', alpha=0.7)
-        
+                ax3.plot(
+                    range(n_features_to_show),
+                    mean_features,
+                    marker="o",
+                    label=f"Class: {label}",
+                    alpha=0.7,
+                )
+
         ax3.set_xlabel("Feature Index")
         ax3.set_ylabel("Mean Feature Value")
-        ax3.set_title(f"Mean Feature Values by Class (First {n_features_to_show} Features)")
+        ax3.set_title(
+            f"Mean Feature Values by Class (First {n_features_to_show} Features)"
+        )
         ax3.legend()
         ax3.grid(alpha=0.3)
-        
+
         # 4. Sample distribution visualization (if feasible)
         ax4 = fig.add_subplot(gs[2, :])
-        
+
         # Create a simple 2D projection using first 2 features
         if features.shape[1] >= 2:
             for i, label in enumerate(unique_labels):
                 mask = labels == label
                 class_features = features[mask]
-                
+
                 if len(class_features) > 0:
-                    ax4.scatter(class_features[:, 0], class_features[:, 1], 
-                              label=f'Class: {label}', alpha=0.6, s=30)
-            
+                    ax4.scatter(
+                        class_features[:, 0],
+                        class_features[:, 1],
+                        label=f"Class: {label}",
+                        alpha=0.6,
+                        s=30,
+                    )
+
             ax4.set_xlabel("Feature 0")
             ax4.set_ylabel("Feature 1")
             ax4.set_title("Sample Distribution (First 2 Features)")
             ax4.legend()
             ax4.grid(alpha=0.3)
         else:
-            ax4.text(0.5, 0.5, "Insufficient features for 2D visualization", 
-                    ha='center', va='center', transform=ax4.transAxes)
+            ax4.text(
+                0.5,
+                0.5,
+                "Insufficient features for 2D visualization",
+                ha="center",
+                va="center",
+                transform=ax4.transAxes,
+            )
             ax4.set_title("Sample Distribution")
-        
+
         plt.suptitle(f"Comprehensive Data Overview - {batch_name}", fontsize=16, y=0.98)
         plt.tight_layout()
-        plt.savefig(os.path.join(output_dir, f"{batch_name}_data_overview.png"),
-                   dpi=300, bbox_inches="tight")
+        plt.savefig(
+            os.path.join(output_dir, f"{batch_name}_data_overview.png"),
+            dpi=300,
+            bbox_inches="tight",
+        )
         plt.close()
