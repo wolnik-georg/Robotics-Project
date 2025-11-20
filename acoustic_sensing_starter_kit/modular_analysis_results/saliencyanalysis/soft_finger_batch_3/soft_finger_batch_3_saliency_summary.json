@@ -1,6 +1,6 @@
 {
   "batch_name": "soft_finger_batch_3",
-  "test_accuracy": 0,
+  "test_accuracy": 0.9666666388511658,
   "num_samples": 150,
   "num_classes": 3,
   "model_architecture": "SimpleClassifier",
