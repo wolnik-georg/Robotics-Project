@@ -1,5 +1,5 @@
 {
-  "execution_timestamp": "2025-11-19T21:27:43.395713",
+  "execution_timestamp": "2025-11-20T09:35:23.767057",
   "config_path": "/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/configs/experiment_config.yml",
   "output_directory": "/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/modular_analysis_results",
   "summary": {
@@ -17,8 +17,7 @@
     },
     "execution_time": {},
     "key_findings": [
-      "Processed 0 samples with 38 features across 9 classes",
-      "Optimal performance achieved with 11 features out of 38 total"
+      "Processed 0 samples with 38 features across 9 classes"
     ]
   },
   "experiment_list": [

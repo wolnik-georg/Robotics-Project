@@ -75,6 +75,16 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
                 "class_distribution": batch_data["class_distribution"],
             }
 
+            # Save batch-specific results
+            self._save_batch_discrimination_results(
+                all_batch_results[batch_name], batch_name
+            )
+            
+            # Create batch-specific plots
+            self._create_batch_plots(
+                all_batch_results[batch_name], batch_name, batch_results[batch_name]
+            )
+
         # Perform cross-batch analysis (train on one batch, test on another)
         cross_batch_results = self._perform_cross_batch_analysis(
             batch_results, classifiers
@@ -121,6 +131,264 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
             classifiers["Linear Discriminant Analysis"] = LinearDiscriminantAnalysis()
 
         return classifiers
+
+    def _save_batch_discrimination_results(self, batch_results: dict, batch_name: str):
+        """Save detailed discrimination results for a specific batch."""
+        import json
+        import os
+
+        # Create batch-specific output directory
+        batch_output_dir = os.path.join(self.experiment_output_dir, batch_name)
+        os.makedirs(batch_output_dir, exist_ok=True)
+
+        # Create a serializable version of the results
+        serializable_results = {
+            "batch_name": batch_name,
+            "num_samples": batch_results["num_samples"],
+            "num_features": batch_results["num_features"],
+            "classes": batch_results["classes"],
+            "class_distribution": batch_results["class_distribution"],
+            "cv_results": batch_results["cv_results"],
+        }
+
+        # Save full batch results
+        results_path = os.path.join(
+            batch_output_dir, f"{batch_name}_discrimination_results.json"
+        )
+        with open(results_path, "w") as f:
+            json.dump(serializable_results, f, indent=2, default=str)
+
+        # Create batch summary with best performing classifiers
+        cv_results = batch_results["cv_results"]
+
+        # Filter out failed classifiers (those without mean_accuracy)
+        successful_results = {
+            name: result
+            for name, result in cv_results.items()
+            if "mean_accuracy" in result and "error" not in result
+        }
+
+        batch_summary = {
+            "batch_name": batch_name,
+            "num_samples": batch_results["num_samples"],
+            "num_classes": len(batch_results["classes"]),
+            "classes": batch_results["classes"],
+        }
+
+        if successful_results:
+            best_classifier = max(
+                successful_results.keys(),
+                key=lambda k: successful_results[k]["mean_accuracy"],
+            )
+            worst_classifier = min(
+                successful_results.keys(),
+                key=lambda k: successful_results[k]["mean_accuracy"],
+            )
+
+            batch_summary.update(
+                {
+                    "best_classifier": {
+                        "name": best_classifier,
+                        "mean_accuracy": successful_results[best_classifier][
+                            "mean_accuracy"
+                        ],
+                        "std_accuracy": successful_results[best_classifier][
+                            "std_accuracy"
+                        ],
+                    },
+                    "worst_classifier": {
+                        "name": worst_classifier,
+                        "mean_accuracy": successful_results[worst_classifier][
+                            "mean_accuracy"
+                        ],
+                        "std_accuracy": successful_results[worst_classifier][
+                            "std_accuracy"
+                        ],
+                    },
+                    "all_classifiers_performance": {
+                        name: {
+                            "mean_accuracy": result["mean_accuracy"],
+                            "std_accuracy": result["std_accuracy"],
+                        }
+                        for name, result in successful_results.items()
+                    },
+                }
+            )
+        else:
+            batch_summary.update(
+                {
+                    "note": "No classifiers succeeded (likely due to single class in batch)",
+                    "all_classifiers_performance": cv_results,
+                }
+            )
+
+        # Save batch summary
+        summary_path = os.path.join(
+            batch_output_dir, f"{batch_name}_discrimination_summary.json"
+        )
+        with open(summary_path, "w") as f:
+            json.dump(batch_summary, f, indent=2, default=str)
+
+        self.logger.info(
+            f"Batch {batch_name} discrimination results saved to: {batch_output_dir}"
+        )
+
+    def _create_batch_plots(self, batch_results: dict, batch_name: str, batch_data: dict):
+        """Create visualization plots for a specific batch."""
+        try:
+            # Create batch-specific output directory
+            batch_output_dir = os.path.join(self.experiment_output_dir, batch_name)
+            os.makedirs(batch_output_dir, exist_ok=True)
+            
+            # Create classifier performance comparison plot
+            self._create_batch_performance_plot(batch_results, batch_name, batch_output_dir)
+            
+            # Create confusion matrices for successful classifiers
+            X = batch_data["features"]
+            y = batch_data["labels"]
+            self._create_batch_confusion_matrices(batch_results, batch_name, batch_output_dir, X, y)
+            
+        except Exception as e:
+            self.logger.warning(f"Failed to create plots for batch {batch_name}: {e}")
+
+    def _create_batch_performance_plot(self, batch_results: dict, batch_name: str, output_dir: str):
+        """Create performance comparison plot for a single batch."""
+        import matplotlib.pyplot as plt
+        
+        cv_results = batch_results["cv_results"]
+        
+        # Filter successful classifiers
+        successful_results = {
+            name: result
+            for name, result in cv_results.items()
+            if "mean_accuracy" in result and "error" not in result
+        }
+        
+        if not successful_results:
+            self.logger.warning(f"No successful classifiers for batch {batch_name}")
+            return
+        
+        # Prepare data for plotting
+        classifiers = list(successful_results.keys())
+        means = [successful_results[clf]["mean_accuracy"] for clf in classifiers]
+        stds = [successful_results[clf]["std_accuracy"] for clf in classifiers]
+        
+        # Create plot
+        fig, ax = plt.subplots(1, 1, figsize=(12, 8))
+        
+        # Bar plot with error bars
+        bars = ax.bar(range(len(classifiers)), means, yerr=stds, 
+                     capsize=5, alpha=0.7, color='steelblue', edgecolor='black')
+        
+        # Customize plot
+        ax.set_xlabel("Classifiers")
+        ax.set_ylabel("Accuracy")
+        ax.set_title(f"Classifier Performance Comparison - {batch_name}")
+        ax.set_xticks(range(len(classifiers)))
+        ax.set_xticklabels(classifiers, rotation=45, ha='right')
+        ax.grid(axis='y', alpha=0.3)
+        ax.set_ylim(0, 1.0)
+        
+        # Add value labels on bars
+        for bar, mean, std in zip(bars, means, stds):
+            height = bar.get_height()
+            ax.text(bar.get_x() + bar.get_width()/2., height + std + 0.01,
+                   f'{mean:.3f}±{std:.3f}', ha='center', va='bottom', fontsize=9)
+        
+        # Color-code bars by performance
+        for i, (bar, mean) in enumerate(zip(bars, means)):
+            if mean == max(means):
+                bar.set_color('gold')  # Best performer
+            elif mean == min(means):
+                bar.set_color('lightcoral')  # Worst performer
+        
+        plt.tight_layout()
+        plt.savefig(os.path.join(output_dir, f"{batch_name}_classifier_performance.png"),
+                   dpi=300, bbox_inches="tight")
+        plt.close()
+
+    def _create_batch_confusion_matrices(self, batch_results: dict, batch_name: str, 
+                                       output_dir: str, X: np.ndarray, y: np.ndarray):
+        """Create confusion matrices for successful classifiers."""
+        import matplotlib.pyplot as plt
+        from sklearn.metrics import confusion_matrix
+        from sklearn.model_selection import StratifiedKFold
+        import seaborn as sns
+        
+        cv_results = batch_results["cv_results"]
+        
+        # Filter successful classifiers and get top 3
+        successful_results = {
+            name: result
+            for name, result in cv_results.items()
+            if "mean_accuracy" in result and "error" not in result
+        }
+        
+        if not successful_results:
+            return
+            
+        # Get top 3 classifiers
+        top_classifiers = sorted(successful_results.keys(), 
+                               key=lambda k: successful_results[k]["mean_accuracy"], 
+                               reverse=True)[:3]
+        
+        if len(top_classifiers) == 0:
+            return
+            
+        # Create confusion matrices
+        fig, axes = plt.subplots(1, len(top_classifiers), figsize=(6 * len(top_classifiers), 5))
+        if len(top_classifiers) == 1:
+            axes = [axes]
+        
+        # Get classifiers
+        classifiers = self._get_classifiers()
+        cv = StratifiedKFold(n_splits=3, shuffle=True, random_state=42)  # Use fewer folds
+        
+        for i, clf_name in enumerate(top_classifiers):
+            try:
+                clf = classifiers[clf_name]
+                
+                # Aggregate confusion matrix across CV folds
+                y_true_all = []
+                y_pred_all = []
+                
+                for train_idx, test_idx in cv.split(X, y):
+                    X_train, X_test = X[train_idx], X[test_idx]
+                    y_train, y_test = y[train_idx], y[test_idx]
+                    
+                    clf.fit(X_train, y_train)
+                    y_pred = clf.predict(X_test)
+                    
+                    y_true_all.extend(y_test)
+                    y_pred_all.extend(y_pred)
+                
+                # Create confusion matrix
+                cm = confusion_matrix(y_true_all, y_pred_all, 
+                                    labels=np.unique(y))
+                
+                # Normalize confusion matrix
+                cm_norm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
+                
+                # Plot
+                im = sns.heatmap(cm_norm, annot=True, fmt='.2f', cmap='Blues',
+                               xticklabels=np.unique(y), 
+                               yticklabels=np.unique(y),
+                               ax=axes[i], cbar=True)
+                
+                axes[i].set_title(f'{clf_name}\nAcc: {successful_results[clf_name]["mean_accuracy"]:.3f}')
+                axes[i].set_xlabel('Predicted Label')
+                axes[i].set_ylabel('True Label')
+                
+            except Exception as e:
+                self.logger.warning(f"Failed to create confusion matrix for {clf_name}: {e}")
+                axes[i].text(0.5, 0.5, f"Failed to create\nconfusion matrix\nfor {clf_name}", 
+                           ha='center', va='center', transform=axes[i].transAxes)
+        
+        plt.suptitle(f"Confusion Matrices - {batch_name}", fontsize=14, y=1.02)
+        plt.tight_layout()
+        plt.savefig(os.path.join(output_dir, f"{batch_name}_confusion_matrices.png"),
+                   dpi=300, bbox_inches="tight")
+        plt.close()
 
     def _perform_cross_validation(
         self,

@@ -1,0 +1,24 @@
+{
+  "batch_name": "soft_finger_batch_2",
+  "num_samples": 200,
+  "num_features": 38,
+  "num_classes": 4,
+  "classes": [
+    "finger blank",
+    "finger bottom",
+    "finger middle",
+    "finger tip"
+  ],
+  "class_distribution": {
+    "finger blank": "50",
+    "finger bottom": "50",
+    "finger middle": "50",
+    "finger tip": "50"
+  },
+  "files_saved": [
+    "soft_finger_batch_2_data_processing_results.json",
+    "soft_finger_batch_2_features.npy",
+    "soft_finger_batch_2_labels.npy",
+    "soft_finger_batch_2_metadata.json"
+  ]
+}

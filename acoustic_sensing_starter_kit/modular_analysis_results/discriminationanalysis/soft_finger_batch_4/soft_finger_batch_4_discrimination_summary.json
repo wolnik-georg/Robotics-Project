@@ -1,0 +1,33 @@
+{
+  "batch_name": "soft_finger_batch_4",
+  "num_samples": 100,
+  "num_classes": 2,
+  "classes": [
+    "metal",
+    "no metal"
+  ],
+  "best_classifier": {
+    "name": "Random Forest",
+    "mean_accuracy": 1.0,
+    "std_accuracy": 0.0
+  },
+  "worst_classifier": {
+    "name": "Random Forest",
+    "mean_accuracy": 1.0,
+    "std_accuracy": 0.0
+  },
+  "all_classifiers_performance": {
+    "Random Forest": {
+      "mean_accuracy": 1.0,
+      "std_accuracy": 0.0
+    },
+    "K-NN": {
+      "mean_accuracy": 1.0,
+      "std_accuracy": 0.0
+    },
+    "Linear Discriminant Analysis": {
+      "mean_accuracy": 1.0,
+      "std_accuracy": 0.0
+    }
+  }
+}

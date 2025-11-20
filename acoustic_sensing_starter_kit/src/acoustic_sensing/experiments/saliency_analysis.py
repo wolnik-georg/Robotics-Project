@@ -42,49 +42,102 @@ class SaliencyAnalysisExperiment(BaseExperiment):
 
     def run(self, shared_data: Dict[str, Any]) -> Dict[str, Any]:
         """
-        Perform saliency analysis using neural networks.
+        Perform saliency analysis using neural networks on each batch separately.
 
         Args:
             shared_data: Dictionary containing loaded features and labels
 
         Returns:
-            Dictionary containing saliency maps and feature importance analysis
+            Dictionary containing per-batch saliency maps and feature importance analysis
         """
         self.logger.info("Starting saliency analysis experiment...")
 
         # Load per-batch data from previous experiment
         batch_results = self.load_shared_data(shared_data, "batch_results")
 
-        # For saliency analysis, combine all batch data for comprehensive analysis
-        all_X = []
-        all_y = []
+        per_batch_results = {}
 
         for batch_name, batch_data in batch_results.items():
+            self.logger.info(f"Processing saliency analysis for {batch_name}...")
+
             X_batch = batch_data["features"]
             y_batch = batch_data["labels"]
 
-            all_X.append(X_batch)
-            all_y.append(y_batch)
+            # Skip batch if insufficient data or single class
+            if len(X_batch) < 10:
+                self.logger.warning(
+                    f"Skipping {batch_name}: insufficient data ({len(X_batch)} samples)"
+                )
+                continue
 
-        # Combine all batches
-        X = np.vstack(all_X)
-        y = np.concatenate(all_y)
+            unique_classes = np.unique(y_batch)
+            if len(unique_classes) < 2:
+                self.logger.warning(f"Skipping {batch_name}: single class data")
+                continue
 
-        self.logger.info(
-            f"Combined data: {len(X)} samples, {X.shape[1]} features across {len(np.unique(y))} classes"
-        )
+            self.logger.info(
+                f"Batch {batch_name}: {len(X_batch)} samples, {X_batch.shape[1]} features, {len(unique_classes)} classes"
+            )
 
+            try:
+                # Perform per-batch saliency analysis
+                batch_saliency_results = self._perform_batch_saliency_analysis(
+                    X_batch, y_batch, batch_name
+                )
+                per_batch_results[batch_name] = batch_saliency_results
+
+            except Exception as e:
+                self.logger.error(f"Error processing {batch_name}: {str(e)}")
+                continue
+
+        # Aggregate results across batches
+        aggregated_results = self._aggregate_saliency_results(per_batch_results)
+
+        results = {
+            "per_batch_results": per_batch_results,
+            "aggregated_results": aggregated_results,
+            "total_batches_analyzed": len(per_batch_results),
+            "skipped_batches": len(batch_results) - len(per_batch_results),
+        }
+
+        # Create cross-batch visualizations
+        if per_batch_results:
+            self._create_cross_batch_visualizations(
+                per_batch_results, aggregated_results
+            )
+
+        # Save summary
+        self._save_saliency_summary(per_batch_results, aggregated_results)
+
+        self.logger.info("Saliency analysis experiment completed")
+        return results
+
+    def _perform_batch_saliency_analysis(
+        self, X: np.ndarray, y: np.ndarray, batch_name: str
+    ) -> dict:
+        """Perform saliency analysis for a single batch."""
         # Prepare data for neural network
         X_processed, y_processed, scaler, label_encoder = self._prepare_data(X, y)
 
         # Split data
-        X_train, X_test, y_train, y_test = train_test_split(
-            X_processed,
-            y_processed,
-            test_size=0.2,
-            random_state=42,
-            stratify=y_processed,
-        )
+        if len(X_processed) < 20:  # Too small for proper train/test split
+            # Use smaller test size for small datasets
+            test_size = min(0.3, max(2, len(X_processed) // 4))
+            X_train, X_test, y_train, y_test = train_test_split(
+                X_processed,
+                y_processed,
+                test_size=test_size,
+                random_state=42,
+                stratify=y_processed if len(np.unique(y_processed)) > 1 else None,
+            )
+        else:
+            X_train, X_test, y_train, y_test = train_test_split(
+                X_processed,
+                y_processed,
+                test_size=0.2,
+                random_state=42,
+                stratify=y_processed,
+            )
 
         # Create and train neural network
         model = self._create_and_train_model(X_train, y_train, X_test, y_test)
@@ -97,23 +150,221 @@ class SaliencyAnalysisExperiment(BaseExperiment):
         # Analyze feature importance patterns
         feature_analysis = self._analyze_feature_patterns(saliency_results, X.shape[1])
 
-        results = {
+        # Evaluate model performance
+        model_performance = self._evaluate_model(model, X_test, y_test)
+
+        batch_results = {
+            "batch_name": batch_name,
             "model": model,
             "scaler": scaler,
             "label_encoder": label_encoder,
             "saliency_maps": saliency_results,
             "feature_analysis": feature_analysis,
-            "model_performance": self._evaluate_model(model, X_test, y_test),
+            "model_performance": model_performance,
+            "num_samples": len(X),
+            "num_features": X.shape[1],
+            "num_classes": len(np.unique(y)),
+            "test_accuracy": model_performance.get("accuracy", 0),
         }
 
-        # Create visualizations
-        self._create_saliency_visualizations(saliency_results, feature_analysis)
+        # Create batch-specific visualizations and save results
+        self._create_batch_saliency_visualizations(
+            saliency_results, feature_analysis, batch_name
+        )
+        self._save_batch_saliency_results(batch_results, batch_name)
 
-        # Save summary
-        self._save_saliency_summary(results)
+        return batch_results
 
-        self.logger.info("Saliency analysis experiment completed")
-        return results
+    def _save_batch_saliency_results(self, batch_results: dict, batch_name: str):
+        """Save detailed saliency results for a specific batch."""
+        import json
+
+        # Create batch-specific output directory
+        batch_output_dir = os.path.join(self.experiment_output_dir, batch_name)
+        os.makedirs(batch_output_dir, exist_ok=True)
+
+        # Create a serializable version of the results
+        serializable_results = {
+            "batch_name": batch_results["batch_name"],
+            "num_samples": batch_results["num_samples"],
+            "num_features": batch_results["num_features"],
+            "num_classes": batch_results["num_classes"],
+            "test_accuracy": batch_results["test_accuracy"],
+            "model_performance": batch_results["model_performance"],
+            "feature_analysis": batch_results["feature_analysis"],
+        }
+
+        # Handle saliency maps (convert tensors to lists)
+        saliency_data = {}
+        for method, data in batch_results["saliency_maps"].items():
+            if hasattr(data, "detach"):  # PyTorch tensor
+                saliency_data[method] = data.detach().cpu().numpy().tolist()
+            elif hasattr(data, "tolist"):  # Numpy array
+                saliency_data[method] = data.tolist()
+            else:
+                saliency_data[method] = data
+
+        serializable_results["saliency_maps_summary"] = saliency_data
+
+        # Save full batch results
+        results_path = os.path.join(
+            batch_output_dir, f"{batch_name}_saliency_results.json"
+        )
+        with open(results_path, "w") as f:
+            json.dump(serializable_results, f, indent=2, default=str)
+
+        # Create batch summary
+        batch_summary = {
+            "batch_name": batch_name,
+            "test_accuracy": batch_results["test_accuracy"],
+            "num_samples": batch_results["num_samples"],
+            "num_classes": batch_results["num_classes"],
+            "model_architecture": "SimpleClassifier",
+            "top_important_features": batch_results["feature_analysis"].get(
+                "top_features", []
+            )[:5],
+            "feature_importance_stats": batch_results["feature_analysis"].get(
+                "importance_scores", []
+            )[:10],
+        }
+
+        # Save batch summary
+        summary_path = os.path.join(
+            batch_output_dir, f"{batch_name}_saliency_summary.json"
+        )
+        with open(summary_path, "w") as f:
+            json.dump(batch_summary, f, indent=2, default=str)
+
+        self.logger.info(
+            f"Batch {batch_name} saliency results saved to: {batch_output_dir}"
+        )
+
+    def _aggregate_saliency_results(self, per_batch_results: dict) -> dict:
+        """Aggregate saliency results across all batches."""
+        if not per_batch_results:
+            return {}
+
+        aggregated = {
+            "overall_performance": {},
+            "feature_importance_consensus": [],
+            "cross_batch_patterns": {},
+            "batch_summaries": {},
+        }
+
+        # Collect performance metrics
+        accuracies = []
+        all_feature_importance = []
+
+        for batch_name, batch_results in per_batch_results.items():
+            # Collect performance
+            accuracy = batch_results.get("test_accuracy", 0)
+            accuracies.append(accuracy)
+
+            # Collect feature importance
+            if "feature_analysis" in batch_results:
+                importance = batch_results["feature_analysis"].get(
+                    "importance_scores", []
+                )
+                if len(importance) > 0:
+                    all_feature_importance.append(importance)
+
+            # Store batch summary
+            aggregated["batch_summaries"][batch_name] = {
+                "accuracy": accuracy,
+                "num_samples": batch_results.get("num_samples", 0),
+                "num_classes": batch_results.get("num_classes", 0),
+                "top_features": batch_results.get("feature_analysis", {}).get(
+                    "top_features", []
+                )[:5],
+            }
+
+        # Calculate overall statistics
+        if accuracies:
+            aggregated["overall_performance"] = {
+                "mean_accuracy": np.mean(accuracies),
+                "std_accuracy": np.std(accuracies),
+                "min_accuracy": np.min(accuracies),
+                "max_accuracy": np.max(accuracies),
+            }
+
+        # Find consensus features (most consistently important)
+        if all_feature_importance:
+            # Average feature importance across batches
+            min_features = min(len(imp) for imp in all_feature_importance)
+            if min_features > 0:
+                # Truncate all to minimum length for fair comparison
+                truncated_importance = [
+                    imp[:min_features] for imp in all_feature_importance
+                ]
+                consensus_importance = np.mean(truncated_importance, axis=0)
+
+                # Get top consensus features
+                top_indices = np.argsort(consensus_importance)[::-1][:10]
+                aggregated["feature_importance_consensus"] = [
+                    {
+                        "feature_idx": int(idx),
+                        "consensus_importance": float(consensus_importance[idx]),
+                    }
+                    for idx in top_indices
+                ]
+
+        return aggregated
+
+    def _create_cross_batch_visualizations(
+        self, per_batch_results: dict, aggregated_results: dict
+    ):
+        """Create visualizations comparing results across batches."""
+        if not per_batch_results:
+            return
+
+        try:
+            import matplotlib.pyplot as plt
+
+            # Performance comparison across batches
+            batch_names = list(per_batch_results.keys())
+            accuracies = [
+                per_batch_results[name].get("test_accuracy", 0) for name in batch_names
+            ]
+
+            plt.figure(figsize=(12, 6))
+            plt.bar(batch_names, accuracies)
+            plt.title("Saliency Analysis Model Performance Across Batches")
+            plt.ylabel("Test Accuracy")
+            plt.xlabel("Batch")
+            plt.xticks(rotation=45)
+            plt.tight_layout()
+            plt.savefig(
+                os.path.join(self.experiment_output_dir, "cross_batch_performance.png")
+            )
+            plt.close()
+
+        except Exception as e:
+            self.logger.warning(f"Failed to create cross-batch visualizations: {e}")
+
+    def _create_batch_saliency_visualizations(
+        self, saliency_results: dict, feature_analysis: dict, batch_name: str
+    ):
+        """Create saliency visualizations for a specific batch."""
+        try:
+            # Create batch-specific output directory
+            batch_output_dir = os.path.join(
+                self.experiment_output_dir, f"batch_{batch_name}"
+            )
+            os.makedirs(batch_output_dir, exist_ok=True)
+
+            # Use existing visualization methods but save to batch directory
+            original_output_dir = self.experiment_output_dir
+            self.experiment_output_dir = batch_output_dir
+
+            self._create_saliency_visualizations(saliency_results, feature_analysis)
+
+            # Restore original output directory
+            self.experiment_output_dir = original_output_dir
+
+        except Exception as e:
+            self.logger.warning(
+                f"Failed to create batch visualizations for {batch_name}: {e}"
+            )
 
     def _prepare_data(self, X: np.ndarray, y: np.ndarray):
         """Prepare data for neural network training."""
@@ -547,29 +798,52 @@ class SaliencyAnalysisExperiment(BaseExperiment):
         )
         plt.close()
 
-    def _save_saliency_summary(self, results: dict):
-        """Save saliency analysis summary."""
+    def _save_saliency_summary(self, per_batch_results: dict, aggregated_results: dict):
+        """Save saliency analysis summary for both per-batch and aggregated results."""
+
+        # Save detailed per-batch results
+        self.save_results(per_batch_results, "saliency_per_batch_results.json")
+
+        # Create overall summary
         summary = {
-            "model_performance": results["model_performance"],
-            "consistently_important_features": results["feature_analysis"].get(
-                "consistently_important", []
-            ),
-            "num_consistently_important": len(
-                results["feature_analysis"].get("consistently_important", [])
-            ),
-            "feature_group_analysis": results["feature_analysis"].get(
-                "feature_groups", {}
-            ),
-            "methods_used": list(
-                results["saliency_maps"].get("feature_importance_stats", {}).keys()
-            ),
+            "overall_performance": aggregated_results.get("overall_performance", {}),
+            "consensus_important_features": aggregated_results.get(
+                "feature_importance_consensus", []
+            )[:10],
+            "num_batches_analyzed": len(per_batch_results),
+            "batch_summaries": aggregated_results.get("batch_summaries", {}),
         }
 
-        # Add top features for each method
-        for method, stats in (
-            results["saliency_maps"].get("feature_importance_stats", {}).items()
-        ):
-            if "top_10_features" in stats:
-                summary[f"{method}_top_features"] = stats["top_10_features"]
+        # Add batch-specific insights
+        batch_insights = {}
+        for batch_name, batch_results in per_batch_results.items():
+            if "feature_analysis" in batch_results:
+                batch_insights[batch_name] = {
+                    "accuracy": batch_results.get("test_accuracy", 0),
+                    "num_samples": batch_results.get("num_samples", 0),
+                    "num_classes": batch_results.get("num_classes", 0),
+                    "top_features": batch_results["feature_analysis"].get(
+                        "top_features", []
+                    )[:5],
+                    "consistently_important": batch_results["feature_analysis"].get(
+                        "consistently_important", []
+                    ),
+                }
+
+        if batch_insights:
+            summary["per_batch_insights"] = batch_insights
+
+        # Add methods used across batches
+        all_methods = set()
+        for batch_results in per_batch_results.values():
+            if (
+                "saliency_maps" in batch_results
+                and "feature_importance_stats" in batch_results["saliency_maps"]
+            ):
+                all_methods.update(
+                    batch_results["saliency_maps"]["feature_importance_stats"].keys()
+                )
+
+        summary["saliency_methods_used"] = list(all_methods)
 
         self.save_results(summary, "saliency_summary.json")

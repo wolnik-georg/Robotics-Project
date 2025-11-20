@@ -1,43 +1,71 @@
 {
-  "baseline_performance": 0.9892307692307692,
+  "overall_baseline_performance": 0.985,
+  "baseline_std": 0.01779513042005218,
+  "best_batch_performance": 1.0,
+  "worst_batch_performance": 0.96,
   "top_consensus_features": [
-    17,
-    35,
-    28,
-    34,
-    1
-  ],
-  "key_insights": [
-    "Optimal performance achieved with 11 features out of 38 total"
-  ],
-  "leave_one_out_top_features": [
-    17,
-    35,
-    28,
+    1,
     23,
     24,
+    25,
+    26,
+    27,
     34,
-    1,
-    20,
-    21,
-    25
-  ],
-  "max_performance_drop": 0.012314913282655215,
-  "optimal_num_features": 11,
-  "cumulative_top_features": [
-    35,
-    37,
-    34,
-    17,
+    31,
     33,
-    1,
-    0,
-    36,
-    28,
-    14
+    30
   ],
-  "group_performance": {
-    "acoustic_only": 0.9892307692307692,
-    "without_impulse": 0.9892307692307692
+  "batch_summaries": {
+    "soft_finger_batch_2": {
+      "baseline_performance": 0.9949999999999999,
+      "num_features": 38,
+      "top_feature": 23
+    },
+    "soft_finger_batch_1": {
+      "baseline_performance": 0.96,
+      "num_features": 38,
+      "top_feature": 34
+    },
+    "soft_finger_batch_3": {
+      "baseline_performance": 1.0,
+      "num_features": 38,
+      "top_feature": 0
+    }
+  },
+  "num_batches_analyzed": 3,
+  "per_batch_insights": {
+    "soft_finger_batch_2": {
+      "baseline_performance": 0.9949999999999999,
+      "key_insights": [
+        "Optimal performance achieved with 11 features out of 38 total"
+      ],
+      "top_features": [
+        23,
+        28
+      ]
+    },
+    "soft_finger_batch_1": {
+      "baseline_performance": 0.96,
+      "key_insights": [
+        "Optimal performance achieved with 11 features out of 38 total"
+      ],
+      "top_features": [
+        34,
+        1,
+        33,
+        37
+      ]
+    },
+    "soft_finger_batch_3": {
+      "baseline_performance": 1.0,
+      "key_insights": [
+        "Optimal performance achieved with 11 features out of 38 total"
+      ],
+      "top_features": [
+        0,
+        1,
+        3
+      ]
+    }
   }
 }
