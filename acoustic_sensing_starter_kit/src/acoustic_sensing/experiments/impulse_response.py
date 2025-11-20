@@ -54,8 +54,12 @@ class ImpulseResponseExperiment(BaseExperiment):
         for batch_name in impulse_responses.keys():
             batch_impulse_data = {
                 "impulse_responses": {batch_name: impulse_responses[batch_name]},
-                "transfer_function_analysis": {batch_name: transfer_function_analysis.get(batch_name, {})},
-                "frequency_analysis": {batch_name: frequency_analysis.get(batch_name, {})},
+                "transfer_function_analysis": {
+                    batch_name: transfer_function_analysis.get(batch_name, {})
+                },
+                "frequency_analysis": {
+                    batch_name: frequency_analysis.get(batch_name, {})
+                },
                 "material_analysis": material_analysis,  # Material analysis is cross-batch
             }
             self._save_batch_impulse_response_results(batch_impulse_data, batch_name)
@@ -847,21 +851,25 @@ class ImpulseResponseExperiment(BaseExperiment):
 
         self.save_results(summary, "impulse_response_summary.json")
 
-    def _save_batch_impulse_response_results(self, batch_data: Dict[str, Any], batch_name: str):
+    def _save_batch_impulse_response_results(
+        self, batch_data: Dict[str, Any], batch_name: str
+    ):
         """Save per-batch impulse response results."""
         import os
         import json
-        
+
         # Create experiment-specific directory first, then batch-specific directory
         experiment_output_dir = os.path.join(self.output_dir, "impulseresponse")
         batch_output_dir = os.path.join(experiment_output_dir, batch_name)
         os.makedirs(batch_output_dir, exist_ok=True)
-        
+
         # Extract batch-specific data
         batch_impulse_responses = batch_data["impulse_responses"].get(batch_name, {})
-        batch_transfer_analysis = batch_data["transfer_function_analysis"].get(batch_name, {})
+        batch_transfer_analysis = batch_data["transfer_function_analysis"].get(
+            batch_name, {}
+        )
         batch_frequency_analysis = batch_data["frequency_analysis"].get(batch_name, {})
-        
+
         # Convert numpy arrays to lists for JSON serialization
         def convert_numpy_to_list(obj):
             if isinstance(obj, np.ndarray):
@@ -876,63 +884,83 @@ class ImpulseResponseExperiment(BaseExperiment):
                 return float(obj)
             else:
                 return obj
-        
+
         # Create batch summary
         batch_summary = {
             "batch_name": batch_name,
-            "num_impulse_responses": len(batch_impulse_responses.get("impulse_responses", [])),
+            "num_impulse_responses": len(
+                batch_impulse_responses.get("impulse_responses", [])
+            ),
             "analysis_timestamp": str(batch_data.get("analysis_timestamp", "unknown")),
-            "transfer_function_analysis": convert_numpy_to_list(batch_transfer_analysis),
+            "transfer_function_analysis": convert_numpy_to_list(
+                batch_transfer_analysis
+            ),
             "frequency_analysis": convert_numpy_to_list(batch_frequency_analysis),
         }
-        
-        # Save batch summary
-        summary_path = os.path.join(batch_output_dir, f"{batch_name}_impulse_response_summary.json")
-        with open(summary_path, 'w') as f:
-            json.dump(batch_summary, f, indent=2)
-            
-        # Save impulse response data (convert numpy arrays)
-        impulse_data_path = os.path.join(batch_output_dir, f"{batch_name}_impulse_response_data.json")
-        with open(impulse_data_path, 'w') as f:
-            json.dump(convert_numpy_to_list(batch_impulse_responses), f, indent=2)
-        
-        self.logger.info(f"Batch {batch_name} impulse response results saved to: {batch_output_dir}")
 
-    def _create_batch_impulse_response_plots(self, batch_data: Dict[str, Any], batch_name: str):
+        # Save batch summary
+        summary_path = os.path.join(
+            batch_output_dir, f"{batch_name}_impulse_response_summary.json"
+        )
+        with open(summary_path, "w") as f:
+            json.dump(batch_summary, f, indent=2)
+
+        # Save impulse response data (convert numpy arrays)
+        impulse_data_path = os.path.join(
+            batch_output_dir, f"{batch_name}_impulse_response_data.json"
+        )
+        with open(impulse_data_path, "w") as f:
+            json.dump(convert_numpy_to_list(batch_impulse_responses), f, indent=2)
+
+        self.logger.info(
+            f"Batch {batch_name} impulse response results saved to: {batch_output_dir}"
+        )
+
+    def _create_batch_impulse_response_plots(
+        self, batch_data: Dict[str, Any], batch_name: str
+    ):
         """Create per-batch impulse response visualization plots."""
         import os
-        
+
         # Create experiment-specific directory first, then batch-specific directory
         experiment_output_dir = os.path.join(self.output_dir, "impulseresponse")
         batch_output_dir = os.path.join(experiment_output_dir, batch_name)
         os.makedirs(batch_output_dir, exist_ok=True)
-        
+
         batch_impulse_responses = batch_data["impulse_responses"].get(batch_name, {})
         batch_frequency_analysis = batch_data["frequency_analysis"].get(batch_name, {})
-        batch_transfer_analysis = batch_data["transfer_function_analysis"].get(batch_name, {})
-        
+        batch_transfer_analysis = batch_data["transfer_function_analysis"].get(
+            batch_name, {}
+        )
+
         if not batch_impulse_responses.get("impulse_responses"):
             self.logger.warning(f"No impulse response data for {batch_name}")
             return
-            
+
         # Create figure with subplots
         fig, axes = plt.subplots(2, 2, figsize=(15, 12))
-        fig.suptitle(f'Impulse Response Analysis - {batch_name}', fontsize=16, fontweight='bold')
-        
+        fig.suptitle(
+            f"Impulse Response Analysis - {batch_name}", fontsize=16, fontweight="bold"
+        )
+
         # Plot 1: Impulse responses in time domain
         ax1 = axes[0, 0]
         impulse_responses = batch_impulse_responses["impulse_responses"]
-        for i, impulse in enumerate(impulse_responses[:5]):  # Show first 5 impulse responses
+        for i, impulse in enumerate(
+            impulse_responses[:5]
+        ):  # Show first 5 impulse responses
             if len(impulse) > 0:
-                time_axis = np.arange(len(impulse)) / 48000  # Assuming 48kHz sample rate
-                ax1.plot(time_axis, impulse, alpha=0.7, label=f'IR {i+1}')
-        ax1.set_title('Impulse Responses (Time Domain)')
-        ax1.set_xlabel('Time (s)')
-        ax1.set_ylabel('Amplitude')
+                time_axis = (
+                    np.arange(len(impulse)) / 48000
+                )  # Assuming 48kHz sample rate
+                ax1.plot(time_axis, impulse, alpha=0.7, label=f"IR {i+1}")
+        ax1.set_title("Impulse Responses (Time Domain)")
+        ax1.set_xlabel("Time (s)")
+        ax1.set_ylabel("Amplitude")
         ax1.grid(True, alpha=0.3)
         if len(impulse_responses) > 0:
             ax1.legend()
-        
+
         # Plot 2: Frequency responses
         ax2 = axes[0, 1]
         if batch_frequency_analysis:
@@ -941,116 +969,165 @@ class ImpulseResponseExperiment(BaseExperiment):
             if freqs and magnitudes:
                 for i, magnitude in enumerate(magnitudes[:3]):  # Show first 3
                     if len(magnitude) > 0 and len(freqs) > 0:
-                        ax2.semilogx(freqs, 20*np.log10(np.abs(magnitude) + 1e-10), alpha=0.7, label=f'FR {i+1}')
-        ax2.set_title('Frequency Responses')
-        ax2.set_xlabel('Frequency (Hz)')
-        ax2.set_ylabel('Magnitude (dB)')
+                        ax2.semilogx(
+                            freqs,
+                            20 * np.log10(np.abs(magnitude) + 1e-10),
+                            alpha=0.7,
+                            label=f"FR {i+1}",
+                        )
+        ax2.set_title("Frequency Responses")
+        ax2.set_xlabel("Frequency (Hz)")
+        ax2.set_ylabel("Magnitude (dB)")
         ax2.grid(True, alpha=0.3)
         ax2.legend()
-        
+
         # Plot 3: Spectral characteristics
         ax3 = axes[1, 0]
         if batch_frequency_analysis:
             centroids = batch_frequency_analysis.get("spectral_centroids", [])
             rolloffs = batch_frequency_analysis.get("spectral_rolloffs", [])
             if centroids:
-                ax3.hist(centroids, bins=20, alpha=0.7, label='Spectral Centroids', color='blue')
+                ax3.hist(
+                    centroids,
+                    bins=20,
+                    alpha=0.7,
+                    label="Spectral Centroids",
+                    color="blue",
+                )
             if rolloffs:
-                ax3.hist(rolloffs, bins=20, alpha=0.7, label='Spectral Rolloffs', color='orange')
-        ax3.set_title('Spectral Characteristics Distribution')
-        ax3.set_xlabel('Frequency (Hz)')
-        ax3.set_ylabel('Count')
+                ax3.hist(
+                    rolloffs,
+                    bins=20,
+                    alpha=0.7,
+                    label="Spectral Rolloffs",
+                    color="orange",
+                )
+        ax3.set_title("Spectral Characteristics Distribution")
+        ax3.set_xlabel("Frequency (Hz)")
+        ax3.set_ylabel("Count")
         ax3.legend()
         ax3.grid(True, alpha=0.3)
-        
+
         # Plot 4: Transfer function characteristics
         ax4 = axes[1, 1]
         if batch_transfer_analysis:
             resonant_freqs = batch_transfer_analysis.get("resonant_frequencies", [])
             q_factors = batch_transfer_analysis.get("quality_factors", [])
             if resonant_freqs and q_factors:
-                scatter = ax4.scatter(resonant_freqs, q_factors, alpha=0.7, c=range(len(resonant_freqs)), cmap='viridis')
-                ax4.set_xlabel('Resonant Frequency (Hz)')
-                ax4.set_ylabel('Quality Factor')
-                plt.colorbar(scatter, ax=ax4, label='Sample Index')
+                scatter = ax4.scatter(
+                    resonant_freqs,
+                    q_factors,
+                    alpha=0.7,
+                    c=range(len(resonant_freqs)),
+                    cmap="viridis",
+                )
+                ax4.set_xlabel("Resonant Frequency (Hz)")
+                ax4.set_ylabel("Quality Factor")
+                plt.colorbar(scatter, ax=ax4, label="Sample Index")
             else:
-                ax4.text(0.5, 0.5, 'No transfer function data', ha='center', va='center', transform=ax4.transAxes)
-        ax4.set_title('Transfer Function Characteristics')
+                ax4.text(
+                    0.5,
+                    0.5,
+                    "No transfer function data",
+                    ha="center",
+                    va="center",
+                    transform=ax4.transAxes,
+                )
+        ax4.set_title("Transfer Function Characteristics")
         ax4.grid(True, alpha=0.3)
-        
-        plt.tight_layout()
-        
-        # Save plot
-        plot_path = os.path.join(batch_output_dir, f"{batch_name}_impulse_response_analysis.png")
-        plt.savefig(plot_path, dpi=300, bbox_inches='tight')
-        plt.close()
-        
-        # Create additional impulse response comparison plot
-        self._create_batch_impulse_comparison_plot(batch_impulse_responses, batch_name, batch_output_dir)
 
-    def _create_batch_impulse_comparison_plot(self, batch_impulse_responses: Dict[str, Any], batch_name: str, output_dir: str):
+        plt.tight_layout()
+
+        # Save plot
+        plot_path = os.path.join(
+            batch_output_dir, f"{batch_name}_impulse_response_analysis.png"
+        )
+        plt.savefig(plot_path, dpi=300, bbox_inches="tight")
+        plt.close()
+
+        # Create additional impulse response comparison plot
+        self._create_batch_impulse_comparison_plot(
+            batch_impulse_responses, batch_name, batch_output_dir
+        )
+
+    def _create_batch_impulse_comparison_plot(
+        self, batch_impulse_responses: Dict[str, Any], batch_name: str, output_dir: str
+    ):
         """Create a detailed impulse response comparison plot for the batch."""
         impulse_responses = batch_impulse_responses.get("impulse_responses", [])
-        
+
         if not impulse_responses:
             return
-            
+
         # Create detailed impulse response plot
         plt.figure(figsize=(14, 10))
-        
+
         # Plot all impulse responses
         for i, impulse in enumerate(impulse_responses):
             if len(impulse) > 0:
                 time_axis = np.arange(len(impulse)) / 48000  # Assuming 48kHz
                 plt.subplot(3, 1, 1)
-                plt.plot(time_axis[:1000], impulse[:1000], alpha=0.6, label=f'Sample {i+1}')  # First 1000 samples
-                
-        plt.title(f'{batch_name} - Impulse Response Overview (First 1000 samples)')
-        plt.xlabel('Time (s)')
-        plt.ylabel('Amplitude')
+                plt.plot(
+                    time_axis[:1000], impulse[:1000], alpha=0.6, label=f"Sample {i+1}"
+                )  # First 1000 samples
+
+        plt.title(f"{batch_name} - Impulse Response Overview (First 1000 samples)")
+        plt.xlabel("Time (s)")
+        plt.ylabel("Amplitude")
         plt.grid(True, alpha=0.3)
-        plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
-        
+        plt.legend(bbox_to_anchor=(1.05, 1), loc="upper left")
+
         # Plot average impulse response
         if impulse_responses:
             min_length = min(len(ir) for ir in impulse_responses if len(ir) > 0)
             if min_length > 0:
-                truncated_irs = [ir[:min_length] for ir in impulse_responses if len(ir) >= min_length]
+                truncated_irs = [
+                    ir[:min_length] for ir in impulse_responses if len(ir) >= min_length
+                ]
                 if truncated_irs:
                     avg_impulse = np.mean(truncated_irs, axis=0)
                     std_impulse = np.std(truncated_irs, axis=0)
-                    
+
                     plt.subplot(3, 1, 2)
                     time_axis = np.arange(len(avg_impulse)) / 48000
-                    plt.plot(time_axis, avg_impulse, 'b-', linewidth=2, label='Average')
-                    plt.fill_between(time_axis, avg_impulse - std_impulse, avg_impulse + std_impulse, 
-                                   alpha=0.3, label='±1 Std Dev')
-                    plt.title('Average Impulse Response with Variability')
-                    plt.xlabel('Time (s)')
-                    plt.ylabel('Amplitude')
+                    plt.plot(time_axis, avg_impulse, "b-", linewidth=2, label="Average")
+                    plt.fill_between(
+                        time_axis,
+                        avg_impulse - std_impulse,
+                        avg_impulse + std_impulse,
+                        alpha=0.3,
+                        label="±1 Std Dev",
+                    )
+                    plt.title("Average Impulse Response with Variability")
+                    plt.xlabel("Time (s)")
+                    plt.ylabel("Amplitude")
                     plt.grid(True, alpha=0.3)
                     plt.legend()
-                    
+
                     # Plot frequency spectrum of average impulse
                     plt.subplot(3, 1, 3)
-                    freqs = np.fft.fftfreq(len(avg_impulse), 1/48000)
+                    freqs = np.fft.fftfreq(len(avg_impulse), 1 / 48000)
                     spectrum = np.fft.fft(avg_impulse)
                     magnitude = np.abs(spectrum)
-                    
+
                     # Plot only positive frequencies
-                    pos_freqs = freqs[:len(freqs)//2]
-                    pos_magnitude = magnitude[:len(magnitude)//2]
-                    
-                    plt.semilogx(pos_freqs[1:], 20*np.log10(pos_magnitude[1:] + 1e-10))
-                    plt.title('Average Impulse Response - Frequency Spectrum')
-                    plt.xlabel('Frequency (Hz)')
-                    plt.ylabel('Magnitude (dB)')
+                    pos_freqs = freqs[: len(freqs) // 2]
+                    pos_magnitude = magnitude[: len(magnitude) // 2]
+
+                    plt.semilogx(
+                        pos_freqs[1:], 20 * np.log10(pos_magnitude[1:] + 1e-10)
+                    )
+                    plt.title("Average Impulse Response - Frequency Spectrum")
+                    plt.xlabel("Frequency (Hz)")
+                    plt.ylabel("Magnitude (dB)")
                     plt.grid(True, alpha=0.3)
                     plt.xlim([20, 24000])  # Limit to audible range
-                    
+
         plt.tight_layout()
-        
+
         # Save detailed plot
-        detailed_plot_path = os.path.join(output_dir, f"{batch_name}_detailed_impulse_analysis.png")
-        plt.savefig(detailed_plot_path, dpi=300, bbox_inches='tight')
+        detailed_plot_path = os.path.join(
+            output_dir, f"{batch_name}_detailed_impulse_analysis.png"
+        )
+        plt.savefig(detailed_plot_path, dpi=300, bbox_inches="tight")
         plt.close()

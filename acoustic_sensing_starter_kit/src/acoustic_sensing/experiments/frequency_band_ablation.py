@@ -23,7 +23,7 @@ class FrequencyBandAblationExperiment(BaseExperiment):
 
     def run(self, shared_data: Dict[str, Any]) -> Dict[str, Any]:
         """
-        Perform frequency band ablation analysis.
+        Perform frequency band ablation analysis per batch.
 
         Args:
             shared_data: Dictionary containing loaded features and labels
@@ -36,79 +36,89 @@ class FrequencyBandAblationExperiment(BaseExperiment):
         # Load per-batch data from previous experiment
         batch_results = self.load_shared_data(shared_data, "batch_results")
 
-        # For frequency band ablation, we need to work with raw audio data
-        # For now, combine the extracted features from all batches
-        all_X = []
-        all_y = []
-
-        for batch_name, batch_data in batch_results.items():
-            X_batch = batch_data["features"]
-            y_batch = batch_data["labels"]
-
-            all_X.append(X_batch)
-            all_y.append(y_batch)
-
-        # Combine all batches
-        X = np.vstack(all_X)
-        y = np.concatenate(all_y)
-
-        self.logger.info(
-            f"Combined data: {len(X)} samples, {X.shape[1]} features across {len(np.unique(y))} classes"
-        )
-
-        # Get baseline performance with all features
-        baseline_performance = self._get_baseline_performance(X, y)
-        self.logger.info(
-            f"Baseline accuracy with all features: {baseline_performance:.4f}"
-        )
-
         # Define frequency bands for analysis
         frequency_bands = self._define_frequency_bands()
 
-        # Perform frequency band analysis on acoustic features
-        # Assuming first 38 features are acoustic features
-        acoustic_features = X[:, :38] if X.shape[1] >= 38 else X
+        # Process each batch separately
+        per_batch_results = {}
+        skipped_batches = []
 
-        # Analyze each frequency band
-        band_results = self._analyze_frequency_bands(
-            acoustic_features, y, frequency_bands
+        for batch_name, batch_data in batch_results.items():
+            self.logger.info(f"Analyzing frequency bands for batch: {batch_name}")
+
+            # Debug: Check what keys are available in batch_data
+            self.logger.info(f"Batch {batch_name} keys: {list(batch_data.keys())}")
+
+            try:
+                X_batch = batch_data["features"]
+                y_batch = batch_data["labels"]
+            except KeyError as e:
+                self.logger.error(f"KeyError in batch {batch_name}: {e}")
+                self.logger.error(f"Available keys: {list(batch_data.keys())}")
+                raise
+
+            # Skip batches with insufficient data
+            if len(X_batch) < 10:
+                self.logger.warning(
+                    f"Skipping {batch_name}: insufficient samples ({len(X_batch)})"
+                )
+                skipped_batches.append(batch_name)
+                continue
+
+            self.logger.info(
+                f"Batch {batch_name}: {len(X_batch)} samples, {X_batch.shape[1]} features, {len(np.unique(y_batch))} classes"
+            )
+
+            # Analyze this batch
+            batch_freq_results = self._analyze_batch_frequency_bands(
+                batch_name, X_batch, y_batch
+            )
+
+            # Save per-batch results
+            self._save_batch_frequency_results(batch_freq_results, batch_name)
+
+            # Create per-batch plots
+            self._create_batch_frequency_plots(batch_freq_results, batch_name)
+
+            per_batch_results[batch_name] = batch_freq_results
+
+        self.logger.info(
+            f"Analyzed frequency bands for {len(per_batch_results)} batches"
         )
 
-        # Perform frequency band ablation (removing each band)
-        ablation_results = self._perform_band_ablation(
-            X, y, frequency_bands, baseline_performance
-        )
+        # Create aggregated analysis across batches for comparison
+        if per_batch_results:
+            aggregated_results = self._create_aggregated_frequency_analysis(
+                per_batch_results
+            )
+        else:
+            aggregated_results = {}
 
-        # Analyze frequency band combinations
-        combination_results = self._analyze_band_combinations(
-            acoustic_features, y, frequency_bands
-        )
-
-        # Perform material-specific frequency analysis
-        material_analysis = self._analyze_material_frequency_responses(
-            acoustic_features, y, frequency_bands, batch_results
-        )
-
+        # Compile final results
         results = {
-            "baseline_performance": baseline_performance,
+            "per_batch_results": per_batch_results,
+            "aggregated_results": aggregated_results,
+            "total_batches_analyzed": len(per_batch_results),
+            "skipped_batches": skipped_batches,
             "frequency_bands": frequency_bands,
-            "band_results": band_results,
-            "ablation_results": ablation_results,
-            "combination_results": combination_results,
-            "material_analysis": material_analysis,
-            "optimal_bands": self._find_optimal_frequency_bands(
-                band_results, combination_results
-            ),
         }
 
-        # Create visualizations
-        self._create_frequency_band_visualizations(results)
-
-        # Save summary
+        # Save overall summary
         self._save_frequency_band_summary(results)
 
+        # Create cross-batch comparison visualizations
+        if len(per_batch_results) > 1:
+            self._create_cross_batch_frequency_comparison(per_batch_results)
+
         self.logger.info("Frequency band ablation experiment completed")
-        return results
+
+        # Update shared data for other experiments
+        return {
+            "per_batch_results": per_batch_results,
+            "aggregated_results": aggregated_results,
+            "total_batches_analyzed": len(per_batch_results),
+            "skipped_batches": skipped_batches,
+        }
 
     def _get_baseline_performance(self, X: np.ndarray, y: np.ndarray) -> float:
         """Get baseline performance with all features."""
@@ -875,3 +885,469 @@ class FrequencyBandAblationExperiment(BaseExperiment):
             summary["num_materials"] = len(results["material_analysis"])
 
         self.save_results(summary, "frequency_band_summary.json")
+
+    def _analyze_batch_frequency_bands(
+        self, batch_name: str, X: np.ndarray, y: np.ndarray
+    ) -> dict:
+        """Analyze frequency bands for a single batch."""
+        self.logger.info(f"Analyzing frequency bands for {batch_name}...")
+
+        # Get baseline performance for this batch
+        baseline_performance = self._get_baseline_performance(X, y)
+        self.logger.info(
+            f"Batch {batch_name} baseline accuracy: {baseline_performance:.4f}"
+        )
+
+        # Define frequency bands for analysis
+        frequency_bands = self._define_frequency_bands()
+
+        # Assume first 38 features are acoustic features
+        acoustic_features = X[:, :38] if X.shape[1] >= 38 else X
+
+        # Analyze individual frequency bands
+        band_results = self._analyze_frequency_bands(
+            acoustic_features, y, frequency_bands
+        )
+
+        # Perform frequency band ablation
+        ablation_results = self._perform_band_ablation(
+            X, y, frequency_bands, baseline_performance
+        )
+
+        # Analyze band combinations
+        combination_results = self._analyze_band_combinations(
+            acoustic_features, y, frequency_bands
+        )
+
+        # Find optimal bands for this batch
+        optimal_bands = self._find_optimal_frequency_bands(
+            band_results, combination_results
+        )
+
+        return {
+            "batch_name": batch_name,
+            "baseline_performance": baseline_performance,
+            "frequency_bands": frequency_bands,
+            "band_results": band_results,
+            "ablation_results": ablation_results,
+            "combination_results": combination_results,
+            "optimal_bands": optimal_bands,
+            "num_samples": len(X),
+            "num_features": X.shape[1],
+            "num_classes": len(np.unique(y)),
+        }
+
+    def _save_batch_frequency_results(self, batch_results: dict, batch_name: str):
+        """Save frequency band analysis results for a specific batch."""
+        # Create batch-specific directory
+        batch_dir = os.path.join(self.experiment_output_dir, batch_name)
+        os.makedirs(batch_dir, exist_ok=True)
+
+        # Save summary
+        summary_path = os.path.join(
+            batch_dir, f"{batch_name}_frequency_band_summary.json"
+        )
+
+        # Convert numpy types for JSON serialization
+        serializable_results = self._convert_numpy_to_list(batch_results)
+
+        with open(summary_path, "w") as f:
+            import json
+
+            json.dump(serializable_results, f, indent=2)
+
+        # Save detailed data
+        data_path = os.path.join(batch_dir, f"{batch_name}_frequency_band_data.json")
+        detailed_data = {
+            "band_performances": batch_results["band_results"],
+            "ablation_results": batch_results["ablation_results"],
+            "combination_results": batch_results["combination_results"],
+            "optimal_bands": batch_results["optimal_bands"],
+        }
+
+        serializable_data = self._convert_numpy_to_list(detailed_data)
+        with open(data_path, "w") as f:
+            json.dump(serializable_data, f, indent=2)
+
+        self.logger.info(
+            f"Batch {batch_name} frequency band results saved to: {batch_dir}"
+        )
+
+    def _create_batch_frequency_plots(self, batch_results: dict, batch_name: str):
+        """Create frequency band analysis plots for a specific batch."""
+        batch_dir = os.path.join(self.experiment_output_dir, batch_name)
+
+        # Create main frequency analysis plot
+        self._create_batch_frequency_analysis_plot(batch_results, batch_dir, batch_name)
+
+        # Create detailed frequency comparison plot
+        self._create_batch_frequency_comparison_plot(
+            batch_results, batch_dir, batch_name
+        )
+
+    def _create_batch_frequency_analysis_plot(
+        self, batch_results: dict, batch_dir, batch_name: str
+    ):
+        """Create main frequency band analysis plot for a batch."""
+        fig, axes = plt.subplots(2, 2, figsize=(15, 12))
+        fig.suptitle(
+            f"Frequency Band Analysis - {batch_name}", fontsize=16, fontweight="bold"
+        )
+
+        # Band performance comparison
+        bands = list(batch_results["band_results"].keys())
+        if bands:  # Check if we have any bands that succeeded
+            performances = [
+                batch_results["band_results"][band]["performance"]["mean_accuracy"]
+                for band in bands
+                if band in batch_results["band_results"]
+                and "performance" in batch_results["band_results"][band]
+            ]
+
+            # Filter bands to match performances in case some failed
+            valid_bands = [
+                band
+                for band in bands
+                if band in batch_results["band_results"]
+                and "performance" in batch_results["band_results"][band]
+            ]
+        else:
+            performances = []
+            valid_bands = []
+
+        if valid_bands and performances:
+            axes[0, 0].bar(
+                valid_bands,
+                performances,
+                color=["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728"][: len(valid_bands)],
+            )
+            axes[0, 0].set_title("Individual Band Performance")
+            axes[0, 0].set_ylabel("Accuracy")
+            axes[0, 0].tick_params(axis="x", rotation=45)
+            axes[0, 0].axhline(
+                y=batch_results["baseline_performance"],
+                color="red",
+                linestyle="--",
+                label="Baseline",
+            )
+            axes[0, 0].legend()
+        else:
+            axes[0, 0].text(
+                0.5,
+                0.5,
+                "No valid frequency band data",
+                ha="center",
+                va="center",
+                transform=axes[0, 0].transAxes,
+            )
+            axes[0, 0].set_title("Individual Band Performance - No Data")
+
+        # Ablation results
+        abl_bands = list(batch_results["ablation_results"].keys())
+        if abl_bands:
+            abl_performances = [
+                batch_results["ablation_results"][band]["performance"]["mean_accuracy"]
+                for band in abl_bands
+                if band in batch_results["ablation_results"]
+                and "performance" in batch_results["ablation_results"][band]
+            ]
+
+            valid_abl_bands = [
+                band
+                for band in abl_bands
+                if band in batch_results["ablation_results"]
+                and "performance" in batch_results["ablation_results"][band]
+            ]
+        else:
+            abl_performances = []
+            valid_abl_bands = []
+
+        if valid_abl_bands and abl_performances:
+            axes[0, 1].bar(
+                valid_abl_bands,
+                abl_performances,
+                color=["#ff9999", "#66b3ff", "#99ff99", "#ffcc99"][
+                    : len(valid_abl_bands)
+                ],
+            )
+            axes[0, 1].set_title("Ablation Analysis (Performance without each band)")
+            axes[0, 1].set_ylabel("Accuracy")
+            axes[0, 1].tick_params(axis="x", rotation=45)
+            axes[0, 1].axhline(
+                y=batch_results["baseline_performance"],
+                color="red",
+                linestyle="--",
+                label="Baseline",
+            )
+            axes[0, 1].legend()
+        else:
+            axes[0, 1].text(
+                0.5,
+                0.5,
+                "No ablation data",
+                ha="center",
+                va="center",
+                transform=axes[0, 1].transAxes,
+            )
+            axes[0, 1].set_title("Ablation Analysis - No Data")
+
+        # Combination results (top 5)
+        if (
+            "combination_results" in batch_results
+            and batch_results["combination_results"]
+        ):
+            combo_items = list(batch_results["combination_results"].items())[:5]
+            combo_names = [item[0] for item in combo_items]
+            combo_accs = [item[1]["accuracy"] for item in combo_items]
+
+            axes[1, 0].barh(combo_names, combo_accs, color="lightblue")
+            axes[1, 0].set_title("Top Band Combinations")
+            axes[1, 0].set_xlabel("Accuracy")
+        else:
+            axes[1, 0].text(
+                0.5,
+                0.5,
+                "No combination data",
+                ha="center",
+                va="center",
+                transform=axes[1, 0].transAxes,
+            )
+            axes[1, 0].set_title("Top Band Combinations - No Data")
+
+        # Summary stats
+        optimal_bands = batch_results["optimal_bands"]
+        best_single_info = ""
+        if "best_single_band" in optimal_bands and optimal_bands["best_single_band"]:
+            best_single = optimal_bands["best_single_band"]
+            best_single_info = f"Best Single Band: {best_single['band']} ({best_single['performance']:.3f})"
+        else:
+            best_single_info = "Best Single Band: N/A"
+
+        best_combo_info = ""
+        if "best_combination" in optimal_bands and optimal_bands["best_combination"]:
+            best_combo = optimal_bands["best_combination"]
+            best_combo_info = f"Best Combination: {best_combo['combination']} ({best_combo['performance']:.3f})"
+        else:
+            best_combo_info = "Best Combination: N/A"
+
+        stats_text = f"""
+        Baseline: {batch_results['baseline_performance']:.3f}
+        {best_single_info}
+        {best_combo_info}
+        Samples: {batch_results['num_samples']}
+        Classes: {batch_results['num_classes']}
+        """
+        axes[1, 1].text(
+            0.1,
+            0.5,
+            stats_text,
+            transform=axes[1, 1].transAxes,
+            fontsize=10,
+            verticalalignment="center",
+            bbox=dict(boxstyle="round", facecolor="wheat", alpha=0.5),
+        )
+        axes[1, 1].set_title("Analysis Summary")
+        axes[1, 1].axis("off")
+
+        plt.tight_layout()
+        plot_path = os.path.join(batch_dir, f"{batch_name}_frequency_band_analysis.png")
+        plt.savefig(plot_path, dpi=300, bbox_inches="tight")
+        plt.close()
+
+    def _create_batch_frequency_comparison_plot(
+        self, batch_results: dict, batch_dir, batch_name: str
+    ):
+        """Create detailed frequency comparison plot for a batch."""
+        fig, axes = plt.subplots(1, 2, figsize=(15, 6))
+        fig.suptitle(
+            f"Detailed Frequency Band Comparison - {batch_name}",
+            fontsize=14,
+            fontweight="bold",
+        )
+
+        # Performance vs baseline
+        bands = list(batch_results["band_results"].keys())
+        performances = [
+            batch_results["band_results"][band]["performance"]["mean_accuracy"]
+            for band in bands
+        ]
+        baseline = batch_results["baseline_performance"]
+
+        relative_performance = [(p - baseline) for p in performances]
+        colors = ["green" if rp >= 0 else "red" for rp in relative_performance]
+
+        axes[0].bar(bands, relative_performance, color=colors, alpha=0.7)
+        axes[0].set_title("Performance Relative to Baseline")
+        axes[0].set_ylabel("Accuracy Difference")
+        axes[0].tick_params(axis="x", rotation=45)
+        axes[0].axhline(y=0, color="black", linestyle="-", alpha=0.3)
+
+        # Ablation impact
+        abl_bands = list(batch_results["ablation_results"].keys())
+        abl_impacts = [
+            batch_results["ablation_results"][band]["performance_drop"]
+            for band in abl_bands
+        ]
+
+        axes[1].bar(
+            abl_bands, abl_impacts, color=["#ff6b6b", "#4ecdc4", "#45b7d1", "#96ceb4"]
+        )
+        axes[1].set_title("Impact of Removing Each Band")
+        axes[1].set_ylabel("Performance Drop")
+        axes[1].tick_params(axis="x", rotation=45)
+
+        plt.tight_layout()
+        plot_path = os.path.join(
+            batch_dir, f"{batch_name}_detailed_frequency_analysis.png"
+        )
+        plt.savefig(plot_path, dpi=300, bbox_inches="tight")
+        plt.close()
+
+    def _create_aggregated_frequency_analysis(self, per_batch_results: dict) -> dict:
+        """Create aggregated analysis across all batches."""
+        if not per_batch_results:
+            return {}
+
+        # Collect all band performances across batches
+        all_band_results = {}
+        all_baseline_performances = {}
+
+        for batch_name, batch_data in per_batch_results.items():
+            all_baseline_performances[batch_name] = batch_data["baseline_performance"]
+
+            for band_name, band_result in batch_data["band_results"].items():
+                if band_name not in all_band_results:
+                    all_band_results[band_name] = []
+                all_band_results[band_name].append(
+                    band_result["performance"]["mean_accuracy"]
+                )
+
+        # Calculate average performance per band
+        avg_band_performance = {}
+        for band_name, performances in all_band_results.items():
+            avg_band_performance[band_name] = {
+                "mean_accuracy": np.mean(performances),
+                "std_accuracy": np.std(performances),
+                "min_accuracy": np.min(performances),
+                "max_accuracy": np.max(performances),
+                "performances": performances,
+            }
+
+        # Find best bands across all batches
+        best_band = max(
+            avg_band_performance.items(), key=lambda x: x[1]["mean_accuracy"]
+        )
+
+        return {
+            "average_baseline": np.mean(list(all_baseline_performances.values())),
+            "band_performance_summary": avg_band_performance,
+            "best_overall_band": {
+                "band": best_band[0],
+                "mean_accuracy": best_band[1]["mean_accuracy"],
+                "std_accuracy": best_band[1]["std_accuracy"],
+            },
+            "total_batches": len(per_batch_results),
+        }
+
+    def _create_cross_batch_frequency_comparison(self, per_batch_results: dict):
+        """Create cross-batch comparison plots."""
+        fig, axes = plt.subplots(2, 2, figsize=(16, 12))
+        fig.suptitle(
+            "Cross-Batch Frequency Band Analysis", fontsize=16, fontweight="bold"
+        )
+
+        # Collect data for plotting
+        batches = list(per_batch_results.keys())
+        bands = list(next(iter(per_batch_results.values()))["band_results"].keys())
+
+        # Performance heatmap
+        performance_matrix = []
+        for batch in batches:
+            batch_perfs = [
+                per_batch_results[batch]["band_results"][band]["performance"][
+                    "mean_accuracy"
+                ]
+                for band in bands
+            ]
+            performance_matrix.append(batch_perfs)
+
+        im = axes[0, 0].imshow(performance_matrix, cmap="YlOrRd", aspect="auto")
+        axes[0, 0].set_title("Performance Heatmap by Batch and Band")
+        axes[0, 0].set_xticks(range(len(bands)))
+        axes[0, 0].set_xticklabels(bands, rotation=45)
+        axes[0, 0].set_yticks(range(len(batches)))
+        axes[0, 0].set_yticklabels(batches)
+        plt.colorbar(im, ax=axes[0, 0])
+
+        # Average band performance across batches
+        avg_performances = []
+        std_performances = []
+        for band in bands:
+            band_perfs = [
+                per_batch_results[batch]["band_results"][band]["performance"][
+                    "mean_accuracy"
+                ]
+                for batch in batches
+            ]
+            avg_performances.append(np.mean(band_perfs))
+            std_performances.append(np.std(band_perfs))
+
+        axes[0, 1].bar(
+            bands,
+            avg_performances,
+            yerr=std_performances,
+            capsize=5,
+            color=["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728"],
+        )
+        axes[0, 1].set_title("Average Band Performance Across Batches")
+        axes[0, 1].set_ylabel("Accuracy")
+        axes[0, 1].tick_params(axis="x", rotation=45)
+
+        # Baseline performance comparison
+        baselines = [
+            per_batch_results[batch]["baseline_performance"] for batch in batches
+        ]
+        axes[1, 0].bar(batches, baselines, color="lightcoral")
+        axes[1, 0].set_title("Baseline Performance by Batch")
+        axes[1, 0].set_ylabel("Baseline Accuracy")
+        axes[1, 0].tick_params(axis="x", rotation=45)
+
+        # Best band per batch
+        best_bands_per_batch = []
+        for batch in batches:
+            band_results = per_batch_results[batch]["band_results"]
+            best_band = max(band_results.items(), key=lambda x: x[1]["accuracy"])
+            best_bands_per_batch.append(best_band[0])
+
+        unique_best_bands = list(set(best_bands_per_batch))
+        band_counts = [best_bands_per_batch.count(band) for band in unique_best_bands]
+
+        axes[1, 1].pie(band_counts, labels=unique_best_bands, autopct="%1.1f%%")
+        axes[1, 1].set_title("Distribution of Best Bands Across Batches")
+
+        plt.tight_layout()
+        plot_path = os.path.join(
+            self.experiment_output_dir, "cross_batch_frequency_comparison.png"
+        )
+        plt.savefig(plot_path, dpi=300, bbox_inches="tight")
+        plt.close()
+
+    def _convert_numpy_to_list(self, obj):
+        """Convert numpy types to lists for JSON serialization."""
+        if isinstance(obj, dict):
+            return {
+                key: self._convert_numpy_to_list(value) for key, value in obj.items()
+            }
+        elif isinstance(obj, list):
+            return [self._convert_numpy_to_list(item) for item in obj]
+        elif isinstance(obj, np.ndarray):
+            return obj.tolist()
+        elif isinstance(obj, (np.int32, np.int64, np.integer)):
+            return int(obj)
+        elif isinstance(obj, (np.float32, np.float64, np.floating)):
+            return float(obj)
+        elif hasattr(obj, "__module__") and "sklearn" in str(obj.__module__):
+            # Skip sklearn objects that aren't JSON serializable
+            return f"<{obj.__class__.__name__}>"
+        else:
+            return obj

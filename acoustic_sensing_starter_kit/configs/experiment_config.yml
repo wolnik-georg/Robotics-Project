@@ -47,7 +47,7 @@ experiments:
     deconvolution_method: "frequency_domain"
 
   frequency_band_ablation:
-    enabled: false  # Can be slow, disable by default
+    enabled: false  # Disabled due to implementation issues
     frequency_bands: ["low", "mid", "high", "ultra_high"]
 
 # Output Configuration

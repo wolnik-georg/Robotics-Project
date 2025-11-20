@@ -1,0 +1,60 @@
+{
+  "baseline_performance": 0.9661538461538461,
+  "frequency_bands_analyzed": [
+    "low",
+    "mid",
+    "high",
+    "ultra_high"
+  ],
+  "num_bands": 4,
+  "best_single_band": {
+    "band": "low",
+    "performance": 0.8846153846153847
+  },
+  "best_combination": {
+    "combination": "low+high+ultra_high",
+    "performance": 0.921573647380099
+  },
+  "band_ranking": [
+    [
+      "low",
+      0.8846153846153847
+    ],
+    [
+      "mid",
+      0.8138461538461538
+    ],
+    [
+      "ultra_high",
+      0.6399999999999999
+    ],
+    [
+      "high",
+      0.5492307692307692
+    ]
+  ],
+  "individual_band_performance": {
+    "low": 0.8846153846153847,
+    "mid": 0.8138461538461538,
+    "high": 0.5492307692307692,
+    "ultra_high": 0.6399999999999999
+  },
+  "band_importance_scores": {
+    "low": 0.006153846153846176,
+    "mid": 0.0015384615384615996,
+    "high": 0.0,
+    "ultra_high": 0.01538461538461533
+  },
+  "materials_analyzed": [
+    "contact",
+    "edge",
+    "finger blank",
+    "finger bottom",
+    "finger middle",
+    "finger tip",
+    "metal",
+    "no contact",
+    "no metal"
+  ],
+  "num_materials": 9
+}
