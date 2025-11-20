@@ -1,0 +1,110 @@
+{
+  "batch_name": "soft_finger_batch_1",
+  "num_samples": 200,
+  "num_features": 38,
+  "classes": [
+    "finger blank",
+    "finger bottom",
+    "finger middle",
+    "finger tip"
+  ],
+  "class_distribution": {
+    "finger blank": "50",
+    "finger bottom": "50",
+    "finger middle": "50",
+    "finger tip": "50"
+  },
+  "cv_results": {
+    "Random Forest": {
+      "scores": [
+        0.925,
+        1.0,
+        0.975,
+        0.975,
+        0.925
+      ],
+      "mean_accuracy": 0.96,
+      "std_accuracy": 0.02999999999999997,
+      "best_score": 1.0,
+      "worst_score": 0.925
+    },
+    "SVM (RBF)": {
+      "scores": [
+        0.875,
+        0.85,
+        0.95,
+        0.825,
+        0.8
+      ],
+      "mean_accuracy": 0.86,
+      "std_accuracy": 0.051478150704934986,
+      "best_score": 0.95,
+      "worst_score": 0.8
+    },
+    "SVM (Linear)": {
+      "scores": [
+        0.925,
+        0.9,
+        0.95,
+        0.875,
+        0.875
+      ],
+      "mean_accuracy": 0.905,
+      "std_accuracy": 0.029154759474226494,
+      "best_score": 0.95,
+      "worst_score": 0.875
+    },
+    "K-NN": {
+      "scores": [
+        0.875,
+        0.75,
+        0.925,
+        0.775,
+        0.8
+      ],
+      "mean_accuracy": 0.825,
+      "std_accuracy": 0.06519202405202651,
+      "best_score": 0.925,
+      "worst_score": 0.75
+    },
+    "Logistic Regression": {
+      "scores": [
+        0.925,
+        0.85,
+        0.975,
+        0.875,
+        0.925
+      ],
+      "mean_accuracy": 0.9099999999999999,
+      "std_accuracy": 0.04358898943540674,
+      "best_score": 0.975,
+      "worst_score": 0.85
+    },
+    "Gradient Boosting": {
+      "scores": [
+        0.95,
+        0.95,
+        0.975,
+        0.875,
+        0.975
+      ],
+      "mean_accuracy": 0.945,
+      "std_accuracy": 0.03674234614174766,
+      "best_score": 0.975,
+      "worst_score": 0.875
+    },
+    "Linear Discriminant Analysis": {
+      "scores": [
+        0.95,
+        1.0,
+        0.975,
+        0.95,
+        0.925
+      ],
+      "mean_accuracy": 0.96,
+      "std_accuracy": 0.025495097567963917,
+      "best_score": 1.0,
+      "worst_score": 0.925
+    }
+  }
+}

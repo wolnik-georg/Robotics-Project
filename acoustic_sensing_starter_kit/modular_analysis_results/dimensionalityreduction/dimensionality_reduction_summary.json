@@ -1,0 +1,75 @@
+{
+  "pca_analysis": {
+    "avg_components_for_95_variance": 16.0,
+    "std_components_for_95_variance": 2.5495097567963922,
+    "min_components_needed": "13",
+    "max_components_needed": "19"
+  },
+  "tsne_analysis": {
+    "avg_silhouette_score": 0.36889898777008057,
+    "std_silhouette_score": 0.1210152226583776,
+    "best_silhouette_score": 0.5022402405738831,
+    "worst_silhouette_score": 0.17225492000579834
+  },
+  "batch_summaries": {
+    "soft_finger_batch_2": {
+      "num_samples": 0,
+      "original_dimensions": 0,
+      "pca_components_95": "14",
+      "first_component_variance": 0.5925569210005459,
+      "tsne_silhouette": 0.3926026225090027
+    },
+    "soft_finger_batch_4": {
+      "num_samples": 0,
+      "original_dimensions": 0,
+      "pca_components_95": "19",
+      "first_component_variance": 0.22963760003402894,
+      "tsne_silhouette": 0.4084981679916382
+    },
+    "soft_finger_batch_1": {
+      "num_samples": 0,
+      "original_dimensions": 0,
+      "pca_components_95": "13",
+      "first_component_variance": 0.5459323529099545,
+      "tsne_silhouette": 0.17225492000579834
+    },
+    "soft_finger_batch_3": {
+      "num_samples": 0,
+      "original_dimensions": 0,
+      "pca_components_95": "18",
+      "first_component_variance": 0.3042412118503048,
+      "tsne_silhouette": 0.5022402405738831
+    }
+  },
+  "num_batches_analyzed": 4,
+  "per_batch_insights": {
+    "soft_finger_batch_2": {
+      "original_dimensions": 0,
+      "num_samples": 0,
+      "pca_components_for_95_variance": "14",
+      "first_component_variance": 0.5925569210005459,
+      "tsne_silhouette_score": 0.3926026225090027
+    },
+    "soft_finger_batch_4": {
+      "original_dimensions": 0,
+      "num_samples": 0,
+      "pca_components_for_95_variance": "19",
+      "first_component_variance": 0.22963760003402894,
+      "tsne_silhouette_score": 0.4084981679916382
+    },
+    "soft_finger_batch_1": {
+      "original_dimensions": 0,
+      "num_samples": 0,
+      "pca_components_for_95_variance": "13",
+      "first_component_variance": 0.5459323529099545,
+      "tsne_silhouette_score": 0.17225492000579834
+    },
+    "soft_finger_batch_3": {
+      "original_dimensions": 0,
+      "num_samples": 0,
+      "pca_components_for_95_variance": "18",
+      "first_component_variance": 0.3042412118503048,
+      "tsne_silhouette_score": 0.5022402405738831
+    }
+  }
+}

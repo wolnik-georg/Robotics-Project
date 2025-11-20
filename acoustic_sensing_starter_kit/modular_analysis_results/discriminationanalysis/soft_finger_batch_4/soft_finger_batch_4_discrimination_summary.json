@@ -1,0 +1,49 @@
+{
+  "batch_name": "soft_finger_batch_4",
+  "num_samples": 100,
+  "num_classes": 2,
+  "classes": [
+    "metal",
+    "no metal"
+  ],
+  "best_classifier": {
+    "name": "SVM (RBF)",
+    "mean_accuracy": 0.8799999999999999,
+    "std_accuracy": 0.05999999999999997
+  },
+  "worst_classifier": {
+    "name": "SVM (Linear)",
+    "mean_accuracy": 0.7300000000000001,
+    "std_accuracy": 0.07483314773547886
+  },
+  "all_classifiers_performance": {
+    "Random Forest": {
+      "mean_accuracy": 0.85,
+      "std_accuracy": 0.07071067811865474
+    },
+    "SVM (RBF)": {
+      "mean_accuracy": 0.8799999999999999,
+      "std_accuracy": 0.05999999999999997
+    },
+    "SVM (Linear)": {
+      "mean_accuracy": 0.7300000000000001,
+      "std_accuracy": 0.07483314773547886
+    },
+    "K-NN": {
+      "mean_accuracy": 0.86,
+      "std_accuracy": 0.05830951894845297
+    },
+    "Logistic Regression": {
+      "mean_accuracy": 0.7699999999999999,
+      "std_accuracy": 0.06782329983125268
+    },
+    "Gradient Boosting": {
+      "mean_accuracy": 0.7799999999999999,
+      "std_accuracy": 0.10770329614269007
+    },
+    "Linear Discriminant Analysis": {
+      "mean_accuracy": 0.8699999999999999,
+      "std_accuracy": 0.05099019513592783
+    }
+  }
+}

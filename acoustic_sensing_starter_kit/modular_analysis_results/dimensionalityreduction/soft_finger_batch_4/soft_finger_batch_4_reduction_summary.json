@@ -1,0 +1,13 @@
+{
+  "batch_name": "soft_finger_batch_4",
+  "num_samples": 100,
+  "original_dimensions": 38,
+  "num_classes": 2,
+  "analysis_methods": [
+    "PCA",
+    "t-SNE"
+  ],
+  "pca_components_95": 19,
+  "first_component_variance": 0.22963760003402894,
+  "best_tsne_silhouette": 0.4084981679916382
+}

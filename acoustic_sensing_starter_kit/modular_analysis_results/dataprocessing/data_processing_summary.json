@@ -1,0 +1,71 @@
+{
+  "total_samples": 650,
+  "total_features": 38,
+  "total_batches": 4,
+  "batch_names": [
+    "soft_finger_batch_2",
+    "soft_finger_batch_4",
+    "soft_finger_batch_1",
+    "soft_finger_batch_3"
+  ],
+  "per_batch_info": {
+    "soft_finger_batch_2": {
+      "num_samples": 200,
+      "num_classes": 4,
+      "classes": [
+        "finger blank",
+        "finger bottom",
+        "finger middle",
+        "finger tip"
+      ],
+      "class_distribution": {
+        "finger blank": "50",
+        "finger bottom": "50",
+        "finger middle": "50",
+        "finger tip": "50"
+      }
+    },
+    "soft_finger_batch_4": {
+      "num_samples": 100,
+      "num_classes": 2,
+      "classes": [
+        "metal",
+        "no metal"
+      ],
+      "class_distribution": {
+        "metal": "50",
+        "no metal": "50"
+      }
+    },
+    "soft_finger_batch_1": {
+      "num_samples": 200,
+      "num_classes": 4,
+      "classes": [
+        "finger blank",
+        "finger bottom",
+        "finger middle",
+        "finger tip"
+      ],
+      "class_distribution": {
+        "finger blank": "50",
+        "finger bottom": "50",
+        "finger middle": "50",
+        "finger tip": "50"
+      }
+    },
+    "soft_finger_batch_3": {
+      "num_samples": 150,
+      "num_classes": 3,
+      "classes": [
+        "contact",
+        "edge",
+        "no contact"
+      ],
+      "class_distribution": {
+        "contact": "50",
+        "edge": "50",
+        "no contact": "50"
+      }
+    }
+  }
+}

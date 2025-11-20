@@ -1,0 +1,604 @@
+{
+  "best_overall": {
+    "accuracy": 1.0,
+    "batch": "soft_finger_batch_3",
+    "classifier": "Linear Discriminant Analysis"
+  },
+  "per_batch_performance": {
+    "soft_finger_batch_2": {
+      "best_classifier": {
+        "name": "Random Forest",
+        "accuracy": 0.9949999999999999
+      },
+      "cv_performance": {
+        "Random Forest": {
+          "mean_accuracy": 0.9949999999999999,
+          "std_accuracy": 0.010000000000000009
+        },
+        "SVM (RBF)": {
+          "mean_accuracy": 0.945,
+          "std_accuracy": 0.02449489742783176
+        },
+        "SVM (Linear)": {
+          "mean_accuracy": 0.925,
+          "std_accuracy": 0.03535533905932736
+        },
+        "K-NN": {
+          "mean_accuracy": 0.9350000000000002,
+          "std_accuracy": 0.02999999999999997
+        },
+        "Logistic Regression": {
+          "mean_accuracy": 0.93,
+          "std_accuracy": 0.033166247903553984
+        },
+        "Gradient Boosting": {
+          "mean_accuracy": 0.975,
+          "std_accuracy": 0.022360679774997918
+        },
+        "Linear Discriminant Analysis": {
+          "mean_accuracy": 0.99,
+          "std_accuracy": 0.020000000000000018
+        }
+      },
+      "num_classifiers_tested": 7
+    },
+    "soft_finger_batch_4": {
+      "best_classifier": {
+        "name": "SVM (RBF)",
+        "accuracy": 0.8799999999999999
+      },
+      "cv_performance": {
+        "Random Forest": {
+          "mean_accuracy": 0.85,
+          "std_accuracy": 0.07071067811865474
+        },
+        "SVM (RBF)": {
+          "mean_accuracy": 0.8799999999999999,
+          "std_accuracy": 0.05999999999999997
+        },
+        "SVM (Linear)": {
+          "mean_accuracy": 0.7300000000000001,
+          "std_accuracy": 0.07483314773547886
+        },
+        "K-NN": {
+          "mean_accuracy": 0.86,
+          "std_accuracy": 0.05830951894845297
+        },
+        "Logistic Regression": {
+          "mean_accuracy": 0.7699999999999999,
+          "std_accuracy": 0.06782329983125268
+        },
+        "Gradient Boosting": {
+          "mean_accuracy": 0.7799999999999999,
+          "std_accuracy": 0.10770329614269007
+        },
+        "Linear Discriminant Analysis": {
+          "mean_accuracy": 0.8699999999999999,
+          "std_accuracy": 0.05099019513592783
+        }
+      },
+      "num_classifiers_tested": 7
+    },
+    "soft_finger_batch_1": {
+      "best_classifier": {
+        "name": "Random Forest",
+        "accuracy": 0.96
+      },
+      "cv_performance": {
+        "Random Forest": {
+          "mean_accuracy": 0.96,
+          "std_accuracy": 0.02999999999999997
+        },
+        "SVM (RBF)": {
+          "mean_accuracy": 0.86,
+          "std_accuracy": 0.051478150704934986
+        },
+        "SVM (Linear)": {
+          "mean_accuracy": 0.905,
+          "std_accuracy": 0.029154759474226494
+        },
+        "K-NN": {
+          "mean_accuracy": 0.825,
+          "std_accuracy": 0.06519202405202651
+        },
+        "Logistic Regression": {
+          "mean_accuracy": 0.9099999999999999,
+          "std_accuracy": 0.04358898943540674
+        },
+        "Gradient Boosting": {
+          "mean_accuracy": 0.945,
+          "std_accuracy": 0.03674234614174766
+        },
+        "Linear Discriminant Analysis": {
+          "mean_accuracy": 0.96,
+          "std_accuracy": 0.025495097567963917
+        }
+      },
+      "num_classifiers_tested": 7
+    },
+    "soft_finger_batch_3": {
+      "best_classifier": {
+        "name": "Linear Discriminant Analysis",
+        "accuracy": 1.0
+      },
+      "cv_performance": {
+        "Random Forest": {
+          "mean_accuracy": 0.9933333333333334,
+          "std_accuracy": 0.01333333333333333
+        },
+        "SVM (RBF)": {
+          "mean_accuracy": 0.96,
+          "std_accuracy": 0.04898979485566354
+        },
+        "SVM (Linear)": {
+          "mean_accuracy": 0.9866666666666667,
+          "std_accuracy": 0.01632993161855452
+        },
+        "K-NN": {
+          "mean_accuracy": 0.9266666666666667,
+          "std_accuracy": 0.04898979485566354
+        },
+        "Logistic Regression": {
+          "mean_accuracy": 0.9666666666666666,
+          "std_accuracy": 0.036514837167011066
+        },
+        "Gradient Boosting": {
+          "mean_accuracy": 0.9866666666666667,
+          "std_accuracy": 0.01632993161855452
+        },
+        "Linear Discriminant Analysis": {
+          "mean_accuracy": 1.0,
+          "std_accuracy": 0.0
+        }
+      },
+      "num_classifiers_tested": 7
+    }
+  },
+  "total_batches": 4,
+  "cross_batch_results": {
+    "soft_finger_batch_2_to_soft_finger_batch_4": {
+      "Random Forest": {
+        "accuracy": 0.0,
+        "train_samples": 200,
+        "test_samples": 100
+      },
+      "SVM (RBF)": {
+        "accuracy": 0.0,
+        "train_samples": 200,
+        "test_samples": 100
+      },
+      "SVM (Linear)": {
+        "accuracy": 0.0,
+        "train_samples": 200,
+        "test_samples": 100
+      },
+      "K-NN": {
+        "accuracy": 0.0,
+        "train_samples": 200,
+        "test_samples": 100
+      },
+      "Logistic Regression": {
+        "accuracy": 0.0,
+        "train_samples": 200,
+        "test_samples": 100
+      },
+      "Gradient Boosting": {
+        "accuracy": 0.0,
+        "train_samples": 200,
+        "test_samples": 100
+      },
+      "Linear Discriminant Analysis": {
+        "accuracy": 0.0,
+        "train_samples": 200,
+        "test_samples": 100
+      }
+    },
+    "soft_finger_batch_2_to_soft_finger_batch_1": {
+      "Random Forest": {
+        "accuracy": 0.25,
+        "train_samples": 200,
+        "test_samples": 200
+      },
+      "SVM (RBF)": {
+        "accuracy": 0.25,
+        "train_samples": 200,
+        "test_samples": 200
+      },
+      "SVM (Linear)": {
+        "accuracy": 0.25,
+        "train_samples": 200,
+        "test_samples": 200
+      },
+      "K-NN": {
+        "accuracy": 0.25,
+        "train_samples": 200,
+        "test_samples": 200
+      },
+      "Logistic Regression": {
+        "accuracy": 0.205,
+        "train_samples": 200,
+        "test_samples": 200
+      },
+      "Gradient Boosting": {
+        "accuracy": 0.25,
+        "train_samples": 200,
+        "test_samples": 200
+      },
+      "Linear Discriminant Analysis": {
+        "accuracy": 0.25,
+        "train_samples": 200,
+        "test_samples": 200
+      }
+    },
+    "soft_finger_batch_2_to_soft_finger_batch_3": {
+      "Random Forest": {
+        "accuracy": 0.0,
+        "train_samples": 200,
+        "test_samples": 150
+      },
+      "SVM (RBF)": {
+        "accuracy": 0.0,
+        "train_samples": 200,
+        "test_samples": 150
+      },
+      "SVM (Linear)": {
+        "accuracy": 0.0,
+        "train_samples": 200,
+        "test_samples": 150
+      },
+      "K-NN": {
+        "accuracy": 0.0,
+        "train_samples": 200,
+        "test_samples": 150
+      },
+      "Logistic Regression": {
+        "accuracy": 0.0,
+        "train_samples": 200,
+        "test_samples": 150
+      },
+      "Gradient Boosting": {
+        "accuracy": 0.0,
+        "train_samples": 200,
+        "test_samples": 150
+      },
+      "Linear Discriminant Analysis": {
+        "accuracy": 0.0,
+        "train_samples": 200,
+        "test_samples": 150
+      }
+    },
+    "soft_finger_batch_4_to_soft_finger_batch_2": {
+      "Random Forest": {
+        "accuracy": 0.0,
+        "train_samples": 100,
+        "test_samples": 200
+      },
+      "SVM (RBF)": {
+        "accuracy": 0.0,
+        "train_samples": 100,
+        "test_samples": 200
+      },
+      "SVM (Linear)": {
+        "accuracy": 0.0,
+        "train_samples": 100,
+        "test_samples": 200
+      },
+      "K-NN": {
+        "accuracy": 0.0,
+        "train_samples": 100,
+        "test_samples": 200
+      },
+      "Logistic Regression": {
+        "accuracy": 0.0,
+        "train_samples": 100,
+        "test_samples": 200
+      },
+      "Gradient Boosting": {
+        "accuracy": 0.0,
+        "train_samples": 100,
+        "test_samples": 200
+      },
+      "Linear Discriminant Analysis": {
+        "accuracy": 0.0,
+        "train_samples": 100,
+        "test_samples": 200
+      }
+    },
+    "soft_finger_batch_4_to_soft_finger_batch_1": {
+      "Random Forest": {
+        "accuracy": 0.0,
+        "train_samples": 100,
+        "test_samples": 200
+      },
+      "SVM (RBF)": {
+        "accuracy": 0.0,
+        "train_samples": 100,
+        "test_samples": 200
+      },
+      "SVM (Linear)": {
+        "accuracy": 0.0,
+        "train_samples": 100,
+        "test_samples": 200
+      },
+      "K-NN": {
+        "accuracy": 0.0,
+        "train_samples": 100,
+        "test_samples": 200
+      },
+      "Logistic Regression": {
+        "accuracy": 0.0,
+        "train_samples": 100,
+        "test_samples": 200
+      },
+      "Gradient Boosting": {
+        "accuracy": 0.0,
+        "train_samples": 100,
+        "test_samples": 200
+      },
+      "Linear Discriminant Analysis": {
+        "accuracy": 0.0,
+        "train_samples": 100,
+        "test_samples": 200
+      }
+    },
+    "soft_finger_batch_4_to_soft_finger_batch_3": {
+      "Random Forest": {
+        "accuracy": 0.0,
+        "train_samples": 100,
+        "test_samples": 150
+      },
+      "SVM (RBF)": {
+        "accuracy": 0.0,
+        "train_samples": 100,
+        "test_samples": 150
+      },
+      "SVM (Linear)": {
+        "accuracy": 0.0,
+        "train_samples": 100,
+        "test_samples": 150
+      },
+      "K-NN": {
+        "accuracy": 0.0,
+        "train_samples": 100,
+        "test_samples": 150
+      },
+      "Logistic Regression": {
+        "accuracy": 0.0,
+        "train_samples": 100,
+        "test_samples": 150
+      },
+      "Gradient Boosting": {
+        "accuracy": 0.0,
+        "train_samples": 100,
+        "test_samples": 150
+      },
+      "Linear Discriminant Analysis": {
+        "accuracy": 0.0,
+        "train_samples": 100,
+        "test_samples": 150
+      }
+    },
+    "soft_finger_batch_1_to_soft_finger_batch_2": {
+      "Random Forest": {
+        "accuracy": 0.25,
+        "train_samples": 200,
+        "test_samples": 200
+      },
+      "SVM (RBF)": {
+        "accuracy": 0.25,
+        "train_samples": 200,
+        "test_samples": 200
+      },
+      "SVM (Linear)": {
+        "accuracy": 0.25,
+        "train_samples": 200,
+        "test_samples": 200
+      },
+      "K-NN": {
+        "accuracy": 0.165,
+        "train_samples": 200,
+        "test_samples": 200
+      },
+      "Logistic Regression": {
+        "accuracy": 0.25,
+        "train_samples": 200,
+        "test_samples": 200
+      },
+      "Gradient Boosting": {
+        "accuracy": 0.25,
+        "train_samples": 200,
+        "test_samples": 200
+      },
+      "Linear Discriminant Analysis": {
+        "accuracy": 0.25,
+        "train_samples": 200,
+        "test_samples": 200
+      }
+    },
+    "soft_finger_batch_1_to_soft_finger_batch_4": {
+      "Random Forest": {
+        "accuracy": 0.0,
+        "train_samples": 200,
+        "test_samples": 100
+      },
+      "SVM (RBF)": {
+        "accuracy": 0.0,
+        "train_samples": 200,
+        "test_samples": 100
+      },
+      "SVM (Linear)": {
+        "accuracy": 0.0,
+        "train_samples": 200,
+        "test_samples": 100
+      },
+      "K-NN": {
+        "accuracy": 0.0,
+        "train_samples": 200,
+        "test_samples": 100
+      },
+      "Logistic Regression": {
+        "accuracy": 0.0,
+        "train_samples": 200,
+        "test_samples": 100
+      },
+      "Gradient Boosting": {
+        "accuracy": 0.0,
+        "train_samples": 200,
+        "test_samples": 100
+      },
+      "Linear Discriminant Analysis": {
+        "accuracy": 0.0,
+        "train_samples": 200,
+        "test_samples": 100
+      }
+    },
+    "soft_finger_batch_1_to_soft_finger_batch_3": {
+      "Random Forest": {
+        "accuracy": 0.0,
+        "train_samples": 200,
+        "test_samples": 150
+      },
+      "SVM (RBF)": {
+        "accuracy": 0.0,
+        "train_samples": 200,
+        "test_samples": 150
+      },
+      "SVM (Linear)": {
+        "accuracy": 0.0,
+        "train_samples": 200,
+        "test_samples": 150
+      },
+      "K-NN": {
+        "accuracy": 0.0,
+        "train_samples": 200,
+        "test_samples": 150
+      },
+      "Logistic Regression": {
+        "accuracy": 0.0,
+        "train_samples": 200,
+        "test_samples": 150
+      },
+      "Gradient Boosting": {
+        "accuracy": 0.0,
+        "train_samples": 200,
+        "test_samples": 150
+      },
+      "Linear Discriminant Analysis": {
+        "accuracy": 0.0,
+        "train_samples": 200,
+        "test_samples": 150
+      }
+    },
+    "soft_finger_batch_3_to_soft_finger_batch_2": {
+      "Random Forest": {
+        "accuracy": 0.0,
+        "train_samples": 150,
+        "test_samples": 200
+      },
+      "SVM (RBF)": {
+        "accuracy": 0.0,
+        "train_samples": 150,
+        "test_samples": 200
+      },
+      "SVM (Linear)": {
+        "accuracy": 0.0,
+        "train_samples": 150,
+        "test_samples": 200
+      },
+      "K-NN": {
+        "accuracy": 0.0,
+        "train_samples": 150,
+        "test_samples": 200
+      },
+      "Logistic Regression": {
+        "accuracy": 0.0,
+        "train_samples": 150,
+        "test_samples": 200
+      },
+      "Gradient Boosting": {
+        "accuracy": 0.0,
+        "train_samples": 150,
+        "test_samples": 200
+      },
+      "Linear Discriminant Analysis": {
+        "accuracy": 0.0,
+        "train_samples": 150,
+        "test_samples": 200
+      }
+    },
+    "soft_finger_batch_3_to_soft_finger_batch_4": {
+      "Random Forest": {
+        "accuracy": 0.0,
+        "train_samples": 150,
+        "test_samples": 100
+      },
+      "SVM (RBF)": {
+        "accuracy": 0.0,
+        "train_samples": 150,
+        "test_samples": 100
+      },
+      "SVM (Linear)": {
+        "accuracy": 0.0,
+        "train_samples": 150,
+        "test_samples": 100
+      },
+      "K-NN": {
+        "accuracy": 0.0,
+        "train_samples": 150,
+        "test_samples": 100
+      },
+      "Logistic Regression": {
+        "accuracy": 0.0,
+        "train_samples": 150,
+        "test_samples": 100
+      },
+      "Gradient Boosting": {
+        "accuracy": 0.0,
+        "train_samples": 150,
+        "test_samples": 100
+      },
+      "Linear Discriminant Analysis": {
+        "accuracy": 0.0,
+        "train_samples": 150,
+        "test_samples": 100
+      }
+    },
+    "soft_finger_batch_3_to_soft_finger_batch_1": {
+      "Random Forest": {
+        "accuracy": 0.0,
+        "train_samples": 150,
+        "test_samples": 200
+      },
+      "SVM (RBF)": {
+        "accuracy": 0.0,
+        "train_samples": 150,
+        "test_samples": 200
+      },
+      "SVM (Linear)": {
+        "accuracy": 0.0,
+        "train_samples": 150,
+        "test_samples": 200
+      },
+      "K-NN": {
+        "accuracy": 0.0,
+        "train_samples": 150,
+        "test_samples": 200
+      },
+      "Logistic Regression": {
+        "accuracy": 0.0,
+        "train_samples": 150,
+        "test_samples": 200
+      },
+      "Gradient Boosting": {
+        "accuracy": 0.0,
+        "train_samples": 150,
+        "test_samples": 200
+      },
+      "Linear Discriminant Analysis": {
+        "accuracy": 0.0,
+        "train_samples": 150,
+        "test_samples": 200
+      }
+    }
+  }
+}

@@ -1,0 +1,1419 @@
+{
+  "batch_name": "soft_finger_batch_1",
+  "total_samples": 200,
+  "contact_positions": [
+    "finger blank",
+    "finger bottom",
+    "finger middle",
+    "finger tip"
+  ],
+  "samples_per_position": {
+    "finger blank": "50",
+    "finger bottom": "50",
+    "finger middle": "50",
+    "finger tip": "50"
+  },
+  "sample_rate": 48000,
+  "file_info": [
+    {
+      "filename": "42_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "42",
+      "duration": 1.15
+    },
+    {
+      "filename": "3_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "3",
+      "duration": 1.15
+    },
+    {
+      "filename": "37_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "37",
+      "duration": 1.15
+    },
+    {
+      "filename": "19_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "19",
+      "duration": 1.15
+    },
+    {
+      "filename": "28_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "28",
+      "duration": 1.15
+    },
+    {
+      "filename": "2_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "2",
+      "duration": 1.15
+    },
+    {
+      "filename": "45_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "45",
+      "duration": 1.15
+    },
+    {
+      "filename": "50_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "50",
+      "duration": 1.15
+    },
+    {
+      "filename": "5_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "5",
+      "duration": 1.15
+    },
+    {
+      "filename": "17_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "17",
+      "duration": 1.15
+    },
+    {
+      "filename": "40_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "40",
+      "duration": 1.15
+    },
+    {
+      "filename": "6_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "6",
+      "duration": 1.15
+    },
+    {
+      "filename": "31_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "31",
+      "duration": 1.15
+    },
+    {
+      "filename": "22_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "22",
+      "duration": 1.15
+    },
+    {
+      "filename": "8_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "8",
+      "duration": 1.15
+    },
+    {
+      "filename": "21_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "21",
+      "duration": 1.15
+    },
+    {
+      "filename": "25_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "25",
+      "duration": 1.15
+    },
+    {
+      "filename": "13_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "13",
+      "duration": 1.15
+    },
+    {
+      "filename": "11_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "11",
+      "duration": 1.15
+    },
+    {
+      "filename": "24_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "24",
+      "duration": 1.15
+    },
+    {
+      "filename": "36_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "36",
+      "duration": 1.15
+    },
+    {
+      "filename": "39_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "39",
+      "duration": 1.15
+    },
+    {
+      "filename": "49_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "49",
+      "duration": 1.15
+    },
+    {
+      "filename": "7_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "7",
+      "duration": 1.15
+    },
+    {
+      "filename": "46_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "46",
+      "duration": 1.15
+    },
+    {
+      "filename": "32_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "32",
+      "duration": 1.15
+    },
+    {
+      "filename": "9_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "9",
+      "duration": 1.15
+    },
+    {
+      "filename": "27_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "27",
+      "duration": 1.15
+    },
+    {
+      "filename": "4_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "4",
+      "duration": 1.15
+    },
+    {
+      "filename": "10_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "10",
+      "duration": 1.15
+    },
+    {
+      "filename": "15_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "15",
+      "duration": 1.15
+    },
+    {
+      "filename": "43_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "43",
+      "duration": 1.15
+    },
+    {
+      "filename": "33_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "33",
+      "duration": 1.15
+    },
+    {
+      "filename": "30_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "30",
+      "duration": 1.15
+    },
+    {
+      "filename": "16_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "16",
+      "duration": 1.15
+    },
+    {
+      "filename": "12_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "12",
+      "duration": 1.15
+    },
+    {
+      "filename": "23_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "23",
+      "duration": 1.15
+    },
+    {
+      "filename": "18_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "18",
+      "duration": 1.15
+    },
+    {
+      "filename": "29_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "29",
+      "duration": 1.15
+    },
+    {
+      "filename": "1_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "1",
+      "duration": 1.15
+    },
+    {
+      "filename": "44_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "44",
+      "duration": 1.15
+    },
+    {
+      "filename": "38_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "38",
+      "duration": 1.15
+    },
+    {
+      "filename": "14_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "14",
+      "duration": 1.15
+    },
+    {
+      "filename": "41_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "41",
+      "duration": 1.15
+    },
+    {
+      "filename": "20_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "20",
+      "duration": 1.15
+    },
+    {
+      "filename": "48_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "48",
+      "duration": 1.15
+    },
+    {
+      "filename": "35_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "35",
+      "duration": 1.15
+    },
+    {
+      "filename": "34_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "34",
+      "duration": 1.15
+    },
+    {
+      "filename": "26_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "26",
+      "duration": 1.15
+    },
+    {
+      "filename": "47_finger blank.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger blank",
+      "sample_number": "47",
+      "duration": 1.15
+    },
+    {
+      "filename": "50_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "50",
+      "duration": 1.15
+    },
+    {
+      "filename": "22_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "22",
+      "duration": 1.15
+    },
+    {
+      "filename": "42_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "42",
+      "duration": 1.15
+    },
+    {
+      "filename": "25_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "25",
+      "duration": 1.15
+    },
+    {
+      "filename": "31_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "31",
+      "duration": 1.15
+    },
+    {
+      "filename": "1_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "1",
+      "duration": 1.15
+    },
+    {
+      "filename": "47_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "47",
+      "duration": 1.15
+    },
+    {
+      "filename": "48_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "48",
+      "duration": 1.15
+    },
+    {
+      "filename": "21_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "21",
+      "duration": 1.15
+    },
+    {
+      "filename": "23_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "23",
+      "duration": 1.15
+    },
+    {
+      "filename": "15_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "15",
+      "duration": 1.15
+    },
+    {
+      "filename": "24_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "24",
+      "duration": 1.15
+    },
+    {
+      "filename": "30_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "30",
+      "duration": 1.15
+    },
+    {
+      "filename": "28_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "28",
+      "duration": 1.15
+    },
+    {
+      "filename": "35_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "35",
+      "duration": 1.15
+    },
+    {
+      "filename": "13_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "13",
+      "duration": 1.15
+    },
+    {
+      "filename": "41_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "41",
+      "duration": 1.15
+    },
+    {
+      "filename": "26_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "26",
+      "duration": 1.15
+    },
+    {
+      "filename": "3_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "3",
+      "duration": 1.15
+    },
+    {
+      "filename": "29_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "29",
+      "duration": 1.15
+    },
+    {
+      "filename": "6_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "6",
+      "duration": 1.15
+    },
+    {
+      "filename": "9_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "9",
+      "duration": 1.15
+    },
+    {
+      "filename": "45_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "45",
+      "duration": 1.15
+    },
+    {
+      "filename": "33_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "33",
+      "duration": 1.15
+    },
+    {
+      "filename": "49_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "49",
+      "duration": 1.15
+    },
+    {
+      "filename": "14_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "14",
+      "duration": 1.15
+    },
+    {
+      "filename": "34_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "34",
+      "duration": 1.15
+    },
+    {
+      "filename": "4_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "4",
+      "duration": 1.15
+    },
+    {
+      "filename": "16_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "16",
+      "duration": 1.15
+    },
+    {
+      "filename": "38_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "38",
+      "duration": 1.15
+    },
+    {
+      "filename": "11_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "11",
+      "duration": 1.15
+    },
+    {
+      "filename": "19_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "19",
+      "duration": 1.15
+    },
+    {
+      "filename": "40_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "40",
+      "duration": 1.15
+    },
+    {
+      "filename": "27_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "27",
+      "duration": 1.15
+    },
+    {
+      "filename": "44_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "44",
+      "duration": 1.15
+    },
+    {
+      "filename": "37_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "37",
+      "duration": 1.15
+    },
+    {
+      "filename": "7_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "7",
+      "duration": 1.15
+    },
+    {
+      "filename": "39_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "39",
+      "duration": 1.15
+    },
+    {
+      "filename": "32_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "32",
+      "duration": 1.15
+    },
+    {
+      "filename": "8_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "8",
+      "duration": 1.15
+    },
+    {
+      "filename": "46_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "46",
+      "duration": 1.15
+    },
+    {
+      "filename": "17_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "17",
+      "duration": 1.15
+    },
+    {
+      "filename": "5_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "5",
+      "duration": 1.15
+    },
+    {
+      "filename": "36_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "36",
+      "duration": 1.15
+    },
+    {
+      "filename": "12_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "12",
+      "duration": 1.15
+    },
+    {
+      "filename": "10_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "10",
+      "duration": 1.15
+    },
+    {
+      "filename": "43_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "43",
+      "duration": 1.15
+    },
+    {
+      "filename": "2_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "2",
+      "duration": 1.15
+    },
+    {
+      "filename": "18_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "18",
+      "duration": 1.15
+    },
+    {
+      "filename": "20_finger bottom.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger bottom",
+      "sample_number": "20",
+      "duration": 1.15
+    },
+    {
+      "filename": "1_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "1",
+      "duration": 1.15
+    },
+    {
+      "filename": "50_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "50",
+      "duration": 1.15
+    },
+    {
+      "filename": "16_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "16",
+      "duration": 1.15
+    },
+    {
+      "filename": "20_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "20",
+      "duration": 1.15
+    },
+    {
+      "filename": "37_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "37",
+      "duration": 1.15
+    },
+    {
+      "filename": "18_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "18",
+      "duration": 1.15
+    },
+    {
+      "filename": "14_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "14",
+      "duration": 1.15
+    },
+    {
+      "filename": "42_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "42",
+      "duration": 1.15
+    },
+    {
+      "filename": "26_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "26",
+      "duration": 1.15
+    },
+    {
+      "filename": "40_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "40",
+      "duration": 1.15
+    },
+    {
+      "filename": "21_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "21",
+      "duration": 1.15
+    },
+    {
+      "filename": "28_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "28",
+      "duration": 1.15
+    },
+    {
+      "filename": "33_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "33",
+      "duration": 1.15
+    },
+    {
+      "filename": "17_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "17",
+      "duration": 1.15
+    },
+    {
+      "filename": "3_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "3",
+      "duration": 1.15
+    },
+    {
+      "filename": "49_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "49",
+      "duration": 1.15
+    },
+    {
+      "filename": "31_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "31",
+      "duration": 1.15
+    },
+    {
+      "filename": "25_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "25",
+      "duration": 1.15
+    },
+    {
+      "filename": "4_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "4",
+      "duration": 1.15
+    },
+    {
+      "filename": "13_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "13",
+      "duration": 1.15
+    },
+    {
+      "filename": "9_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "9",
+      "duration": 1.15
+    },
+    {
+      "filename": "5_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "5",
+      "duration": 1.15
+    },
+    {
+      "filename": "39_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "39",
+      "duration": 1.15
+    },
+    {
+      "filename": "6_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "6",
+      "duration": 1.15
+    },
+    {
+      "filename": "35_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "35",
+      "duration": 1.15
+    },
+    {
+      "filename": "29_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "29",
+      "duration": 1.15
+    },
+    {
+      "filename": "47_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "47",
+      "duration": 1.15
+    },
+    {
+      "filename": "22_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "22",
+      "duration": 1.15
+    },
+    {
+      "filename": "11_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "11",
+      "duration": 1.15
+    },
+    {
+      "filename": "10_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "10",
+      "duration": 1.15
+    },
+    {
+      "filename": "30_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "30",
+      "duration": 1.15
+    },
+    {
+      "filename": "8_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "8",
+      "duration": 1.15
+    },
+    {
+      "filename": "24_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "24",
+      "duration": 1.15
+    },
+    {
+      "filename": "45_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "45",
+      "duration": 1.15
+    },
+    {
+      "filename": "43_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "43",
+      "duration": 1.15
+    },
+    {
+      "filename": "15_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "15",
+      "duration": 1.15
+    },
+    {
+      "filename": "46_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "46",
+      "duration": 1.15
+    },
+    {
+      "filename": "32_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "32",
+      "duration": 1.15
+    },
+    {
+      "filename": "44_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "44",
+      "duration": 1.15
+    },
+    {
+      "filename": "34_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "34",
+      "duration": 1.15
+    },
+    {
+      "filename": "41_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "41",
+      "duration": 1.15
+    },
+    {
+      "filename": "38_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "38",
+      "duration": 1.15
+    },
+    {
+      "filename": "2_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "2",
+      "duration": 1.15
+    },
+    {
+      "filename": "23_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "23",
+      "duration": 1.15
+    },
+    {
+      "filename": "7_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "7",
+      "duration": 1.15
+    },
+    {
+      "filename": "19_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "19",
+      "duration": 1.15
+    },
+    {
+      "filename": "36_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "36",
+      "duration": 1.15
+    },
+    {
+      "filename": "27_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "27",
+      "duration": 1.15
+    },
+    {
+      "filename": "48_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "48",
+      "duration": 1.15
+    },
+    {
+      "filename": "12_finger middle.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger middle",
+      "sample_number": "12",
+      "duration": 1.15
+    },
+    {
+      "filename": "12_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "12",
+      "duration": 1.15
+    },
+    {
+      "filename": "47_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "47",
+      "duration": 1.15
+    },
+    {
+      "filename": "50_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "50",
+      "duration": 1.15
+    },
+    {
+      "filename": "21_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "21",
+      "duration": 1.15
+    },
+    {
+      "filename": "10_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "10",
+      "duration": 1.15
+    },
+    {
+      "filename": "26_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "26",
+      "duration": 1.15
+    },
+    {
+      "filename": "20_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "20",
+      "duration": 1.15
+    },
+    {
+      "filename": "30_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "30",
+      "duration": 1.15
+    },
+    {
+      "filename": "25_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "25",
+      "duration": 1.15
+    },
+    {
+      "filename": "14_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "14",
+      "duration": 1.15
+    },
+    {
+      "filename": "48_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "48",
+      "duration": 1.15
+    },
+    {
+      "filename": "38_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "38",
+      "duration": 1.15
+    },
+    {
+      "filename": "33_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "33",
+      "duration": 1.15
+    },
+    {
+      "filename": "42_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "42",
+      "duration": 1.15
+    },
+    {
+      "filename": "5_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "5",
+      "duration": 1.15
+    },
+    {
+      "filename": "11_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "11",
+      "duration": 1.15
+    },
+    {
+      "filename": "6_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "6",
+      "duration": 1.15
+    },
+    {
+      "filename": "32_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "32",
+      "duration": 1.15
+    },
+    {
+      "filename": "15_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "15",
+      "duration": 1.15
+    },
+    {
+      "filename": "40_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "40",
+      "duration": 1.15
+    },
+    {
+      "filename": "8_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "8",
+      "duration": 1.15
+    },
+    {
+      "filename": "34_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "34",
+      "duration": 1.15
+    },
+    {
+      "filename": "27_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "27",
+      "duration": 1.15
+    },
+    {
+      "filename": "37_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "37",
+      "duration": 1.15
+    },
+    {
+      "filename": "45_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "45",
+      "duration": 1.15
+    },
+    {
+      "filename": "17_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "17",
+      "duration": 1.15
+    },
+    {
+      "filename": "31_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "31",
+      "duration": 1.15
+    },
+    {
+      "filename": "36_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "36",
+      "duration": 1.15
+    },
+    {
+      "filename": "19_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "19",
+      "duration": 1.15
+    },
+    {
+      "filename": "49_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "49",
+      "duration": 1.15
+    },
+    {
+      "filename": "22_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "22",
+      "duration": 1.15
+    },
+    {
+      "filename": "41_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "41",
+      "duration": 1.15
+    },
+    {
+      "filename": "46_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "46",
+      "duration": 1.15
+    },
+    {
+      "filename": "7_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "7",
+      "duration": 1.15
+    },
+    {
+      "filename": "39_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "39",
+      "duration": 1.15
+    },
+    {
+      "filename": "2_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "2",
+      "duration": 1.15
+    },
+    {
+      "filename": "9_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "9",
+      "duration": 1.15
+    },
+    {
+      "filename": "35_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "35",
+      "duration": 1.15
+    },
+    {
+      "filename": "44_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "44",
+      "duration": 1.15
+    },
+    {
+      "filename": "16_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "16",
+      "duration": 1.15
+    },
+    {
+      "filename": "13_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "13",
+      "duration": 1.15
+    },
+    {
+      "filename": "28_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "28",
+      "duration": 1.15
+    },
+    {
+      "filename": "3_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "3",
+      "duration": 1.15
+    },
+    {
+      "filename": "43_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "43",
+      "duration": 1.15
+    },
+    {
+      "filename": "18_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "18",
+      "duration": 1.15
+    },
+    {
+      "filename": "23_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "23",
+      "duration": 1.15
+    },
+    {
+      "filename": "1_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "1",
+      "duration": 1.15
+    },
+    {
+      "filename": "24_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "24",
+      "duration": 1.15
+    },
+    {
+      "filename": "4_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "4",
+      "duration": 1.15
+    },
+    {
+      "filename": "29_finger tip.wav",
+      "batch": "soft_finger_batch_1",
+      "position": "finger tip",
+      "sample_number": "29",
+      "duration": 1.15
+    }
+  ]
+}

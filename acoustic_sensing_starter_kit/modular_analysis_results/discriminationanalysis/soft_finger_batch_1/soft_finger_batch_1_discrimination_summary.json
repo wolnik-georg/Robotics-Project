@@ -1,0 +1,51 @@
+{
+  "batch_name": "soft_finger_batch_1",
+  "num_samples": 200,
+  "num_classes": 4,
+  "classes": [
+    "finger blank",
+    "finger bottom",
+    "finger middle",
+    "finger tip"
+  ],
+  "best_classifier": {
+    "name": "Random Forest",
+    "mean_accuracy": 0.96,
+    "std_accuracy": 0.02999999999999997
+  },
+  "worst_classifier": {
+    "name": "K-NN",
+    "mean_accuracy": 0.825,
+    "std_accuracy": 0.06519202405202651
+  },
+  "all_classifiers_performance": {
+    "Random Forest": {
+      "mean_accuracy": 0.96,
+      "std_accuracy": 0.02999999999999997
+    },
+    "SVM (RBF)": {
+      "mean_accuracy": 0.86,
+      "std_accuracy": 0.051478150704934986
+    },
+    "SVM (Linear)": {
+      "mean_accuracy": 0.905,
+      "std_accuracy": 0.029154759474226494
+    },
+    "K-NN": {
+      "mean_accuracy": 0.825,
+      "std_accuracy": 0.06519202405202651
+    },
+    "Logistic Regression": {
+      "mean_accuracy": 0.9099999999999999,
+      "std_accuracy": 0.04358898943540674
+    },
+    "Gradient Boosting": {
+      "mean_accuracy": 0.945,
+      "std_accuracy": 0.03674234614174766
+    },
+    "Linear Discriminant Analysis": {
+      "mean_accuracy": 0.96,
+      "std_accuracy": 0.025495097567963917
+    }
+  }
+}

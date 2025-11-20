@@ -1,0 +1,90 @@
+{
+  "overall_baseline_performance": 0.9495833333333332,
+  "baseline_std": 0.05916519951232593,
+  "best_batch_performance": 0.9949999999999999,
+  "worst_batch_performance": 0.85,
+  "top_consensus_features": [
+    0,
+    2,
+    1,
+    23,
+    24,
+    25,
+    26,
+    27,
+    37,
+    3
+  ],
+  "batch_summaries": {
+    "soft_finger_batch_2": {
+      "baseline_performance": 0.9949999999999999,
+      "num_features": 38,
+      "top_feature": 23
+    },
+    "soft_finger_batch_4": {
+      "baseline_performance": 0.85,
+      "num_features": 38,
+      "top_feature": 37
+    },
+    "soft_finger_batch_1": {
+      "baseline_performance": 0.96,
+      "num_features": 38,
+      "top_feature": 34
+    },
+    "soft_finger_batch_3": {
+      "baseline_performance": 0.9933333333333334,
+      "num_features": 38,
+      "top_feature": 0
+    }
+  },
+  "num_batches_analyzed": 4,
+  "per_batch_insights": {
+    "soft_finger_batch_2": {
+      "baseline_performance": 0.9949999999999999,
+      "key_insights": [
+        "Optimal performance achieved with 11 features out of 38 total"
+      ],
+      "top_features": [
+        23,
+        28
+      ]
+    },
+    "soft_finger_batch_4": {
+      "baseline_performance": 0.85,
+      "key_insights": [
+        "Optimal performance achieved with 11 features out of 38 total"
+      ],
+      "top_features": [
+        37,
+        0,
+        3,
+        18,
+        24
+      ]
+    },
+    "soft_finger_batch_1": {
+      "baseline_performance": 0.96,
+      "key_insights": [
+        "Optimal performance achieved with 11 features out of 38 total"
+      ],
+      "top_features": [
+        34,
+        1,
+        33,
+        37
+      ]
+    },
+    "soft_finger_batch_3": {
+      "baseline_performance": 0.9933333333333334,
+      "key_insights": [
+        "Optimal performance achieved with 11 features out of 38 total"
+      ],
+      "top_features": [
+        0,
+        1,
+        36,
+        3
+      ]
+    }
+  }
+}

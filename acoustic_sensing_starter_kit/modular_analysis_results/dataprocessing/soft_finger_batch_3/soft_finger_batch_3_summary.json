@@ -1,0 +1,22 @@
+{
+  "batch_name": "soft_finger_batch_3",
+  "num_samples": 150,
+  "num_features": 38,
+  "num_classes": 3,
+  "classes": [
+    "contact",
+    "edge",
+    "no contact"
+  ],
+  "class_distribution": {
+    "contact": "50",
+    "edge": "50",
+    "no contact": "50"
+  },
+  "files_saved": [
+    "soft_finger_batch_3_data_processing_results.json",
+    "soft_finger_batch_3_features.npy",
+    "soft_finger_batch_3_labels.npy",
+    "soft_finger_batch_3_metadata.json"
+  ]
+}
