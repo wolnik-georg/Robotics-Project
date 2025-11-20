@@ -315,7 +315,11 @@ def plot_recorded_spectra(data_dir, classes, save_path=None):
 
     for cls in classes:
         # Find first file for this class
-        files = [f for f in os.listdir(data_dir) if f.endswith(".wav") and cls in f]
+        files = [
+            f
+            for f in os.listdir(data_dir)
+            if f.endswith(".wav") and get_num_and_label(f)[1] == cls
+        ]
         if files:
             file_path = os.path.join(data_dir, files[0])
             audio = preprocessing.load_audio(file_path, sr=SR)
@@ -397,7 +401,11 @@ def plot_waveforms(data_dir, classes, save_path=None):
 
     for i, cls in enumerate(classes):
         ax = axes[i]
-        files = [f for f in os.listdir(data_dir) if f.endswith(".wav") and cls in f]
+        files = [
+            f
+            for f in os.listdir(data_dir)
+            if f.endswith(".wav") and get_num_and_label(f)[1] == cls
+        ]
         if files:
             audios = [
                 preprocessing.load_audio(os.path.join(data_dir, f), sr=SR)
@@ -455,7 +463,11 @@ def plot_class_spectra(data_dir, classes, save_path=None):
         axes = [axes]
 
     for i, cls in enumerate(classes):
-        files = [f for f in os.listdir(data_dir) if f.endswith(".wav") and cls in f]
+        files = [
+            f
+            for f in os.listdir(data_dir)
+            if f.endswith(".wav") and get_num_and_label(f)[1] == cls
+        ]
         if files:
             spectra = []
             for f in files:
@@ -507,7 +519,11 @@ def plot_spectrograms(data_dir, classes, save_path=None):
         axes = [axes]
 
     for i, cls in enumerate(classes):
-        files = [f for f in os.listdir(data_dir) if f.endswith(".wav") and cls in f]
+        files = [
+            f
+            for f in os.listdir(data_dir)
+            if f.endswith(".wav") and get_num_and_label(f)[1] == cls
+        ]
         if files:
             file_path = os.path.join(data_dir, files[0])
             print(f"Plotting spectrogram for class '{cls}' from file: {files[0]}")

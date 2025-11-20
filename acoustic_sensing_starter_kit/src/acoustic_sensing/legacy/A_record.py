@@ -35,13 +35,13 @@ from glob import glob
 # ==================
 # USER SETTINGS
 # ==================
-BASE_DIR = "."
+BASE_DIR = "../../../data/"  # Save to main data folder instead of legacy folder
 SOUND_NAME = "long_sweep"  # sound to use
 CLASS_LABELS = ["tip", "middle", "base", "back", "none"]  # classes to train
 # DEMO_CLASS_LABELS = ["finger tip", "finger middle", "finger bottom", "finger blank"]
-DEMO_CLASS_LABELS = ["metal", "no metal"]
-SAMPLES_PER_CLASS = 50
-MODEL_NAME = "soft_finger_batch_4"
+DEMO_CLASS_LABELS = ["contact", "no_contact", "edge"]  # active classes used
+SAMPLES_PER_CLASS = 210  # samples per class
+MODEL_NAME = "edge_detection_v1"  # output folder
 SHUFFLE_RECORDING_ORDER = False
 APPEND_TO_EXISTING_FILES = True
 CHANNELS = 1
@@ -104,7 +104,7 @@ def main():
     # check if data was previously recorded
     # ask if want to load or re-record and overwrite
     global DATA_DIR
-    DATA_DIR = mkpath(BASE_DIR, "data", MODEL_NAME)
+    DATA_DIR = mkpath(BASE_DIR, MODEL_NAME, "data")
 
     setup_experiment()
     setup_jack(SOUND_NAME)
@@ -170,7 +170,7 @@ def setup_jack(sound_name):
         J.set_input_data(i, Ains[i])
 
     # store active sound for reference
-    sound_file = os.path.join(DATA_DIR, "data", "{}_{}.wav".format(0, sound_name))
+    sound_file = os.path.join(DATA_DIR, "{}_{}.wav".format(0, sound_name))
     os.makedirs(os.path.dirname(sound_file), exist_ok=True)
     scipy.io.wavfile.write(sound_file, SR, sound)
     return J, Aouts, Ains
@@ -267,7 +267,7 @@ def store():
     global sample_id
     sample_id[current_label] += 1
     sound_file = os.path.join(
-        DATA_DIR, "data", "{}_{}.wav".format(sample_id[current_label], current_label)
+        DATA_DIR, "{}_{}.wav".format(sample_id[current_label], current_label)
     )
     os.makedirs(os.path.dirname(sound_file), exist_ok=True)
     scipy.io.wavfile.write(sound_file, SR, Ains[0])

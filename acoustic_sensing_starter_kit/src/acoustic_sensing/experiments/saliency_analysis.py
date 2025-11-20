@@ -164,7 +164,7 @@ class SaliencyAnalysisExperiment(BaseExperiment):
             "num_samples": len(X),
             "num_features": X.shape[1],
             "num_classes": len(np.unique(y)),
-            "test_accuracy": model_performance.get("accuracy", 0),
+            "test_accuracy": model_performance.get("overall_accuracy", 0),
         }
 
         # Create batch-specific visualizations and save results
@@ -616,6 +616,7 @@ class SaliencyAnalysisExperiment(BaseExperiment):
             "consistently_important": [],
             "method_specific": {},
             "feature_groups": {},
+            "top_features": [],
         }
 
         # Find consistently important features across methods
@@ -629,6 +630,16 @@ class SaliencyAnalysisExperiment(BaseExperiment):
                 # Find intersection of top features across methods
                 consistent_features = set.intersection(*all_rankings)
                 analysis["consistently_important"] = list(consistent_features)
+
+        # Extract top features from any method (preferably the first one with data)
+        for method, stats in saliency_results.get(
+            "feature_importance_stats", {}
+        ).items():
+            if "top_10_features" in stats and stats["top_10_features"]:
+                analysis["top_features"] = stats["top_10_features"][
+                    :10
+                ]  # Top 10 features
+                break
 
         # Analyze feature groups (acoustic vs impulse response features)
         # Assume first 38 features are acoustic, rest are impulse response
