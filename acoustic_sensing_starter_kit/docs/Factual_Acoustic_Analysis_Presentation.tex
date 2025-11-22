@@ -1,0 +1,329 @@
+\documentclass{beamer}
+\usetheme{Madrid}
+\usecolortheme{default}
+
+\usepackage[utf8]{inputenc}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{graphicx}
+
+\title{Geometric Reconstruction with Acoustic Tactile Sensing}
+\author{Georg Wolnik}
+\institute{TU Berlin - Biology and Robotics Department}
+\date{\today}
+
+\begin{document}
+
+% Title slide
+\begin{frame}
+\titlepage
+\end{frame}
+
+% Research Question
+\begin{frame}{Research Question}
+\begin{center}
+\Large How can we maximize the information extracted from acoustic signals to achieve reliable contact classification?
+\end{center}
+
+\vspace{0.5cm}
+
+\textbf{Sub-Questions and Corresponding Experiments:}
+\begin{itemize}
+    \item \textbf{Where are the limits for information extraction?} → (1)
+    \item \textbf{Which algorithms extract information best?} → (2)
+    \item \textbf{Which features contain the most information?} → (3)
+    \item \textbf{How do different processing methods compare?} → (4) \& (5)
+\end{itemize}
+
+\vspace{0.3cm}
+
+\textbf{Approach:} Systematic analysis of 1,280 audio samples across 5 contact scenarios.
+\end{frame}
+
+% Datasets
+\begin{frame}{Experimental Datasets}
+\begin{table}
+\centering
+\begin{tabular}{|l|l|c|c|}
+\hline
+\textbf{Dataset} & \textbf{Contact Type} & \textbf{Classes} & \textbf{Samples} \\
+\hline
+Batch 1 & Position detection & 4 & 200 \\
+Batch 2 & Position detection (validation) & 4 & 200 \\
+Batch 3 & Edge detection (3-class) & 3 & 150 \\
+Batch 4 & Paper clip detection & 2 & 100 \\
+Edge v1 & Edge detection (3-class) & 3 & 630 \\
+\hline
+\textbf{Total} & & \textbf{2-4} & \textbf{1,280} \\
+\hline
+\end{tabular}
+\end{table}
+
+\vspace{0.5cm}
+Batches 1-4 have 50 samples per class. Edge v1 has 210 samples per class.
+\end{frame}
+
+% Experiment Overview
+\begin{frame}{Five Analysis Methods}
+\begin{enumerate}
+    \item \textbf{Dimensionality Reduction} - PCA and t-SNE visualization
+    \item \textbf{Classification} - Machine learning algorithm comparison
+    \item \textbf{Feature Ablation} - Individual feature importance analysis
+    \item \textbf{Saliency Analysis} - Neural network attention mapping
+    \item \textbf{Impulse Response} - Physical acoustic characterization
+\end{enumerate}
+\end{frame}
+
+% Experiment 2
+\begin{frame}{Experiment 1: Dimensionality Reduction}
+\textbf{Purpose:} Visualize class separability in reduced feature space
+
+\textbf{Method:}
+\begin{itemize}
+    \item Principal Component Analysis (PCA)
+    \item t-SNE mapping with silhouette score calculation
+    \item Components needed for 95\% variance explained
+\end{itemize}
+
+\textbf{Results:}
+\begin{table}
+\centering
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Dataset} & \textbf{Silhouette Score} & \textbf{Components (95\%)} \\
+\hline
+Paper clip detection & 0.463 & 12 \\
+Edge (Batch 3) & 0.347 & 14 \\
+Position (Batch 1) & 0.184 & 16 \\
+Position (Batch 2) & 0.191 & 16 \\
+Edge (Edge v1) & -0.015 & 17 \\
+\hline
+\end{tabular}
+\end{table}
+
+\textbf{Observation:} Paper clip detection shows best class separation, while Edge v1 shows class overlap.
+\end{frame}
+
+% PCA Visualization
+\begin{frame}{PCA Analysis - Batch 2}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{soft_finger_batch_2_pca_analysis.png}
+\end{center}
+\end{frame}
+
+% t-SNE Visualization
+\begin{frame}{t-SNE Analysis - Batch 2}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{soft_finger_batch_2_tsne_perplexity_50.png}
+\end{center}
+\end{frame}
+
+% Experiment 2
+\begin{frame}{Experiment 2: Classification}
+\textbf{Purpose:} Compare machine learning algorithm performance
+
+\textbf{Method:}
+\begin{itemize}
+    \item 7 algorithms tested: Random Forest, SVM, Gradient Boosting, etc.
+    \item 5-fold cross-validation
+    \item Mean accuracy and standard deviation calculated
+\end{itemize}
+
+\textbf{Results:}
+\begin{table}
+\centering
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Dataset} & \textbf{Best Algorithm} & \textbf{Accuracy (\%)} \\
+\hline
+Edge (Batch 3) & Linear Discriminant Analysis & 100.0 ± 0.0 \\
+Position (Batch 2) & Random Forest & 99.5 ± 1.0 \\
+Position (Batch 1) & Random Forest & 96.0 ± 3.0 \\
+Paper clip detection & SVM RBF & 88.0 ± 6.0 \\
+Edge (Edge v1) & Gradient Boosting & 67.1 ± 2.9 \\
+\hline
+\end{tabular}
+\end{table}
+
+\textbf{Observation:} Performance decreases with task complexity. Edge detection (Batch 3) achieves highest accuracy.
+\end{frame}
+
+% Classification Performance Visualization
+\begin{frame}{Classifier Performance - Batch 3}
+\begin{center}
+\includegraphics[width=0.9\textwidth]{soft_finger_batch_3_classifier_performance.png}
+\end{center}
+\end{frame}
+
+% Experiment 3
+\begin{frame}{Experiment 3: Feature Ablation}
+\textbf{Purpose:} Determine which acoustic features contribute most to classification
+
+\textbf{Method:}
+\begin{itemize}
+    \item Remove each feature individually
+    \item Measure performance drop
+    \item Group features by category (spectral, temporal, statistical, perceptual)
+\end{itemize}
+
+\textbf{Results - Feature Category Importance:}
+\begin{table}
+\centering
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Dataset} & \textbf{Spectral} & \textbf{Temporal} & \textbf{Statistical} & \textbf{Perceptual} \\
+\hline
+Paper clip detection & 67\% & 8\% & 12\% & 18\% \\
+Edge Binary & 42\% & 58\% & 15\% & 12\% \\
+Position & 34\% & 19\% & 12\% & 16\% \\
+Edge 3-class & 28\% & 22\% & 20\% & 19\% \\
+\hline
+\end{tabular}
+\end{table}
+
+\textbf{Observation:} Paper clip detection relies on spectral features, edge detection on temporal features.
+\end{frame}
+
+% Top Features Comparison
+\begin{frame}{Top Features Comparison Across Datasets}
+\footnotesize
+
+\begin{table}
+\centering
+\begin{tabular}{|c|p{3.5cm}|p{3.5cm}|}
+\hline
+\textbf{Rank} & \textbf{Position Batch 1} & \textbf{Position Batch 2} \\
+\hline
+1 & spectral\_centroid & high\_energy\_ratio \\
+2 & spectral\_bandwidth & ultra\_high\_energy\_ratio \\
+3 & spectral\_flatness & low\_mid\_ratio \\
+4 & spectral\_contrast\_0 & spectral\_centroid \\
+5 & spectral\_contrast\_1 & spectral\_bandwidth \\
+\hline
+\textbf{Drop} & 0-0.5\% & 0.5\% \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}
+\centering
+\begin{tabular}{|c|p{3.5cm}|p{3.5cm}|}
+\hline
+\textbf{Rank} & \textbf{Edge Detection} & \textbf{Paper Clip Detection} \\
+\hline
+1 & spectral\_centroid & freq\_response\_spread \\
+2 & spectral\_bandwidth & high\_freq\_energy \\
+3 & spectral\_rolloff & high\_freq\_damping \\
+4 & spectral\_flatness & low\_energy\_ratio \\
+5 & spectral\_contrast\_0 & resonance\_energy\_ratio \\
+\hline
+\textbf{Drop} & 0.7\% & 2.0\% \\
+\hline
+\end{tabular}
+\end{table}
+
+\textbf{Key Observations:}
+\begin{itemize}
+    \item \textbf{Spectral features} dominate position and edge detection
+    \item \textbf{Impulse response features} critical for paper clip detection  
+    \item \textbf{Energy ratios} important for position detection (Batch 2)
+\end{itemize}
+\end{frame}
+
+% Experiment 4
+\begin{frame}{Experiment 4: Saliency Analysis}
+\textbf{Purpose:} Analyze which features neural networks consider most important
+
+\textbf{Method:}
+\begin{itemize}
+    \item Train neural networks on each dataset
+    \item Apply gradient-based saliency to identify feature importance
+    \item Compare with traditional feature ablation results
+\end{itemize}
+
+\textbf{Results - Feature Importance Comparison:}
+\begin{table}
+\centering
+\scriptsize
+\begin{tabular}{|l|p{3.8cm}|p{3.8cm}|}
+\hline
+\textbf{Dataset} & \textbf{NN Saliency Top 2} & \textbf{Feature Ablation Top 2} \\
+\hline
+Paper clip detection & freq\_response\_spread, high\_freq\_energy & freq\_response\_spread, high\_freq\_energy \\
+Position (Batch 1) & spectral\_centroid, spectral\_bandwidth & spectral\_centroid, spectral\_bandwidth \\
+Position (Batch 2) & high\_energy\_ratio, ultra\_high\_ratio & high\_energy\_ratio, ultra\_high\_energy\_ratio \\
+Edge detection & spectral\_centroid, spectral\_bandwidth & spectral\_centroid, spectral\_bandwidth \\
+\hline
+\end{tabular}
+\end{table}
+
+\textbf{Key Finding:} Neural networks and traditional methods show strong agreement on feature importance.
+
+\textbf{Performance Note:} NN: 54-95\%, Traditional ML: 67-99\%
+\end{frame}
+
+% Experiment 5
+\begin{frame}{Experiment 5: Impulse Response Analysis}
+\textbf{Purpose:} Extract system transfer functions independent of input signal characteristics
+
+\textbf{Method:}
+\begin{itemize}
+    \item Deconvolution: H(f) = Y(f)/X(f) 
+    \item Extract 15 impulse response features (resonance, damping, frequency response)
+    \item Combine with 38 acoustic features → 53 total features
+\end{itemize}
+
+\textbf{Key Advantage:} Impulse response features characterize physical system properties, independent of input signal design.
+
+\textbf{Results:} Different contact states show distinct acoustic signatures:
+\begin{itemize}
+    \item Contact vs Edge vs No Contact: measurable differences in duration, resonance, Q-factor
+    \item 3 of top 6 most important features (saliency analysis) come from impulse response
+\end{itemize}
+\end{frame}
+
+% Summary
+\begin{frame}{Summary of Results}
+
+\textbf{Classification Performance Ranking:}
+\begin{enumerate}
+    \item Edge Detection (Batch 3): 100\% accuracy
+    \item Position Detection (Batch 2): 100\% accuracy
+    \item Position Detection (Batch 1): 96\% accuracy
+    \item Paper Clip Detection: 88\% accuracy
+    \item Edge Detection (Edge v1): 67\% accuracy
+\end{enumerate}
+
+\vspace{0.5cm}
+
+\textbf{Key Findings:}
+\begin{itemize}
+    \item Task complexity correlates with classification difficulty
+    \item Different tasks require different acoustic feature types
+    \item Traditional ML methods generally outperform neural networks
+    \item Physical acoustic differences exist between contact states
+    \item Algorithm choice affects performance significantly
+\end{itemize}
+\end{frame}
+
+% Conclusion
+\begin{frame}{Conclusion}
+
+\textbf{Sub-question Answers:}
+\begin{itemize}
+    \item \textit{Extraction limits?} Perfect classification achievable (100%) for some tasks, complex multi-class tasks: 67-100\%
+    \item \textit{Best algorithms?} Linear Discriminant Analysis (edges), Random Forest (position), SVM RBF (paper clips), Gradient Boosting (multi-class)
+    \item \textit{Most informative features?} Spectral (paper clips), temporal (edges), impulse response (top 6 features)
+    \item \textit{Processing methods?} Traditional ML outperforms neural networks by 1-13\%
+\end{itemize}
+
+\vspace{0.4cm}
+
+\textbf{Dataset Dependency:} Performance varies significantly (67\%-100\%) across datasets. Continuous validation required with new data batches.
+
+\vspace{0.3cm}
+
+\textbf{Results reflect performance on specific datasets and require ongoing validation for broader applicability.}
+\end{frame}
+
+\end{document}
