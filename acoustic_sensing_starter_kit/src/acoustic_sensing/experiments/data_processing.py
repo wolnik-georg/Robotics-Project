@@ -56,7 +56,7 @@ class DataProcessingExperiment(BaseExperiment):
         available_batches = [
             d
             for d in os.listdir(data_dir_path)
-            if (d == "collected_data_runs_2025_12_11_v1")
+            if (d == "collected_data_runs_2025_12_11_v2")
             and os.path.isdir(os.path.join(data_dir_path, d))
         ]
 
@@ -124,6 +124,12 @@ class DataProcessingExperiment(BaseExperiment):
                     # Convert to numpy array
                     X_feat = np.array(X_feat)
                     labels = np.array(labels)
+
+                    # NEW: Map labels to grouped classes
+                    labels = self._map_labels_to_groups(labels)
+
+                    # Update actual_classes to reflect grouped labels
+                    actual_classes = sorted(list(set(labels)))
 
                     # Store results for this batch
                     batch_results[batch_name] = {
@@ -211,6 +217,23 @@ class DataProcessingExperiment(BaseExperiment):
 
         self.logger.info("Data processing experiment completed successfully")
         return results
+
+    def _map_labels_to_groups(self, labels):
+        """Map raw folder names to grouped classes: surface_* -> contact, no_surface_* -> no_contact, edge_* -> edge."""
+        mapped_labels = []
+        for label in labels:
+            if isinstance(label, str):
+                if label.startswith("surface"):
+                    mapped_labels.append("contact")
+                elif label.startswith("no_surface"):
+                    mapped_labels.append("no_contact")
+                elif label.startswith("edge"):
+                    mapped_labels.append("edge")
+                else:
+                    mapped_labels.append(label)  # Fallback for unknown labels
+            else:
+                mapped_labels.append(str(label))  # Handle non-string labels
+        return mapped_labels
 
     def _save_batch_data_processing_results(self, batch_data: dict, batch_name: str):
         """Save detailed data processing results for a specific batch."""

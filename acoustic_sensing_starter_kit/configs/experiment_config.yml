@@ -17,7 +17,7 @@ experiments:
     include_impulse_features: true
 
   dimensionality_reduction:
-    enabled: true
+    enabled: false
     pca_enabled: true
     pca_variance_threshold: 0.95
     tsne_enabled: true
@@ -30,20 +30,20 @@ experiments:
     include_lda: true
 
   saliency_analysis:
-    enabled: true
+    enabled: false
     neural_network_epochs: 100
     gradient_methods: ["basic", "integrated"]
     num_samples: 10
 
   feature_ablation:
-    enabled: true
+    enabled: false
     include_leave_one_out: true
     include_cumulative_addition: true
     include_group_ablation: true
     include_random_combinations: true
 
   impulse_response:
-    enabled: true
+    enabled: false
     deconvolution_method: "frequency_domain"
 
   frequency_band_ablation:

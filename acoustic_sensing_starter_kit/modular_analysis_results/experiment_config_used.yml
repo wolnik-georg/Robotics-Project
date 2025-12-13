@@ -15,7 +15,7 @@ experiments:
     enabled: true
     include_impulse_features: true
   dimensionality_reduction:
-    enabled: true
+    enabled: false
     include_umap: false
     pca_enabled: true
     pca_variance_threshold: 0.95
@@ -31,7 +31,7 @@ experiments:
     include_lda: true
     test_multiple_classifiers: true
   feature_ablation:
-    enabled: true
+    enabled: false
     include_cumulative_addition: true
     include_group_ablation: true
     include_leave_one_out: true
@@ -45,9 +45,9 @@ experiments:
     - ultra_high
   impulse_response:
     deconvolution_method: frequency_domain
-    enabled: true
+    enabled: false
   saliency_analysis:
-    enabled: true
+    enabled: false
     gradient_methods:
     - basic
     - integrated

@@ -1,43 +1,43 @@
 {
   "best_overall": {
-    "accuracy": 0.7661801242236025,
-    "batch": "collected_data_runs_2025_12_11_v2",
+    "accuracy": 0.8346153846153846,
+    "batch": "collected_data_runs_2025_12_11_v2_2",
     "classifier": "Random Forest"
   },
   "per_batch_performance": {
-    "collected_data_runs_2025_12_11_v2": {
+    "collected_data_runs_2025_12_11_v2_2": {
       "best_classifier": {
         "name": "Random Forest",
-        "accuracy": 0.7661801242236025
+        "accuracy": 0.8346153846153846
       },
       "cv_performance": {
         "Random Forest": {
-          "mean_accuracy": 0.7661801242236025,
-          "std_accuracy": 0.014834321574060389
+          "mean_accuracy": 0.8346153846153846,
+          "std_accuracy": 0.00806776037053962
         },
         "SVM (RBF)": {
-          "mean_accuracy": 0.6890605590062111,
-          "std_accuracy": 0.005168755305013921
+          "mean_accuracy": 0.6815384615384616,
+          "std_accuracy": 0.0015384615384615333
         },
         "SVM (Linear)": {
-          "mean_accuracy": 0.6878260869565217,
-          "std_accuracy": 0.006545063290593536
+          "mean_accuracy": 0.6815384615384616,
+          "std_accuracy": 0.0015384615384615333
         },
         "K-NN": {
-          "mean_accuracy": 0.6679114906832299,
-          "std_accuracy": 0.011460521519086659
+          "mean_accuracy": 0.6746153846153845,
+          "std_accuracy": 0.021838568563966758
         },
         "Logistic Regression": {
-          "mean_accuracy": 0.685333850931677,
-          "std_accuracy": 0.009739887491966158
+          "mean_accuracy": 0.6815384615384616,
+          "std_accuracy": 0.003768445758127953
         },
         "Gradient Boosting": {
-          "mean_accuracy": 0.7549767080745341,
-          "std_accuracy": 0.013903205053498114
+          "mean_accuracy": 0.7923076923076924,
+          "std_accuracy": 0.01354370527819924
         },
         "Linear Discriminant Analysis": {
-          "mean_accuracy": 0.6119875776397515,
-          "std_accuracy": 0.022363353821631054
+          "mean_accuracy": 0.6807692307692308,
+          "std_accuracy": 0.0054392829322041925
         }
       },
       "num_classifiers_tested": 7

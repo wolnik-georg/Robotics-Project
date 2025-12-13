@@ -93,6 +93,43 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
         # Find best performing batch and classifier
         best_batch_info = self._find_best_batch_performance(all_batch_results)
 
+        # NEW: Save the best model for reuse
+        if best_batch_info:
+            best_clf_name = best_batch_info["classifier"]
+            best_batch_name = best_batch_info["batch_name"]
+            best_batch_data = batch_results[best_batch_name]
+
+            # Get the classifier and fit it on the best batch's data
+            classifiers_dict = self._get_classifiers()
+            best_clf = classifiers_dict[best_clf_name]
+            X_best = best_batch_data["features"]
+            y_best = best_batch_data["labels"]
+            scaler = StandardScaler()
+            X_best_scaled = scaler.fit_transform(X_best)
+            best_clf.fit(X_best_scaled, y_best)  # Train the model
+
+            # Save model, scaler, and metadata
+            model_data = {
+                "model": best_clf,
+                "scaler": scaler,
+                "classes": best_batch_data["classes"],
+                "batch_name": best_batch_name,
+                "accuracy": best_batch_info["accuracy"],
+                "feature_names": [
+                    f"feature_{i}" for i in range(X_best.shape[1])
+                ],  # Optional
+            }
+            import pickle
+
+            model_path = os.path.join(
+                self.experiment_output_dir, "best_discrimination_model.pkl"
+            )
+            with open(model_path, "wb") as f:
+                pickle.dump(model_data, f)
+            self.logger.info(
+                f"Saved best model ({best_clf_name}, acc: {best_batch_info['accuracy']:.3f}) to {model_path}"
+            )
+
         results = {
             "batch_performance_results": all_batch_results,
             "cross_batch_results": cross_batch_results,
