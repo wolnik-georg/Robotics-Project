@@ -1,0 +1,15 @@
+{
+  "batch_name": "reduce_signal_time_experiment",
+  "test_accuracy": 1.0,
+  "num_samples": 150,
+  "num_classes": 3,
+  "model_architecture": "SimpleClassifier",
+  "top_important_features": [
+    25,
+    18,
+    24,
+    23,
+    31
+  ],
+  "feature_importance_stats": []
+}

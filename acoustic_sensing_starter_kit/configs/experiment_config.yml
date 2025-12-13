@@ -15,9 +15,11 @@ experiments:
   data_processing:
     enabled: true
     include_impulse_features: true
+    apply_audio_smoothing: true
+    smoothing_cutoff_freq: 500
 
   dimensionality_reduction:
-    enabled: false
+    enabled: true
     pca_enabled: true
     pca_variance_threshold: 0.95
     tsne_enabled: true
@@ -30,20 +32,20 @@ experiments:
     include_lda: true
 
   saliency_analysis:
-    enabled: false
+    enabled: true
     neural_network_epochs: 100
     gradient_methods: ["basic", "integrated"]
     num_samples: 10
 
   feature_ablation:
-    enabled: false
+    enabled: true
     include_leave_one_out: true
     include_cumulative_addition: true
     include_group_ablation: true
     include_random_combinations: true
 
   impulse_response:
-    enabled: false
+    enabled: true
     deconvolution_method: "frequency_domain"
 
   frequency_band_ablation:

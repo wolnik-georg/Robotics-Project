@@ -1,0 +1,38 @@
+{
+  "batch_name": "reduce_signal_time_experiment_ablation_2",
+  "baseline_performance": 0.96,
+  "num_features": 38,
+  "classes_analyzed": "unknown",
+  "analysis_methods": [
+    "baseline_performance",
+    "scaler",
+    "batch_name",
+    "leave_one_out",
+    "cumulative_addition",
+    "group_ablation",
+    "random_combinations",
+    "synthesis"
+  ],
+  "top_features": [
+    34,
+    22,
+    23,
+    25,
+    30,
+    32,
+    33,
+    35,
+    37,
+    0
+  ],
+  "max_performance_drop": 0.05333333333333323,
+  "key_insights": [
+    "Optimal performance achieved with 11 features out of 38 total"
+  ],
+  "consensus_top_features": [
+    34,
+    25,
+    35,
+    0
+  ]
+}

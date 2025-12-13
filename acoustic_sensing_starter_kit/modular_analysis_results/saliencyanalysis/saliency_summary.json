@@ -1,42 +1,7 @@
 {
-  "overall_performance": {
-    "mean_accuracy": 0.7018633484840393,
-    "std_accuracy": 0.0,
-    "min_accuracy": 0.7018633484840393,
-    "max_accuracy": 0.7018633484840393
-  },
+  "overall_performance": {},
   "consensus_important_features": [],
-  "num_batches_analyzed": 1,
-  "batch_summaries": {
-    "collected_data_runs_2025_12_11_v2": {
-      "accuracy": 0.7018633484840393,
-      "num_samples": 804,
-      "num_classes": 50,
-      "top_features": [
-        25,
-        12,
-        3,
-        24,
-        9
-      ]
-    }
-  },
-  "per_batch_insights": {
-    "collected_data_runs_2025_12_11_v2": {
-      "accuracy": 0.7018633484840393,
-      "num_samples": 804,
-      "num_classes": 50,
-      "top_features": [
-        25,
-        12,
-        3,
-        24,
-        9
-      ],
-      "consistently_important": []
-    }
-  },
-  "saliency_methods_used": [
-    "basic_gradients"
-  ]
+  "num_batches_analyzed": 0,
+  "batch_summaries": {},
+  "saliency_methods_used": []
 }

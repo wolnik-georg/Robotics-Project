@@ -1,0 +1,15 @@
+{
+  "batch_name": "reduce_signal_time_experiment_ablation_2",
+  "test_accuracy": 0.8999999761581421,
+  "num_samples": 150,
+  "num_classes": 3,
+  "model_architecture": "SimpleClassifier",
+  "top_important_features": [
+    24,
+    18,
+    3,
+    19,
+    25
+  ],
+  "feature_importance_stats": []
+}

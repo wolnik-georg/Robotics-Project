@@ -1,0 +1,22 @@
+{
+  "batch_name": "collected_data_all",
+  "num_samples": 4512,
+  "num_features": 38,
+  "num_classes": 3,
+  "classes": [
+    "contact",
+    "edge",
+    "no_contact"
+  ],
+  "class_distribution": {
+    "contact": "1370",
+    "edge": "2485",
+    "no_contact": "657"
+  },
+  "files_saved": [
+    "collected_data_all_data_processing_results.json",
+    "collected_data_all_features.npy",
+    "collected_data_all_labels.npy",
+    "collected_data_all_metadata.json"
+  ]
+}

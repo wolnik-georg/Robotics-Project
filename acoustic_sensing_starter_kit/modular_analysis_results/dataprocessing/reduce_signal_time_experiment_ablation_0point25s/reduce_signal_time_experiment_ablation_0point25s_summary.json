@@ -1,0 +1,22 @@
+{
+  "batch_name": "reduce_signal_time_experiment_ablation_0point25s",
+  "num_samples": 150,
+  "num_features": 38,
+  "num_classes": 3,
+  "classes": [
+    "contact",
+    "edge",
+    "no_contact"
+  ],
+  "class_distribution": {
+    "contact": "50",
+    "edge": "50",
+    "no_contact": "50"
+  },
+  "files_saved": [
+    "reduce_signal_time_experiment_ablation_0point25s_data_processing_results.json",
+    "reduce_signal_time_experiment_ablation_0point25s_features.npy",
+    "reduce_signal_time_experiment_ablation_0point25s_labels.npy",
+    "reduce_signal_time_experiment_ablation_0point25s_metadata.json"
+  ]
+}

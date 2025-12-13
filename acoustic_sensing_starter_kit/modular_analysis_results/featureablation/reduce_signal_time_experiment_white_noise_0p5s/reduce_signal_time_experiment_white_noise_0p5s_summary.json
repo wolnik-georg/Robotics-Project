@@ -1,0 +1,38 @@
+{
+  "batch_name": "reduce_signal_time_experiment_white_noise_0p5s",
+  "baseline_performance": 0.887311827956989,
+  "num_features": 38,
+  "classes_analyzed": "unknown",
+  "analysis_methods": [
+    "baseline_performance",
+    "scaler",
+    "batch_name",
+    "leave_one_out",
+    "cumulative_addition",
+    "group_ablation",
+    "random_combinations",
+    "synthesis"
+  ],
+  "top_features": [
+    1,
+    25,
+    2,
+    15,
+    16,
+    24,
+    34,
+    14,
+    19,
+    20
+  ],
+  "max_performance_drop": 0.039860847564832325,
+  "key_insights": [
+    "Optimal performance achieved with 13 features out of 38 total"
+  ],
+  "consensus_top_features": [
+    1,
+    25,
+    16,
+    34
+  ]
+}

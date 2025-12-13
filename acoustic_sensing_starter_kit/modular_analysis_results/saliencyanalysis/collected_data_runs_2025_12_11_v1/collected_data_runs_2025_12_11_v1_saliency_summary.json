@@ -1,0 +1,15 @@
+{
+  "batch_name": "collected_data_runs_2025_12_11_v1",
+  "test_accuracy": 0.46000000834465027,
+  "num_samples": 997,
+  "num_classes": 3,
+  "model_architecture": "SimpleClassifier",
+  "top_important_features": [
+    23,
+    25,
+    2,
+    34,
+    1
+  ],
+  "feature_importance_stats": []
+}

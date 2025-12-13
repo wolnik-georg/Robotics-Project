@@ -239,11 +239,16 @@ class ExperimentOrchestrator:
 
         # Get experiment configuration
         if experiment_name == "data_processing":
-            # Data processing uses global config
+            # Data processing uses global config plus data_processing specific config
             exp_config = {
                 "base_data_dir": self.config.get("base_data_dir", "data"),
                 "enabled": True,
             }
+            # Add data_processing specific config
+            data_processing_config = self.config.get("experiments", {}).get(
+                "data_processing", {}
+            )
+            exp_config.update(data_processing_config)
         else:
             exp_config = self.config.get("experiments", {}).get(experiment_name, {})
 

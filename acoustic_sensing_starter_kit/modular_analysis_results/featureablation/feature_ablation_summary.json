@@ -1,33 +1,33 @@
 {
-  "overall_baseline_performance": 0.7661801242236025,
+  "overall_baseline_performance": 0.8602150537634408,
   "baseline_std": 0.0,
-  "best_batch_performance": 0.7661801242236025,
-  "worst_batch_performance": 0.7661801242236025,
+  "best_batch_performance": 0.8602150537634408,
+  "worst_batch_performance": 0.8602150537634408,
   "top_consensus_features": [
-    3,
-    19,
-    26,
-    0,
-    2
+    34,
+    36,
+    37,
+    4,
+    5
   ],
   "batch_summaries": {
-    "collected_data_runs_2025_12_11_v2": {
-      "baseline_performance": 0.7661801242236025,
+    "reduce_signal_time_experiment_white_noise_1s": {
+      "baseline_performance": 0.8602150537634408,
       "num_features": 38,
-      "top_feature": 3
+      "top_feature": 34
     }
   },
   "num_batches_analyzed": 1,
   "per_batch_insights": {
-    "collected_data_runs_2025_12_11_v2": {
-      "baseline_performance": 0.7661801242236025,
+    "reduce_signal_time_experiment_white_noise_1s": {
+      "baseline_performance": 0.8602150537634408,
       "key_insights": [
         "Optimal performance achieved with 11 features out of 38 total"
       ],
       "top_features": [
-        26,
-        28,
-        8
+        34,
+        25,
+        0
       ]
     }
   }

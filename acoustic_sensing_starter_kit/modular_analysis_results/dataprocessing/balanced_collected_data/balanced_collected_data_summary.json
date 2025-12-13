@@ -1,0 +1,22 @@
+{
+  "batch_name": "balanced_collected_data",
+  "num_samples": 1971,
+  "num_features": 38,
+  "num_classes": 3,
+  "classes": [
+    "contact",
+    "edge",
+    "no_contact"
+  ],
+  "class_distribution": {
+    "contact": "657",
+    "edge": "657",
+    "no_contact": "657"
+  },
+  "files_saved": [
+    "balanced_collected_data_data_processing_results.json",
+    "balanced_collected_data_features.npy",
+    "balanced_collected_data_labels.npy",
+    "balanced_collected_data_metadata.json"
+  ]
+}

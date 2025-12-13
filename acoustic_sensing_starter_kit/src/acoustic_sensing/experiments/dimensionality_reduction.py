@@ -289,8 +289,8 @@ class DimensionalityReductionExperiment(BaseExperiment):
 
         # Fixed color map for base class names (strip numbers after underscore)
         color_map = {
-            "surface": "red",
-            "no_surface": "blue",
+            "contact": "red",
+            "no_contact": "blue",
             "edge": "green",
         }
         default_color = "gray"  # For any other labels
@@ -337,8 +337,8 @@ class DimensionalityReductionExperiment(BaseExperiment):
 
         # Fixed color map for base class names (strip numbers after underscore)
         color_map = {
-            "surface": "red",
-            "no_surface": "blue",
+            "contact": "red",
+            "no_contact": "blue",
             "edge": "green",
         }
         default_color = "gray"  # For any other labels

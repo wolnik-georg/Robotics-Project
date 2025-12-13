@@ -1,0 +1,13 @@
+{
+  "batch_name": "reduce_signal_time_experiment_white_noise_1s",
+  "num_samples": 151,
+  "original_dimensions": 38,
+  "num_classes": 4,
+  "analysis_methods": [
+    "PCA",
+    "t-SNE"
+  ],
+  "pca_components_95": 8,
+  "first_component_variance": 0.7589896431650943,
+  "best_tsne_silhouette": -0.07954704016447067
+}

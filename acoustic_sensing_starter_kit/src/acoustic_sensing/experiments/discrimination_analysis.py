@@ -52,6 +52,10 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
             X = batch_data["features"]
             y = batch_data["labels"]
 
+            # Ensure X and y are numpy arrays
+            X = np.array(X) if not isinstance(X, np.ndarray) else X
+            y = np.array(y) if not isinstance(y, np.ndarray) else y
+
             if len(X) == 0:
                 self.logger.warning(f"No data available for batch {batch_name}")
                 continue
@@ -434,6 +438,10 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
 
                     y_true_all.extend(y_test)
                     y_pred_all.extend(y_pred)
+
+                # Convert to numpy arrays to ensure proper handling
+                y_true_all = np.array(y_true_all)
+                y_pred_all = np.array(y_pred_all)
 
                 # Create confusion matrix
                 cm = confusion_matrix(y_true_all, y_pred_all, labels=np.unique(y))

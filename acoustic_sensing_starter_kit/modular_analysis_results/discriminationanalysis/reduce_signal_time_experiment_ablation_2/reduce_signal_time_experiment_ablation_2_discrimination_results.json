@@ -1,0 +1,108 @@
+{
+  "batch_name": "reduce_signal_time_experiment_ablation_2",
+  "num_samples": 150,
+  "num_features": 38,
+  "classes": [
+    "contact",
+    "edge",
+    "no_contact"
+  ],
+  "class_distribution": {
+    "contact": "50",
+    "edge": "50",
+    "no_contact": "50"
+  },
+  "cv_results": {
+    "Random Forest": {
+      "scores": [
+        0.9333333333333333,
+        1.0,
+        0.9333333333333333,
+        0.9666666666666667,
+        0.9666666666666667
+      ],
+      "mean_accuracy": 0.96,
+      "std_accuracy": 0.02494438257849294,
+      "best_score": 1.0,
+      "worst_score": 0.9333333333333333
+    },
+    "SVM (RBF)": {
+      "scores": [
+        0.9333333333333333,
+        1.0,
+        0.9,
+        0.9666666666666667,
+        0.9666666666666667
+      ],
+      "mean_accuracy": 0.9533333333333334,
+      "std_accuracy": 0.03399346342395189,
+      "best_score": 1.0,
+      "worst_score": 0.9
+    },
+    "SVM (Linear)": {
+      "scores": [
+        0.9666666666666667,
+        0.9666666666666667,
+        0.9,
+        0.9333333333333333,
+        0.9333333333333333
+      ],
+      "mean_accuracy": 0.9400000000000001,
+      "std_accuracy": 0.024944382578492935,
+      "best_score": 0.9666666666666667,
+      "worst_score": 0.9
+    },
+    "K-NN": {
+      "scores": [
+        0.9,
+        0.9333333333333333,
+        0.9666666666666667,
+        0.9666666666666667,
+        0.9333333333333333
+      ],
+      "mean_accuracy": 0.9400000000000001,
+      "std_accuracy": 0.02494438257849294,
+      "best_score": 0.9666666666666667,
+      "worst_score": 0.9
+    },
+    "Logistic Regression": {
+      "scores": [
+        0.9666666666666667,
+        1.0,
+        0.8333333333333334,
+        0.9666666666666667,
+        1.0
+      ],
+      "mean_accuracy": 0.9533333333333335,
+      "std_accuracy": 0.06182412330330468,
+      "best_score": 1.0,
+      "worst_score": 0.8333333333333334
+    },
+    "Gradient Boosting": {
+      "scores": [
+        0.9333333333333333,
+        1.0,
+        0.9333333333333333,
+        0.9,
+        0.9666666666666667
+      ],
+      "mean_accuracy": 0.9466666666666667,
+      "std_accuracy": 0.03399346342395189,
+      "best_score": 1.0,
+      "worst_score": 0.9
+    },
+    "Linear Discriminant Analysis": {
+      "scores": [
+        1.0,
+        1.0,
+        0.9333333333333333,
+        0.9333333333333333,
+        1.0
+      ],
+      "mean_accuracy": 0.9733333333333334,
+      "std_accuracy": 0.03265986323710903,
+      "best_score": 1.0,
+      "worst_score": 0.9333333333333333
+    }
+  }
+}

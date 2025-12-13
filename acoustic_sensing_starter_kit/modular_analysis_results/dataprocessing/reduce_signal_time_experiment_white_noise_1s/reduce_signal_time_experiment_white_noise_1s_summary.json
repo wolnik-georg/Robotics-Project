@@ -1,0 +1,24 @@
+{
+  "batch_name": "reduce_signal_time_experiment_white_noise_1s",
+  "num_samples": 151,
+  "num_features": 38,
+  "num_classes": 4,
+  "classes": [
+    "contact",
+    "edge",
+    "no_contact",
+    "white_noise"
+  ],
+  "class_distribution": {
+    "contact": "50",
+    "edge": "50",
+    "no_contact": "50",
+    "white_noise": "1"
+  },
+  "files_saved": [
+    "reduce_signal_time_experiment_white_noise_1s_data_processing_results.json",
+    "reduce_signal_time_experiment_white_noise_1s_features.npy",
+    "reduce_signal_time_experiment_white_noise_1s_labels.npy",
+    "reduce_signal_time_experiment_white_noise_1s_metadata.json"
+  ]
+}

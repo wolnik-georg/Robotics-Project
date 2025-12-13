@@ -1,13 +1,13 @@
 {
-  "total_samples": 1300,
+  "total_samples": 1971,
   "total_features": 38,
   "total_batches": 1,
   "batch_names": [
-    "collected_data_runs_2025_12_11_v2_2"
+    "balanced_collected_data"
   ],
   "per_batch_info": {
-    "collected_data_runs_2025_12_11_v2_2": {
-      "num_samples": 1300,
+    "balanced_collected_data": {
+      "num_samples": 1971,
       "num_classes": 3,
       "classes": [
         "contact",
@@ -15,9 +15,9 @@
         "no_contact"
       ],
       "class_distribution": {
-        "contact": "333",
-        "edge": "886",
-        "no_contact": "81"
+        "contact": "657",
+        "edge": "657",
+        "no_contact": "657"
       }
     }
   }

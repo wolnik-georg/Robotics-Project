@@ -1,0 +1,1067 @@
+{
+  "batch_name": "reduce_signal_time_experiment_ablation_0point25s",
+  "total_samples": 150,
+  "contact_positions": [
+    "contact",
+    "edge",
+    "no_contact"
+  ],
+  "samples_per_position": {
+    "contact": "50",
+    "edge": "50",
+    "no_contact": "50"
+  },
+  "sample_rate": 48000,
+  "file_info": [
+    {
+      "filename": "15_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "15",
+      "duration": 0.4
+    },
+    {
+      "filename": "17_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "17",
+      "duration": 0.4
+    },
+    {
+      "filename": "30_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "30",
+      "duration": 0.4
+    },
+    {
+      "filename": "6_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "6",
+      "duration": 0.4
+    },
+    {
+      "filename": "11_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "11",
+      "duration": 0.4
+    },
+    {
+      "filename": "44_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "44",
+      "duration": 0.4
+    },
+    {
+      "filename": "1_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "1",
+      "duration": 0.4
+    },
+    {
+      "filename": "9_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "9",
+      "duration": 0.4
+    },
+    {
+      "filename": "25_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "25",
+      "duration": 0.4
+    },
+    {
+      "filename": "4_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "4",
+      "duration": 0.4
+    },
+    {
+      "filename": "14_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "14",
+      "duration": 0.4
+    },
+    {
+      "filename": "45_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "45",
+      "duration": 0.4
+    },
+    {
+      "filename": "21_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "21",
+      "duration": 0.4
+    },
+    {
+      "filename": "40_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "40",
+      "duration": 0.4
+    },
+    {
+      "filename": "34_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "34",
+      "duration": 0.4
+    },
+    {
+      "filename": "48_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "48",
+      "duration": 0.4
+    },
+    {
+      "filename": "27_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "27",
+      "duration": 0.4
+    },
+    {
+      "filename": "49_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "49",
+      "duration": 0.4
+    },
+    {
+      "filename": "12_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "12",
+      "duration": 0.4
+    },
+    {
+      "filename": "28_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "28",
+      "duration": 0.4
+    },
+    {
+      "filename": "18_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "18",
+      "duration": 0.4
+    },
+    {
+      "filename": "47_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "47",
+      "duration": 0.4
+    },
+    {
+      "filename": "23_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "23",
+      "duration": 0.4
+    },
+    {
+      "filename": "13_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "13",
+      "duration": 0.4
+    },
+    {
+      "filename": "36_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "36",
+      "duration": 0.4
+    },
+    {
+      "filename": "5_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "5",
+      "duration": 0.4
+    },
+    {
+      "filename": "41_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "41",
+      "duration": 0.4
+    },
+    {
+      "filename": "29_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "29",
+      "duration": 0.4
+    },
+    {
+      "filename": "39_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "39",
+      "duration": 0.4
+    },
+    {
+      "filename": "8_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "8",
+      "duration": 0.4
+    },
+    {
+      "filename": "24_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "24",
+      "duration": 0.4
+    },
+    {
+      "filename": "20_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "20",
+      "duration": 0.4
+    },
+    {
+      "filename": "33_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "33",
+      "duration": 0.4
+    },
+    {
+      "filename": "43_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "43",
+      "duration": 0.4
+    },
+    {
+      "filename": "50_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "50",
+      "duration": 0.4
+    },
+    {
+      "filename": "19_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "19",
+      "duration": 0.4
+    },
+    {
+      "filename": "46_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "46",
+      "duration": 0.4
+    },
+    {
+      "filename": "22_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "22",
+      "duration": 0.4
+    },
+    {
+      "filename": "10_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "10",
+      "duration": 0.4
+    },
+    {
+      "filename": "26_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "26",
+      "duration": 0.4
+    },
+    {
+      "filename": "38_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "38",
+      "duration": 0.4
+    },
+    {
+      "filename": "42_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "42",
+      "duration": 0.4
+    },
+    {
+      "filename": "16_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "16",
+      "duration": 0.4
+    },
+    {
+      "filename": "3_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "3",
+      "duration": 0.4
+    },
+    {
+      "filename": "37_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "37",
+      "duration": 0.4
+    },
+    {
+      "filename": "35_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "35",
+      "duration": 0.4
+    },
+    {
+      "filename": "31_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "31",
+      "duration": 0.4
+    },
+    {
+      "filename": "32_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "32",
+      "duration": 0.4
+    },
+    {
+      "filename": "7_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "7",
+      "duration": 0.4
+    },
+    {
+      "filename": "2_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "contact",
+      "sample_number": "2",
+      "duration": 0.4
+    },
+    {
+      "filename": "9_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "9",
+      "duration": 0.4
+    },
+    {
+      "filename": "48_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "48",
+      "duration": 0.4
+    },
+    {
+      "filename": "41_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "41",
+      "duration": 0.4
+    },
+    {
+      "filename": "1_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "1",
+      "duration": 0.4
+    },
+    {
+      "filename": "11_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "11",
+      "duration": 0.4
+    },
+    {
+      "filename": "2_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "2",
+      "duration": 0.4
+    },
+    {
+      "filename": "16_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "16",
+      "duration": 0.4
+    },
+    {
+      "filename": "25_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "25",
+      "duration": 0.4
+    },
+    {
+      "filename": "21_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "21",
+      "duration": 0.4
+    },
+    {
+      "filename": "7_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "7",
+      "duration": 0.4
+    },
+    {
+      "filename": "15_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "15",
+      "duration": 0.4
+    },
+    {
+      "filename": "29_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "29",
+      "duration": 0.4
+    },
+    {
+      "filename": "5_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "5",
+      "duration": 0.4
+    },
+    {
+      "filename": "24_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "24",
+      "duration": 0.4
+    },
+    {
+      "filename": "8_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "8",
+      "duration": 0.4
+    },
+    {
+      "filename": "22_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "22",
+      "duration": 0.4
+    },
+    {
+      "filename": "44_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "44",
+      "duration": 0.4
+    },
+    {
+      "filename": "6_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "6",
+      "duration": 0.4
+    },
+    {
+      "filename": "12_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "12",
+      "duration": 0.4
+    },
+    {
+      "filename": "39_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "39",
+      "duration": 0.4
+    },
+    {
+      "filename": "20_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "20",
+      "duration": 0.4
+    },
+    {
+      "filename": "4_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "4",
+      "duration": 0.4
+    },
+    {
+      "filename": "14_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "14",
+      "duration": 0.4
+    },
+    {
+      "filename": "31_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "31",
+      "duration": 0.4
+    },
+    {
+      "filename": "26_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "26",
+      "duration": 0.4
+    },
+    {
+      "filename": "50_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "50",
+      "duration": 0.4
+    },
+    {
+      "filename": "42_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "42",
+      "duration": 0.4
+    },
+    {
+      "filename": "40_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "40",
+      "duration": 0.4
+    },
+    {
+      "filename": "36_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "36",
+      "duration": 0.4
+    },
+    {
+      "filename": "45_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "45",
+      "duration": 0.4
+    },
+    {
+      "filename": "19_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "19",
+      "duration": 0.4
+    },
+    {
+      "filename": "13_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "13",
+      "duration": 0.4
+    },
+    {
+      "filename": "32_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "32",
+      "duration": 0.4
+    },
+    {
+      "filename": "17_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "17",
+      "duration": 0.4
+    },
+    {
+      "filename": "3_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "3",
+      "duration": 0.4
+    },
+    {
+      "filename": "18_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "18",
+      "duration": 0.4
+    },
+    {
+      "filename": "49_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "49",
+      "duration": 0.4
+    },
+    {
+      "filename": "37_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "37",
+      "duration": 0.4
+    },
+    {
+      "filename": "35_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "35",
+      "duration": 0.4
+    },
+    {
+      "filename": "43_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "43",
+      "duration": 0.4
+    },
+    {
+      "filename": "28_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "28",
+      "duration": 0.4
+    },
+    {
+      "filename": "33_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "33",
+      "duration": 0.4
+    },
+    {
+      "filename": "23_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "23",
+      "duration": 0.4
+    },
+    {
+      "filename": "10_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "10",
+      "duration": 0.4
+    },
+    {
+      "filename": "27_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "27",
+      "duration": 0.4
+    },
+    {
+      "filename": "46_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "46",
+      "duration": 0.4
+    },
+    {
+      "filename": "34_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "34",
+      "duration": 0.4
+    },
+    {
+      "filename": "38_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "38",
+      "duration": 0.4
+    },
+    {
+      "filename": "47_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "47",
+      "duration": 0.4
+    },
+    {
+      "filename": "30_edge.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "edge",
+      "sample_number": "30",
+      "duration": 0.4
+    },
+    {
+      "filename": "32_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "32",
+      "duration": 0.4
+    },
+    {
+      "filename": "14_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "14",
+      "duration": 0.4
+    },
+    {
+      "filename": "5_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "5",
+      "duration": 0.4
+    },
+    {
+      "filename": "12_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "12",
+      "duration": 0.4
+    },
+    {
+      "filename": "22_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "22",
+      "duration": 0.4
+    },
+    {
+      "filename": "49_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "49",
+      "duration": 0.4
+    },
+    {
+      "filename": "17_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "17",
+      "duration": 0.4
+    },
+    {
+      "filename": "47_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "47",
+      "duration": 0.4
+    },
+    {
+      "filename": "10_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "10",
+      "duration": 0.4
+    },
+    {
+      "filename": "6_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "6",
+      "duration": 0.4
+    },
+    {
+      "filename": "37_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "37",
+      "duration": 0.4
+    },
+    {
+      "filename": "16_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "16",
+      "duration": 0.4
+    },
+    {
+      "filename": "42_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "42",
+      "duration": 0.4
+    },
+    {
+      "filename": "35_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "35",
+      "duration": 0.4
+    },
+    {
+      "filename": "20_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "20",
+      "duration": 0.4
+    },
+    {
+      "filename": "40_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "40",
+      "duration": 0.4
+    },
+    {
+      "filename": "8_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "8",
+      "duration": 0.4
+    },
+    {
+      "filename": "19_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "19",
+      "duration": 0.4
+    },
+    {
+      "filename": "33_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "33",
+      "duration": 0.4
+    },
+    {
+      "filename": "25_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "25",
+      "duration": 0.4
+    },
+    {
+      "filename": "13_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "13",
+      "duration": 0.4
+    },
+    {
+      "filename": "41_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "41",
+      "duration": 0.4
+    },
+    {
+      "filename": "29_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "29",
+      "duration": 0.4
+    },
+    {
+      "filename": "45_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "45",
+      "duration": 0.4
+    },
+    {
+      "filename": "44_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "44",
+      "duration": 0.4
+    },
+    {
+      "filename": "4_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "4",
+      "duration": 0.4
+    },
+    {
+      "filename": "11_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "11",
+      "duration": 0.4
+    },
+    {
+      "filename": "31_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "31",
+      "duration": 0.4
+    },
+    {
+      "filename": "46_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "46",
+      "duration": 0.4
+    },
+    {
+      "filename": "1_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "1",
+      "duration": 0.4
+    },
+    {
+      "filename": "26_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "26",
+      "duration": 0.4
+    },
+    {
+      "filename": "18_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "18",
+      "duration": 0.4
+    },
+    {
+      "filename": "30_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "30",
+      "duration": 0.4
+    },
+    {
+      "filename": "24_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "24",
+      "duration": 0.4
+    },
+    {
+      "filename": "43_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "43",
+      "duration": 0.4
+    },
+    {
+      "filename": "2_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "2",
+      "duration": 0.4
+    },
+    {
+      "filename": "38_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "38",
+      "duration": 0.4
+    },
+    {
+      "filename": "48_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "48",
+      "duration": 0.4
+    },
+    {
+      "filename": "15_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "15",
+      "duration": 0.4
+    },
+    {
+      "filename": "9_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "9",
+      "duration": 0.4
+    },
+    {
+      "filename": "34_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "34",
+      "duration": 0.4
+    },
+    {
+      "filename": "27_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "27",
+      "duration": 0.4
+    },
+    {
+      "filename": "3_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "3",
+      "duration": 0.4
+    },
+    {
+      "filename": "39_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "39",
+      "duration": 0.4
+    },
+    {
+      "filename": "28_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "28",
+      "duration": 0.4
+    },
+    {
+      "filename": "23_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "23",
+      "duration": 0.4
+    },
+    {
+      "filename": "7_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "7",
+      "duration": 0.4
+    },
+    {
+      "filename": "50_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "50",
+      "duration": 0.4
+    },
+    {
+      "filename": "21_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "21",
+      "duration": 0.4
+    },
+    {
+      "filename": "36_no_contact.wav",
+      "batch": "reduce_signal_time_experiment_ablation_0point25s",
+      "position": "no_contact",
+      "sample_number": "36",
+      "duration": 0.4
+    }
+  ]
+}

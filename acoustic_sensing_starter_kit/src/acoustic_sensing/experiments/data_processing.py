@@ -11,6 +11,7 @@ from sklearn.model_selection import cross_val_score, StratifiedKFold
 from sklearn.metrics import classification_report, confusion_matrix
 from sklearn.linear_model import LogisticRegression
 import os
+from scipy.signal import butter, filtfilt  # Add for audio smoothing
 
 
 class DataProcessingExperiment(BaseExperiment):
@@ -56,7 +57,7 @@ class DataProcessingExperiment(BaseExperiment):
         available_batches = [
             d
             for d in os.listdir(data_dir_path)
-            if (d == "collected_data_runs_2025_12_11_v2")
+            if (d == "balanced_collected_data")
             and os.path.isdir(os.path.join(data_dir_path, d))
         ]
 
@@ -90,6 +91,16 @@ class DataProcessingExperiment(BaseExperiment):
                         f"Extracting features from {len(audio_data)} audio samples..."
                     )
 
+                    # Check for optional audio smoothing
+                    apply_smoothing = self.config.get("apply_audio_smoothing", False)
+                    if apply_smoothing:
+                        self.logger.info(
+                            "Audio smoothing enabled - applying high-pass filter"
+                        )
+                        cutoff_freq = self.config.get("smoothing_cutoff_freq", 500)
+                    else:
+                        self.logger.info("Audio smoothing disabled")
+
                     # Feature extraction (same as working code)
                     feature_extractor = GeometricFeatureExtractor(sr=48000)
 
@@ -98,6 +109,12 @@ class DataProcessingExperiment(BaseExperiment):
 
                     for i, audio in enumerate(audio_data):
                         try:
+                            # Apply smoothing if enabled
+                            if apply_smoothing:
+                                audio = self._apply_high_pass_filter(
+                                    audio, sr=48000, cutoff=cutoff_freq
+                                )
+
                             features = feature_extractor.extract_features(
                                 audio, method="comprehensive"
                             )
@@ -127,6 +144,7 @@ class DataProcessingExperiment(BaseExperiment):
 
                     # NEW: Map labels to grouped classes
                     labels = self._map_labels_to_groups(labels)
+                    labels = np.array(labels)
 
                     # Update actual_classes to reflect grouped labels
                     actual_classes = sorted(list(set(labels)))
@@ -235,10 +253,35 @@ class DataProcessingExperiment(BaseExperiment):
                 mapped_labels.append(str(label))  # Handle non-string labels
         return mapped_labels
 
+    def _apply_high_pass_filter(
+        self, audio: np.ndarray, sr: int, cutoff: float
+    ) -> np.ndarray:
+        """Apply a high-pass Butterworth filter to remove low-frequency noise from audio."""
+        # Design a 4th-order Butterworth high-pass filter
+        nyquist = sr / 2
+        normalized_cutoff = cutoff / nyquist
+        b, a = butter(4, normalized_cutoff, btype="high")
+
+        # Apply the filter
+        filtered_audio = filtfilt(b, a, audio)
+        return filtered_audio
+
     def _save_batch_data_processing_results(self, batch_data: dict, batch_name: str):
         """Save detailed data processing results for a specific batch."""
         import json
         import os
+
+        # Ensure labels and features are numpy arrays
+        batch_data["features"] = (
+            np.array(batch_data["features"])
+            if not isinstance(batch_data["features"], np.ndarray)
+            else batch_data["features"]
+        )
+        batch_data["labels"] = (
+            np.array(batch_data["labels"])
+            if not isinstance(batch_data["labels"], np.ndarray)
+            else batch_data["labels"]
+        )
 
         # Create batch-specific output directory
         batch_output_dir = os.path.join(self.experiment_output_dir, batch_name)
