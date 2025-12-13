@@ -80,7 +80,7 @@ except ImportError:
 
 SENSORMODEL_FILENAME = "sensor_model.pkl"
 TEST_SIZE = (
-    0.2  # percentage of samples left out of training and used for reporting test score
+    0.4  # percentage of samples left out of training and used for reporting test score
 )
 SHOW_PLOTS = True
 # ==================

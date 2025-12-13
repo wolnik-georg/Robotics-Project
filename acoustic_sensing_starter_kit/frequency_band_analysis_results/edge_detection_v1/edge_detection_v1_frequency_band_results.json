@@ -1,0 +1,864 @@
+{
+  "batch_name": "edge_detection_v1",
+  "n_samples": 630,
+  "classes": [
+    "contact",
+    "edge",
+    "no"
+  ],
+  "class_distribution": [
+    210,
+    210,
+    210
+  ],
+  "frequency_band_results": {
+    "ultra_low": {
+      "freq_range": [
+        20,
+        200
+      ],
+      "classifier_results": {
+        "random_forest": {
+          "mean_accuracy": 0.3333333333333333,
+          "std_accuracy": 0.0,
+          "min_accuracy": 0.3333333333333333,
+          "max_accuracy": 0.3333333333333333,
+          "cv_scores": [
+            0.3333333333333333,
+            0.3333333333333333,
+            0.3333333333333333,
+            0.3333333333333333,
+            0.3333333333333333
+          ],
+          "n_samples": 630,
+          "n_features": 38
+        },
+        "svm_rbf": {
+          "mean_accuracy": 0.3333333333333333,
+          "std_accuracy": 0.0,
+          "min_accuracy": 0.3333333333333333,
+          "max_accuracy": 0.3333333333333333,
+          "cv_scores": [
+            0.3333333333333333,
+            0.3333333333333333,
+            0.3333333333333333,
+            0.3333333333333333,
+            0.3333333333333333
+          ],
+          "n_samples": 630,
+          "n_features": 38
+        },
+        "logistic": {
+          "mean_accuracy": 0.3333333333333333,
+          "std_accuracy": 0.0,
+          "min_accuracy": 0.3333333333333333,
+          "max_accuracy": 0.3333333333333333,
+          "cv_scores": [
+            0.3333333333333333,
+            0.3333333333333333,
+            0.3333333333333333,
+            0.3333333333333333,
+            0.3333333333333333
+          ],
+          "n_samples": 630,
+          "n_features": 38
+        }
+      }
+    },
+    "low_mid": {
+      "freq_range": [
+        200,
+        500
+      ],
+      "classifier_results": {
+        "random_forest": {
+          "mean_accuracy": 0.4,
+          "std_accuracy": 0.01076560314781789,
+          "min_accuracy": 0.38095238095238093,
+          "max_accuracy": 0.4126984126984127,
+          "cv_scores": [
+            0.3968253968253968,
+            0.40476190476190477,
+            0.4126984126984127,
+            0.40476190476190477,
+            0.38095238095238093
+          ],
+          "n_samples": 630,
+          "n_features": 38
+        },
+        "svm_rbf": {
+          "mean_accuracy": 0.4015873015873016,
+          "std_accuracy": 0.035705466283180914,
+          "min_accuracy": 0.3412698412698413,
+          "max_accuracy": 0.4444444444444444,
+          "cv_scores": [
+            0.4444444444444444,
+            0.40476190476190477,
+            0.42857142857142855,
+            0.3888888888888889,
+            0.3412698412698413
+          ],
+          "n_samples": 630,
+          "n_features": 38
+        },
+        "logistic": {
+          "mean_accuracy": 0.4111111111111111,
+          "std_accuracy": 0.03419152258498098,
+          "min_accuracy": 0.3492063492063492,
+          "max_accuracy": 0.4523809523809524,
+          "cv_scores": [
+            0.42857142857142855,
+            0.4523809523809524,
+            0.3492063492063492,
+            0.4126984126984127,
+            0.4126984126984127
+          ],
+          "n_samples": 630,
+          "n_features": 38
+        }
+      }
+    },
+    "mid": {
+      "freq_range": [
+        500,
+        1000
+      ],
+      "classifier_results": {
+        "random_forest": {
+          "mean_accuracy": 0.35238095238095235,
+          "std_accuracy": 0.02045095035988115,
+          "min_accuracy": 0.3333333333333333,
+          "max_accuracy": 0.38095238095238093,
+          "cv_scores": [
+            0.373015873015873,
+            0.3412698412698413,
+            0.3333333333333333,
+            0.38095238095238093,
+            0.3333333333333333
+          ],
+          "n_samples": 630,
+          "n_features": 38
+        },
+        "svm_rbf": {
+          "mean_accuracy": 0.3555555555555555,
+          "std_accuracy": 0.04979170521066071,
+          "min_accuracy": 0.2698412698412698,
+          "max_accuracy": 0.42063492063492064,
+          "cv_scores": [
+            0.3412698412698413,
+            0.373015873015873,
+            0.42063492063492064,
+            0.373015873015873,
+            0.2698412698412698
+          ],
+          "n_samples": 630,
+          "n_features": 38
+        },
+        "logistic": {
+          "mean_accuracy": 0.35079365079365077,
+          "std_accuracy": 0.03901017691252224,
+          "min_accuracy": 0.29365079365079366,
+          "max_accuracy": 0.3968253968253968,
+          "cv_scores": [
+            0.3968253968253968,
+            0.38095238095238093,
+            0.31746031746031744,
+            0.29365079365079366,
+            0.36507936507936506
+          ],
+          "n_samples": 630,
+          "n_features": 38
+        }
+      }
+    },
+    "high_mid": {
+      "freq_range": [
+        1000,
+        2000
+      ],
+      "classifier_results": {
+        "random_forest": {
+          "mean_accuracy": 0.33015873015873015,
+          "std_accuracy": 0.0327615356199211,
+          "min_accuracy": 0.2698412698412698,
+          "max_accuracy": 0.36507936507936506,
+          "cv_scores": [
+            0.3412698412698413,
+            0.3253968253968254,
+            0.36507936507936506,
+            0.3492063492063492,
+            0.2698412698412698
+          ],
+          "n_samples": 630,
+          "n_features": 38
+        },
+        "svm_rbf": {
+          "mean_accuracy": 0.33968253968253964,
+          "std_accuracy": 0.035279540906179165,
+          "min_accuracy": 0.2857142857142857,
+          "max_accuracy": 0.3888888888888889,
+          "cv_scores": [
+            0.35714285714285715,
+            0.31746031746031744,
+            0.3492063492063492,
+            0.2857142857142857,
+            0.3888888888888889
+          ],
+          "n_samples": 630,
+          "n_features": 38
+        },
+        "logistic": {
+          "mean_accuracy": 0.38095238095238093,
+          "std_accuracy": 0.007098628499999332,
+          "min_accuracy": 0.373015873015873,
+          "max_accuracy": 0.3888888888888889,
+          "cv_scores": [
+            0.373015873015873,
+            0.38095238095238093,
+            0.3888888888888889,
+            0.3888888888888889,
+            0.373015873015873
+          ],
+          "n_samples": 630,
+          "n_features": 38
+        }
+      }
+    },
+    "high": {
+      "freq_range": [
+        2000,
+        4000
+      ],
+      "classifier_results": {
+        "random_forest": {
+          "mean_accuracy": 0.38730158730158726,
+          "std_accuracy": 0.02767554884787729,
+          "min_accuracy": 0.3412698412698413,
+          "max_accuracy": 0.42063492063492064,
+          "cv_scores": [
+            0.42063492063492064,
+            0.40476190476190477,
+            0.3412698412698413,
+            0.373015873015873,
+            0.3968253968253968
+          ],
+          "n_samples": 630,
+          "n_features": 38
+        },
+        "svm_rbf": {
+          "mean_accuracy": 0.319047619047619,
+          "std_accuracy": 0.01969789467617596,
+          "min_accuracy": 0.29365079365079366,
+          "max_accuracy": 0.3492063492063492,
+          "cv_scores": [
+            0.3253968253968254,
+            0.30158730158730157,
+            0.29365079365079366,
+            0.3492063492063492,
+            0.3253968253968254
+          ],
+          "n_samples": 630,
+          "n_features": 38
+        },
+        "logistic": {
+          "mean_accuracy": 0.4,
+          "std_accuracy": 0.03077891972962748,
+          "min_accuracy": 0.35714285714285715,
+          "max_accuracy": 0.4365079365079365,
+          "cv_scores": [
+            0.35714285714285715,
+            0.373015873015873,
+            0.42857142857142855,
+            0.4365079365079365,
+            0.40476190476190477
+          ],
+          "n_samples": 630,
+          "n_features": 38
+        }
+      }
+    },
+    "ultra_high": {
+      "freq_range": [
+        4000,
+        8000
+      ],
+      "classifier_results": {
+        "random_forest": {
+          "mean_accuracy": 0.4523809523809524,
+          "std_accuracy": 0.024072620457306505,
+          "min_accuracy": 0.42063492063492064,
+          "max_accuracy": 0.48412698412698413,
+          "cv_scores": [
+            0.47619047619047616,
+            0.4365079365079365,
+            0.48412698412698413,
+            0.4444444444444444,
+            0.42063492063492064
+          ],
+          "n_samples": 630,
+          "n_features": 38
+        },
+        "svm_rbf": {
+          "mean_accuracy": 0.4158730158730159,
+          "std_accuracy": 0.02684370559569486,
+          "min_accuracy": 0.3888888888888889,
+          "max_accuracy": 0.4523809523809524,
+          "cv_scores": [
+            0.4523809523809524,
+            0.3888888888888889,
+            0.3968253968253968,
+            0.4444444444444444,
+            0.3968253968253968
+          ],
+          "n_samples": 630,
+          "n_features": 38
+        },
+        "logistic": {
+          "mean_accuracy": 0.40476190476190477,
+          "std_accuracy": 0.044330920773869645,
+          "min_accuracy": 0.3412698412698413,
+          "max_accuracy": 0.4603174603174603,
+          "cv_scores": [
+            0.4603174603174603,
+            0.42857142857142855,
+            0.3412698412698413,
+            0.42857142857142855,
+            0.36507936507936506
+          ],
+          "n_samples": 630,
+          "n_features": 38
+        }
+      }
+    },
+    "extended": {
+      "freq_range": [
+        8000,
+        20000
+      ],
+      "classifier_results": {
+        "random_forest": {
+          "mean_accuracy": 0.6142857142857143,
+          "std_accuracy": 0.03237472707043035,
+          "min_accuracy": 0.5793650793650794,
+          "max_accuracy": 0.6666666666666666,
+          "cv_scores": [
+            0.6666666666666666,
+            0.6349206349206349,
+            0.5793650793650794,
+            0.5873015873015873,
+            0.6031746031746031
+          ],
+          "n_samples": 630,
+          "n_features": 38
+        },
+        "svm_rbf": {
+          "mean_accuracy": 0.4904761904761905,
+          "std_accuracy": 0.015389459864813758,
+          "min_accuracy": 0.46825396825396826,
+          "max_accuracy": 0.5158730158730159,
+          "cv_scores": [
+            0.49206349206349204,
+            0.48412698412698413,
+            0.46825396825396826,
+            0.49206349206349204,
+            0.5158730158730159
+          ],
+          "n_samples": 630,
+          "n_features": 38
+        },
+        "logistic": {
+          "mean_accuracy": 0.4936507936507937,
+          "std_accuracy": 0.018374344290143223,
+          "min_accuracy": 0.46825396825396826,
+          "max_accuracy": 0.5238095238095238,
+          "cv_scores": [
+            0.5238095238095238,
+            0.5,
+            0.46825396825396826,
+            0.49206349206349204,
+            0.48412698412698413
+          ],
+          "n_samples": 630,
+          "n_features": 38
+        }
+      }
+    },
+    "proposed": {
+      "freq_range": [
+        200,
+        2000
+      ],
+      "classifier_results": {
+        "random_forest": {
+          "mean_accuracy": 0.4015873015873016,
+          "std_accuracy": 0.023862375203766512,
+          "min_accuracy": 0.373015873015873,
+          "max_accuracy": 0.42857142857142855,
+          "cv_scores": [
+            0.373015873015873,
+            0.373015873015873,
+            0.42063492063492064,
+            0.42857142857142855,
+            0.4126984126984127
+          ],
+          "n_samples": 630,
+          "n_features": 38
+        },
+        "svm_rbf": {
+          "mean_accuracy": 0.38571428571428573,
+          "std_accuracy": 0.016342270065058728,
+          "min_accuracy": 0.35714285714285715,
+          "max_accuracy": 0.40476190476190477,
+          "cv_scores": [
+            0.3888888888888889,
+            0.40476190476190477,
+            0.35714285714285715,
+            0.38095238095238093,
+            0.3968253968253968
+          ],
+          "n_samples": 630,
+          "n_features": 38
+        },
+        "logistic": {
+          "mean_accuracy": 0.38095238095238093,
+          "std_accuracy": 0.01944039478399348,
+          "min_accuracy": 0.3492063492063492,
+          "max_accuracy": 0.40476190476190477,
+          "cv_scores": [
+            0.373015873015873,
+            0.3492063492063492,
+            0.3968253968253968,
+            0.40476190476190477,
+            0.38095238095238093
+          ],
+          "n_samples": 630,
+          "n_features": 38
+        }
+      }
+    },
+    "high_combined": {
+      "freq_range": [
+        2000,
+        20000
+      ],
+      "classifier_results": {
+        "random_forest": {
+          "mean_accuracy": 0.5698412698412698,
+          "std_accuracy": 0.03563483225498994,
+          "min_accuracy": 0.5079365079365079,
+          "max_accuracy": 0.6190476190476191,
+          "cv_scores": [
+            0.6190476190476191,
+            0.5793650793650794,
+            0.5714285714285714,
+            0.5079365079365079,
+            0.5714285714285714
+          ],
+          "n_samples": 630,
+          "n_features": 38
+        },
+        "svm_rbf": {
+          "mean_accuracy": 0.4571428571428572,
+          "std_accuracy": 0.024384589675773356,
+          "min_accuracy": 0.42063492063492064,
+          "max_accuracy": 0.48412698412698413,
+          "cv_scores": [
+            0.48412698412698413,
+            0.42063492063492064,
+            0.4365079365079365,
+            0.47619047619047616,
+            0.46825396825396826
+          ],
+          "n_samples": 630,
+          "n_features": 38
+        },
+        "logistic": {
+          "mean_accuracy": 0.4920634920634921,
+          "std_accuracy": 0.027030772009407015,
+          "min_accuracy": 0.4603174603174603,
+          "max_accuracy": 0.5238095238095238,
+          "cv_scores": [
+            0.4603174603174603,
+            0.5158730158730159,
+            0.4603174603174603,
+            0.5,
+            0.5238095238095238
+          ],
+          "n_samples": 630,
+          "n_features": 38
+        }
+      }
+    },
+    "mid_combined": {
+      "freq_range": [
+        200,
+        4000
+      ],
+      "classifier_results": {
+        "random_forest": {
+          "mean_accuracy": 0.43968253968253973,
+          "std_accuracy": 0.03352176520943314,
+          "min_accuracy": 0.38095238095238093,
+          "max_accuracy": 0.48412698412698413,
+          "cv_scores": [
+            0.48412698412698413,
+            0.38095238095238093,
+            0.4444444444444444,
+            0.4523809523809524,
+            0.4365079365079365
+          ],
+          "n_samples": 630,
+          "n_features": 38
+        },
+        "svm_rbf": {
+          "mean_accuracy": 0.39841269841269844,
+          "std_accuracy": 0.026274516440074374,
+          "min_accuracy": 0.3492063492063492,
+          "max_accuracy": 0.42063492063492064,
+          "cv_scores": [
+            0.40476190476190477,
+            0.42063492063492064,
+            0.3968253968253968,
+            0.42063492063492064,
+            0.3492063492063492
+          ],
+          "n_samples": 630,
+          "n_features": 38
+        },
+        "logistic": {
+          "mean_accuracy": 0.4095238095238095,
+          "std_accuracy": 0.01076560314781788,
+          "min_accuracy": 0.3968253968253968,
+          "max_accuracy": 0.42857142857142855,
+          "cv_scores": [
+            0.40476190476190477,
+            0.40476190476190477,
+            0.42857142857142855,
+            0.4126984126984127,
+            0.3968253968253968
+          ],
+          "n_samples": 630,
+          "n_features": 38
+        }
+      }
+    },
+    "full": {
+      "freq_range": [
+        200,
+        20000
+      ],
+      "classifier_results": {
+        "random_forest": {
+          "mean_accuracy": 0.5920634920634921,
+          "std_accuracy": 0.021057935176859673,
+          "min_accuracy": 0.5634920634920635,
+          "max_accuracy": 0.626984126984127,
+          "cv_scores": [
+            0.626984126984127,
+            0.5952380952380952,
+            0.5634920634920635,
+            0.5952380952380952,
+            0.5793650793650794
+          ],
+          "n_samples": 630,
+          "n_features": 38
+        },
+        "svm_rbf": {
+          "mean_accuracy": 0.4492063492063492,
+          "std_accuracy": 0.017817416127494972,
+          "min_accuracy": 0.42857142857142855,
+          "max_accuracy": 0.46825396825396826,
+          "cv_scores": [
+            0.46825396825396826,
+            0.42857142857142855,
+            0.42857142857142855,
+            0.46825396825396826,
+            0.4523809523809524
+          ],
+          "n_samples": 630,
+          "n_features": 38
+        },
+        "logistic": {
+          "mean_accuracy": 0.4793650793650793,
+          "std_accuracy": 0.02952551625037822,
+          "min_accuracy": 0.4365079365079365,
+          "max_accuracy": 0.5238095238095238,
+          "cv_scores": [
+            0.49206349206349204,
+            0.48412698412698413,
+            0.4365079365079365,
+            0.5238095238095238,
+            0.4603174603174603
+          ],
+          "n_samples": 630,
+          "n_features": 38
+        }
+      }
+    },
+    "full_20_20k": {
+      "freq_range": [
+        20,
+        20000
+      ],
+      "classifier_results": {
+        "random_forest": {
+          "mean_accuracy": 0.607936507936508,
+          "std_accuracy": 0.0498422808511352,
+          "min_accuracy": 0.5714285714285714,
+          "max_accuracy": 0.7063492063492064,
+          "cv_scores": [
+            0.7063492063492064,
+            0.5793650793650794,
+            0.5952380952380952,
+            0.5714285714285714,
+            0.5873015873015873
+          ],
+          "n_samples": 630,
+          "n_features": 38
+        },
+        "svm_rbf": {
+          "mean_accuracy": 0.48730158730158724,
+          "std_accuracy": 0.02386237520376653,
+          "min_accuracy": 0.4523809523809524,
+          "max_accuracy": 0.5238095238095238,
+          "cv_scores": [
+            0.5238095238095238,
+            0.5,
+            0.47619047619047616,
+            0.4523809523809524,
+            0.48412698412698413
+          ],
+          "n_samples": 630,
+          "n_features": 38
+        },
+        "logistic": {
+          "mean_accuracy": 0.4682539682539682,
+          "std_accuracy": 0.029268395102517105,
+          "min_accuracy": 0.4444444444444444,
+          "max_accuracy": 0.5079365079365079,
+          "cv_scores": [
+            0.5079365079365079,
+            0.5,
+            0.4444444444444444,
+            0.4444444444444444,
+            0.4444444444444444
+          ],
+          "n_samples": 630,
+          "n_features": 38
+        }
+      }
+    }
+  },
+  "statistical_comparisons": {
+    "anova_test": {
+      "f_statistic": 58.37252813411695,
+      "p_value": 6.0647143297899025e-24,
+      "significant": true
+    },
+    "pairwise_tests": {
+      "ultra_low": {
+        "t_statistic": 5.7206349050445615,
+        "p_value": 0.004620661506503439,
+        "significant": true,
+        "proposed_better": true
+      },
+      "low_mid": {
+        "t_statistic": 0.1254911610276322,
+        "p_value": 0.9061891454139106,
+        "significant": false,
+        "proposed_better": true
+      },
+      "mid": {
+        "t_statistic": 3.084615289650966,
+        "p_value": 0.036766200872960904,
+        "significant": true,
+        "proposed_better": true
+      },
+      "high_mid": {
+        "t_statistic": 3.6742346141747677,
+        "p_value": 0.021311641128756713,
+        "significant": true,
+        "proposed_better": true
+      },
+      "high": {
+        "t_statistic": 0.5858500994137072,
+        "p_value": 0.5894382255755729,
+        "significant": false,
+        "proposed_better": true
+      },
+      "ultra_high": {
+        "t_statistic": -2.903098954409694,
+        "p_value": 0.04398111026842086,
+        "significant": true,
+        "proposed_better": false
+      },
+      "extended": {
+        "t_statistic": -7.691755144265911,
+        "p_value": 0.0015368466264678376,
+        "significant": true,
+        "proposed_better": false
+      },
+      "high_combined": {
+        "t_statistic": -5.986694444083992,
+        "p_value": 0.0039142520183538245,
+        "significant": true,
+        "proposed_better": false
+      },
+      "mid_combined": {
+        "t_statistic": -2.057983021710106,
+        "p_value": 0.10870095132492358,
+        "significant": false,
+        "proposed_better": false
+      },
+      "full": {
+        "t_statistic": -9.272008911435075,
+        "p_value": 0.0007525003474945838,
+        "significant": true,
+        "proposed_better": false
+      },
+      "full_20_20k": {
+        "t_statistic": -6.197506830096349,
+        "p_value": 0.0034468813678878263,
+        "significant": true,
+        "proposed_better": false
+      }
+    },
+    "band_rankings": {
+      "ranked_by_accuracy": [
+        [
+          "extended",
+          0.6142857142857143
+        ],
+        [
+          "full_20_20k",
+          0.607936507936508
+        ],
+        [
+          "full",
+          0.5920634920634921
+        ],
+        [
+          "high_combined",
+          0.5698412698412698
+        ],
+        [
+          "ultra_high",
+          0.4523809523809524
+        ],
+        [
+          "mid_combined",
+          0.43968253968253973
+        ],
+        [
+          "proposed",
+          0.4015873015873016
+        ],
+        [
+          "low_mid",
+          0.4
+        ],
+        [
+          "high",
+          0.38730158730158726
+        ],
+        [
+          "mid",
+          0.35238095238095235
+        ],
+        [
+          "ultra_low",
+          0.3333333333333333
+        ],
+        [
+          "high_mid",
+          0.33015873015873015
+        ]
+      ],
+      "best_band": [
+        "extended",
+        0.6142857142857143
+      ],
+      "proposed_rank": 7
+    }
+  },
+  "best_bands": {
+    "overall_best": {
+      "band": "extended",
+      "classifier": "random_forest",
+      "accuracy": 0.6142857142857143,
+      "std": 0.03237472707043035,
+      "freq_range": [
+        8000,
+        20000
+      ]
+    },
+    "by_classifier": {
+      "random_forest": {
+        "band": "extended",
+        "classifier": "random_forest",
+        "accuracy": 0.6142857142857143,
+        "std": 0.03237472707043035,
+        "freq_range": [
+          8000,
+          20000
+        ]
+      },
+      "svm_rbf": {
+        "band": "extended",
+        "classifier": "svm_rbf",
+        "accuracy": 0.4904761904761905,
+        "std": 0.015389459864813758,
+        "freq_range": [
+          8000,
+          20000
+        ]
+      },
+      "logistic": {
+        "band": "extended",
+        "classifier": "logistic",
+        "accuracy": 0.4936507936507937,
+        "std": 0.018374344290143223,
+        "freq_range": [
+          8000,
+          20000
+        ]
+      }
+    },
+    "proposed_band_performance": {
+      "results": [
+        {
+          "band": "proposed",
+          "classifier": "random_forest",
+          "accuracy": 0.4015873015873016,
+          "std": 0.023862375203766512,
+          "freq_range": [
+            200,
+            2000
+          ]
+        },
+        {
+          "band": "proposed",
+          "classifier": "svm_rbf",
+          "accuracy": 0.38571428571428573,
+          "std": 0.016342270065058728,
+          "freq_range": [
+            200,
+            2000
+          ]
+        },
+        {
+          "band": "proposed",
+          "classifier": "logistic",
+          "accuracy": 0.38095238095238093,
+          "std": 0.01944039478399348,
+          "freq_range": [
+            200,
+            2000
+          ]
+        }
+      ],
+      "mean_across_classifiers": 0.38941798941798944,
+      "std_across_classifiers": 0.00882186878335084
+    }
+  }
+}

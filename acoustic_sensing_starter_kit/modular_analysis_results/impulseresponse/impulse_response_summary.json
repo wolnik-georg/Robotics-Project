@@ -1,14 +1,14 @@
 {
-  "num_batches_processed": 5,
-  "total_impulse_responses": 25,
+  "num_batches_processed": 1,
+  "total_impulse_responses": 5,
   "materials_found": [
     "unknown"
   ],
   "num_unique_materials": 1,
   "spectral_centroid_range": {
-    "min": 0.03632117824337771,
-    "max": 0.04226047854465984,
-    "mean": 0.03986794033720524
+    "min": 0.03759947675019898,
+    "max": 0.04185834123774311,
+    "mean": 0.039991884644681855
   },
   "spectral_rolloff_range": {
     "min": 0.06640625,
@@ -16,13 +16,13 @@
     "mean": 0.06640625
   },
   "resonant_frequency_range": {
-    "min": 150.732421875,
+    "min": 172.265625,
     "max": 22006.93359375,
-    "mean": 11144.475302213683
+    "mean": 11140.373254994876
   },
   "quality_factor_range": {
-    "min": 0.8607594936708861,
+    "min": 1.3333333333333333,
     "max": 511.0,
-    "mean": 216.3769402880156
+    "mean": 210.46018920696145
   }
 }

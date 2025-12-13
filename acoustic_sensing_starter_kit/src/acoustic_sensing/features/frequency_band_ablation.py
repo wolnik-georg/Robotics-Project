@@ -45,6 +45,8 @@ class FrequencyBandAblationAnalyzer:
 
     This addresses the research question: "Which frequency bands contain
     the most information for geometric contact classification?"
+
+    Analyzes specific datasets: soft_finger_batch_1-4 and edge_detection_v1.
     """
 
     def __init__(
@@ -58,6 +60,7 @@ class FrequencyBandAblationAnalyzer:
 
         # Define frequency bands to test (skipping problematic ultra-low frequencies)
         self.frequency_bands = {
+            "ultra_low": (20, 200),  # Ultra-low frequencies
             "low_mid": (200, 500),  # Low-mid frequencies
             "mid": (500, 1000),  # Mid frequencies
             "high_mid": (1000, 2000),  # High-mid frequencies
@@ -68,7 +71,8 @@ class FrequencyBandAblationAnalyzer:
             "proposed": (200, 2000),  # Our proposed most discriminative band
             "high_combined": (2000, 20000),  # All high frequencies
             "mid_combined": (200, 4000),  # All mid frequencies
-            "full": (200, 20000),  # Full spectrum (excluding problematic low freqs)
+            "full": (200, 20000),  # Full spectrum (200Hz-20kHz)
+            "full_20_20k": (20, 20000),  # True full spectrum (20Hz-20kHz)
         }
 
         # Classifiers to test
@@ -1353,14 +1357,26 @@ class FrequencyBandAblationAnalyzer:
         """Run frequency band analysis on multiple batches."""
 
         if batch_names is None:
-            # Auto-detect available batches
+            # Use predefined list of valid datasets
+            valid_datasets = [
+                "soft_finger_batch_1",
+                "soft_finger_batch_2",
+                "soft_finger_batch_3",
+                "soft_finger_batch_4",
+                "edge_detection_v1",
+            ]
             batch_names = []
-            for path in self.base_data_dir.iterdir():
-                if path.is_dir() and "batch" in path.name.lower():
-                    batch_names.append(path.name)
+            for dataset_name in valid_datasets:
+                dataset_path = self.base_data_dir / dataset_name
+                if (
+                    dataset_path.exists()
+                    and dataset_path.is_dir()
+                    and (dataset_path / "data").exists()
+                ):
+                    batch_names.append(dataset_name)
             batch_names.sort()
 
-        print(f"Analyzing {len(batch_names)} batches: {batch_names}")
+        print(f"Analyzing {len(batch_names)} datasets: {batch_names}")
 
         all_results = {}
 
@@ -1713,6 +1729,7 @@ def main():
     print("=" * 60)
     print("This analysis validates the claim that 200-2000Hz is the most")
     print("discriminative frequency range for acoustic geometric classification.")
+    print("Analyzes soft_finger_batch_1-4 and edge_detection_v1 datasets.")
     print()
 
     # Initialize analyzer

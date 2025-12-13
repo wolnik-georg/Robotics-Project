@@ -1,7 +1,11 @@
 base_data_dir: data
 batches:
-  process_all: true
-  specific_batches: []
+  process_all: false
+  specific_batches:
+  - collected_data_runs_2025_12_10_v1
+  - collected_data_runs_2025_12_11_v1
+  - collected_data_runs_2025_12_11_v2
+  - collected_data_runs_2025_12_11_v2_2
 data_loading:
   enabled: true
   max_samples_per_class: null

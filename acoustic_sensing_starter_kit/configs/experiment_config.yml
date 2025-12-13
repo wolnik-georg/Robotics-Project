@@ -59,8 +59,8 @@ output:
 
 # Batch Configuration
 batches:
-  process_all: true
-  specific_batches: []  # Leave empty for all, or specify: ["soft_finger_batch_1", "soft_finger_batch_2"]
+  process_all: false
+  specific_batches: ['collected_data_runs_2025_12_10_v1', "collected_data_runs_2025_12_11_v1", "collected_data_runs_2025_12_11_v2", "collected_data_runs_2025_12_11_v2_2"]  # Leave empty for all, or specify: ["soft_finger_batch_1", "soft_finger_batch_2"]
 
 # System Configuration
 base_data_dir: "data"

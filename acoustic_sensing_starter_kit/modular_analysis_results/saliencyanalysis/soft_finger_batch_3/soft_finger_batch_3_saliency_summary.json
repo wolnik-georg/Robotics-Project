@@ -6,10 +6,10 @@
   "model_architecture": "SimpleClassifier",
   "top_important_features": [
     1,
-    30,
+    36,
+    3,
     0,
-    12,
-    24
+    17
   ],
   "feature_importance_stats": []
 }

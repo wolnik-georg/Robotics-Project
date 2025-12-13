@@ -56,7 +56,7 @@ class DataProcessingExperiment(BaseExperiment):
         available_batches = [
             d
             for d in os.listdir(data_dir_path)
-            if (d.startswith("soft_finger_batch_") or d.startswith("edge_detection_v1"))
+            if (d == "collected_data_runs_2025_12_11_v1")
             and os.path.isdir(os.path.join(data_dir_path, d))
         ]
 

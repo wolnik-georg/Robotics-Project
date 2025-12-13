@@ -404,14 +404,21 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
                 # Normalize confusion matrix
                 cm_norm = cm.astype("float") / cm.sum(axis=1)[:, np.newaxis]
 
+                # Clean up labels by removing "finger" prefix for better readability
+                unique_labels = np.unique(y)
+                cleaned_labels = [
+                    label.replace("finger_", "").replace("finger", "")
+                    for label in unique_labels
+                ]
+
                 # Plot
                 im = sns.heatmap(
                     cm_norm,
                     annot=True,
                     fmt=".2f",
                     cmap="Blues",
-                    xticklabels=np.unique(y),
-                    yticklabels=np.unique(y),
+                    xticklabels=cleaned_labels,
+                    yticklabels=cleaned_labels,
                     ax=axes[i],
                     cbar=True,
                 )

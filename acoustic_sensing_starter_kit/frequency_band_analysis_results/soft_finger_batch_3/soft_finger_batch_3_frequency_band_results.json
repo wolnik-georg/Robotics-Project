@@ -12,6 +12,59 @@
     50
   ],
   "frequency_band_results": {
+    "ultra_low": {
+      "freq_range": [
+        20,
+        200
+      ],
+      "classifier_results": {
+        "random_forest": {
+          "mean_accuracy": 0.3333333333333333,
+          "std_accuracy": 0.0,
+          "min_accuracy": 0.3333333333333333,
+          "max_accuracy": 0.3333333333333333,
+          "cv_scores": [
+            0.3333333333333333,
+            0.3333333333333333,
+            0.3333333333333333,
+            0.3333333333333333,
+            0.3333333333333333
+          ],
+          "n_samples": 150,
+          "n_features": 38
+        },
+        "svm_rbf": {
+          "mean_accuracy": 0.3333333333333333,
+          "std_accuracy": 0.0,
+          "min_accuracy": 0.3333333333333333,
+          "max_accuracy": 0.3333333333333333,
+          "cv_scores": [
+            0.3333333333333333,
+            0.3333333333333333,
+            0.3333333333333333,
+            0.3333333333333333,
+            0.3333333333333333
+          ],
+          "n_samples": 150,
+          "n_features": 38
+        },
+        "logistic": {
+          "mean_accuracy": 0.3333333333333333,
+          "std_accuracy": 0.0,
+          "min_accuracy": 0.3333333333333333,
+          "max_accuracy": 0.3333333333333333,
+          "cv_scores": [
+            0.3333333333333333,
+            0.3333333333333333,
+            0.3333333333333333,
+            0.3333333333333333,
+            0.3333333333333333
+          ],
+          "n_samples": 150,
+          "n_features": 38
+        }
+      }
+    },
     "low_mid": {
       "freq_range": [
         200,
@@ -541,15 +594,74 @@
           "n_features": 38
         }
       }
+    },
+    "full_20_20k": {
+      "freq_range": [
+        20,
+        20000
+      ],
+      "classifier_results": {
+        "random_forest": {
+          "mean_accuracy": 0.9933333333333334,
+          "std_accuracy": 0.01333333333333333,
+          "min_accuracy": 0.9666666666666667,
+          "max_accuracy": 1.0,
+          "cv_scores": [
+            1.0,
+            1.0,
+            0.9666666666666667,
+            1.0,
+            1.0
+          ],
+          "n_samples": 150,
+          "n_features": 38
+        },
+        "svm_rbf": {
+          "mean_accuracy": 0.9733333333333334,
+          "std_accuracy": 0.01333333333333333,
+          "min_accuracy": 0.9666666666666667,
+          "max_accuracy": 1.0,
+          "cv_scores": [
+            0.9666666666666667,
+            0.9666666666666667,
+            1.0,
+            0.9666666666666667,
+            0.9666666666666667
+          ],
+          "n_samples": 150,
+          "n_features": 38
+        },
+        "logistic": {
+          "mean_accuracy": 0.9666666666666666,
+          "std_accuracy": 0.02108185106778919,
+          "min_accuracy": 0.9333333333333333,
+          "max_accuracy": 1.0,
+          "cv_scores": [
+            0.9666666666666667,
+            0.9333333333333333,
+            1.0,
+            0.9666666666666667,
+            0.9666666666666667
+          ],
+          "n_samples": 150,
+          "n_features": 38
+        }
+      }
     }
   },
   "statistical_comparisons": {
     "anova_test": {
-      "f_statistic": 73.17348927875216,
-      "p_value": 5.253549700164822e-22,
+      "f_statistic": 362.47765793531676,
+      "p_value": 3.0785680588617844e-42,
       "significant": true
     },
     "pairwise_tests": {
+      "ultra_low": {
+        "t_statistic": 30.041637771599586,
+        "p_value": 7.312325879564378e-06,
+        "significant": true,
+        "proposed_better": true
+      },
       "low_mid": {
         "t_statistic": 10.339685242263954,
         "p_value": 0.000493757929656209,
@@ -603,6 +715,12 @@
         "p_value": 0.4263172079403687,
         "significant": false,
         "proposed_better": false
+      },
+      "full_20_20k": {
+        "t_statistic": -1.3719886811400708,
+        "p_value": 0.24198153056802077,
+        "significant": false,
+        "proposed_better": false
       }
     },
     "band_rankings": {
@@ -628,6 +746,10 @@
           0.9933333333333334
         ],
         [
+          "full_20_20k",
+          0.9933333333333334
+        ],
+        [
           "full",
           0.9866666666666667
         ],
@@ -646,13 +768,17 @@
         [
           "low_mid",
           0.6866666666666665
+        ],
+        [
+          "ultra_low",
+          0.3333333333333333
         ]
       ],
       "best_band": [
         "ultra_high",
         1.0
       ],
-      "proposed_rank": 7
+      "proposed_rank": 8
     }
   },
   "best_bands": {
@@ -678,12 +804,12 @@
         ]
       },
       "svm_rbf": {
-        "band": "full",
+        "band": "full_20_20k",
         "classifier": "svm_rbf",
-        "accuracy": 0.9533333333333334,
-        "std": 0.016329931618554516,
+        "accuracy": 0.9733333333333334,
+        "std": 0.01333333333333333,
         "freq_range": [
-          200,
+          20,
           20000
         ]
       },

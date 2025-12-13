@@ -1,0 +1,37 @@
+{
+  "batch_name": "collected_data_runs_2025_12_11_v2",
+  "baseline_performance": 0.7661801242236025,
+  "num_features": 38,
+  "classes_analyzed": "unknown",
+  "analysis_methods": [
+    "baseline_performance",
+    "scaler",
+    "batch_name",
+    "leave_one_out",
+    "cumulative_addition",
+    "group_ablation",
+    "random_combinations",
+    "synthesis"
+  ],
+  "top_features": [
+    3,
+    19,
+    26,
+    0,
+    2,
+    17,
+    28,
+    29,
+    30,
+    8
+  ],
+  "max_performance_drop": 0.02364281079076669,
+  "key_insights": [
+    "Optimal performance achieved with 11 features out of 38 total"
+  ],
+  "consensus_top_features": [
+    26,
+    28,
+    8
+  ]
+}

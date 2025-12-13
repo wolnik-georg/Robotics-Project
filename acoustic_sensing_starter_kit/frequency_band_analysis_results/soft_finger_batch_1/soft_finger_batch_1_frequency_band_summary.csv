@@ -1,4 +1,7 @@
 batch,frequency_band,freq_min_hz,freq_max_hz,classifier,mean_accuracy,std_accuracy,min_accuracy,max_accuracy,n_samples,n_features
+soft_finger_batch_1,ultra_low,20,200,random_forest,0.25,0.0,0.25,0.25,200,38
+soft_finger_batch_1,ultra_low,20,200,svm_rbf,0.25,0.0,0.25,0.25,200,38
+soft_finger_batch_1,ultra_low,20,200,logistic,0.25,0.0,0.25,0.25,200,38
 soft_finger_batch_1,low_mid,200,500,random_forest,0.9,0.035355339059327376,0.85,0.95,200,38
 soft_finger_batch_1,low_mid,200,500,svm_rbf,0.8150000000000001,0.04062019202317979,0.75,0.875,200,38
 soft_finger_batch_1,low_mid,200,500,logistic,0.8550000000000001,0.018708286933869722,0.825,0.875,200,38
@@ -29,3 +32,6 @@ soft_finger_batch_1,mid_combined,200,4000,logistic,0.6199999999999999,0.07483314
 soft_finger_batch_1,full,200,20000,random_forest,0.975,0.02738612787525829,0.925,1.0,200,38
 soft_finger_batch_1,full,200,20000,svm_rbf,0.93,0.04301162633521313,0.85,0.975,200,38
 soft_finger_batch_1,full,200,20000,logistic,0.925,0.05,0.85,1.0,200,38
+soft_finger_batch_1,full_20_20k,20,20000,random_forest,0.9450000000000001,0.03674234614174766,0.875,0.975,200,38
+soft_finger_batch_1,full_20_20k,20,20000,svm_rbf,0.95,0.03162277660168377,0.9,0.975,200,38
+soft_finger_batch_1,full_20_20k,20,20000,logistic,0.9349999999999999,0.060415229867972854,0.85,1.0,200,38

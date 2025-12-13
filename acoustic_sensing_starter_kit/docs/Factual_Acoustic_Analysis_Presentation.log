@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2025.11.10)  22 NOV 2025 22:55
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2025.11.10)  23 NOV 2025 17:32
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -707,7 +707,7 @@ Overfull \hbox (45.74716pt too wide) in paragraph at lines 15--15
  []
 
 
-Overfull \hbox (27.98857pt too wide) in paragraph at lines 15--15
+Overfull \hbox (32.57195pt too wide) in paragraph at lines 15--15
  [][][][]  
  []
 
@@ -717,7 +717,7 @@ Overfull \hbox (45.74716pt too wide) has occurred while \output is active
  []
 
 
-Overfull \hbox (27.98857pt too wide) has occurred while \output is active
+Overfull \hbox (32.57195pt too wide) has occurred while \output is active
  [][][][]  
  []
 
@@ -733,7 +733,7 @@ Overfull \hbox (45.74716pt too wide) has occurred while \output is active
  []
 
 
-Overfull \hbox (27.98857pt too wide) has occurred while \output is active
+Overfull \hbox (32.57195pt too wide) has occurred while \output is active
  [][][][]  
  []
 
@@ -757,7 +757,7 @@ Overfull \hbox (45.74716pt too wide) has occurred while \output is active
  []
 
 
-Overfull \hbox (27.98857pt too wide) has occurred while \output is active
+Overfull \hbox (32.57195pt too wide) has occurred while \output is active
  [][][][]  
  []
 
@@ -769,7 +769,7 @@ Overfull \hbox (45.74716pt too wide) has occurred while \output is active
  []
 
 
-Overfull \hbox (27.98857pt too wide) has occurred while \output is active
+Overfull \hbox (32.57195pt too wide) has occurred while \output is active
  [][][][]  
  []
 
@@ -781,7 +781,7 @@ Overfull \hbox (45.74716pt too wide) has occurred while \output is active
  []
 
 
-Overfull \hbox (27.98857pt too wide) has occurred while \output is active
+Overfull \hbox (32.57195pt too wide) has occurred while \output is active
  [][][][]  
  []
 
@@ -799,7 +799,7 @@ Overfull \hbox (45.74716pt too wide) has occurred while \output is active
  []
 
 
-Overfull \hbox (27.98857pt too wide) has occurred while \output is active
+Overfull \hbox (32.57195pt too wide) has occurred while \output is active
  [][][][]  
  []
 
@@ -817,7 +817,7 @@ Overfull \hbox (45.74716pt too wide) has occurred while \output is active
  []
 
 
-Overfull \hbox (27.98857pt too wide) has occurred while \output is active
+Overfull \hbox (32.57195pt too wide) has occurred while \output is active
  [][][][]  
  []
 
@@ -829,7 +829,7 @@ Overfull \hbox (45.74716pt too wide) has occurred while \output is active
  []
 
 
-Overfull \hbox (27.98857pt too wide) has occurred while \output is active
+Overfull \hbox (32.57195pt too wide) has occurred while \output is active
  [][][][]  
  []
 
@@ -847,7 +847,7 @@ Overfull \hbox (45.74716pt too wide) has occurred while \output is active
  []
 
 
-Overfull \hbox (27.98857pt too wide) has occurred while \output is active
+Overfull \hbox (32.57195pt too wide) has occurred while \output is active
  [][][][]  
  []
 
@@ -864,7 +864,7 @@ Overfull \hbox (45.74716pt too wide) has occurred while \output is active
  []
 
 
-Overfull \hbox (27.98857pt too wide) has occurred while \output is active
+Overfull \hbox (32.57195pt too wide) has occurred while \output is active
  [][][][]  
  []
 
@@ -876,7 +876,7 @@ Overfull \hbox (45.74716pt too wide) has occurred while \output is active
  []
 
 
-Overfull \hbox (27.98857pt too wide) has occurred while \output is active
+Overfull \hbox (32.57195pt too wide) has occurred while \output is active
  [][][][]  
  []
 
@@ -928,7 +928,7 @@ Overfull \hbox (45.74716pt too wide) has occurred while \output is active
  []
 
 
-Overfull \hbox (27.98857pt too wide) has occurred while \output is active
+Overfull \hbox (32.57195pt too wide) has occurred while \output is active
  [][][][]  
  []
 
@@ -940,7 +940,7 @@ Overfull \hbox (45.74716pt too wide) has occurred while \output is active
  []
 
 
-Overfull \hbox (27.98857pt too wide) has occurred while \output is active
+Overfull \hbox (32.57195pt too wide) has occurred while \output is active
  [][][][]  
  []
 
@@ -952,7 +952,7 @@ Overfull \hbox (45.74716pt too wide) has occurred while \output is active
  []
 
 
-Overfull \hbox (27.98857pt too wide) has occurred while \output is active
+Overfull \hbox (32.57195pt too wide) has occurred while \output is active
  [][][][]  
  []
 
@@ -964,7 +964,7 @@ Overfull \hbox (45.74716pt too wide) has occurred while \output is active
  []
 
 
-Overfull \hbox (27.98857pt too wide) has occurred while \output is active
+Overfull \hbox (32.57195pt too wide) has occurred while \output is active
  [][][][]  
  []
 
@@ -987,13 +987,13 @@ Package rerunfilecheck Info: File `Factual_Acoustic_Analysis_Presentation.out' h
 Here is how much of TeX's memory you used:
  22012 strings out of 480247
  432653 string characters out of 5896150
- 685669 words of memory out of 5000000
+ 685693 words of memory out of 5000000
  39449 multiletter control sequences out of 15000+600000
  480885 words of font info for 69 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  128i,15n,122p,506b,562s stack positions out of 5000i,500n,10000p,200000b,80000s
  </home/georg/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/tcss1095.600pk></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi10.pfb>
-Output written on Factual_Acoustic_Analysis_Presentation.pdf (15 pages, 1134806 bytes).
+Output written on Factual_Acoustic_Analysis_Presentation.pdf (15 pages, 1134882 bytes).
 PDF statistics:
  479 PDF objects out of 1000 (max. 8388607)
  423 compressed objects within 5 object streams

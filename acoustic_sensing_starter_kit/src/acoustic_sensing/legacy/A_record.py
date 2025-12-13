@@ -36,12 +36,12 @@ from glob import glob
 # USER SETTINGS
 # ==================
 BASE_DIR = "../../../data/"  # Save to main data folder instead of legacy folder
-SOUND_NAME = "long_sweep"  # sound to use
+SOUND_NAME = "white_noise"  # sound to use
 CLASS_LABELS = ["tip", "middle", "base", "back", "none"]  # classes to train
 # DEMO_CLASS_LABELS = ["finger tip", "finger middle", "finger bottom", "finger blank"]
 DEMO_CLASS_LABELS = ["contact", "no_contact", "edge"]  # active classes used
-SAMPLES_PER_CLASS = 210  # samples per class
-MODEL_NAME = "edge_detection_v1"  # output folder
+SAMPLES_PER_CLASS = 50  # samples per class
+MODEL_NAME = "reduce_signal_time_experiment_white_noise_1s"  # output folder
 SHUFFLE_RECORDING_ORDER = False
 APPEND_TO_EXISTING_FILES = True
 CHANNELS = 1
@@ -74,14 +74,24 @@ SOUNDS = dict(
         "quick_sweep": numpy.hstack(
             [
                 scipy.signal.chirp(
-                    numpy.arange(int(SR * 0.3)) / SR, 20, 0.3, 20000
+                    numpy.arange(int(SR * 0.5)) / SR, 20, 0.3, 20000
+                ).astype("float32"),
+                RECORDING_DELAY_SILENCE,
+            ]
+        ),
+        "ultra_quick_sweep": numpy.hstack(
+            [
+                scipy.signal.chirp(
+                    numpy.arange(int(SR * 0.25)) / SR, 20, 0.2, 20000
                 ).astype("float32"),
                 RECORDING_DELAY_SILENCE,
             ]
         ),
         "white_noise": numpy.hstack(
             [
-                numpy.random.uniform(low=-0.999, high=1.0, size=(SR)).astype("float32"),
+                numpy.random.uniform(low=-0.999, high=1.0, size=(int(SR))).astype(
+                    "float32"
+                ),
                 RECORDING_DELAY_SILENCE,
             ]
         ),

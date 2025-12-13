@@ -6,12 +6,12 @@ This script runs the comprehensive frequency band analysis to validate
 the 200-2000Hz discriminative range claim.
 
 Usage:
-    python run_frequency_ablation.py [batch_names...]
+    python run_frequency_ablation.py [dataset_names...]
 
 Examples:
-    python run_frequency_ablation.py                           # All batches
-    python run_frequency_ablation.py soft_finger_batch_1       # Single batch
-    python run_frequency_ablation.py soft_finger_batch_1 soft_finger_batch_2  # Multiple batches
+    python run_frequency_ablation.py                           # All datasets
+    python run_frequency_ablation.py soft_finger_batch_1       # Single dataset
+    python run_frequency_ablation.py soft_finger_batch_1 soft_finger_batch_2  # Multiple datasets
 """
 
 import sys
@@ -34,10 +34,10 @@ def main():
     # Parse command line arguments
     if len(sys.argv) > 1:
         batch_names = sys.argv[1:]
-        print(f"Running analysis on specified batches: {batch_names}")
+        print(f"Running analysis on specified datasets: {batch_names}")
     else:
         batch_names = None
-        print("Running analysis on all available batches")
+        print("Running analysis on all available datasets")
 
     # Check data directory
     data_dir = Path("data")

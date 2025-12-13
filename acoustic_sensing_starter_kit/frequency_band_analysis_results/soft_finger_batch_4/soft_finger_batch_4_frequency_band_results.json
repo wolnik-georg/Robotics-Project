@@ -10,6 +10,59 @@
     50
   ],
   "frequency_band_results": {
+    "ultra_low": {
+      "freq_range": [
+        20,
+        200
+      ],
+      "classifier_results": {
+        "random_forest": {
+          "mean_accuracy": 0.5,
+          "std_accuracy": 0.0,
+          "min_accuracy": 0.5,
+          "max_accuracy": 0.5,
+          "cv_scores": [
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ],
+          "n_samples": 100,
+          "n_features": 38
+        },
+        "svm_rbf": {
+          "mean_accuracy": 0.5,
+          "std_accuracy": 0.0,
+          "min_accuracy": 0.5,
+          "max_accuracy": 0.5,
+          "cv_scores": [
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ],
+          "n_samples": 100,
+          "n_features": 38
+        },
+        "logistic": {
+          "mean_accuracy": 0.5,
+          "std_accuracy": 0.0,
+          "min_accuracy": 0.5,
+          "max_accuracy": 0.5,
+          "cv_scores": [
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ],
+          "n_samples": 100,
+          "n_features": 38
+        }
+      }
+    },
     "low_mid": {
       "freq_range": [
         200,
@@ -539,15 +592,74 @@
           "n_features": 38
         }
       }
+    },
+    "full_20_20k": {
+      "freq_range": [
+        20,
+        20000
+      ],
+      "classifier_results": {
+        "random_forest": {
+          "mean_accuracy": 0.8400000000000001,
+          "std_accuracy": 0.06633249580710798,
+          "min_accuracy": 0.75,
+          "max_accuracy": 0.95,
+          "cv_scores": [
+            0.85,
+            0.95,
+            0.75,
+            0.85,
+            0.8
+          ],
+          "n_samples": 100,
+          "n_features": 38
+        },
+        "svm_rbf": {
+          "mean_accuracy": 0.79,
+          "std_accuracy": 0.09695359714832656,
+          "min_accuracy": 0.65,
+          "max_accuracy": 0.95,
+          "cv_scores": [
+            0.75,
+            0.8,
+            0.65,
+            0.95,
+            0.8
+          ],
+          "n_samples": 100,
+          "n_features": 38
+        },
+        "logistic": {
+          "mean_accuracy": 0.76,
+          "std_accuracy": 0.09695359714832659,
+          "min_accuracy": 0.65,
+          "max_accuracy": 0.9,
+          "cv_scores": [
+            0.7,
+            0.65,
+            0.7,
+            0.9,
+            0.85
+          ],
+          "n_samples": 100,
+          "n_features": 38
+        }
+      }
     }
   },
   "statistical_comparisons": {
     "anova_test": {
-      "f_statistic": 1.613649182177101,
-      "p_value": 0.14438666823721555,
-      "significant": false
+      "f_statistic": 4.627185314685313,
+      "p_value": 8.823785868121376e-05,
+      "significant": true
     },
     "pairwise_tests": {
+      "ultra_low": {
+        "t_statistic": 3.137858162210944,
+        "p_value": 0.034919706674539065,
+        "significant": true,
+        "proposed_better": true
+      },
       "low_mid": {
         "t_statistic": 0.6882472016116856,
         "p_value": 0.5291333003818578,
@@ -601,10 +713,20 @@
         "p_value": 0.13694512334578746,
         "significant": false,
         "proposed_better": false
+      },
+      "full_20_20k": {
+        "t_statistic": -8.999999999999996,
+        "p_value": 0.0008438325176012799,
+        "significant": true,
+        "proposed_better": false
       }
     },
     "band_rankings": {
       "ranked_by_accuracy": [
+        [
+          "full_20_20k",
+          0.8400000000000001
+        ],
         [
           "ultra_high",
           0.78
@@ -644,54 +766,58 @@
         [
           "low_mid",
           0.63
+        ],
+        [
+          "ultra_low",
+          0.5
         ]
       ],
       "best_band": [
-        "ultra_high",
-        0.78
+        "full_20_20k",
+        0.8400000000000001
       ],
-      "proposed_rank": 7
+      "proposed_rank": 8
     }
   },
   "best_bands": {
     "overall_best": {
-      "band": "ultra_high",
+      "band": "full_20_20k",
       "classifier": "random_forest",
-      "accuracy": 0.78,
-      "std": 0.06,
+      "accuracy": 0.8400000000000001,
+      "std": 0.06633249580710798,
       "freq_range": [
-        4000,
-        8000
+        20,
+        20000
       ]
     },
     "by_classifier": {
       "random_forest": {
-        "band": "ultra_high",
+        "band": "full_20_20k",
         "classifier": "random_forest",
-        "accuracy": 0.78,
-        "std": 0.06,
+        "accuracy": 0.8400000000000001,
+        "std": 0.06633249580710798,
         "freq_range": [
-          4000,
-          8000
+          20,
+          20000
         ]
       },
       "svm_rbf": {
-        "band": "full",
+        "band": "full_20_20k",
         "classifier": "svm_rbf",
-        "accuracy": 0.7300000000000001,
-        "std": 0.08717797887081348,
+        "accuracy": 0.79,
+        "std": 0.09695359714832656,
         "freq_range": [
-          200,
+          20,
           20000
         ]
       },
       "logistic": {
-        "band": "high_combined",
+        "band": "full_20_20k",
         "classifier": "logistic",
-        "accuracy": 0.74,
-        "std": 0.09165151389911681,
+        "accuracy": 0.76,
+        "std": 0.09695359714832659,
         "freq_range": [
-          2000,
+          20,
           20000
         ]
       }

@@ -284,46 +284,37 @@ class DimensionalityReductionExperiment(BaseExperiment):
         batch_name: str,
         output_dir: str,
     ):
-        """Create PCA visualization for a single batch."""
-        fig, axes = plt.subplots(2, 2, figsize=(15, 12))
+        """Create PCA cluster projection visualization for a single batch."""
+        fig, ax = plt.subplots(1, 1, figsize=(10, 8))
 
-        # Explained variance plot
-        axes[0, 0].bar(range(1, len(explained_var) + 1), explained_var, alpha=0.7)
-        axes[0, 0].set_xlabel("Principal Component")
-        axes[0, 0].set_ylabel("Explained Variance Ratio")
-        axes[0, 0].set_title(f"Explained Variance by Component - {batch_name}")
-
-        # Cumulative variance plot
-        axes[0, 1].plot(range(1, len(cumulative_var) + 1), cumulative_var, "bo-")
-        axes[0, 1].axhline(y=0.95, color="r", linestyle="--", label="95% Variance")
-        axes[0, 1].set_xlabel("Number of Components")
-        axes[0, 1].set_ylabel("Cumulative Explained Variance")
-        axes[0, 1].set_title(f"Cumulative Explained Variance - {batch_name}")
-        axes[0, 1].legend()
+        # Fixed color map for base class names (strip numbers after underscore)
+        color_map = {
+            "surface": "red",
+            "no_surface": "blue",
+            "edge": "green",
+        }
+        default_color = "gray"  # For any other labels
 
         # 2D PCA plot colored by class
         unique_classes = np.unique(y)
-        colors = plt.cm.tab10(np.linspace(0, 1, len(unique_classes)))
-
-        for i, cls in enumerate(unique_classes):
+        for cls in unique_classes:
+            # Extract base class name (everything before first underscore)
+            base_cls = cls.split("_")[0] if "_" in cls else cls
             mask = y == cls
-            axes[1, 0].scatter(
-                X_pca[mask, 0], X_pca[mask, 1], c=[colors[i]], label=cls, alpha=0.7
+            color = color_map.get(base_cls, default_color)
+            ax.scatter(
+                X_pca[mask, 0],
+                X_pca[mask, 1],
+                c=color,
+                label=base_cls,  # Use base class name in legend
+                alpha=0.7,
+                s=50,
             )
-        axes[1, 0].set_xlabel("First Principal Component")
-        axes[1, 0].set_ylabel("Second Principal Component")
-        axes[1, 0].set_title(f"PCA Projection - {batch_name}")
-        axes[1, 0].legend()
-
-        # Scree plot (alternative view)
-        axes[1, 1].plot(
-            range(1, min(11, len(explained_var) + 1)),
-            explained_var[: min(10, len(explained_var))],
-            "ro-",
-        )
-        axes[1, 1].set_xlabel("Principal Component")
-        axes[1, 1].set_ylabel("Explained Variance Ratio")
-        axes[1, 1].set_title(f"Scree Plot (First 10 Components) - {batch_name}")
+        ax.set_xlabel("First Principal Component")
+        ax.set_ylabel("Second Principal Component")
+        ax.set_title(f"PCA Projection - {batch_name}")
+        ax.legend()
+        ax.grid(True, alpha=0.3)
 
         plt.tight_layout()
         plt.savefig(
@@ -344,17 +335,26 @@ class DimensionalityReductionExperiment(BaseExperiment):
         """Create t-SNE visualization for a single batch."""
         fig, ax = plt.subplots(1, 1, figsize=(10, 8))
 
+        # Fixed color map for base class names (strip numbers after underscore)
+        color_map = {
+            "surface": "red",
+            "no_surface": "blue",
+            "edge": "green",
+        }
+        default_color = "gray"  # For any other labels
+
         # Plot colored by class
         unique_classes = np.unique(y)
-        colors = plt.cm.tab10(np.linspace(0, 1, len(unique_classes)))
-
-        for i, cls in enumerate(unique_classes):
+        for cls in unique_classes:
+            # Extract base class name (everything before first underscore)
+            base_cls = cls.split("_")[0] if "_" in cls else cls
             mask = y == cls
+            color = color_map.get(base_cls, default_color)
             ax.scatter(
                 X_tsne[mask, 0],
                 X_tsne[mask, 1],
-                c=[colors[i]],
-                label=cls,
+                c=color,
+                label=base_cls,  # Use base class name in legend
                 alpha=0.7,
                 s=50,
             )
@@ -379,17 +379,26 @@ class DimensionalityReductionExperiment(BaseExperiment):
         """Create UMAP visualization for a single batch."""
         fig, ax = plt.subplots(1, 1, figsize=(10, 8))
 
+        # Fixed color map for base class names (strip numbers after underscore)
+        color_map = {
+            "surface": "red",
+            "no_surface": "blue",
+            "edge": "green",
+        }
+        default_color = "gray"  # For any other labels
+
         # Plot colored by class
         unique_classes = np.unique(y)
-        colors = plt.cm.tab10(np.linspace(0, 1, len(unique_classes)))
-
-        for i, cls in enumerate(unique_classes):
+        for cls in unique_classes:
+            # Extract base class name (everything before first underscore)
+            base_cls = cls.split("_")[0] if "_" in cls else cls
             mask = y == cls
+            color = color_map.get(base_cls, default_color)
             ax.scatter(
                 X_umap[mask, 0],
                 X_umap[mask, 1],
-                c=[colors[i]],
-                label=cls,
+                c=color,
+                label=base_cls,  # Use base class name in legend
                 alpha=0.7,
                 s=50,
             )

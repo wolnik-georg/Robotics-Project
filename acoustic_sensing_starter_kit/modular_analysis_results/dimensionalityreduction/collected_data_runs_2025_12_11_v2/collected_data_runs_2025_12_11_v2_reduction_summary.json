@@ -1,0 +1,13 @@
+{
+  "batch_name": "collected_data_runs_2025_12_11_v2",
+  "num_samples": 804,
+  "original_dimensions": 38,
+  "num_classes": 50,
+  "analysis_methods": [
+    "PCA",
+    "t-SNE"
+  ],
+  "pca_components_95": 12,
+  "first_component_variance": 0.3754863111522561,
+  "best_tsne_silhouette": -0.6501428484916687
+}

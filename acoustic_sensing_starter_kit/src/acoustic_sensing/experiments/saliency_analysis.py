@@ -53,7 +53,7 @@ class SaliencyAnalysisExperiment(BaseExperiment):
         self.logger.info("Starting saliency analysis experiment...")
 
         # Load per-batch data from previous experiment
-        batch_results = self.load_shared_data(shared_data, "batch_results")
+        batch_results = self.load_shared_data(shared_data, "batch_results") 
 
         per_batch_results = {}
 

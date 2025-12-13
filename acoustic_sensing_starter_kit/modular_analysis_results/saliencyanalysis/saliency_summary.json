@@ -1,137 +1,37 @@
 {
   "overall_performance": {
-    "mean_accuracy": 0.8362698435783387,
-    "std_accuracy": 0.1594305027310367,
-    "min_accuracy": 0.5396825671195984,
-    "max_accuracy": 0.9666666388511658
+    "mean_accuracy": 0.7018633484840393,
+    "std_accuracy": 0.0,
+    "min_accuracy": 0.7018633484840393,
+    "max_accuracy": 0.7018633484840393
   },
   "consensus_important_features": [],
-  "num_batches_analyzed": 5,
+  "num_batches_analyzed": 1,
   "batch_summaries": {
-    "soft_finger_batch_2": {
-      "accuracy": 0.925000011920929,
-      "num_samples": 200,
-      "num_classes": 4,
+    "collected_data_runs_2025_12_11_v2": {
+      "accuracy": 0.7018633484840393,
+      "num_samples": 804,
+      "num_classes": 50,
       "top_features": [
-        27,
-        36,
-        14,
-        22,
-        17
-      ]
-    },
-    "soft_finger_batch_4": {
-      "accuracy": 0.800000011920929,
-      "num_samples": 100,
-      "num_classes": 2,
-      "top_features": [
-        13,
-        8,
         25,
-        0,
-        1
-      ]
-    },
-    "soft_finger_batch_1": {
-      "accuracy": 0.949999988079071,
-      "num_samples": 200,
-      "num_classes": 4,
-      "top_features": [
-        1,
-        13,
-        0,
-        17,
-        22
-      ]
-    },
-    "soft_finger_batch_3": {
-      "accuracy": 0.9666666388511658,
-      "num_samples": 150,
-      "num_classes": 3,
-      "top_features": [
-        1,
-        30,
-        0,
         12,
-        24
-      ]
-    },
-    "edge_detection_v1": {
-      "accuracy": 0.5396825671195984,
-      "num_samples": 630,
-      "num_classes": 3,
-      "top_features": [
-        35,
-        17,
-        1,
         3,
-        34
+        24,
+        9
       ]
     }
   },
   "per_batch_insights": {
-    "soft_finger_batch_2": {
-      "accuracy": 0.925000011920929,
-      "num_samples": 200,
-      "num_classes": 4,
+    "collected_data_runs_2025_12_11_v2": {
+      "accuracy": 0.7018633484840393,
+      "num_samples": 804,
+      "num_classes": 50,
       "top_features": [
-        27,
-        36,
-        14,
-        22,
-        17
-      ],
-      "consistently_important": []
-    },
-    "soft_finger_batch_4": {
-      "accuracy": 0.800000011920929,
-      "num_samples": 100,
-      "num_classes": 2,
-      "top_features": [
-        13,
-        8,
         25,
-        0,
-        1
-      ],
-      "consistently_important": []
-    },
-    "soft_finger_batch_1": {
-      "accuracy": 0.949999988079071,
-      "num_samples": 200,
-      "num_classes": 4,
-      "top_features": [
-        1,
-        13,
-        0,
-        17,
-        22
-      ],
-      "consistently_important": []
-    },
-    "soft_finger_batch_3": {
-      "accuracy": 0.9666666388511658,
-      "num_samples": 150,
-      "num_classes": 3,
-      "top_features": [
-        1,
-        30,
-        0,
         12,
-        24
-      ],
-      "consistently_important": []
-    },
-    "edge_detection_v1": {
-      "accuracy": 0.5396825671195984,
-      "num_samples": 630,
-      "num_classes": 3,
-      "top_features": [
-        35,
-        17,
-        1,
         3,
-        34
+        24,
+        9
       ],
       "consistently_important": []
     }
