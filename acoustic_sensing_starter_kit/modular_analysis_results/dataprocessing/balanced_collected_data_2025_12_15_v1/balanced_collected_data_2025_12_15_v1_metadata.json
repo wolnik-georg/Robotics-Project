@@ -1,0 +1,1067 @@
+{
+  "batch_name": "balanced_collected_data_2025_12_15_v1",
+  "total_samples": 150,
+  "contact_positions": [
+    "contact",
+    "edge",
+    "no_contact"
+  ],
+  "samples_per_position": {
+    "contact": "50",
+    "edge": "50",
+    "no_contact": "50"
+  },
+  "sample_rate": 48000,
+  "file_info": [
+    {
+      "filename": "17_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "17",
+      "duration": 1.15
+    },
+    {
+      "filename": "6_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "6",
+      "duration": 1.15
+    },
+    {
+      "filename": "143_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "143",
+      "duration": 1.15
+    },
+    {
+      "filename": "110_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "110",
+      "duration": 1.15
+    },
+    {
+      "filename": "85_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "85",
+      "duration": 1.15
+    },
+    {
+      "filename": "44_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "44",
+      "duration": 1.15
+    },
+    {
+      "filename": "9_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "9",
+      "duration": 1.15
+    },
+    {
+      "filename": "69_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "69",
+      "duration": 1.15
+    },
+    {
+      "filename": "25_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "25",
+      "duration": 1.15
+    },
+    {
+      "filename": "97_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "97",
+      "duration": 1.15
+    },
+    {
+      "filename": "40_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "40",
+      "duration": 1.15
+    },
+    {
+      "filename": "170_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "170",
+      "duration": 1.15
+    },
+    {
+      "filename": "34_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "34",
+      "duration": 1.15
+    },
+    {
+      "filename": "48_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "48",
+      "duration": 1.15
+    },
+    {
+      "filename": "177_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "177",
+      "duration": 1.15
+    },
+    {
+      "filename": "120_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "120",
+      "duration": 1.15
+    },
+    {
+      "filename": "57_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "57",
+      "duration": 1.15
+    },
+    {
+      "filename": "91_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "91",
+      "duration": 1.15
+    },
+    {
+      "filename": "175_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "175",
+      "duration": 1.15
+    },
+    {
+      "filename": "101_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "101",
+      "duration": 1.15
+    },
+    {
+      "filename": "99_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "99",
+      "duration": 1.15
+    },
+    {
+      "filename": "18_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "18",
+      "duration": 1.15
+    },
+    {
+      "filename": "164_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "164",
+      "duration": 1.15
+    },
+    {
+      "filename": "13_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "13",
+      "duration": 1.15
+    },
+    {
+      "filename": "5_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "5",
+      "duration": 1.15
+    },
+    {
+      "filename": "98_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "98",
+      "duration": 1.15
+    },
+    {
+      "filename": "141_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "141",
+      "duration": 1.15
+    },
+    {
+      "filename": "72_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "72",
+      "duration": 1.15
+    },
+    {
+      "filename": "132_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "132",
+      "duration": 1.15
+    },
+    {
+      "filename": "123_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "123",
+      "duration": 1.15
+    },
+    {
+      "filename": "147_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "147",
+      "duration": 1.15
+    },
+    {
+      "filename": "166_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "166",
+      "duration": 1.15
+    },
+    {
+      "filename": "20_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "20",
+      "duration": 1.15
+    },
+    {
+      "filename": "131_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "131",
+      "duration": 1.15
+    },
+    {
+      "filename": "142_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "142",
+      "duration": 1.15
+    },
+    {
+      "filename": "65_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "65",
+      "duration": 1.15
+    },
+    {
+      "filename": "76_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "76",
+      "duration": 1.15
+    },
+    {
+      "filename": "133_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "133",
+      "duration": 1.15
+    },
+    {
+      "filename": "26_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "26",
+      "duration": 1.15
+    },
+    {
+      "filename": "151_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "151",
+      "duration": 1.15
+    },
+    {
+      "filename": "117_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "117",
+      "duration": 1.15
+    },
+    {
+      "filename": "42_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "42",
+      "duration": 1.15
+    },
+    {
+      "filename": "136_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "136",
+      "duration": 1.15
+    },
+    {
+      "filename": "3_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "3",
+      "duration": 1.15
+    },
+    {
+      "filename": "167_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "167",
+      "duration": 1.15
+    },
+    {
+      "filename": "137_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "137",
+      "duration": 1.15
+    },
+    {
+      "filename": "87_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "87",
+      "duration": 1.15
+    },
+    {
+      "filename": "169_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "169",
+      "duration": 1.15
+    },
+    {
+      "filename": "7_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "7",
+      "duration": 1.15
+    },
+    {
+      "filename": "2_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "contact",
+      "sample_number": "2",
+      "duration": 1.15
+    },
+    {
+      "filename": "307_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "307",
+      "duration": 1.15
+    },
+    {
+      "filename": "379_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "379",
+      "duration": 1.15
+    },
+    {
+      "filename": "534_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "534",
+      "duration": 1.15
+    },
+    {
+      "filename": "41_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "41",
+      "duration": 1.15
+    },
+    {
+      "filename": "197_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "197",
+      "duration": 1.15
+    },
+    {
+      "filename": "244_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "244",
+      "duration": 1.15
+    },
+    {
+      "filename": "302_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "302",
+      "duration": 1.15
+    },
+    {
+      "filename": "580_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "580",
+      "duration": 1.15
+    },
+    {
+      "filename": "258_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "258",
+      "duration": 1.15
+    },
+    {
+      "filename": "310_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "310",
+      "duration": 1.15
+    },
+    {
+      "filename": "318_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "318",
+      "duration": 1.15
+    },
+    {
+      "filename": "221_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "221",
+      "duration": 1.15
+    },
+    {
+      "filename": "164_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "164",
+      "duration": 1.15
+    },
+    {
+      "filename": "225_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "225",
+      "duration": 1.15
+    },
+    {
+      "filename": "231_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "231",
+      "duration": 1.15
+    },
+    {
+      "filename": "75_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "75",
+      "duration": 1.15
+    },
+    {
+      "filename": "537_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "537",
+      "duration": 1.15
+    },
+    {
+      "filename": "447_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "447",
+      "duration": 1.15
+    },
+    {
+      "filename": "235_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "235",
+      "duration": 1.15
+    },
+    {
+      "filename": "68_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "68",
+      "duration": 1.15
+    },
+    {
+      "filename": "233_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "233",
+      "duration": 1.15
+    },
+    {
+      "filename": "457_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "457",
+      "duration": 1.15
+    },
+    {
+      "filename": "169_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "169",
+      "duration": 1.15
+    },
+    {
+      "filename": "592_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "592",
+      "duration": 1.15
+    },
+    {
+      "filename": "554_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "554",
+      "duration": 1.15
+    },
+    {
+      "filename": "263_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "263",
+      "duration": 1.15
+    },
+    {
+      "filename": "101_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "101",
+      "duration": 1.15
+    },
+    {
+      "filename": "95_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "95",
+      "duration": 1.15
+    },
+    {
+      "filename": "494_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "494",
+      "duration": 1.15
+    },
+    {
+      "filename": "599_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "599",
+      "duration": 1.15
+    },
+    {
+      "filename": "567_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "567",
+      "duration": 1.15
+    },
+    {
+      "filename": "88_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "88",
+      "duration": 1.15
+    },
+    {
+      "filename": "267_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "267",
+      "duration": 1.15
+    },
+    {
+      "filename": "299_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "299",
+      "duration": 1.15
+    },
+    {
+      "filename": "26_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "26",
+      "duration": 1.15
+    },
+    {
+      "filename": "452_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "452",
+      "duration": 1.15
+    },
+    {
+      "filename": "414_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "414",
+      "duration": 1.15
+    },
+    {
+      "filename": "274_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "274",
+      "duration": 1.15
+    },
+    {
+      "filename": "219_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "219",
+      "duration": 1.15
+    },
+    {
+      "filename": "586_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "586",
+      "duration": 1.15
+    },
+    {
+      "filename": "19_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "19",
+      "duration": 1.15
+    },
+    {
+      "filename": "13_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "13",
+      "duration": 1.15
+    },
+    {
+      "filename": "35_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "35",
+      "duration": 1.15
+    },
+    {
+      "filename": "377_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "377",
+      "duration": 1.15
+    },
+    {
+      "filename": "57_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "57",
+      "duration": 1.15
+    },
+    {
+      "filename": "509_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "509",
+      "duration": 1.15
+    },
+    {
+      "filename": "381_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "381",
+      "duration": 1.15
+    },
+    {
+      "filename": "432_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "432",
+      "duration": 1.15
+    },
+    {
+      "filename": "30_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "30",
+      "duration": 1.15
+    },
+    {
+      "filename": "249_edge.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "edge",
+      "sample_number": "249",
+      "duration": 1.15
+    },
+    {
+      "filename": "32_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "32",
+      "duration": 1.15
+    },
+    {
+      "filename": "14_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "14",
+      "duration": 1.15
+    },
+    {
+      "filename": "5_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "5",
+      "duration": 1.15
+    },
+    {
+      "filename": "12_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "12",
+      "duration": 1.15
+    },
+    {
+      "filename": "22_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "22",
+      "duration": 1.15
+    },
+    {
+      "filename": "49_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "49",
+      "duration": 1.15
+    },
+    {
+      "filename": "17_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "17",
+      "duration": 1.15
+    },
+    {
+      "filename": "47_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "47",
+      "duration": 1.15
+    },
+    {
+      "filename": "10_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "10",
+      "duration": 1.15
+    },
+    {
+      "filename": "6_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "6",
+      "duration": 1.15
+    },
+    {
+      "filename": "37_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "37",
+      "duration": 1.15
+    },
+    {
+      "filename": "16_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "16",
+      "duration": 1.15
+    },
+    {
+      "filename": "42_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "42",
+      "duration": 1.15
+    },
+    {
+      "filename": "35_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "35",
+      "duration": 1.15
+    },
+    {
+      "filename": "20_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "20",
+      "duration": 1.15
+    },
+    {
+      "filename": "40_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "40",
+      "duration": 1.15
+    },
+    {
+      "filename": "8_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "8",
+      "duration": 1.15
+    },
+    {
+      "filename": "19_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "19",
+      "duration": 1.15
+    },
+    {
+      "filename": "33_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "33",
+      "duration": 1.15
+    },
+    {
+      "filename": "25_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "25",
+      "duration": 1.15
+    },
+    {
+      "filename": "13_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "13",
+      "duration": 1.15
+    },
+    {
+      "filename": "41_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "41",
+      "duration": 1.15
+    },
+    {
+      "filename": "29_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "29",
+      "duration": 1.15
+    },
+    {
+      "filename": "45_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "45",
+      "duration": 1.15
+    },
+    {
+      "filename": "44_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "44",
+      "duration": 1.15
+    },
+    {
+      "filename": "4_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "4",
+      "duration": 1.15
+    },
+    {
+      "filename": "11_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "11",
+      "duration": 1.15
+    },
+    {
+      "filename": "31_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "31",
+      "duration": 1.15
+    },
+    {
+      "filename": "46_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "46",
+      "duration": 1.15
+    },
+    {
+      "filename": "1_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "1",
+      "duration": 1.15
+    },
+    {
+      "filename": "26_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "26",
+      "duration": 1.15
+    },
+    {
+      "filename": "18_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "18",
+      "duration": 1.15
+    },
+    {
+      "filename": "30_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "30",
+      "duration": 1.15
+    },
+    {
+      "filename": "24_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "24",
+      "duration": 1.15
+    },
+    {
+      "filename": "43_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "43",
+      "duration": 1.15
+    },
+    {
+      "filename": "2_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "2",
+      "duration": 1.15
+    },
+    {
+      "filename": "38_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "38",
+      "duration": 1.15
+    },
+    {
+      "filename": "48_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "48",
+      "duration": 1.15
+    },
+    {
+      "filename": "15_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "15",
+      "duration": 1.15
+    },
+    {
+      "filename": "9_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "9",
+      "duration": 1.15
+    },
+    {
+      "filename": "34_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "34",
+      "duration": 1.15
+    },
+    {
+      "filename": "27_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "27",
+      "duration": 1.15
+    },
+    {
+      "filename": "3_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "3",
+      "duration": 1.15
+    },
+    {
+      "filename": "39_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "39",
+      "duration": 1.15
+    },
+    {
+      "filename": "28_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "28",
+      "duration": 1.15
+    },
+    {
+      "filename": "23_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "23",
+      "duration": 1.15
+    },
+    {
+      "filename": "7_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "7",
+      "duration": 1.15
+    },
+    {
+      "filename": "50_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "50",
+      "duration": 1.15
+    },
+    {
+      "filename": "21_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "21",
+      "duration": 1.15
+    },
+    {
+      "filename": "36_no_contact.wav",
+      "batch": "balanced_collected_data_2025_12_15_v1",
+      "position": "no_contact",
+      "sample_number": "36",
+      "duration": 1.15
+    }
+  ]
+}

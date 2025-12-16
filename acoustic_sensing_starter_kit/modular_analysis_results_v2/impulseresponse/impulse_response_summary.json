@@ -1,0 +1,28 @@
+{
+  "num_batches_processed": 1,
+  "total_impulse_responses": 5,
+  "materials_found": [
+    "unknown"
+  ],
+  "num_unique_materials": 1,
+  "spectral_centroid_range": {
+    "min": 0.03812194020201998,
+    "max": 0.04194592346615737,
+    "mean": 0.040084867675856964
+  },
+  "spectral_rolloff_range": {
+    "min": 0.06640625,
+    "max": 0.06640625,
+    "mean": 0.06640625
+  },
+  "resonant_frequency_range": {
+    "min": 172.265625,
+    "max": 22006.93359375,
+    "mean": 11180.66100242677
+  },
+  "quality_factor_range": {
+    "min": 1.142857142857143,
+    "max": 511.0,
+    "mean": 216.60749105727228
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "best_overall": {
+    "accuracy": 0.8411111111111111,
+    "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+    "classifier": "Linear Discriminant Analysis"
+  },
+  "per_batch_performance": {
+    "collected_data_runs_validate_2025_12_16_v2_simple": {
+      "best_classifier": {
+        "name": "Linear Discriminant Analysis",
+        "accuracy": 0.8411111111111111
+      },
+      "cv_performance": {
+        "Random Forest": {
+          "mean_accuracy": 0.8277777777777777,
+          "std_accuracy": 0.020184335693983292
+        },
+        "SVM (RBF)": {
+          "mean_accuracy": 0.8099999999999999,
+          "std_accuracy": 0.025676044462869627
+        },
+        "SVM (Linear)": {
+          "mean_accuracy": 0.8344444444444445,
+          "std_accuracy": 0.026851213274654593
+        },
+        "K-NN": {
+          "mean_accuracy": 0.7355555555555556,
+          "std_accuracy": 0.020367003088692603
+        },
+        "Logistic Regression": {
+          "mean_accuracy": 0.8333333333333333,
+          "std_accuracy": 0.021372648957412616
+        },
+        "Gradient Boosting": {
+          "mean_accuracy": 0.8222222222222222,
+          "std_accuracy": 0.02304049039258635
+        },
+        "Extra Trees": {
+          "mean_accuracy": 0.8255555555555556,
+          "std_accuracy": 0.014740554623801765
+        },
+        "AdaBoost": {
+          "mean_accuracy": 0.7177777777777778,
+          "std_accuracy": 0.0572410972106278
+        },
+        "XGBoost": {
+          "mean_accuracy": 0.8300000000000001,
+          "std_accuracy": 0.01474055462380177
+        },
+        "Naive Bayes": {
+          "mean_accuracy": 0.7088888888888889,
+          "std_accuracy": 0.054727157137887776
+        },
+        "Quadratic Discriminant Analysis": {
+          "mean_accuracy": 0.7811111111111112,
+          "std_accuracy": 0.04760952285695232
+        },
+        "Linear Discriminant Analysis": {
+          "mean_accuracy": 0.8411111111111111,
+          "std_accuracy": 0.019116278371205834
+        },
+        "Ensemble (RF + SVM)": {
+          "mean_accuracy": 0.8111111111111111,
+          "std_accuracy": 0.02408831487630976
+        }
+      },
+      "num_classifiers_tested": 13
+    }
+  },
+  "total_batches": 1,
+  "cross_batch_results": {}
+}

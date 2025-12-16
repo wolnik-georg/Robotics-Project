@@ -1,0 +1,6317 @@
+{
+  "batch_name": "collected_data_runs_validate_2025_12_16_v2_simple",
+  "total_samples": 900,
+  "contact_positions": [
+    "contact",
+    "edge",
+    "no_contact"
+  ],
+  "samples_per_position": {
+    "contact": "300",
+    "edge": "300",
+    "no_contact": "300"
+  },
+  "sample_rate": 48000,
+  "file_info": [
+    {
+      "filename": "423_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "423",
+      "duration": 1.15
+    },
+    {
+      "filename": "465_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "465",
+      "duration": 1.15
+    },
+    {
+      "filename": "469_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "469",
+      "duration": 1.15
+    },
+    {
+      "filename": "460_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "460",
+      "duration": 1.15
+    },
+    {
+      "filename": "333_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "333",
+      "duration": 1.15
+    },
+    {
+      "filename": "318_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "318",
+      "duration": 1.15
+    },
+    {
+      "filename": "439_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "439",
+      "duration": 1.15
+    },
+    {
+      "filename": "337_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "337",
+      "duration": 1.15
+    },
+    {
+      "filename": "491_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "491",
+      "duration": 1.15
+    },
+    {
+      "filename": "407_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "407",
+      "duration": 1.15
+    },
+    {
+      "filename": "303_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "303",
+      "duration": 1.15
+    },
+    {
+      "filename": "573_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "573",
+      "duration": 1.15
+    },
+    {
+      "filename": "358_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "358",
+      "duration": 1.15
+    },
+    {
+      "filename": "489_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "489",
+      "duration": 1.15
+    },
+    {
+      "filename": "579_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "579",
+      "duration": 1.15
+    },
+    {
+      "filename": "518_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "518",
+      "duration": 1.15
+    },
+    {
+      "filename": "478_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "478",
+      "duration": 1.15
+    },
+    {
+      "filename": "398_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "398",
+      "duration": 1.15
+    },
+    {
+      "filename": "488_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "488",
+      "duration": 1.15
+    },
+    {
+      "filename": "511_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "511",
+      "duration": 1.15
+    },
+    {
+      "filename": "471_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "471",
+      "duration": 1.15
+    },
+    {
+      "filename": "509_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "509",
+      "duration": 1.15
+    },
+    {
+      "filename": "365_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "365",
+      "duration": 1.15
+    },
+    {
+      "filename": "485_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "485",
+      "duration": 1.15
+    },
+    {
+      "filename": "481_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "481",
+      "duration": 1.15
+    },
+    {
+      "filename": "536_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "536",
+      "duration": 1.15
+    },
+    {
+      "filename": "326_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "326",
+      "duration": 1.15
+    },
+    {
+      "filename": "330_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "330",
+      "duration": 1.15
+    },
+    {
+      "filename": "320_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "320",
+      "duration": 1.15
+    },
+    {
+      "filename": "529_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "529",
+      "duration": 1.15
+    },
+    {
+      "filename": "468_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "468",
+      "duration": 1.15
+    },
+    {
+      "filename": "594_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "594",
+      "duration": 1.15
+    },
+    {
+      "filename": "336_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "336",
+      "duration": 1.15
+    },
+    {
+      "filename": "581_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "581",
+      "duration": 1.15
+    },
+    {
+      "filename": "378_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "378",
+      "duration": 1.15
+    },
+    {
+      "filename": "497_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "497",
+      "duration": 1.15
+    },
+    {
+      "filename": "345_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "345",
+      "duration": 1.15
+    },
+    {
+      "filename": "447_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "447",
+      "duration": 1.15
+    },
+    {
+      "filename": "551_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "551",
+      "duration": 1.15
+    },
+    {
+      "filename": "445_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "445",
+      "duration": 1.15
+    },
+    {
+      "filename": "492_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "492",
+      "duration": 1.15
+    },
+    {
+      "filename": "346_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "346",
+      "duration": 1.15
+    },
+    {
+      "filename": "597_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "597",
+      "duration": 1.15
+    },
+    {
+      "filename": "561_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "561",
+      "duration": 1.15
+    },
+    {
+      "filename": "457_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "457",
+      "duration": 1.15
+    },
+    {
+      "filename": "531_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "531",
+      "duration": 1.15
+    },
+    {
+      "filename": "404_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "404",
+      "duration": 1.15
+    },
+    {
+      "filename": "323_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "323",
+      "duration": 1.15
+    },
+    {
+      "filename": "499_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "499",
+      "duration": 1.15
+    },
+    {
+      "filename": "322_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "322",
+      "duration": 1.15
+    },
+    {
+      "filename": "523_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "523",
+      "duration": 1.15
+    },
+    {
+      "filename": "428_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "428",
+      "duration": 1.15
+    },
+    {
+      "filename": "335_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "335",
+      "duration": 1.15
+    },
+    {
+      "filename": "452_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "452",
+      "duration": 1.15
+    },
+    {
+      "filename": "524_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "524",
+      "duration": 1.15
+    },
+    {
+      "filename": "547_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "547",
+      "duration": 1.15
+    },
+    {
+      "filename": "590_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "590",
+      "duration": 1.15
+    },
+    {
+      "filename": "490_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "490",
+      "duration": 1.15
+    },
+    {
+      "filename": "315_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "315",
+      "duration": 1.15
+    },
+    {
+      "filename": "366_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "366",
+      "duration": 1.15
+    },
+    {
+      "filename": "354_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "354",
+      "duration": 1.15
+    },
+    {
+      "filename": "364_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "364",
+      "duration": 1.15
+    },
+    {
+      "filename": "525_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "525",
+      "duration": 1.15
+    },
+    {
+      "filename": "599_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "599",
+      "duration": 1.15
+    },
+    {
+      "filename": "557_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "557",
+      "duration": 1.15
+    },
+    {
+      "filename": "438_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "438",
+      "duration": 1.15
+    },
+    {
+      "filename": "379_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "379",
+      "duration": 1.15
+    },
+    {
+      "filename": "418_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "418",
+      "duration": 1.15
+    },
+    {
+      "filename": "520_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "520",
+      "duration": 1.15
+    },
+    {
+      "filename": "592_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "592",
+      "duration": 1.15
+    },
+    {
+      "filename": "306_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "306",
+      "duration": 1.15
+    },
+    {
+      "filename": "362_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "362",
+      "duration": 1.15
+    },
+    {
+      "filename": "371_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "371",
+      "duration": 1.15
+    },
+    {
+      "filename": "421_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "421",
+      "duration": 1.15
+    },
+    {
+      "filename": "386_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "386",
+      "duration": 1.15
+    },
+    {
+      "filename": "339_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "339",
+      "duration": 1.15
+    },
+    {
+      "filename": "560_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "560",
+      "duration": 1.15
+    },
+    {
+      "filename": "435_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "435",
+      "duration": 1.15
+    },
+    {
+      "filename": "374_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "374",
+      "duration": 1.15
+    },
+    {
+      "filename": "537_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "537",
+      "duration": 1.15
+    },
+    {
+      "filename": "427_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "427",
+      "duration": 1.15
+    },
+    {
+      "filename": "351_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "351",
+      "duration": 1.15
+    },
+    {
+      "filename": "316_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "316",
+      "duration": 1.15
+    },
+    {
+      "filename": "419_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "419",
+      "duration": 1.15
+    },
+    {
+      "filename": "449_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "449",
+      "duration": 1.15
+    },
+    {
+      "filename": "459_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "459",
+      "duration": 1.15
+    },
+    {
+      "filename": "587_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "587",
+      "duration": 1.15
+    },
+    {
+      "filename": "412_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "412",
+      "duration": 1.15
+    },
+    {
+      "filename": "501_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "501",
+      "duration": 1.15
+    },
+    {
+      "filename": "495_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "495",
+      "duration": 1.15
+    },
+    {
+      "filename": "462_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "462",
+      "duration": 1.15
+    },
+    {
+      "filename": "314_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "314",
+      "duration": 1.15
+    },
+    {
+      "filename": "352_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "352",
+      "duration": 1.15
+    },
+    {
+      "filename": "340_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "340",
+      "duration": 1.15
+    },
+    {
+      "filename": "368_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "368",
+      "duration": 1.15
+    },
+    {
+      "filename": "397_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "397",
+      "duration": 1.15
+    },
+    {
+      "filename": "377_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "377",
+      "duration": 1.15
+    },
+    {
+      "filename": "500_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "500",
+      "duration": 1.15
+    },
+    {
+      "filename": "344_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "344",
+      "duration": 1.15
+    },
+    {
+      "filename": "331_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "331",
+      "duration": 1.15
+    },
+    {
+      "filename": "542_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "542",
+      "duration": 1.15
+    },
+    {
+      "filename": "598_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "598",
+      "duration": 1.15
+    },
+    {
+      "filename": "311_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "311",
+      "duration": 1.15
+    },
+    {
+      "filename": "389_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "389",
+      "duration": 1.15
+    },
+    {
+      "filename": "516_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "516",
+      "duration": 1.15
+    },
+    {
+      "filename": "583_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "583",
+      "duration": 1.15
+    },
+    {
+      "filename": "325_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "325",
+      "duration": 1.15
+    },
+    {
+      "filename": "356_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "356",
+      "duration": 1.15
+    },
+    {
+      "filename": "539_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "539",
+      "duration": 1.15
+    },
+    {
+      "filename": "482_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "482",
+      "duration": 1.15
+    },
+    {
+      "filename": "442_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "442",
+      "duration": 1.15
+    },
+    {
+      "filename": "376_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "376",
+      "duration": 1.15
+    },
+    {
+      "filename": "424_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "424",
+      "duration": 1.15
+    },
+    {
+      "filename": "519_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "519",
+      "duration": 1.15
+    },
+    {
+      "filename": "381_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "381",
+      "duration": 1.15
+    },
+    {
+      "filename": "380_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "380",
+      "duration": 1.15
+    },
+    {
+      "filename": "517_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "517",
+      "duration": 1.15
+    },
+    {
+      "filename": "600_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "600",
+      "duration": 1.15
+    },
+    {
+      "filename": "433_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "433",
+      "duration": 1.15
+    },
+    {
+      "filename": "534_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "534",
+      "duration": 1.15
+    },
+    {
+      "filename": "552_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "552",
+      "duration": 1.15
+    },
+    {
+      "filename": "334_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "334",
+      "duration": 1.15
+    },
+    {
+      "filename": "530_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "530",
+      "duration": 1.15
+    },
+    {
+      "filename": "477_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "477",
+      "duration": 1.15
+    },
+    {
+      "filename": "567_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "567",
+      "duration": 1.15
+    },
+    {
+      "filename": "580_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "580",
+      "duration": 1.15
+    },
+    {
+      "filename": "450_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "450",
+      "duration": 1.15
+    },
+    {
+      "filename": "570_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "570",
+      "duration": 1.15
+    },
+    {
+      "filename": "564_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "564",
+      "duration": 1.15
+    },
+    {
+      "filename": "319_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "319",
+      "duration": 1.15
+    },
+    {
+      "filename": "434_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "434",
+      "duration": 1.15
+    },
+    {
+      "filename": "328_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "328",
+      "duration": 1.15
+    },
+    {
+      "filename": "312_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "312",
+      "duration": 1.15
+    },
+    {
+      "filename": "572_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "572",
+      "duration": 1.15
+    },
+    {
+      "filename": "507_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "507",
+      "duration": 1.15
+    },
+    {
+      "filename": "353_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "353",
+      "duration": 1.15
+    },
+    {
+      "filename": "577_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "577",
+      "duration": 1.15
+    },
+    {
+      "filename": "521_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "521",
+      "duration": 1.15
+    },
+    {
+      "filename": "474_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "474",
+      "duration": 1.15
+    },
+    {
+      "filename": "496_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "496",
+      "duration": 1.15
+    },
+    {
+      "filename": "475_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "475",
+      "duration": 1.15
+    },
+    {
+      "filename": "327_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "327",
+      "duration": 1.15
+    },
+    {
+      "filename": "308_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "308",
+      "duration": 1.15
+    },
+    {
+      "filename": "528_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "528",
+      "duration": 1.15
+    },
+    {
+      "filename": "589_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "589",
+      "duration": 1.15
+    },
+    {
+      "filename": "595_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "595",
+      "duration": 1.15
+    },
+    {
+      "filename": "385_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "385",
+      "duration": 1.15
+    },
+    {
+      "filename": "413_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "413",
+      "duration": 1.15
+    },
+    {
+      "filename": "575_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "575",
+      "duration": 1.15
+    },
+    {
+      "filename": "309_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "309",
+      "duration": 1.15
+    },
+    {
+      "filename": "383_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "383",
+      "duration": 1.15
+    },
+    {
+      "filename": "562_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "562",
+      "duration": 1.15
+    },
+    {
+      "filename": "593_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "593",
+      "duration": 1.15
+    },
+    {
+      "filename": "498_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "498",
+      "duration": 1.15
+    },
+    {
+      "filename": "444_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "444",
+      "duration": 1.15
+    },
+    {
+      "filename": "343_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "343",
+      "duration": 1.15
+    },
+    {
+      "filename": "538_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "538",
+      "duration": 1.15
+    },
+    {
+      "filename": "310_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "310",
+      "duration": 1.15
+    },
+    {
+      "filename": "384_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "384",
+      "duration": 1.15
+    },
+    {
+      "filename": "324_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "324",
+      "duration": 1.15
+    },
+    {
+      "filename": "425_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "425",
+      "duration": 1.15
+    },
+    {
+      "filename": "494_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "494",
+      "duration": 1.15
+    },
+    {
+      "filename": "473_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "473",
+      "duration": 1.15
+    },
+    {
+      "filename": "440_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "440",
+      "duration": 1.15
+    },
+    {
+      "filename": "369_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "369",
+      "duration": 1.15
+    },
+    {
+      "filename": "569_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "569",
+      "duration": 1.15
+    },
+    {
+      "filename": "387_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "387",
+      "duration": 1.15
+    },
+    {
+      "filename": "441_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "441",
+      "duration": 1.15
+    },
+    {
+      "filename": "549_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "549",
+      "duration": 1.15
+    },
+    {
+      "filename": "410_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "410",
+      "duration": 1.15
+    },
+    {
+      "filename": "393_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "393",
+      "duration": 1.15
+    },
+    {
+      "filename": "522_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "522",
+      "duration": 1.15
+    },
+    {
+      "filename": "350_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "350",
+      "duration": 1.15
+    },
+    {
+      "filename": "342_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "342",
+      "duration": 1.15
+    },
+    {
+      "filename": "446_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "446",
+      "duration": 1.15
+    },
+    {
+      "filename": "396_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "396",
+      "duration": 1.15
+    },
+    {
+      "filename": "437_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "437",
+      "duration": 1.15
+    },
+    {
+      "filename": "476_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "476",
+      "duration": 1.15
+    },
+    {
+      "filename": "394_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "394",
+      "duration": 1.15
+    },
+    {
+      "filename": "414_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "414",
+      "duration": 1.15
+    },
+    {
+      "filename": "510_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "510",
+      "duration": 1.15
+    },
+    {
+      "filename": "420_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "420",
+      "duration": 1.15
+    },
+    {
+      "filename": "558_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "558",
+      "duration": 1.15
+    },
+    {
+      "filename": "301_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "301",
+      "duration": 1.15
+    },
+    {
+      "filename": "487_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "487",
+      "duration": 1.15
+    },
+    {
+      "filename": "321_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "321",
+      "duration": 1.15
+    },
+    {
+      "filename": "582_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "582",
+      "duration": 1.15
+    },
+    {
+      "filename": "484_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "484",
+      "duration": 1.15
+    },
+    {
+      "filename": "546_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "546",
+      "duration": 1.15
+    },
+    {
+      "filename": "430_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "430",
+      "duration": 1.15
+    },
+    {
+      "filename": "541_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "541",
+      "duration": 1.15
+    },
+    {
+      "filename": "527_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "527",
+      "duration": 1.15
+    },
+    {
+      "filename": "461_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "461",
+      "duration": 1.15
+    },
+    {
+      "filename": "443_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "443",
+      "duration": 1.15
+    },
+    {
+      "filename": "392_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "392",
+      "duration": 1.15
+    },
+    {
+      "filename": "513_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "513",
+      "duration": 1.15
+    },
+    {
+      "filename": "483_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "483",
+      "duration": 1.15
+    },
+    {
+      "filename": "571_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "571",
+      "duration": 1.15
+    },
+    {
+      "filename": "304_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "304",
+      "duration": 1.15
+    },
+    {
+      "filename": "388_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "388",
+      "duration": 1.15
+    },
+    {
+      "filename": "406_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "406",
+      "duration": 1.15
+    },
+    {
+      "filename": "359_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "359",
+      "duration": 1.15
+    },
+    {
+      "filename": "544_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "544",
+      "duration": 1.15
+    },
+    {
+      "filename": "493_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "493",
+      "duration": 1.15
+    },
+    {
+      "filename": "341_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "341",
+      "duration": 1.15
+    },
+    {
+      "filename": "503_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "503",
+      "duration": 1.15
+    },
+    {
+      "filename": "436_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "436",
+      "duration": 1.15
+    },
+    {
+      "filename": "480_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "480",
+      "duration": 1.15
+    },
+    {
+      "filename": "455_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "455",
+      "duration": 1.15
+    },
+    {
+      "filename": "576_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "576",
+      "duration": 1.15
+    },
+    {
+      "filename": "591_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "591",
+      "duration": 1.15
+    },
+    {
+      "filename": "402_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "402",
+      "duration": 1.15
+    },
+    {
+      "filename": "563_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "563",
+      "duration": 1.15
+    },
+    {
+      "filename": "568_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "568",
+      "duration": 1.15
+    },
+    {
+      "filename": "545_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "545",
+      "duration": 1.15
+    },
+    {
+      "filename": "360_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "360",
+      "duration": 1.15
+    },
+    {
+      "filename": "479_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "479",
+      "duration": 1.15
+    },
+    {
+      "filename": "375_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "375",
+      "duration": 1.15
+    },
+    {
+      "filename": "305_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "305",
+      "duration": 1.15
+    },
+    {
+      "filename": "370_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "370",
+      "duration": 1.15
+    },
+    {
+      "filename": "506_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "506",
+      "duration": 1.15
+    },
+    {
+      "filename": "566_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "566",
+      "duration": 1.15
+    },
+    {
+      "filename": "555_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "555",
+      "duration": 1.15
+    },
+    {
+      "filename": "548_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "548",
+      "duration": 1.15
+    },
+    {
+      "filename": "454_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "454",
+      "duration": 1.15
+    },
+    {
+      "filename": "550_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "550",
+      "duration": 1.15
+    },
+    {
+      "filename": "451_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "451",
+      "duration": 1.15
+    },
+    {
+      "filename": "400_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "400",
+      "duration": 1.15
+    },
+    {
+      "filename": "405_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "405",
+      "duration": 1.15
+    },
+    {
+      "filename": "574_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "574",
+      "duration": 1.15
+    },
+    {
+      "filename": "540_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "540",
+      "duration": 1.15
+    },
+    {
+      "filename": "472_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "472",
+      "duration": 1.15
+    },
+    {
+      "filename": "543_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "543",
+      "duration": 1.15
+    },
+    {
+      "filename": "363_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "363",
+      "duration": 1.15
+    },
+    {
+      "filename": "332_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "332",
+      "duration": 1.15
+    },
+    {
+      "filename": "416_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "416",
+      "duration": 1.15
+    },
+    {
+      "filename": "372_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "372",
+      "duration": 1.15
+    },
+    {
+      "filename": "313_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "313",
+      "duration": 1.15
+    },
+    {
+      "filename": "463_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "463",
+      "duration": 1.15
+    },
+    {
+      "filename": "349_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "349",
+      "duration": 1.15
+    },
+    {
+      "filename": "556_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "556",
+      "duration": 1.15
+    },
+    {
+      "filename": "453_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "453",
+      "duration": 1.15
+    },
+    {
+      "filename": "467_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "467",
+      "duration": 1.15
+    },
+    {
+      "filename": "508_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "508",
+      "duration": 1.15
+    },
+    {
+      "filename": "526_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "526",
+      "duration": 1.15
+    },
+    {
+      "filename": "395_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "395",
+      "duration": 1.15
+    },
+    {
+      "filename": "533_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "533",
+      "duration": 1.15
+    },
+    {
+      "filename": "554_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "554",
+      "duration": 1.15
+    },
+    {
+      "filename": "535_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "535",
+      "duration": 1.15
+    },
+    {
+      "filename": "415_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "415",
+      "duration": 1.15
+    },
+    {
+      "filename": "347_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "347",
+      "duration": 1.15
+    },
+    {
+      "filename": "466_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "466",
+      "duration": 1.15
+    },
+    {
+      "filename": "357_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "357",
+      "duration": 1.15
+    },
+    {
+      "filename": "584_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "584",
+      "duration": 1.15
+    },
+    {
+      "filename": "432_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "432",
+      "duration": 1.15
+    },
+    {
+      "filename": "585_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "585",
+      "duration": 1.15
+    },
+    {
+      "filename": "458_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "458",
+      "duration": 1.15
+    },
+    {
+      "filename": "515_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "515",
+      "duration": 1.15
+    },
+    {
+      "filename": "448_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "448",
+      "duration": 1.15
+    },
+    {
+      "filename": "504_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "504",
+      "duration": 1.15
+    },
+    {
+      "filename": "355_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "355",
+      "duration": 1.15
+    },
+    {
+      "filename": "307_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "307",
+      "duration": 1.15
+    },
+    {
+      "filename": "403_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "403",
+      "duration": 1.15
+    },
+    {
+      "filename": "559_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "559",
+      "duration": 1.15
+    },
+    {
+      "filename": "514_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "514",
+      "duration": 1.15
+    },
+    {
+      "filename": "348_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "348",
+      "duration": 1.15
+    },
+    {
+      "filename": "464_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "464",
+      "duration": 1.15
+    },
+    {
+      "filename": "588_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "588",
+      "duration": 1.15
+    },
+    {
+      "filename": "596_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "596",
+      "duration": 1.15
+    },
+    {
+      "filename": "431_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "431",
+      "duration": 1.15
+    },
+    {
+      "filename": "390_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "390",
+      "duration": 1.15
+    },
+    {
+      "filename": "426_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "426",
+      "duration": 1.15
+    },
+    {
+      "filename": "565_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "565",
+      "duration": 1.15
+    },
+    {
+      "filename": "553_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "553",
+      "duration": 1.15
+    },
+    {
+      "filename": "486_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "486",
+      "duration": 1.15
+    },
+    {
+      "filename": "401_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "401",
+      "duration": 1.15
+    },
+    {
+      "filename": "408_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "408",
+      "duration": 1.15
+    },
+    {
+      "filename": "505_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "505",
+      "duration": 1.15
+    },
+    {
+      "filename": "329_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "329",
+      "duration": 1.15
+    },
+    {
+      "filename": "367_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "367",
+      "duration": 1.15
+    },
+    {
+      "filename": "391_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "391",
+      "duration": 1.15
+    },
+    {
+      "filename": "470_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "470",
+      "duration": 1.15
+    },
+    {
+      "filename": "338_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "338",
+      "duration": 1.15
+    },
+    {
+      "filename": "578_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "578",
+      "duration": 1.15
+    },
+    {
+      "filename": "512_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "512",
+      "duration": 1.15
+    },
+    {
+      "filename": "373_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "373",
+      "duration": 1.15
+    },
+    {
+      "filename": "456_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "456",
+      "duration": 1.15
+    },
+    {
+      "filename": "429_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "429",
+      "duration": 1.15
+    },
+    {
+      "filename": "302_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "302",
+      "duration": 1.15
+    },
+    {
+      "filename": "417_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "417",
+      "duration": 1.15
+    },
+    {
+      "filename": "411_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "411",
+      "duration": 1.15
+    },
+    {
+      "filename": "409_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "409",
+      "duration": 1.15
+    },
+    {
+      "filename": "317_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "317",
+      "duration": 1.15
+    },
+    {
+      "filename": "399_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "399",
+      "duration": 1.15
+    },
+    {
+      "filename": "532_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "532",
+      "duration": 1.15
+    },
+    {
+      "filename": "382_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "382",
+      "duration": 1.15
+    },
+    {
+      "filename": "586_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "586",
+      "duration": 1.15
+    },
+    {
+      "filename": "502_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "502",
+      "duration": 1.15
+    },
+    {
+      "filename": "361_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "361",
+      "duration": 1.15
+    },
+    {
+      "filename": "422_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "contact",
+      "sample_number": "422",
+      "duration": 1.15
+    },
+    {
+      "filename": "149_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "149",
+      "duration": 1.15
+    },
+    {
+      "filename": "9_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "9",
+      "duration": 1.15
+    },
+    {
+      "filename": "79_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "79",
+      "duration": 1.15
+    },
+    {
+      "filename": "161_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "161",
+      "duration": 1.15
+    },
+    {
+      "filename": "86_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "86",
+      "duration": 1.15
+    },
+    {
+      "filename": "124_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "124",
+      "duration": 1.15
+    },
+    {
+      "filename": "276_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "276",
+      "duration": 1.15
+    },
+    {
+      "filename": "48_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "48",
+      "duration": 1.15
+    },
+    {
+      "filename": "150_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "150",
+      "duration": 1.15
+    },
+    {
+      "filename": "104_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "104",
+      "duration": 1.15
+    },
+    {
+      "filename": "200_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "200",
+      "duration": 1.15
+    },
+    {
+      "filename": "262_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "262",
+      "duration": 1.15
+    },
+    {
+      "filename": "122_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "122",
+      "duration": 1.15
+    },
+    {
+      "filename": "84_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "84",
+      "duration": 1.15
+    },
+    {
+      "filename": "41_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "41",
+      "duration": 1.15
+    },
+    {
+      "filename": "58_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "58",
+      "duration": 1.15
+    },
+    {
+      "filename": "197_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "197",
+      "duration": 1.15
+    },
+    {
+      "filename": "61_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "61",
+      "duration": 1.15
+    },
+    {
+      "filename": "1_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "1",
+      "duration": 1.15
+    },
+    {
+      "filename": "159_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "159",
+      "duration": 1.15
+    },
+    {
+      "filename": "11_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "11",
+      "duration": 1.15
+    },
+    {
+      "filename": "257_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "257",
+      "duration": 1.15
+    },
+    {
+      "filename": "293_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "293",
+      "duration": 1.15
+    },
+    {
+      "filename": "183_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "183",
+      "duration": 1.15
+    },
+    {
+      "filename": "244_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "244",
+      "duration": 1.15
+    },
+    {
+      "filename": "238_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "238",
+      "duration": 1.15
+    },
+    {
+      "filename": "283_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "283",
+      "duration": 1.15
+    },
+    {
+      "filename": "222_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "222",
+      "duration": 1.15
+    },
+    {
+      "filename": "129_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "129",
+      "duration": 1.15
+    },
+    {
+      "filename": "138_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "138",
+      "duration": 1.15
+    },
+    {
+      "filename": "277_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "277",
+      "duration": 1.15
+    },
+    {
+      "filename": "211_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "211",
+      "duration": 1.15
+    },
+    {
+      "filename": "69_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "69",
+      "duration": 1.15
+    },
+    {
+      "filename": "98_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "98",
+      "duration": 1.15
+    },
+    {
+      "filename": "127_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "127",
+      "duration": 1.15
+    },
+    {
+      "filename": "290_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "290",
+      "duration": 1.15
+    },
+    {
+      "filename": "242_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "242",
+      "duration": 1.15
+    },
+    {
+      "filename": "218_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "218",
+      "duration": 1.15
+    },
+    {
+      "filename": "2_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "2",
+      "duration": 1.15
+    },
+    {
+      "filename": "258_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "258",
+      "duration": 1.15
+    },
+    {
+      "filename": "160_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "160",
+      "duration": 1.15
+    },
+    {
+      "filename": "195_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "195",
+      "duration": 1.15
+    },
+    {
+      "filename": "278_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "278",
+      "duration": 1.15
+    },
+    {
+      "filename": "252_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "252",
+      "duration": 1.15
+    },
+    {
+      "filename": "16_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "16",
+      "duration": 1.15
+    },
+    {
+      "filename": "25_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "25",
+      "duration": 1.15
+    },
+    {
+      "filename": "221_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "221",
+      "duration": 1.15
+    },
+    {
+      "filename": "229_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "229",
+      "duration": 1.15
+    },
+    {
+      "filename": "164_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "164",
+      "duration": 1.15
+    },
+    {
+      "filename": "56_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "56",
+      "duration": 1.15
+    },
+    {
+      "filename": "236_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "236",
+      "duration": 1.15
+    },
+    {
+      "filename": "220_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "220",
+      "duration": 1.15
+    },
+    {
+      "filename": "225_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "225",
+      "duration": 1.15
+    },
+    {
+      "filename": "186_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "186",
+      "duration": 1.15
+    },
+    {
+      "filename": "21_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "21",
+      "duration": 1.15
+    },
+    {
+      "filename": "111_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "111",
+      "duration": 1.15
+    },
+    {
+      "filename": "134_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "134",
+      "duration": 1.15
+    },
+    {
+      "filename": "117_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "117",
+      "duration": 1.15
+    },
+    {
+      "filename": "63_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "63",
+      "duration": 1.15
+    },
+    {
+      "filename": "103_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "103",
+      "duration": 1.15
+    },
+    {
+      "filename": "99_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "99",
+      "duration": 1.15
+    },
+    {
+      "filename": "231_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "231",
+      "duration": 1.15
+    },
+    {
+      "filename": "179_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "179",
+      "duration": 1.15
+    },
+    {
+      "filename": "120_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "120",
+      "duration": 1.15
+    },
+    {
+      "filename": "177_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "177",
+      "duration": 1.15
+    },
+    {
+      "filename": "151_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "151",
+      "duration": 1.15
+    },
+    {
+      "filename": "66_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "66",
+      "duration": 1.15
+    },
+    {
+      "filename": "288_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "288",
+      "duration": 1.15
+    },
+    {
+      "filename": "75_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "75",
+      "duration": 1.15
+    },
+    {
+      "filename": "131_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "131",
+      "duration": 1.15
+    },
+    {
+      "filename": "215_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "215",
+      "duration": 1.15
+    },
+    {
+      "filename": "141_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "141",
+      "duration": 1.15
+    },
+    {
+      "filename": "196_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "196",
+      "duration": 1.15
+    },
+    {
+      "filename": "216_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "216",
+      "duration": 1.15
+    },
+    {
+      "filename": "142_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "142",
+      "duration": 1.15
+    },
+    {
+      "filename": "100_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "100",
+      "duration": 1.15
+    },
+    {
+      "filename": "128_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "128",
+      "duration": 1.15
+    },
+    {
+      "filename": "245_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "245",
+      "duration": 1.15
+    },
+    {
+      "filename": "171_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "171",
+      "duration": 1.15
+    },
+    {
+      "filename": "154_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "154",
+      "duration": 1.15
+    },
+    {
+      "filename": "7_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "7",
+      "duration": 1.15
+    },
+    {
+      "filename": "272_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "272",
+      "duration": 1.15
+    },
+    {
+      "filename": "135_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "135",
+      "duration": 1.15
+    },
+    {
+      "filename": "107_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "107",
+      "duration": 1.15
+    },
+    {
+      "filename": "157_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "157",
+      "duration": 1.15
+    },
+    {
+      "filename": "15_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "15",
+      "duration": 1.15
+    },
+    {
+      "filename": "29_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "29",
+      "duration": 1.15
+    },
+    {
+      "filename": "125_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "125",
+      "duration": 1.15
+    },
+    {
+      "filename": "235_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "235",
+      "duration": 1.15
+    },
+    {
+      "filename": "5_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "5",
+      "duration": 1.15
+    },
+    {
+      "filename": "77_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "77",
+      "duration": 1.15
+    },
+    {
+      "filename": "24_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "24",
+      "duration": 1.15
+    },
+    {
+      "filename": "286_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "286",
+      "duration": 1.15
+    },
+    {
+      "filename": "55_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "55",
+      "duration": 1.15
+    },
+    {
+      "filename": "8_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "8",
+      "duration": 1.15
+    },
+    {
+      "filename": "265_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "265",
+      "duration": 1.15
+    },
+    {
+      "filename": "206_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "206",
+      "duration": 1.15
+    },
+    {
+      "filename": "174_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "174",
+      "duration": 1.15
+    },
+    {
+      "filename": "143_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "143",
+      "duration": 1.15
+    },
+    {
+      "filename": "175_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "175",
+      "duration": 1.15
+    },
+    {
+      "filename": "82_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "82",
+      "duration": 1.15
+    },
+    {
+      "filename": "205_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "205",
+      "duration": 1.15
+    },
+    {
+      "filename": "203_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "203",
+      "duration": 1.15
+    },
+    {
+      "filename": "146_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "146",
+      "duration": 1.15
+    },
+    {
+      "filename": "22_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "22",
+      "duration": 1.15
+    },
+    {
+      "filename": "269_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "269",
+      "duration": 1.15
+    },
+    {
+      "filename": "189_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "189",
+      "duration": 1.15
+    },
+    {
+      "filename": "187_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "187",
+      "duration": 1.15
+    },
+    {
+      "filename": "68_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "68",
+      "duration": 1.15
+    },
+    {
+      "filename": "241_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "241",
+      "duration": 1.15
+    },
+    {
+      "filename": "44_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "44",
+      "duration": 1.15
+    },
+    {
+      "filename": "105_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "105",
+      "duration": 1.15
+    },
+    {
+      "filename": "227_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "227",
+      "duration": 1.15
+    },
+    {
+      "filename": "233_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "233",
+      "duration": 1.15
+    },
+    {
+      "filename": "194_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "194",
+      "duration": 1.15
+    },
+    {
+      "filename": "237_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "237",
+      "duration": 1.15
+    },
+    {
+      "filename": "285_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "285",
+      "duration": 1.15
+    },
+    {
+      "filename": "62_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "62",
+      "duration": 1.15
+    },
+    {
+      "filename": "296_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "296",
+      "duration": 1.15
+    },
+    {
+      "filename": "118_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "118",
+      "duration": 1.15
+    },
+    {
+      "filename": "96_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "96",
+      "duration": 1.15
+    },
+    {
+      "filename": "6_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "6",
+      "duration": 1.15
+    },
+    {
+      "filename": "300_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "300",
+      "duration": 1.15
+    },
+    {
+      "filename": "123_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "123",
+      "duration": 1.15
+    },
+    {
+      "filename": "169_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "169",
+      "duration": 1.15
+    },
+    {
+      "filename": "173_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "173",
+      "duration": 1.15
+    },
+    {
+      "filename": "113_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "113",
+      "duration": 1.15
+    },
+    {
+      "filename": "282_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "282",
+      "duration": 1.15
+    },
+    {
+      "filename": "263_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "263",
+      "duration": 1.15
+    },
+    {
+      "filename": "256_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "256",
+      "duration": 1.15
+    },
+    {
+      "filename": "193_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "193",
+      "duration": 1.15
+    },
+    {
+      "filename": "101_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "101",
+      "duration": 1.15
+    },
+    {
+      "filename": "67_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "67",
+      "duration": 1.15
+    },
+    {
+      "filename": "201_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "201",
+      "duration": 1.15
+    },
+    {
+      "filename": "12_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "12",
+      "duration": 1.15
+    },
+    {
+      "filename": "90_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "90",
+      "duration": 1.15
+    },
+    {
+      "filename": "156_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "156",
+      "duration": 1.15
+    },
+    {
+      "filename": "95_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "95",
+      "duration": 1.15
+    },
+    {
+      "filename": "144_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "144",
+      "duration": 1.15
+    },
+    {
+      "filename": "116_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "116",
+      "duration": 1.15
+    },
+    {
+      "filename": "65_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "65",
+      "duration": 1.15
+    },
+    {
+      "filename": "73_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "73",
+      "duration": 1.15
+    },
+    {
+      "filename": "260_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "260",
+      "duration": 1.15
+    },
+    {
+      "filename": "102_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "102",
+      "duration": 1.15
+    },
+    {
+      "filename": "148_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "148",
+      "duration": 1.15
+    },
+    {
+      "filename": "158_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "158",
+      "duration": 1.15
+    },
+    {
+      "filename": "39_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "39",
+      "duration": 1.15
+    },
+    {
+      "filename": "59_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "59",
+      "duration": 1.15
+    },
+    {
+      "filename": "228_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "228",
+      "duration": 1.15
+    },
+    {
+      "filename": "80_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "80",
+      "duration": 1.15
+    },
+    {
+      "filename": "240_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "240",
+      "duration": 1.15
+    },
+    {
+      "filename": "121_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "121",
+      "duration": 1.15
+    },
+    {
+      "filename": "20_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "20",
+      "duration": 1.15
+    },
+    {
+      "filename": "4_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "4",
+      "duration": 1.15
+    },
+    {
+      "filename": "137_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "137",
+      "duration": 1.15
+    },
+    {
+      "filename": "207_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "207",
+      "duration": 1.15
+    },
+    {
+      "filename": "88_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "88",
+      "duration": 1.15
+    },
+    {
+      "filename": "14_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "14",
+      "duration": 1.15
+    },
+    {
+      "filename": "267_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "267",
+      "duration": 1.15
+    },
+    {
+      "filename": "145_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "145",
+      "duration": 1.15
+    },
+    {
+      "filename": "204_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "204",
+      "duration": 1.15
+    },
+    {
+      "filename": "289_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "289",
+      "duration": 1.15
+    },
+    {
+      "filename": "210_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "210",
+      "duration": 1.15
+    },
+    {
+      "filename": "234_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "234",
+      "duration": 1.15
+    },
+    {
+      "filename": "85_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "85",
+      "duration": 1.15
+    },
+    {
+      "filename": "52_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "52",
+      "duration": 1.15
+    },
+    {
+      "filename": "294_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "294",
+      "duration": 1.15
+    },
+    {
+      "filename": "70_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "70",
+      "duration": 1.15
+    },
+    {
+      "filename": "106_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "106",
+      "duration": 1.15
+    },
+    {
+      "filename": "31_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "31",
+      "duration": 1.15
+    },
+    {
+      "filename": "109_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "109",
+      "duration": 1.15
+    },
+    {
+      "filename": "284_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "284",
+      "duration": 1.15
+    },
+    {
+      "filename": "279_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "279",
+      "duration": 1.15
+    },
+    {
+      "filename": "273_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "273",
+      "duration": 1.15
+    },
+    {
+      "filename": "89_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "89",
+      "duration": 1.15
+    },
+    {
+      "filename": "176_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "176",
+      "duration": 1.15
+    },
+    {
+      "filename": "270_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "270",
+      "duration": 1.15
+    },
+    {
+      "filename": "212_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "212",
+      "duration": 1.15
+    },
+    {
+      "filename": "168_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "168",
+      "duration": 1.15
+    },
+    {
+      "filename": "271_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "271",
+      "duration": 1.15
+    },
+    {
+      "filename": "299_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "299",
+      "duration": 1.15
+    },
+    {
+      "filename": "208_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "208",
+      "duration": 1.15
+    },
+    {
+      "filename": "81_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "81",
+      "duration": 1.15
+    },
+    {
+      "filename": "26_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "26",
+      "duration": 1.15
+    },
+    {
+      "filename": "50_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "50",
+      "duration": 1.15
+    },
+    {
+      "filename": "198_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "198",
+      "duration": 1.15
+    },
+    {
+      "filename": "295_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "295",
+      "duration": 1.15
+    },
+    {
+      "filename": "94_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "94",
+      "duration": 1.15
+    },
+    {
+      "filename": "42_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "42",
+      "duration": 1.15
+    },
+    {
+      "filename": "202_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "202",
+      "duration": 1.15
+    },
+    {
+      "filename": "274_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "274",
+      "duration": 1.15
+    },
+    {
+      "filename": "170_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "170",
+      "duration": 1.15
+    },
+    {
+      "filename": "280_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "280",
+      "duration": 1.15
+    },
+    {
+      "filename": "130_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "130",
+      "duration": 1.15
+    },
+    {
+      "filename": "60_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "60",
+      "duration": 1.15
+    },
+    {
+      "filename": "133_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "133",
+      "duration": 1.15
+    },
+    {
+      "filename": "40_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "40",
+      "duration": 1.15
+    },
+    {
+      "filename": "140_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "140",
+      "duration": 1.15
+    },
+    {
+      "filename": "268_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "268",
+      "duration": 1.15
+    },
+    {
+      "filename": "213_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "213",
+      "duration": 1.15
+    },
+    {
+      "filename": "219_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "219",
+      "duration": 1.15
+    },
+    {
+      "filename": "259_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "259",
+      "duration": 1.15
+    },
+    {
+      "filename": "162_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "162",
+      "duration": 1.15
+    },
+    {
+      "filename": "192_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "192",
+      "duration": 1.15
+    },
+    {
+      "filename": "97_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "97",
+      "duration": 1.15
+    },
+    {
+      "filename": "248_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "248",
+      "duration": 1.15
+    },
+    {
+      "filename": "188_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "188",
+      "duration": 1.15
+    },
+    {
+      "filename": "181_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "181",
+      "duration": 1.15
+    },
+    {
+      "filename": "51_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "51",
+      "duration": 1.15
+    },
+    {
+      "filename": "76_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "76",
+      "duration": 1.15
+    },
+    {
+      "filename": "147_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "147",
+      "duration": 1.15
+    },
+    {
+      "filename": "72_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "72",
+      "duration": 1.15
+    },
+    {
+      "filename": "297_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "297",
+      "duration": 1.15
+    },
+    {
+      "filename": "226_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "226",
+      "duration": 1.15
+    },
+    {
+      "filename": "36_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "36",
+      "duration": 1.15
+    },
+    {
+      "filename": "45_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "45",
+      "duration": 1.15
+    },
+    {
+      "filename": "250_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "250",
+      "duration": 1.15
+    },
+    {
+      "filename": "19_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "19",
+      "duration": 1.15
+    },
+    {
+      "filename": "214_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "214",
+      "duration": 1.15
+    },
+    {
+      "filename": "13_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "13",
+      "duration": 1.15
+    },
+    {
+      "filename": "32_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "32",
+      "duration": 1.15
+    },
+    {
+      "filename": "17_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "17",
+      "duration": 1.15
+    },
+    {
+      "filename": "64_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "64",
+      "duration": 1.15
+    },
+    {
+      "filename": "239_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "239",
+      "duration": 1.15
+    },
+    {
+      "filename": "172_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "172",
+      "duration": 1.15
+    },
+    {
+      "filename": "53_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "53",
+      "duration": 1.15
+    },
+    {
+      "filename": "3_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "3",
+      "duration": 1.15
+    },
+    {
+      "filename": "18_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "18",
+      "duration": 1.15
+    },
+    {
+      "filename": "254_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "254",
+      "duration": 1.15
+    },
+    {
+      "filename": "247_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "247",
+      "duration": 1.15
+    },
+    {
+      "filename": "49_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "49",
+      "duration": 1.15
+    },
+    {
+      "filename": "37_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "37",
+      "duration": 1.15
+    },
+    {
+      "filename": "190_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "190",
+      "duration": 1.15
+    },
+    {
+      "filename": "230_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "230",
+      "duration": 1.15
+    },
+    {
+      "filename": "35_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "35",
+      "duration": 1.15
+    },
+    {
+      "filename": "87_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "87",
+      "duration": 1.15
+    },
+    {
+      "filename": "43_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "43",
+      "duration": 1.15
+    },
+    {
+      "filename": "93_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "93",
+      "duration": 1.15
+    },
+    {
+      "filename": "246_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "246",
+      "duration": 1.15
+    },
+    {
+      "filename": "292_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "292",
+      "duration": 1.15
+    },
+    {
+      "filename": "28_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "28",
+      "duration": 1.15
+    },
+    {
+      "filename": "209_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "209",
+      "duration": 1.15
+    },
+    {
+      "filename": "33_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "33",
+      "duration": 1.15
+    },
+    {
+      "filename": "78_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "78",
+      "duration": 1.15
+    },
+    {
+      "filename": "223_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "223",
+      "duration": 1.15
+    },
+    {
+      "filename": "119_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "119",
+      "duration": 1.15
+    },
+    {
+      "filename": "291_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "291",
+      "duration": 1.15
+    },
+    {
+      "filename": "224_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "224",
+      "duration": 1.15
+    },
+    {
+      "filename": "167_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "167",
+      "duration": 1.15
+    },
+    {
+      "filename": "264_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "264",
+      "duration": 1.15
+    },
+    {
+      "filename": "23_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "23",
+      "duration": 1.15
+    },
+    {
+      "filename": "166_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "166",
+      "duration": 1.15
+    },
+    {
+      "filename": "178_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "178",
+      "duration": 1.15
+    },
+    {
+      "filename": "251_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "251",
+      "duration": 1.15
+    },
+    {
+      "filename": "184_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "184",
+      "duration": 1.15
+    },
+    {
+      "filename": "10_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "10",
+      "duration": 1.15
+    },
+    {
+      "filename": "27_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "27",
+      "duration": 1.15
+    },
+    {
+      "filename": "74_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "74",
+      "duration": 1.15
+    },
+    {
+      "filename": "182_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "182",
+      "duration": 1.15
+    },
+    {
+      "filename": "57_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "57",
+      "duration": 1.15
+    },
+    {
+      "filename": "91_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "91",
+      "duration": 1.15
+    },
+    {
+      "filename": "46_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "46",
+      "duration": 1.15
+    },
+    {
+      "filename": "34_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "34",
+      "duration": 1.15
+    },
+    {
+      "filename": "163_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "163",
+      "duration": 1.15
+    },
+    {
+      "filename": "275_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "275",
+      "duration": 1.15
+    },
+    {
+      "filename": "38_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "38",
+      "duration": 1.15
+    },
+    {
+      "filename": "165_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "165",
+      "duration": 1.15
+    },
+    {
+      "filename": "253_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "253",
+      "duration": 1.15
+    },
+    {
+      "filename": "71_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "71",
+      "duration": 1.15
+    },
+    {
+      "filename": "155_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "155",
+      "duration": 1.15
+    },
+    {
+      "filename": "47_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "47",
+      "duration": 1.15
+    },
+    {
+      "filename": "108_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "108",
+      "duration": 1.15
+    },
+    {
+      "filename": "114_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "114",
+      "duration": 1.15
+    },
+    {
+      "filename": "199_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "199",
+      "duration": 1.15
+    },
+    {
+      "filename": "255_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "255",
+      "duration": 1.15
+    },
+    {
+      "filename": "153_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "153",
+      "duration": 1.15
+    },
+    {
+      "filename": "136_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "136",
+      "duration": 1.15
+    },
+    {
+      "filename": "180_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "180",
+      "duration": 1.15
+    },
+    {
+      "filename": "261_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "261",
+      "duration": 1.15
+    },
+    {
+      "filename": "191_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "191",
+      "duration": 1.15
+    },
+    {
+      "filename": "232_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "232",
+      "duration": 1.15
+    },
+    {
+      "filename": "83_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "83",
+      "duration": 1.15
+    },
+    {
+      "filename": "112_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "112",
+      "duration": 1.15
+    },
+    {
+      "filename": "298_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "298",
+      "duration": 1.15
+    },
+    {
+      "filename": "217_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "217",
+      "duration": 1.15
+    },
+    {
+      "filename": "266_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "266",
+      "duration": 1.15
+    },
+    {
+      "filename": "30_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "30",
+      "duration": 1.15
+    },
+    {
+      "filename": "152_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "152",
+      "duration": 1.15
+    },
+    {
+      "filename": "115_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "115",
+      "duration": 1.15
+    },
+    {
+      "filename": "243_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "243",
+      "duration": 1.15
+    },
+    {
+      "filename": "287_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "287",
+      "duration": 1.15
+    },
+    {
+      "filename": "126_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "126",
+      "duration": 1.15
+    },
+    {
+      "filename": "139_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "139",
+      "duration": 1.15
+    },
+    {
+      "filename": "132_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "132",
+      "duration": 1.15
+    },
+    {
+      "filename": "54_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "54",
+      "duration": 1.15
+    },
+    {
+      "filename": "281_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "281",
+      "duration": 1.15
+    },
+    {
+      "filename": "249_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "249",
+      "duration": 1.15
+    },
+    {
+      "filename": "110_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "110",
+      "duration": 1.15
+    },
+    {
+      "filename": "185_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "185",
+      "duration": 1.15
+    },
+    {
+      "filename": "92_edge.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "edge",
+      "sample_number": "92",
+      "duration": 1.15
+    },
+    {
+      "filename": "677_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "677",
+      "duration": 1.15
+    },
+    {
+      "filename": "658_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "658",
+      "duration": 1.15
+    },
+    {
+      "filename": "853_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "853",
+      "duration": 1.15
+    },
+    {
+      "filename": "640_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "640",
+      "duration": 1.15
+    },
+    {
+      "filename": "839_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "839",
+      "duration": 1.15
+    },
+    {
+      "filename": "775_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "775",
+      "duration": 1.15
+    },
+    {
+      "filename": "616_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "616",
+      "duration": 1.15
+    },
+    {
+      "filename": "683_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "683",
+      "duration": 1.15
+    },
+    {
+      "filename": "697_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "697",
+      "duration": 1.15
+    },
+    {
+      "filename": "657_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "657",
+      "duration": 1.15
+    },
+    {
+      "filename": "840_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "840",
+      "duration": 1.15
+    },
+    {
+      "filename": "604_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "604",
+      "duration": 1.15
+    },
+    {
+      "filename": "769_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "769",
+      "duration": 1.15
+    },
+    {
+      "filename": "872_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "872",
+      "duration": 1.15
+    },
+    {
+      "filename": "844_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "844",
+      "duration": 1.15
+    },
+    {
+      "filename": "690_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "690",
+      "duration": 1.15
+    },
+    {
+      "filename": "626_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "626",
+      "duration": 1.15
+    },
+    {
+      "filename": "618_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "618",
+      "duration": 1.15
+    },
+    {
+      "filename": "824_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "824",
+      "duration": 1.15
+    },
+    {
+      "filename": "679_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "679",
+      "duration": 1.15
+    },
+    {
+      "filename": "621_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "621",
+      "duration": 1.15
+    },
+    {
+      "filename": "736_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "736",
+      "duration": 1.15
+    },
+    {
+      "filename": "763_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "763",
+      "duration": 1.15
+    },
+    {
+      "filename": "873_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "873",
+      "duration": 1.15
+    },
+    {
+      "filename": "796_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "796",
+      "duration": 1.15
+    },
+    {
+      "filename": "713_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "713",
+      "duration": 1.15
+    },
+    {
+      "filename": "676_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "676",
+      "duration": 1.15
+    },
+    {
+      "filename": "882_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "882",
+      "duration": 1.15
+    },
+    {
+      "filename": "707_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "707",
+      "duration": 1.15
+    },
+    {
+      "filename": "860_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "860",
+      "duration": 1.15
+    },
+    {
+      "filename": "656_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "656",
+      "duration": 1.15
+    },
+    {
+      "filename": "742_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "742",
+      "duration": 1.15
+    },
+    {
+      "filename": "773_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "773",
+      "duration": 1.15
+    },
+    {
+      "filename": "665_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "665",
+      "duration": 1.15
+    },
+    {
+      "filename": "636_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "636",
+      "duration": 1.15
+    },
+    {
+      "filename": "688_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "688",
+      "duration": 1.15
+    },
+    {
+      "filename": "885_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "885",
+      "duration": 1.15
+    },
+    {
+      "filename": "615_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "615",
+      "duration": 1.15
+    },
+    {
+      "filename": "814_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "814",
+      "duration": 1.15
+    },
+    {
+      "filename": "866_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "866",
+      "duration": 1.15
+    },
+    {
+      "filename": "836_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "836",
+      "duration": 1.15
+    },
+    {
+      "filename": "726_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "726",
+      "duration": 1.15
+    },
+    {
+      "filename": "746_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "746",
+      "duration": 1.15
+    },
+    {
+      "filename": "816_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "816",
+      "duration": 1.15
+    },
+    {
+      "filename": "848_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "848",
+      "duration": 1.15
+    },
+    {
+      "filename": "712_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "712",
+      "duration": 1.15
+    },
+    {
+      "filename": "883_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "883",
+      "duration": 1.15
+    },
+    {
+      "filename": "719_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "719",
+      "duration": 1.15
+    },
+    {
+      "filename": "774_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "774",
+      "duration": 1.15
+    },
+    {
+      "filename": "831_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "831",
+      "duration": 1.15
+    },
+    {
+      "filename": "899_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "899",
+      "duration": 1.15
+    },
+    {
+      "filename": "837_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "837",
+      "duration": 1.15
+    },
+    {
+      "filename": "827_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "827",
+      "duration": 1.15
+    },
+    {
+      "filename": "792_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "792",
+      "duration": 1.15
+    },
+    {
+      "filename": "865_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "865",
+      "duration": 1.15
+    },
+    {
+      "filename": "845_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "845",
+      "duration": 1.15
+    },
+    {
+      "filename": "787_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "787",
+      "duration": 1.15
+    },
+    {
+      "filename": "745_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "745",
+      "duration": 1.15
+    },
+    {
+      "filename": "898_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "898",
+      "duration": 1.15
+    },
+    {
+      "filename": "617_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "617",
+      "duration": 1.15
+    },
+    {
+      "filename": "747_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "747",
+      "duration": 1.15
+    },
+    {
+      "filename": "699_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "699",
+      "duration": 1.15
+    },
+    {
+      "filename": "619_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "619",
+      "duration": 1.15
+    },
+    {
+      "filename": "696_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "696",
+      "duration": 1.15
+    },
+    {
+      "filename": "804_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "804",
+      "duration": 1.15
+    },
+    {
+      "filename": "779_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "779",
+      "duration": 1.15
+    },
+    {
+      "filename": "830_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "830",
+      "duration": 1.15
+    },
+    {
+      "filename": "762_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "762",
+      "duration": 1.15
+    },
+    {
+      "filename": "863_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "863",
+      "duration": 1.15
+    },
+    {
+      "filename": "752_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "752",
+      "duration": 1.15
+    },
+    {
+      "filename": "627_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "627",
+      "duration": 1.15
+    },
+    {
+      "filename": "799_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "799",
+      "duration": 1.15
+    },
+    {
+      "filename": "750_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "750",
+      "duration": 1.15
+    },
+    {
+      "filename": "859_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "859",
+      "duration": 1.15
+    },
+    {
+      "filename": "821_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "821",
+      "duration": 1.15
+    },
+    {
+      "filename": "732_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "732",
+      "duration": 1.15
+    },
+    {
+      "filename": "815_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "815",
+      "duration": 1.15
+    },
+    {
+      "filename": "651_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "651",
+      "duration": 1.15
+    },
+    {
+      "filename": "634_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "634",
+      "duration": 1.15
+    },
+    {
+      "filename": "654_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "654",
+      "duration": 1.15
+    },
+    {
+      "filename": "642_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "642",
+      "duration": 1.15
+    },
+    {
+      "filename": "727_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "727",
+      "duration": 1.15
+    },
+    {
+      "filename": "670_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "670",
+      "duration": 1.15
+    },
+    {
+      "filename": "856_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "856",
+      "duration": 1.15
+    },
+    {
+      "filename": "731_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "731",
+      "duration": 1.15
+    },
+    {
+      "filename": "800_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "800",
+      "duration": 1.15
+    },
+    {
+      "filename": "789_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "789",
+      "duration": 1.15
+    },
+    {
+      "filename": "784_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "784",
+      "duration": 1.15
+    },
+    {
+      "filename": "862_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "862",
+      "duration": 1.15
+    },
+    {
+      "filename": "711_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "711",
+      "duration": 1.15
+    },
+    {
+      "filename": "772_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "772",
+      "duration": 1.15
+    },
+    {
+      "filename": "756_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "756",
+      "duration": 1.15
+    },
+    {
+      "filename": "695_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "695",
+      "duration": 1.15
+    },
+    {
+      "filename": "614_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "614",
+      "duration": 1.15
+    },
+    {
+      "filename": "881_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "881",
+      "duration": 1.15
+    },
+    {
+      "filename": "603_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "603",
+      "duration": 1.15
+    },
+    {
+      "filename": "611_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "611",
+      "duration": 1.15
+    },
+    {
+      "filename": "825_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "825",
+      "duration": 1.15
+    },
+    {
+      "filename": "810_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "810",
+      "duration": 1.15
+    },
+    {
+      "filename": "778_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "778",
+      "duration": 1.15
+    },
+    {
+      "filename": "644_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "644",
+      "duration": 1.15
+    },
+    {
+      "filename": "701_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "701",
+      "duration": 1.15
+    },
+    {
+      "filename": "785_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "785",
+      "duration": 1.15
+    },
+    {
+      "filename": "793_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "793",
+      "duration": 1.15
+    },
+    {
+      "filename": "867_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "867",
+      "duration": 1.15
+    },
+    {
+      "filename": "811_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "811",
+      "duration": 1.15
+    },
+    {
+      "filename": "801_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "801",
+      "duration": 1.15
+    },
+    {
+      "filename": "687_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "687",
+      "duration": 1.15
+    },
+    {
+      "filename": "820_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "820",
+      "duration": 1.15
+    },
+    {
+      "filename": "662_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "662",
+      "duration": 1.15
+    },
+    {
+      "filename": "754_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "754",
+      "duration": 1.15
+    },
+    {
+      "filename": "637_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "637",
+      "duration": 1.15
+    },
+    {
+      "filename": "728_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "728",
+      "duration": 1.15
+    },
+    {
+      "filename": "700_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "700",
+      "duration": 1.15
+    },
+    {
+      "filename": "808_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "808",
+      "duration": 1.15
+    },
+    {
+      "filename": "879_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "879",
+      "duration": 1.15
+    },
+    {
+      "filename": "643_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "643",
+      "duration": 1.15
+    },
+    {
+      "filename": "888_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "888",
+      "duration": 1.15
+    },
+    {
+      "filename": "650_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "650",
+      "duration": 1.15
+    },
+    {
+      "filename": "794_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "794",
+      "duration": 1.15
+    },
+    {
+      "filename": "706_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "706",
+      "duration": 1.15
+    },
+    {
+      "filename": "641_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "641",
+      "duration": 1.15
+    },
+    {
+      "filename": "648_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "648",
+      "duration": 1.15
+    },
+    {
+      "filename": "892_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "892",
+      "duration": 1.15
+    },
+    {
+      "filename": "868_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "868",
+      "duration": 1.15
+    },
+    {
+      "filename": "812_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "812",
+      "duration": 1.15
+    },
+    {
+      "filename": "645_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "645",
+      "duration": 1.15
+    },
+    {
+      "filename": "768_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "768",
+      "duration": 1.15
+    },
+    {
+      "filename": "841_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "841",
+      "duration": 1.15
+    },
+    {
+      "filename": "715_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "715",
+      "duration": 1.15
+    },
+    {
+      "filename": "738_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "738",
+      "duration": 1.15
+    },
+    {
+      "filename": "897_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "897",
+      "duration": 1.15
+    },
+    {
+      "filename": "659_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "659",
+      "duration": 1.15
+    },
+    {
+      "filename": "828_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "828",
+      "duration": 1.15
+    },
+    {
+      "filename": "631_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "631",
+      "duration": 1.15
+    },
+    {
+      "filename": "834_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "834",
+      "duration": 1.15
+    },
+    {
+      "filename": "667_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "667",
+      "duration": 1.15
+    },
+    {
+      "filename": "798_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "798",
+      "duration": 1.15
+    },
+    {
+      "filename": "743_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "743",
+      "duration": 1.15
+    },
+    {
+      "filename": "685_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "685",
+      "duration": 1.15
+    },
+    {
+      "filename": "877_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "877",
+      "duration": 1.15
+    },
+    {
+      "filename": "702_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "702",
+      "duration": 1.15
+    },
+    {
+      "filename": "623_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "623",
+      "duration": 1.15
+    },
+    {
+      "filename": "681_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "681",
+      "duration": 1.15
+    },
+    {
+      "filename": "807_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "807",
+      "duration": 1.15
+    },
+    {
+      "filename": "797_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "797",
+      "duration": 1.15
+    },
+    {
+      "filename": "788_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "788",
+      "duration": 1.15
+    },
+    {
+      "filename": "835_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "835",
+      "duration": 1.15
+    },
+    {
+      "filename": "739_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "739",
+      "duration": 1.15
+    },
+    {
+      "filename": "771_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "771",
+      "duration": 1.15
+    },
+    {
+      "filename": "829_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "829",
+      "duration": 1.15
+    },
+    {
+      "filename": "705_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "705",
+      "duration": 1.15
+    },
+    {
+      "filename": "607_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "607",
+      "duration": 1.15
+    },
+    {
+      "filename": "613_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "613",
+      "duration": 1.15
+    },
+    {
+      "filename": "733_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "733",
+      "duration": 1.15
+    },
+    {
+      "filename": "857_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "857",
+      "duration": 1.15
+    },
+    {
+      "filename": "612_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "612",
+      "duration": 1.15
+    },
+    {
+      "filename": "691_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "691",
+      "duration": 1.15
+    },
+    {
+      "filename": "693_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "693",
+      "duration": 1.15
+    },
+    {
+      "filename": "805_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "805",
+      "duration": 1.15
+    },
+    {
+      "filename": "704_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "704",
+      "duration": 1.15
+    },
+    {
+      "filename": "669_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "669",
+      "duration": 1.15
+    },
+    {
+      "filename": "664_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "664",
+      "duration": 1.15
+    },
+    {
+      "filename": "876_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "876",
+      "duration": 1.15
+    },
+    {
+      "filename": "646_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "646",
+      "duration": 1.15
+    },
+    {
+      "filename": "891_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "891",
+      "duration": 1.15
+    },
+    {
+      "filename": "786_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "786",
+      "duration": 1.15
+    },
+    {
+      "filename": "675_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "675",
+      "duration": 1.15
+    },
+    {
+      "filename": "751_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "751",
+      "duration": 1.15
+    },
+    {
+      "filename": "770_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "770",
+      "duration": 1.15
+    },
+    {
+      "filename": "884_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "884",
+      "duration": 1.15
+    },
+    {
+      "filename": "765_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "765",
+      "duration": 1.15
+    },
+    {
+      "filename": "895_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "895",
+      "duration": 1.15
+    },
+    {
+      "filename": "806_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "806",
+      "duration": 1.15
+    },
+    {
+      "filename": "781_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "781",
+      "duration": 1.15
+    },
+    {
+      "filename": "813_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "813",
+      "duration": 1.15
+    },
+    {
+      "filename": "652_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "652",
+      "duration": 1.15
+    },
+    {
+      "filename": "686_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "686",
+      "duration": 1.15
+    },
+    {
+      "filename": "723_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "723",
+      "duration": 1.15
+    },
+    {
+      "filename": "886_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "886",
+      "duration": 1.15
+    },
+    {
+      "filename": "842_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "842",
+      "duration": 1.15
+    },
+    {
+      "filename": "849_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "849",
+      "duration": 1.15
+    },
+    {
+      "filename": "714_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "714",
+      "duration": 1.15
+    },
+    {
+      "filename": "724_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "724",
+      "duration": 1.15
+    },
+    {
+      "filename": "838_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "838",
+      "duration": 1.15
+    },
+    {
+      "filename": "861_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "861",
+      "duration": 1.15
+    },
+    {
+      "filename": "608_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "608",
+      "duration": 1.15
+    },
+    {
+      "filename": "730_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "730",
+      "duration": 1.15
+    },
+    {
+      "filename": "749_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "749",
+      "duration": 1.15
+    },
+    {
+      "filename": "755_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "755",
+      "duration": 1.15
+    },
+    {
+      "filename": "735_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "735",
+      "duration": 1.15
+    },
+    {
+      "filename": "737_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "737",
+      "duration": 1.15
+    },
+    {
+      "filename": "896_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "896",
+      "duration": 1.15
+    },
+    {
+      "filename": "639_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "639",
+      "duration": 1.15
+    },
+    {
+      "filename": "890_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "890",
+      "duration": 1.15
+    },
+    {
+      "filename": "858_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "858",
+      "duration": 1.15
+    },
+    {
+      "filename": "809_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "809",
+      "duration": 1.15
+    },
+    {
+      "filename": "740_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "740",
+      "duration": 1.15
+    },
+    {
+      "filename": "889_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "889",
+      "duration": 1.15
+    },
+    {
+      "filename": "628_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "628",
+      "duration": 1.15
+    },
+    {
+      "filename": "630_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "630",
+      "duration": 1.15
+    },
+    {
+      "filename": "672_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "672",
+      "duration": 1.15
+    },
+    {
+      "filename": "633_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "633",
+      "duration": 1.15
+    },
+    {
+      "filename": "734_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "734",
+      "duration": 1.15
+    },
+    {
+      "filename": "893_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "893",
+      "duration": 1.15
+    },
+    {
+      "filename": "609_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "609",
+      "duration": 1.15
+    },
+    {
+      "filename": "666_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "666",
+      "duration": 1.15
+    },
+    {
+      "filename": "833_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "833",
+      "duration": 1.15
+    },
+    {
+      "filename": "673_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "673",
+      "duration": 1.15
+    },
+    {
+      "filename": "823_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "823",
+      "duration": 1.15
+    },
+    {
+      "filename": "722_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "722",
+      "duration": 1.15
+    },
+    {
+      "filename": "790_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "790",
+      "duration": 1.15
+    },
+    {
+      "filename": "647_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "647",
+      "duration": 1.15
+    },
+    {
+      "filename": "721_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "721",
+      "duration": 1.15
+    },
+    {
+      "filename": "864_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "864",
+      "duration": 1.15
+    },
+    {
+      "filename": "870_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "870",
+      "duration": 1.15
+    },
+    {
+      "filename": "764_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "764",
+      "duration": 1.15
+    },
+    {
+      "filename": "660_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "660",
+      "duration": 1.15
+    },
+    {
+      "filename": "653_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "653",
+      "duration": 1.15
+    },
+    {
+      "filename": "847_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "847",
+      "duration": 1.15
+    },
+    {
+      "filename": "725_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "725",
+      "duration": 1.15
+    },
+    {
+      "filename": "709_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "709",
+      "duration": 1.15
+    },
+    {
+      "filename": "880_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "880",
+      "duration": 1.15
+    },
+    {
+      "filename": "716_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "716",
+      "duration": 1.15
+    },
+    {
+      "filename": "887_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "887",
+      "duration": 1.15
+    },
+    {
+      "filename": "729_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "729",
+      "duration": 1.15
+    },
+    {
+      "filename": "875_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "875",
+      "duration": 1.15
+    },
+    {
+      "filename": "678_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "678",
+      "duration": 1.15
+    },
+    {
+      "filename": "635_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "635",
+      "duration": 1.15
+    },
+    {
+      "filename": "795_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "795",
+      "duration": 1.15
+    },
+    {
+      "filename": "655_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "655",
+      "duration": 1.15
+    },
+    {
+      "filename": "663_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "663",
+      "duration": 1.15
+    },
+    {
+      "filename": "854_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "854",
+      "duration": 1.15
+    },
+    {
+      "filename": "878_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "878",
+      "duration": 1.15
+    },
+    {
+      "filename": "694_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "694",
+      "duration": 1.15
+    },
+    {
+      "filename": "802_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "802",
+      "duration": 1.15
+    },
+    {
+      "filename": "776_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "776",
+      "duration": 1.15
+    },
+    {
+      "filename": "826_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "826",
+      "duration": 1.15
+    },
+    {
+      "filename": "720_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "720",
+      "duration": 1.15
+    },
+    {
+      "filename": "718_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "718",
+      "duration": 1.15
+    },
+    {
+      "filename": "601_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "601",
+      "duration": 1.15
+    },
+    {
+      "filename": "822_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "822",
+      "duration": 1.15
+    },
+    {
+      "filename": "624_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "624",
+      "duration": 1.15
+    },
+    {
+      "filename": "668_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "668",
+      "duration": 1.15
+    },
+    {
+      "filename": "753_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "753",
+      "duration": 1.15
+    },
+    {
+      "filename": "649_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "649",
+      "duration": 1.15
+    },
+    {
+      "filename": "605_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "605",
+      "duration": 1.15
+    },
+    {
+      "filename": "680_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "680",
+      "duration": 1.15
+    },
+    {
+      "filename": "622_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "622",
+      "duration": 1.15
+    },
+    {
+      "filename": "869_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "869",
+      "duration": 1.15
+    },
+    {
+      "filename": "758_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "758",
+      "duration": 1.15
+    },
+    {
+      "filename": "625_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "625",
+      "duration": 1.15
+    },
+    {
+      "filename": "689_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "689",
+      "duration": 1.15
+    },
+    {
+      "filename": "757_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "757",
+      "duration": 1.15
+    },
+    {
+      "filename": "741_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "741",
+      "duration": 1.15
+    },
+    {
+      "filename": "783_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "783",
+      "duration": 1.15
+    },
+    {
+      "filename": "606_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "606",
+      "duration": 1.15
+    },
+    {
+      "filename": "744_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "744",
+      "duration": 1.15
+    },
+    {
+      "filename": "780_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "780",
+      "duration": 1.15
+    },
+    {
+      "filename": "894_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "894",
+      "duration": 1.15
+    },
+    {
+      "filename": "761_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "761",
+      "duration": 1.15
+    },
+    {
+      "filename": "684_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "684",
+      "duration": 1.15
+    },
+    {
+      "filename": "610_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "610",
+      "duration": 1.15
+    },
+    {
+      "filename": "717_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "717",
+      "duration": 1.15
+    },
+    {
+      "filename": "843_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "843",
+      "duration": 1.15
+    },
+    {
+      "filename": "851_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "851",
+      "duration": 1.15
+    },
+    {
+      "filename": "803_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "803",
+      "duration": 1.15
+    },
+    {
+      "filename": "791_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "791",
+      "duration": 1.15
+    },
+    {
+      "filename": "766_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "766",
+      "duration": 1.15
+    },
+    {
+      "filename": "759_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "759",
+      "duration": 1.15
+    },
+    {
+      "filename": "817_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "817",
+      "duration": 1.15
+    },
+    {
+      "filename": "698_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "698",
+      "duration": 1.15
+    },
+    {
+      "filename": "852_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "852",
+      "duration": 1.15
+    },
+    {
+      "filename": "682_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "682",
+      "duration": 1.15
+    },
+    {
+      "filename": "748_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "748",
+      "duration": 1.15
+    },
+    {
+      "filename": "638_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "638",
+      "duration": 1.15
+    },
+    {
+      "filename": "674_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "674",
+      "duration": 1.15
+    },
+    {
+      "filename": "760_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "760",
+      "duration": 1.15
+    },
+    {
+      "filename": "661_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "661",
+      "duration": 1.15
+    },
+    {
+      "filename": "692_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "692",
+      "duration": 1.15
+    },
+    {
+      "filename": "850_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "850",
+      "duration": 1.15
+    },
+    {
+      "filename": "819_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "819",
+      "duration": 1.15
+    },
+    {
+      "filename": "703_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "703",
+      "duration": 1.15
+    },
+    {
+      "filename": "777_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "777",
+      "duration": 1.15
+    },
+    {
+      "filename": "767_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "767",
+      "duration": 1.15
+    },
+    {
+      "filename": "629_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "629",
+      "duration": 1.15
+    },
+    {
+      "filename": "708_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "708",
+      "duration": 1.15
+    },
+    {
+      "filename": "874_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "874",
+      "duration": 1.15
+    },
+    {
+      "filename": "782_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "782",
+      "duration": 1.15
+    },
+    {
+      "filename": "671_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "671",
+      "duration": 1.15
+    },
+    {
+      "filename": "855_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "855",
+      "duration": 1.15
+    },
+    {
+      "filename": "818_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "818",
+      "duration": 1.15
+    },
+    {
+      "filename": "900_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "900",
+      "duration": 1.15
+    },
+    {
+      "filename": "832_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "832",
+      "duration": 1.15
+    },
+    {
+      "filename": "871_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "871",
+      "duration": 1.15
+    },
+    {
+      "filename": "846_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "846",
+      "duration": 1.15
+    },
+    {
+      "filename": "632_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "632",
+      "duration": 1.15
+    },
+    {
+      "filename": "710_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "710",
+      "duration": 1.15
+    },
+    {
+      "filename": "602_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "602",
+      "duration": 1.15
+    },
+    {
+      "filename": "620_no_contact.wav",
+      "batch": "collected_data_runs_validate_2025_12_16_v2_simple",
+      "position": "no_contact",
+      "sample_number": "620",
+      "duration": 1.15
+    }
+  ]
+}

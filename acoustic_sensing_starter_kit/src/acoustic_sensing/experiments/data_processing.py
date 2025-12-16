@@ -57,7 +57,7 @@ class DataProcessingExperiment(BaseExperiment):
         available_batches = [
             d
             for d in os.listdir(data_dir_path)
-            if (d == "balanced_collected_data")
+            if (d == "collected_data_runs_validate_2025_12_16_v2_simple")
             and os.path.isdir(os.path.join(data_dir_path, d))
         ]
 
@@ -92,7 +92,9 @@ class DataProcessingExperiment(BaseExperiment):
                     )
 
                     # Check for optional audio smoothing
-                    apply_smoothing = self.config.get("apply_audio_smoothing", False)
+                    apply_smoothing = (
+                        False  # Disabled by default to preserve frequency sweeps
+                    )
                     if apply_smoothing:
                         self.logger.info(
                             "Audio smoothing enabled - applying high-pass filter"
@@ -371,6 +373,9 @@ class DataProcessingExperiment(BaseExperiment):
 
             # Create comprehensive data overview plot
             self._create_data_overview_plot(batch_data, batch_name, batch_output_dir)
+
+            # Create spectrogram visualization for validation
+            self._create_spectrogram_plot(batch_name, batch_output_dir)
 
         except Exception as e:
             self.logger.warning(f"Failed to create plots for batch {batch_name}: {e}")
@@ -697,3 +702,75 @@ Feature Statistics:
             bbox_inches="tight",
         )
         plt.close()
+
+    def _create_spectrogram_plot(self, batch_name: str, output_dir: str):
+        """Create spectrogram visualization for a sample recording to validate sweep presence."""
+        try:
+            import librosa
+            import librosa.display
+
+            # Get data directory path
+            base_data_dir = self.config.get("base_data_dir", "data")
+            batch_data_dir = f"/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/{base_data_dir}/{batch_name}/data"
+
+            if not os.path.exists(batch_data_dir):
+                self.logger.warning(f"Data directory not found: {batch_data_dir}")
+                return
+
+            # Find first WAV file
+            wav_files = [f for f in os.listdir(batch_data_dir) if f.endswith(".wav")]
+            if not wav_files:
+                self.logger.warning(f"No WAV files found in {batch_data_dir}")
+                return
+
+            sample_file = os.path.join(batch_data_dir, wav_files[0])
+            self.logger.info(f"Creating spectrogram from sample file: {sample_file}")
+
+            # Load audio
+            audio, sr = librosa.load(sample_file, sr=48000)
+
+            # Apply same smoothing if enabled
+            apply_smoothing = self.config.get("apply_audio_smoothing", False)
+            if apply_smoothing:
+                cutoff_freq = self.config.get("smoothing_cutoff_freq", 500)
+                audio = self._apply_high_pass_filter(audio, sr=sr, cutoff=cutoff_freq)
+
+            # Create spectrogram
+            fig, ax = plt.subplots(1, 1, figsize=(12, 8))
+
+            # Compute STFT
+            D = librosa.stft(audio, n_fft=2048, hop_length=512)
+            S_db = librosa.amplitude_to_db(np.abs(D), ref=np.max)
+
+            # Display spectrogram
+            img = librosa.display.specshow(
+                S_db,
+                sr=sr,
+                hop_length=512,
+                x_axis="time",
+                y_axis="log",
+                ax=ax,
+                cmap="viridis",
+            )
+
+            ax.set_title(
+                f"Spectrogram - {batch_name} (Sample: {os.path.basename(sample_file)})"
+            )
+            ax.set_xlabel("Time (s)")
+            ax.set_ylabel("Frequency (Hz)")
+
+            # Add colorbar
+            fig.colorbar(img, ax=ax, format="%+2.0f dB", label="Amplitude (dB)")
+
+            plt.tight_layout()
+            plt.savefig(
+                os.path.join(output_dir, f"{batch_name}_spectrogram.png"),
+                dpi=300,
+                bbox_inches="tight",
+            )
+            plt.close()
+
+            self.logger.info(f"Spectrogram saved to {output_dir}")
+
+        except Exception as e:
+            self.logger.warning(f"Failed to create spectrogram for {batch_name}: {e}")

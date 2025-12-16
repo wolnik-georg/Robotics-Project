@@ -1,0 +1,22 @@
+{
+  "batch_name": "balanced_collected_data_2025_12_15_v1",
+  "num_samples": 150,
+  "num_features": 38,
+  "num_classes": 3,
+  "classes": [
+    "contact",
+    "edge",
+    "no_contact"
+  ],
+  "class_distribution": {
+    "contact": "50",
+    "edge": "50",
+    "no_contact": "50"
+  },
+  "files_saved": [
+    "balanced_collected_data_2025_12_15_v1_data_processing_results.json",
+    "balanced_collected_data_2025_12_15_v1_features.npy",
+    "balanced_collected_data_2025_12_15_v1_labels.npy",
+    "balanced_collected_data_2025_12_15_v1_metadata.json"
+  ]
+}

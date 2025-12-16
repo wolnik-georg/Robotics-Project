@@ -1,0 +1,6 @@
+{
+  "dataset_name": "runs_validate_2025_12_16_v2_simple",
+  "total_samples": 900,
+  "created_by": "collect_data.py --simple",
+  "source_directory": "runs_validate_2025_12_16_v2"
+}

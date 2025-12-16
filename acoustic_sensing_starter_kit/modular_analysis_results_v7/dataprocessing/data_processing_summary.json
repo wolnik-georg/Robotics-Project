@@ -1,0 +1,24 @@
+{
+  "total_samples": 900,
+  "total_features": 38,
+  "total_batches": 1,
+  "batch_names": [
+    "collected_data_runs_validate_2025_12_16_v2_simple"
+  ],
+  "per_batch_info": {
+    "collected_data_runs_validate_2025_12_16_v2_simple": {
+      "num_samples": 900,
+      "num_classes": 3,
+      "classes": [
+        "contact",
+        "edge",
+        "no_contact"
+      ],
+      "class_distribution": {
+        "contact": "300",
+        "edge": "300",
+        "no_contact": "300"
+      }
+    }
+  }
+}

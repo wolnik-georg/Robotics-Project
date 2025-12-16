@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2025.11.10)  23 NOV 2025 17:32
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2025.11.10)  14 DEC 2025 12:34
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -544,31 +544,89 @@ Package: array 2021/10/04 v2.5f Tabular extension package (FMi)
 \extratabsurround=\skip64
 \backup@length=\skip65
 \ar@cellbox=\box76
+) (/usr/share/texlive/texmf-dist/tex/latex/colortbl/colortbl.sty
+Package: colortbl 2020/01/04 v1.0e Color table columns (DPC)
+\everycr=\toks48
+\minrowclearance=\skip66
+) (/usr/share/texlive/texmf-dist/tex/latex/pgf/frontendlayer/tikz.sty (/usr/share/texlive/texmf-dist/tex/latex/pgf/basiclayer/pgf.sty
+Package: pgf 2021/05/15 v3.1.9a (3.1.9a)
+ (/usr/share/texlive/texmf-dist/tex/generic/pgf/modules/pgfmoduleshapes.code.tex
+File: pgfmoduleshapes.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgfnodeparttextbox=\box77
+) (/usr/share/texlive/texmf-dist/tex/generic/pgf/modules/pgfmoduleplot.code.tex
+File: pgfmoduleplot.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+) (/usr/share/texlive/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-65.sty
+Package: pgfcomp-version-0-65 2021/05/15 v3.1.9a (3.1.9a)
+\pgf@nodesepstart=\dimen299
+\pgf@nodesepend=\dimen300
+) (/usr/share/texlive/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-18.sty
+Package: pgfcomp-version-1-18 2021/05/15 v3.1.9a (3.1.9a)
+)) (/usr/share/texlive/texmf-dist/tex/latex/pgf/utilities/pgffor.sty (/usr/share/texlive/texmf-dist/tex/latex/pgf/utilities/pgfkeys.sty (/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex)) (/usr/share/texlive/texmf-dist/tex/latex/pgf/math/pgfmath.sty (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex)) (/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgffor.code.tex
+Package: pgffor 2021/05/15 v3.1.9a (3.1.9a)
+ (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex)
+\pgffor@iter=\dimen301
+\pgffor@skip=\dimen302
+\pgffor@stack=\toks49
+\pgffor@toks=\toks50
+)) (/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/tikz.code.tex
+Package: tikz 2021/05/15 v3.1.9a (3.1.9a)
+ (/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/pgflibraryplothandlers.code.tex
+File: pgflibraryplothandlers.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgf@plot@mark@count=\count333
+\pgfplotmarksize=\dimen303
+)
+\tikz@lastx=\dimen304
+\tikz@lasty=\dimen305
+\tikz@lastxsaved=\dimen306
+\tikz@lastysaved=\dimen307
+\tikz@lastmovetox=\dimen308
+\tikz@lastmovetoy=\dimen309
+\tikzleveldistance=\dimen310
+\tikzsiblingdistance=\dimen311
+\tikz@figbox=\box78
+\tikz@figbox@bg=\box79
+\tikz@tempbox=\box80
+\tikz@tempbox@bg=\box81
+\tikztreelevel=\count334
+\tikznumberofchildren=\count335
+\tikznumberofcurrentchild=\count336
+\tikz@fig@count=\count337
+ (/usr/share/texlive/texmf-dist/tex/generic/pgf/modules/pgfmodulematrix.code.tex
+File: pgfmodulematrix.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgfmatrixcurrentrow=\count338
+\pgfmatrixcurrentcolumn=\count339
+\pgf@matrix@numberofcolumns=\count340
+)
+\tikz@expandcount=\count341
+ (/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarytopaths.code.tex
+File: tikzlibrarytopaths.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+))) (/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarypositioning.code.tex
+File: tikzlibrarypositioning.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 ) (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2022-01-12 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count333
-\l__pdf_internal_box=\box77
+\l__color_backend_stack_int=\count342
+\l__pdf_internal_box=\box82
 ) (./Factual_Acoustic_Analysis_Presentation.aux)
 \openout1 = `Factual_Acoustic_Analysis_Presentation.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 15.
-LaTeX Font Info:    ... okay on input line 15.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 15.
-LaTeX Font Info:    ... okay on input line 15.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 15.
-LaTeX Font Info:    ... okay on input line 15.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 15.
-LaTeX Font Info:    ... okay on input line 15.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 15.
-LaTeX Font Info:    ... okay on input line 15.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 15.
-LaTeX Font Info:    ... okay on input line 15.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 15.
-LaTeX Font Info:    ... okay on input line 15.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 15.
-LaTeX Font Info:    ... okay on input line 15.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 15.
-LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -606,24 +664,24 @@ LaTeX Font Info:    ... okay on input line 15.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count334
-\scratchdimen=\dimen299
-\scratchbox=\box78
-\nofMPsegments=\count335
-\nofMParguments=\count336
-\everyMPshowfont=\toks48
-\MPscratchCnt=\count337
-\MPscratchDim=\dimen300
-\MPnumerator=\count338
-\makeMPintoPDFobject=\count339
-\everyMPtoPDFconversion=\toks49
+\scratchcounter=\count343
+\scratchdimen=\dimen312
+\scratchbox=\box83
+\nofMPsegments=\count344
+\nofMParguments=\count345
+\everyMPshowfont=\toks51
+\MPscratchCnt=\count346
+\MPscratchDim=\dimen313
+\MPnumerator=\count347
+\makeMPintoPDFobject=\count348
+\everyMPtoPDFconversion=\toks52
 ) (/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
  (/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
-Package hyperref Info: Link coloring OFF on input line 15.
+Package hyperref Info: Link coloring OFF on input line 21.
  (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
  (/usr/share/texlive/texmf-dist/tex/latex/refcount/refcount.sty
@@ -631,64 +689,64 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 ) (/usr/share/texlive/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count340
+\c@section@level=\count349
 )
-LaTeX Info: Redefining \ref on input line 15.
-LaTeX Info: Redefining \pageref on input line 15.
-LaTeX Info: Redefining \nameref on input line 15.
+LaTeX Info: Redefining \ref on input line 21.
+LaTeX Info: Redefining \pageref on input line 21.
+LaTeX Info: Redefining \nameref on input line 21.
  (./Factual_Acoustic_Analysis_Presentation.out) (./Factual_Acoustic_Analysis_Presentation.out)
 \@outlinefile=\write5
 \openout5 = `Factual_Acoustic_Analysis_Presentation.out'.
 
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/cmr/m/n --> OT1/cmss/m/n on input line 15.
+(Font)                  OT1/cmr/m/n --> OT1/cmss/m/n on input line 21.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 15.
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 21.
 \symnumbers=\mathgroup6
 \sympureletters=\mathgroup7
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
-(Font)                  OT1/cmss/m/n --> OT1/cmr/m/n on input line 15.
-LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 15.
+(Font)                  OT1/cmss/m/n --> OT1/cmr/m/n on input line 21.
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 21.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 15.
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 21.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 15.
-LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 15.
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 21.
+LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 21.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> OT1/cmss/m/n on input line 15.
+(Font)                  OT1/cmss/m/n --> OT1/cmss/m/n on input line 21.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> OT1/cmss/m/n on input line 15.
-LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 15.
+(Font)                  OT1/cmss/bx/n --> OT1/cmss/m/n on input line 21.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 21.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/cmr/m/it --> OT1/cmss/m/it on input line 15.
+(Font)                  OT1/cmr/m/it --> OT1/cmss/m/it on input line 21.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmr/bx/it --> OT1/cmss/m/it on input line 15.
-LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 15.
+(Font)                  OT1/cmr/bx/it --> OT1/cmss/m/it on input line 21.
+LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 21.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 15.
+(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 21.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 15.
+(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 21.
 LaTeX Font Info:    Overwriting symbol font `numbers' in version `bold'
-(Font)                  OT1/cmss/m/n --> OT1/cmss/b/n on input line 15.
+(Font)                  OT1/cmss/m/n --> OT1/cmss/b/n on input line 21.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
-(Font)                  OT1/cmss/m/it --> OT1/cmss/b/it on input line 15.
+(Font)                  OT1/cmss/m/it --> OT1/cmss/b/it on input line 21.
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `bold'
-(Font)                  OT1/cmss/b/n --> OT1/cmr/b/n on input line 15.
+(Font)                  OT1/cmss/b/n --> OT1/cmr/b/n on input line 21.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  OT1/cmss/b/n --> OT1/cmss/b/n on input line 15.
+(Font)                  OT1/cmss/b/n --> OT1/cmss/b/n on input line 21.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/m/n --> OT1/cmss/b/n on input line 15.
+(Font)                  OT1/cmss/m/n --> OT1/cmss/b/n on input line 21.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmss/m/it --> OT1/cmss/b/it on input line 15.
+(Font)                  OT1/cmss/m/it --> OT1/cmss/b/it on input line 21.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> OT1/cmtt/b/n on input line 15.
-LaTeX Font Info:    Redeclaring symbol font `pureletters' on input line 15.
+(Font)                  OT1/cmtt/m/n --> OT1/cmtt/b/n on input line 21.
+LaTeX Font Info:    Redeclaring symbol font `pureletters' on input line 21.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `normal'
-(Font)                  OT1/cmss/m/it --> OT1/mathkerncmss/m/sl on input line 15.
+(Font)                  OT1/cmss/m/it --> OT1/mathkerncmss/m/sl on input line 21.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
-(Font)                  OT1/cmss/b/it --> OT1/mathkerncmss/m/sl on input line 15.
+(Font)                  OT1/cmss/b/it --> OT1/mathkerncmss/m/sl on input line 21.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
-(Font)                  OT1/mathkerncmss/m/sl --> OT1/mathkerncmss/bx/sl on input line 15.
+(Font)                  OT1/mathkerncmss/m/sl --> OT1/mathkerncmss/bx/sl on input line 21.
  (/usr/share/texlive/texmf-dist/tex/latex/translator/translator-basic-dictionary-English.dict
 Dictionary: translator-basic-dictionary, Language: English 
 ) (/usr/share/texlive/texmf-dist/tex/latex/translator/translator-bibliography-dictionary-English.dict
@@ -702,12 +760,12 @@ Dictionary: translator-numbers-dictionary, Language: English
 ) (/usr/share/texlive/texmf-dist/tex/latex/translator/translator-theorem-dictionary-English.dict
 Dictionary: translator-theorem-dictionary, Language: English 
 ) (./Factual_Acoustic_Analysis_Presentation.nav)
-Overfull \hbox (45.74716pt too wide) in paragraph at lines 15--15
+Overfull \hbox (45.74716pt too wide) in paragraph at lines 21--21
  [][]  \OT1/cmss/m/n/6 ([])  
  []
 
 
-Overfull \hbox (32.57195pt too wide) in paragraph at lines 15--15
+Overfull \hbox (34.83864pt too wide) in paragraph at lines 21--21
  [][][][]  
  []
 
@@ -717,47 +775,41 @@ Overfull \hbox (45.74716pt too wide) has occurred while \output is active
  []
 
 
-Overfull \hbox (32.57195pt too wide) has occurred while \output is active
+Overfull \hbox (34.83864pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-LaTeX Font Info:    Trying to load font information for TS1+cmss on input line 41.
- (/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmss.fd
-File: ts1cmss.fd 2019/12/16 v2.5j Standard LaTeX font definitions
-)
+Overfull \hbox (6.83684pt too wide) in paragraph at lines 53--53
+[][]  
+ []
+
+
 Overfull \hbox (45.74716pt too wide) has occurred while \output is active
  [][]  \OT1/cmss/m/n/6 ([])  
  []
 
 
-Overfull \hbox (32.57195pt too wide) has occurred while \output is active
+Overfull \hbox (34.83864pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [2
 
 ]
-LaTeX Font Info:    Trying to load font information for U+msa on input line 64.
- (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
-File: umsa.fd 2013/01/14 v3.01 AMS symbols A
-)
-LaTeX Font Info:    Trying to load font information for U+msb on input line 64.
- (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
-File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
-LaTeX Font Info:    Trying to load font information for OT1+mathkerncmss on input line 64.
- (/usr/share/texlive/texmf-dist/tex/latex/sansmathaccent/ot1mathkerncmss.fd
-File: ot1mathkerncmss.fd 2020/01/31 Fontinst v1.933 font definitions for OT1/mathkerncmss.
-)
+Overfull \hbox (6.83696pt too wide) in paragraph at lines 88--88
+[][]  
+ []
+
+
 Overfull \hbox (45.74716pt too wide) has occurred while \output is active
  [][]  \OT1/cmss/m/n/6 ([])  
  []
 
 
-Overfull \hbox (32.57195pt too wide) has occurred while \output is active
+Overfull \hbox (34.83864pt too wide) has occurred while \output is active
  [][][][]  
  []
 
@@ -769,157 +821,171 @@ Overfull \hbox (45.74716pt too wide) has occurred while \output is active
  []
 
 
-Overfull \hbox (32.57195pt too wide) has occurred while \output is active
+Overfull \hbox (34.83864pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [4
 
 ]
+LaTeX Font Info:    Trying to load font information for U+msa on input line 130.
+ (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 130.
+ (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+LaTeX Font Info:    Trying to load font information for OT1+mathkerncmss on input line 130.
+ (/usr/share/texlive/texmf-dist/tex/latex/sansmathaccent/ot1mathkerncmss.fd
+File: ot1mathkerncmss.fd 2020/01/31 Fontinst v1.933 font definitions for OT1/mathkerncmss.
+)
 Overfull \hbox (45.74716pt too wide) has occurred while \output is active
  [][]  \OT1/cmss/m/n/6 ([])  
  []
 
 
-Overfull \hbox (32.57195pt too wide) has occurred while \output is active
+Overfull \hbox (34.83864pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [5
 
 ]
-<soft_finger_batch_2_pca_analysis.png, id=167, 1076.823pt x 858.8085pt>
+<soft_finger_batch_2_pca_analysis.png, id=166, 715.473pt x 569.7285pt>
 File: soft_finger_batch_2_pca_analysis.png Graphic file (type png)
 <use soft_finger_batch_2_pca_analysis.png>
-Package pdftex.def Info: soft_finger_batch_2_pca_analysis.png  used on input line 112.
-(pdftex.def)             Requested size: 273.83728pt x 218.39702pt.
+Package pdftex.def Info: soft_finger_batch_2_pca_analysis.png  used on input line 158.
+(pdftex.def)             Requested size: 171.14764pt x 136.27689pt.
+<soft_finger_batch_2_tsne_perplexity_50.png, id=168, 714.5094pt x 569.7285pt>
+File: soft_finger_batch_2_tsne_perplexity_50.png Graphic file (type png)
+<use soft_finger_batch_2_tsne_perplexity_50.png>
+Package pdftex.def Info: soft_finger_batch_2_tsne_perplexity_50.png  used on input line 158.
+(pdftex.def)             Requested size: 171.14764pt x 136.46814pt.
 
 Overfull \hbox (45.74716pt too wide) has occurred while \output is active
  [][]  \OT1/cmss/m/n/6 ([])  
  []
 
 
-Overfull \hbox (32.57195pt too wide) has occurred while \output is active
+Overfull \hbox (34.83864pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [6
 
- <./soft_finger_batch_2_pca_analysis.png>]
-<soft_finger_batch_2_tsne_perplexity_50.png, id=196, 714.5094pt x 569.7285pt>
-File: soft_finger_batch_2_tsne_perplexity_50.png Graphic file (type png)
-<use soft_finger_batch_2_tsne_perplexity_50.png>
-Package pdftex.def Info: soft_finger_batch_2_tsne_perplexity_50.png  used on input line 119.
-(pdftex.def)             Requested size: 273.83728pt x 218.35075pt.
-
+ <./soft_finger_batch_2_pca_analysis.png> <./soft_finger_batch_2_tsne_perplexity_50.png>]
 Overfull \hbox (45.74716pt too wide) has occurred while \output is active
  [][]  \OT1/cmss/m/n/6 ([])  
  []
 
 
-Overfull \hbox (32.57195pt too wide) has occurred while \output is active
+Overfull \hbox (34.83864pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [7
 
- <./soft_finger_batch_2_tsne_perplexity_50.png>]
+]
+<soft_finger_batch_2_classifier_performance.png, id=224, 860.013pt x 569.2467pt>
+File: soft_finger_batch_2_classifier_performance.png Graphic file (type png)
+<use soft_finger_batch_2_classifier_performance.png>
+Package pdftex.def Info: soft_finger_batch_2_classifier_performance.png  used on input line 188.
+(pdftex.def)             Requested size: 342.2953pt x 226.56546pt.
+
+Overfull \vbox (5.49487pt too high) detected at line 188
+ []
+
+
 Overfull \hbox (45.74716pt too wide) has occurred while \output is active
  [][]  \OT1/cmss/m/n/6 ([])  
  []
 
 
-Overfull \hbox (32.57195pt too wide) has occurred while \output is active
+Overfull \hbox (34.83864pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [8
 
-]
-<soft_finger_batch_3_classifier_performance.png, id=252, 860.013pt x 569.2467pt>
-File: soft_finger_batch_3_classifier_performance.png Graphic file (type png)
-<use soft_finger_batch_3_classifier_performance.png>
-Package pdftex.def Info: soft_finger_batch_3_classifier_performance.png  used on input line 156.
-(pdftex.def)             Requested size: 308.06367pt x 203.9037pt.
-
+ <./soft_finger_batch_2_classifier_performance.png>]
+LaTeX Font Info:    Trying to load font information for TS1+cmss on input line 210.
+ (/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmss.fd
+File: ts1cmss.fd 2019/12/16 v2.5j Standard LaTeX font definitions
+)
 Overfull \hbox (45.74716pt too wide) has occurred while \output is active
  [][]  \OT1/cmss/m/n/6 ([])  
  []
 
 
-Overfull \hbox (32.57195pt too wide) has occurred while \output is active
+Overfull \hbox (34.83864pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [9
 
- <./soft_finger_batch_3_classifier_performance.png>]
-Overfull \hbox (2.74637pt too wide) in paragraph at lines 185--185
- [] 
- []
-
-
+]
 Overfull \hbox (45.74716pt too wide) has occurred while \output is active
  [][]  \OT1/cmss/m/n/6 ([])  
  []
 
 
-Overfull \hbox (32.57195pt too wide) has occurred while \output is active
+Overfull \hbox (34.83864pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [10
 
 ]
+Underfull \hbox (badness 1412) in paragraph at lines 278--278
+[]|\OT1/cmss/m/n/8 spectral[]centroid, ul-tra[]high[]energy[]ratio, high[]energy[]ratio, ul-tra[]high[]ratio,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 278--278
+\OT1/cmss/m/n/8 mid[]energy[]ratio, ul-tra[]high[]ratio, low[]mid[]ratio, damp-ing[]ratio, spec-
+ []
+
+
+Underfull \hbox (badness 1721) in paragraph at lines 278--278
+[]|\OT1/cmss/m/n/8 high[]freq[]slope, spec-tral[]contrast[]0, spec-tral[]contrast[]1, spec-tral[]contrast[]2,
+ []
+
+
 Overfull \hbox (45.74716pt too wide) has occurred while \output is active
  [][]  \OT1/cmss/m/n/6 ([])  
  []
 
 
-Overfull \hbox (32.57195pt too wide) has occurred while \output is active
+Overfull \hbox (34.83864pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [11
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 263--263
-[]|\OT1/cmss/m/n/8 freq[]response[]spread,
+Underfull \hbox (badness 1092) in paragraph at lines 308--308
+[]|\OT1/cmss/m/n/8 env[]min, res-o-nance[]high[]ratio, damp-ing[]ratio,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 263--263
-[]|\OT1/cmss/m/n/8 freq[]response[]spread,
+Underfull \hbox (badness 10000) in paragraph at lines 308--308
+[]|\OT1/cmss/m/n/8 spectral[]bandwidth, env[]decay[]rate, spec-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 263--263
-[]|\OT1/cmss/m/n/8 spectral[]centroid, spec-
+Underfull \hbox (badness 10000) in paragraph at lines 308--308
+[]|\OT1/cmss/m/n/8 resonance[]skewness, spec-tral[]contrast[]4,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 263--263
-[]|\OT1/cmss/m/n/8 spectral[]centroid, spec-
+Underfull \hbox (badness 10000) in paragraph at lines 308--308
+[]|\OT1/cmss/m/n/8 ultra[]high[]energy[]ratio, ul-tra[]high[]ratio,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 263--263
-[]|\OT1/cmss/m/n/8 high[]energy[]ratio, ul-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 263--263
-[]|\OT1/cmss/m/n/8 high[]energy[]ratio, ul-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 263--263
-[]|\OT1/cmss/m/n/8 spectral[]centroid, spec-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 263--263
-[]|\OT1/cmss/m/n/8 spectral[]centroid, spec-
+Underfull \hbox (badness 10000) in paragraph at lines 308--308
+\OT1/cmss/m/n/8 spec-tral[]bandwidth, spec-tral[]flatness,
  []
 
 
@@ -928,7 +994,7 @@ Overfull \hbox (45.74716pt too wide) has occurred while \output is active
  []
 
 
-Overfull \hbox (32.57195pt too wide) has occurred while \output is active
+Overfull \hbox (34.83864pt too wide) has occurred while \output is active
  [][][][]  
  []
 
@@ -940,7 +1006,7 @@ Overfull \hbox (45.74716pt too wide) has occurred while \output is active
  []
 
 
-Overfull \hbox (32.57195pt too wide) has occurred while \output is active
+Overfull \hbox (34.83864pt too wide) has occurred while \output is active
  [][][][]  
  []
 
@@ -952,7 +1018,7 @@ Overfull \hbox (45.74716pt too wide) has occurred while \output is active
  []
 
 
-Overfull \hbox (32.57195pt too wide) has occurred while \output is active
+Overfull \hbox (34.83864pt too wide) has occurred while \output is active
  [][][][]  
  []
 
@@ -964,7 +1030,7 @@ Overfull \hbox (45.74716pt too wide) has occurred while \output is active
  []
 
 
-Overfull \hbox (32.57195pt too wide) has occurred while \output is active
+Overfull \hbox (34.83864pt too wide) has occurred while \output is active
  [][][][]  
  []
 
@@ -985,18 +1051,18 @@ Package rerunfilecheck Info: File `Factual_Acoustic_Analysis_Presentation.out' h
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 22012 strings out of 480247
- 432653 string characters out of 5896150
- 685693 words of memory out of 5000000
- 39449 multiletter control sequences out of 15000+600000
- 480885 words of font info for 69 fonts, out of 8000000 for 9000
+ 25315 strings out of 480247
+ 511154 string characters out of 5896150
+ 754952 words of memory out of 5000000
+ 42698 multiletter control sequences out of 15000+600000
+ 479188 words of font info for 63 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 128i,15n,122p,506b,562s stack positions out of 5000i,500n,10000p,200000b,80000s
- </home/georg/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/tcss1095.600pk></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi10.pfb>
-Output written on Factual_Acoustic_Analysis_Presentation.pdf (15 pages, 1134882 bytes).
+ 128i,15n,122p,506b,740s stack positions out of 5000i,500n,10000p,200000b,80000s
+ </home/georg/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/tcss1095.600pk></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
+Output written on Factual_Acoustic_Analysis_Presentation.pdf (15 pages, 941481 bytes).
 PDF statistics:
- 479 PDF objects out of 1000 (max. 8388607)
- 423 compressed objects within 5 object streams
+ 497 PDF objects out of 1000 (max. 8388607)
+ 433 compressed objects within 5 object streams
  31 named destinations out of 1000 (max. 500000)
- 100 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 142 words of extra memory for PDF output out of 10000 (max. 10000000)
 

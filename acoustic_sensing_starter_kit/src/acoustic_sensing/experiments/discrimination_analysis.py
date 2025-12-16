@@ -4,14 +4,58 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
+from sklearn.ensemble import (
+    RandomForestClassifier,
+    GradientBoostingClassifier,
+    VotingClassifier,
+    ExtraTreesClassifier,
+    AdaBoostClassifier,
+)
 from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.linear_model import LogisticRegression
-from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+from sklearn.discriminant_analysis import (
+    LinearDiscriminantAnalysis,
+    QuadraticDiscriminantAnalysis,
+)
+from sklearn.naive_bayes import GaussianNB
+import xgboost as xgb
+from sklearn.base import BaseEstimator, ClassifierMixin
+
+
+class XGBoostWrapper(BaseEstimator, ClassifierMixin):
+    """XGBoost wrapper that handles string labels."""
+
+    def __init__(self, n_estimators=100, random_state=42, eval_metric="mlogloss"):
+        self.n_estimators = n_estimators
+        self.random_state = random_state
+        self.eval_metric = eval_metric
+        self.label_encoder = LabelEncoder()
+        self.model = None
+
+    def fit(self, X, y):
+        # Encode string labels to numeric
+        y_encoded = self.label_encoder.fit_transform(y)
+        self.model = xgb.XGBClassifier(
+            n_estimators=self.n_estimators,
+            random_state=self.random_state,
+            eval_metric=self.eval_metric,
+        )
+        self.model.fit(X, y_encoded)
+        return self
+
+    def predict(self, X):
+        # Predict numeric labels and convert back to original labels
+        y_pred_encoded = self.model.predict(X)
+        return self.label_encoder.inverse_transform(y_pred_encoded)
+
+    def predict_proba(self, X):
+        return self.model.predict_proba(X)
+
+
 from sklearn.model_selection import cross_val_score, StratifiedKFold
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.base import clone
 import os
 
@@ -166,17 +210,31 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
             "K-NN": KNeighborsClassifier(n_neighbors=5),
             "Logistic Regression": LogisticRegression(random_state=42, max_iter=1000),
             "Gradient Boosting": GradientBoostingClassifier(random_state=42),
+            "Extra Trees": ExtraTreesClassifier(n_estimators=100, random_state=42),
+            "AdaBoost": AdaBoostClassifier(n_estimators=100, random_state=42),
+            "XGBoost": XGBoostWrapper(
+                n_estimators=100, random_state=42, eval_metric="mlogloss"
+            ),
+            "Naive Bayes": GaussianNB(),
+            "Quadratic Discriminant Analysis": QuadraticDiscriminantAnalysis(),
         }
 
         if self.config.get("include_lda", True):
             classifiers["Linear Discriminant Analysis"] = LinearDiscriminantAnalysis()
 
+        # Add ensemble classifier combining Random Forest and SVM
+        rf_clf = RandomForestClassifier(n_estimators=100, random_state=42)
+        svm_clf = SVC(
+            kernel="rbf", probability=True, random_state=42
+        )  # probability=True for soft voting
+        classifiers["Ensemble (RF + SVM)"] = VotingClassifier(
+            estimators=[("rf", rf_clf), ("svm", svm_clf)], voting="soft"
+        )
+
         return classifiers
 
     def _save_batch_discrimination_results(self, batch_results: dict, batch_name: str):
-        """Save detailed discrimination results for a specific batch."""
         import json
-        import os
 
         # Create batch-specific output directory
         batch_output_dir = os.path.join(self.experiment_output_dir, batch_name)

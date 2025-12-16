@@ -298,15 +298,13 @@ class DimensionalityReductionExperiment(BaseExperiment):
         # 2D PCA plot colored by class
         unique_classes = np.unique(y)
         for cls in unique_classes:
-            # Extract base class name (everything before first underscore)
-            base_cls = cls.split("_")[0] if "_" in cls else cls
             mask = y == cls
-            color = color_map.get(base_cls, default_color)
+            color = color_map.get(cls, default_color)
             ax.scatter(
                 X_pca[mask, 0],
                 X_pca[mask, 1],
                 c=color,
-                label=base_cls,  # Use base class name in legend
+                label=cls,  # Use full class name in legend
                 alpha=0.7,
                 s=50,
             )
@@ -346,15 +344,13 @@ class DimensionalityReductionExperiment(BaseExperiment):
         # Plot colored by class
         unique_classes = np.unique(y)
         for cls in unique_classes:
-            # Extract base class name (everything before first underscore)
-            base_cls = cls.split("_")[0] if "_" in cls else cls
             mask = y == cls
-            color = color_map.get(base_cls, default_color)
+            color = color_map.get(cls, default_color)
             ax.scatter(
                 X_tsne[mask, 0],
                 X_tsne[mask, 1],
                 c=color,
-                label=base_cls,  # Use base class name in legend
+                label=cls,  # Use full class name in legend
                 alpha=0.7,
                 s=50,
             )
@@ -381,8 +377,8 @@ class DimensionalityReductionExperiment(BaseExperiment):
 
         # Fixed color map for base class names (strip numbers after underscore)
         color_map = {
-            "surface": "red",
-            "no_surface": "blue",
+            "contact": "red",
+            "no_contact": "blue",
             "edge": "green",
         }
         default_color = "gray"  # For any other labels
@@ -390,15 +386,13 @@ class DimensionalityReductionExperiment(BaseExperiment):
         # Plot colored by class
         unique_classes = np.unique(y)
         for cls in unique_classes:
-            # Extract base class name (everything before first underscore)
-            base_cls = cls.split("_")[0] if "_" in cls else cls
             mask = y == cls
-            color = color_map.get(base_cls, default_color)
+            color = color_map.get(cls, default_color)
             ax.scatter(
                 X_umap[mask, 0],
                 X_umap[mask, 1],
                 c=color,
-                label=base_cls,  # Use base class name in legend
+                label=cls,  # Use full class name in legend
                 alpha=0.7,
                 s=50,
             )

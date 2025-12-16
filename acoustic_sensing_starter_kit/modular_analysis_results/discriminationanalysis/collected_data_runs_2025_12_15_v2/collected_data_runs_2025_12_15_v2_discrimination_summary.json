@@ -1,0 +1,50 @@
+{
+  "batch_name": "collected_data_runs_2025_12_15_v2",
+  "num_samples": 3590,
+  "num_classes": 3,
+  "classes": [
+    "contact",
+    "edge",
+    "no_contact"
+  ],
+  "best_classifier": {
+    "name": "Random Forest",
+    "mean_accuracy": 0.7295264623955432,
+    "std_accuracy": 0.005090715009052118
+  },
+  "worst_classifier": {
+    "name": "K-NN",
+    "mean_accuracy": 0.6866295264623956,
+    "std_accuracy": 0.010752233462740252
+  },
+  "all_classifiers_performance": {
+    "Random Forest": {
+      "mean_accuracy": 0.7295264623955432,
+      "std_accuracy": 0.005090715009052118
+    },
+    "SVM (RBF)": {
+      "mean_accuracy": 0.7239554317548746,
+      "std_accuracy": 0.0013646182411048411
+    },
+    "SVM (Linear)": {
+      "mean_accuracy": 0.724233983286908,
+      "std_accuracy": 0.0
+    },
+    "K-NN": {
+      "mean_accuracy": 0.6866295264623956,
+      "std_accuracy": 0.010752233462740252
+    },
+    "Logistic Regression": {
+      "mean_accuracy": 0.7225626740947074,
+      "std_accuracy": 0.0010422443974300514
+    },
+    "Gradient Boosting": {
+      "mean_accuracy": 0.7217270194986073,
+      "std_accuracy": 0.007123516352392457
+    },
+    "Linear Discriminant Analysis": {
+      "mean_accuracy": 0.7222841225626742,
+      "std_accuracy": 0.002262963343909737
+    }
+  }
+}
