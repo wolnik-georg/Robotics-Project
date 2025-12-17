@@ -1,0 +1,74 @@
+{
+  "batch_name": "collected_data_runs_validate_2025_12_16_v3_static_reference",
+  "num_samples": 910,
+  "num_classes": 3,
+  "classes": [
+    "contact",
+    "edge",
+    "no_contact"
+  ],
+  "best_classifier": {
+    "name": "SVM (Linear)",
+    "mean_accuracy": 0.9824175824175825,
+    "std_accuracy": 0.005383493940182844
+  },
+  "worst_classifier": {
+    "name": "Naive Bayes",
+    "mean_accuracy": 0.7791208791208791,
+    "std_accuracy": 0.07850800483293076
+  },
+  "all_classifiers_performance": {
+    "Random Forest": {
+      "mean_accuracy": 0.9747252747252748,
+      "std_accuracy": 0.013725270326150322
+    },
+    "SVM (RBF)": {
+      "mean_accuracy": 0.9505494505494505,
+      "std_accuracy": 0.017375151978947127
+    },
+    "SVM (Linear)": {
+      "mean_accuracy": 0.9824175824175825,
+      "std_accuracy": 0.005383493940182844
+    },
+    "K-NN": {
+      "mean_accuracy": 0.8747252747252746,
+      "std_accuracy": 0.03076923076923077
+    },
+    "Logistic Regression": {
+      "mean_accuracy": 0.976923076923077,
+      "std_accuracy": 0.00879120879120879
+    },
+    "Gradient Boosting": {
+      "mean_accuracy": 0.9736263736263735,
+      "std_accuracy": 0.013186813186813178
+    },
+    "Extra Trees": {
+      "mean_accuracy": 0.9648351648351647,
+      "std_accuracy": 0.014578570507056703
+    },
+    "AdaBoost": {
+      "mean_accuracy": 0.9538461538461538,
+      "std_accuracy": 0.013278072498455569
+    },
+    "XGBoost": {
+      "mean_accuracy": 0.9758241758241759,
+      "std_accuracy": 0.014158350249148488
+    },
+    "Naive Bayes": {
+      "mean_accuracy": 0.7791208791208791,
+      "std_accuracy": 0.07850800483293076
+    },
+    "Quadratic Discriminant Analysis": {
+      "mean_accuracy": 0.9703296703296702,
+      "std_accuracy": 0.01652010591029988
+    },
+    "Linear Discriminant Analysis": {
+      "mean_accuracy": 0.9747252747252746,
+      "std_accuracy": 0.004395604395604381
+    },
+    "Ensemble (RF + SVM)": {
+      "mean_accuracy": 0.9648351648351647,
+      "std_accuracy": 0.01019078955548978
+    }
+  }
+}

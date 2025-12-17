@@ -12,6 +12,9 @@ from sklearn.metrics import classification_report, confusion_matrix
 from sklearn.linear_model import LogisticRegression
 import os
 from scipy.signal import butter, filtfilt  # Add for audio smoothing
+from pathlib import Path
+import librosa
+from acoustic_sensing.core.motion_artifact_removal import apply_motion_artifact_removal
 
 
 class DataProcessingExperiment(BaseExperiment):
@@ -57,7 +60,7 @@ class DataProcessingExperiment(BaseExperiment):
         available_batches = [
             d
             for d in os.listdir(data_dir_path)
-            if (d == "collected_data_runs_validate_2025_12_16_v2_simple")
+            if (d == "balanced_collected_data_2025_12_16_v3_undersample")
             and os.path.isdir(os.path.join(data_dir_path, d))
         ]
 
@@ -87,6 +90,31 @@ class DataProcessingExperiment(BaseExperiment):
                 )
 
                 if len(audio_data) > 0:
+                    # Apply motion artifact removal if enabled
+                    motion_removal_config = self.config.get(
+                        "motion_artifact_removal", {}
+                    )
+                    if motion_removal_config.get("enabled", False):
+                        static_dir = Path(
+                            f"/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/{base_data_dir}/collected_data_runs_validate_2025_12_16_v3_static_reference/data"
+                        )
+                        self.logger.info("Applying motion artifact removal...")
+                        audio_data = apply_motion_artifact_removal(
+                            audio_data, np.array(labels), static_dir, sr=48000
+                        )
+                        self.logger.info("Motion artifact removal completed")
+
+                        # Create motion artifact removal comparison plots
+                        self._create_motion_artifact_comparison_plots(
+                            audio_data,
+                            labels,
+                            static_dir,
+                            batch_name,
+                            self.experiment_output_dir,
+                        )
+                    else:
+                        self.logger.info("Motion artifact removal disabled")
+
                     self.logger.info(
                         f"Extracting features from {len(audio_data)} audio samples..."
                     )
@@ -774,3 +802,267 @@ Feature Statistics:
 
         except Exception as e:
             self.logger.warning(f"Failed to create spectrogram for {batch_name}: {e}")
+
+    def _apply_motion_artifact_removal_to_single_audio(
+        self, audio: np.ndarray, template: np.ndarray
+    ) -> np.ndarray:
+        """Apply motion artifact removal to a single audio signal (helper for validation)."""
+        from acoustic_sensing.core.motion_artifact_removal import (
+            _static_subtraction,
+            _lms_adaptive_filter,
+        )
+
+        # Apply the same 2-stage pipeline used in the main processing
+        clean1 = _static_subtraction(audio, template)
+        clean_final = _lms_adaptive_filter(clean1, template)
+
+        # Pad back to original length if necessary
+        if len(clean_final) < len(audio):
+            clean_final = np.pad(
+                clean_final, (0, len(audio) - len(clean_final)), "constant"
+            )
+
+        return clean_final.astype(np.float32)
+
+    def _calculate_snr(self, signal: np.ndarray, noise: np.ndarray) -> float:
+        """Calculate Signal-to-Noise Ratio in dB."""
+        # Ensure same length
+        min_len = min(len(signal), len(noise))
+        signal = signal[:min_len]
+        noise = noise[:min_len]
+
+        # Calculate signal power
+        signal_power = np.mean(signal**2)
+
+        # Calculate noise power (using the static reference as noise estimate)
+        noise_power = np.mean(noise**2)
+
+        # Avoid division by zero
+        if noise_power < 1e-10:
+            return float("inf")
+
+        # Calculate SNR in dB
+        snr = 10 * np.log10(signal_power / noise_power)
+        return snr
+
+    def _create_motion_artifact_comparison_plots(
+        self,
+        audio_data: np.ndarray,
+        labels: np.ndarray,
+        static_dir: Path,
+        batch_name: str,
+        output_dir: str,
+    ):
+        """Create before/after comparison spectrograms for motion artifact removal with quantitative validation."""
+        try:
+            # Import required libraries
+            import librosa.display
+            from acoustic_sensing.core.motion_artifact_removal import (
+                compute_static_templates,
+                remove_motion_artifacts,
+            )
+
+            # Create batch-specific output directory
+            batch_output_dir = os.path.join(output_dir, batch_name)
+            os.makedirs(batch_output_dir, exist_ok=True)
+
+            # Get unique classes
+            unique_labels = np.unique(labels)
+
+            # Store validation metrics
+            validation_results = {}
+
+            for class_name in unique_labels:
+                if class_name not in ["contact", "edge", "no_contact"]:
+                    continue
+
+                # Find recordings of this class
+                class_mask = labels == class_name
+                class_indices = np.where(class_mask)[0]
+
+                if len(class_indices) == 0:
+                    continue
+
+                # Use the first recording of this class as example
+                example_idx = class_indices[0]
+                original_audio = audio_data[example_idx]  # This is already cleaned!
+
+                # We need the original uncleaned audio for comparison
+                # Load it from the raw data before motion artifact removal
+                base_data_dir = self.config.get("base_data_dir", "data")
+                batch_data_dir = f"/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/{base_data_dir}/{batch_name}/data"
+
+                # Find the corresponding WAV file
+                wav_files = [
+                    f for f in os.listdir(batch_data_dir) if f.endswith(".wav")
+                ]
+                # Match by index - this is approximate but works for validation
+                if example_idx < len(wav_files):
+                    raw_audio_file = os.path.join(
+                        batch_data_dir, wav_files[example_idx]
+                    )
+                    raw_audio, _ = librosa.load(raw_audio_file, sr=48000)
+                else:
+                    self.logger.warning(
+                        f"Could not find corresponding raw audio file for index {example_idx}"
+                    )
+                    continue
+
+                # Load corresponding static reference
+                static_files = list(static_dir.glob(f"*_{class_name}.wav"))
+                if not static_files:
+                    self.logger.warning(f"No static reference found for {class_name}")
+                    continue
+
+                # Use first static reference as example
+                static_audio, _ = librosa.load(static_files[0], sr=48000)
+
+                # Apply motion artifact removal to get the cleaned version
+                if class_name in templates:
+                    template = templates[class_name]
+                    # Apply the same processing that was done during data loading
+                    clean_audio = self._apply_motion_artifact_removal_to_single_audio(
+                        raw_audio, template
+                    )
+                else:
+                    clean_audio = raw_audio.copy()
+
+                # Calculate quantitative metrics
+                snr_before = self._calculate_snr(raw_audio, static_audio)
+                snr_after = self._calculate_snr(clean_audio, static_audio)
+                noise_reduction_db = snr_after - snr_before
+
+                # Store validation results
+                validation_results[class_name] = {
+                    "snr_before": snr_before,
+                    "snr_after": snr_after,
+                    "noise_reduction_db": noise_reduction_db,
+                    "rms_noise_removed": np.sqrt(
+                        np.mean((raw_audio - clean_audio) ** 2)
+                    ),
+                }
+
+                # Create comparison plot
+                fig, axes = plt.subplots(4, 1, figsize=(12, 16))
+
+                # 1. Original recording spectrogram (raw, uncleaned)
+                D_orig = librosa.stft(raw_audio, n_fft=2048, hop_length=512)
+                S_db_orig = librosa.amplitude_to_db(np.abs(D_orig), ref=np.max)
+                img1 = librosa.display.specshow(
+                    S_db_orig,
+                    sr=48000,
+                    hop_length=512,
+                    x_axis="time",
+                    y_axis="log",
+                    ax=axes[0],
+                    cmap="viridis",
+                )
+                axes[0].set_title(f"Original Recording (Raw) - {class_name}")
+                axes[0].set_xlabel("")
+
+                # 2. Static reference spectrogram
+                D_static = librosa.stft(static_audio, n_fft=2048, hop_length=512)
+                S_db_static = librosa.amplitude_to_db(np.abs(D_static), ref=np.max)
+                img2 = librosa.display.specshow(
+                    S_db_static,
+                    sr=48000,
+                    hop_length=512,
+                    x_axis="time",
+                    y_axis="log",
+                    ax=axes[1],
+                    cmap="viridis",
+                )
+                axes[1].set_title(f"Static Reference (Noise Template) - {class_name}")
+                axes[1].set_xlabel("")
+
+                # 3. Cleaned recording spectrogram
+                D_clean = librosa.stft(clean_audio, n_fft=2048, hop_length=512)
+                S_db_clean = librosa.amplitude_to_db(np.abs(D_clean), ref=np.max)
+                img3 = librosa.display.specshow(
+                    S_db_clean,
+                    sr=48000,
+                    hop_length=512,
+                    x_axis="time",
+                    y_axis="log",
+                    ax=axes[2],
+                    cmap="viridis",
+                )
+                axes[2].set_title(f"After Motion Artifact Removal - {class_name}")
+                axes[2].set_xlabel("")
+
+                # 4. What was removed - show the difference
+                noise_removed = raw_audio - clean_audio
+                D_removed = librosa.stft(noise_removed, n_fft=2048, hop_length=512)
+                S_db_removed = librosa.amplitude_to_db(np.abs(D_removed), ref=np.max)
+                img4 = librosa.display.specshow(
+                    S_db_removed,
+                    sr=48000,
+                    hop_length=512,
+                    x_axis="time",
+                    y_axis="log",
+                    ax=axes[3],
+                    cmap="plasma",
+                )
+                axes[3].set_title(f"Removed Robot Noise (Raw - Clean) - {class_name}")
+
+                # Add colorbar to the last subplot
+                fig.colorbar(
+                    img4,
+                    ax=axes,
+                    format="%+2.0f dB",
+                    label="Amplitude (dB)",
+                    shrink=0.8,
+                )
+
+                # Add quantitative metrics as text
+                metrics_text = f"""
+SNR Before: {snr_before:.1f} dB
+SNR After: {snr_after:.1f} dB
+Noise Reduction: {noise_reduction_db:.1f} dB
+RMS Noise Removed: {validation_results[class_name]['rms_noise_removed']:.4f}
+"""
+
+                fig.text(
+                    0.02,
+                    0.98,
+                    metrics_text,
+                    transform=fig.transFigure,
+                    fontsize=10,
+                    verticalalignment="top",
+                    bbox=dict(boxstyle="round", facecolor="wheat", alpha=0.8),
+                )
+
+                plt.suptitle(
+                    f"Motion Artifact Removal Validation - {batch_name} ({class_name})",
+                    fontsize=14,
+                    y=0.98,
+                )
+                plt.tight_layout()
+
+                # Save the comparison plot
+                output_path = os.path.join(
+                    batch_output_dir,
+                    f"{batch_name}_motion_artifact_validation_{class_name}.png",
+                )
+                plt.savefig(output_path, dpi=300, bbox_inches="tight")
+                plt.close()
+
+                self.logger.info(
+                    f"Motion artifact validation plot saved: {output_path}"
+                )
+
+            # Save validation metrics
+            if validation_results:
+                validation_path = os.path.join(
+                    batch_output_dir, f"{batch_name}_motion_artifact_metrics.json"
+                )
+                import json
+
+                with open(validation_path, "w") as f:
+                    json.dump(validation_results, f, indent=2)
+                self.logger.info(f"Validation metrics saved: {validation_path}")
+
+        except Exception as e:
+            self.logger.warning(
+                f"Failed to create motion artifact comparison plots: {e}"
+            )

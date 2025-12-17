@@ -1,0 +1,74 @@
+{
+  "batch_name": "collected_data_runs_2025_12_16_v3",
+  "num_samples": 3121,
+  "num_classes": 3,
+  "classes": [
+    "contact",
+    "edge",
+    "no_contact"
+  ],
+  "best_classifier": {
+    "name": "XGBoost",
+    "mean_accuracy": 0.8635041025641026,
+    "std_accuracy": 0.0051381328519678115
+  },
+  "worst_classifier": {
+    "name": "Naive Bayes",
+    "mean_accuracy": 0.5056020512820513,
+    "std_accuracy": 0.03628007190034242
+  },
+  "all_classifiers_performance": {
+    "Random Forest": {
+      "mean_accuracy": 0.8231302564102563,
+      "std_accuracy": 0.016395602543807022
+    },
+    "SVM (RBF)": {
+      "mean_accuracy": 0.7850046153846153,
+      "std_accuracy": 0.008386251294969612
+    },
+    "SVM (Linear)": {
+      "mean_accuracy": 0.7782810256410257,
+      "std_accuracy": 0.012592081520871405
+    },
+    "K-NN": {
+      "mean_accuracy": 0.6949692307692308,
+      "std_accuracy": 0.005529061348469099
+    },
+    "Logistic Regression": {
+      "mean_accuracy": 0.7580923076923076,
+      "std_accuracy": 0.013972028504806262
+    },
+    "Gradient Boosting": {
+      "mean_accuracy": 0.8289005128205128,
+      "std_accuracy": 0.010313701450344482
+    },
+    "Extra Trees": {
+      "mean_accuracy": 0.8212082051282051,
+      "std_accuracy": 0.013159042748188488
+    },
+    "AdaBoost": {
+      "mean_accuracy": 0.738868717948718,
+      "std_accuracy": 0.010206551814116937
+    },
+    "XGBoost": {
+      "mean_accuracy": 0.8635041025641026,
+      "std_accuracy": 0.0051381328519678115
+    },
+    "Naive Bayes": {
+      "mean_accuracy": 0.5056020512820513,
+      "std_accuracy": 0.03628007190034242
+    },
+    "Quadratic Discriminant Analysis": {
+      "mean_accuracy": 0.7263641025641026,
+      "std_accuracy": 0.020924136788138478
+    },
+    "Linear Discriminant Analysis": {
+      "mean_accuracy": 0.7712297435897435,
+      "std_accuracy": 0.008491537590500768
+    },
+    "Ensemble (RF + SVM)": {
+      "mean_accuracy": 0.8096758974358975,
+      "std_accuracy": 0.015818056128085685
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "pca_analysis": {
+    "avg_components_for_95_variance": 14.0,
+    "std_components_for_95_variance": 0.0,
+    "min_components_needed": "14",
+    "max_components_needed": "14"
+  },
+  "tsne_analysis": {
+    "avg_silhouette_score": -0.01887124963104725,
+    "std_silhouette_score": 0.0,
+    "best_silhouette_score": -0.01887124963104725,
+    "worst_silhouette_score": -0.01887124963104725
+  },
+  "batch_summaries": {
+    "balanced_collected_data_2025_12_16_v3_oversample": {
+      "num_samples": 0,
+      "original_dimensions": 0,
+      "pca_components_95": "14",
+      "first_component_variance": 0.389945813427975,
+      "tsne_silhouette": -0.01887124963104725
+    }
+  },
+  "num_batches_analyzed": 1,
+  "per_batch_insights": {
+    "balanced_collected_data_2025_12_16_v3_oversample": {
+      "original_dimensions": 0,
+      "num_samples": 0,
+      "pca_components_for_95_variance": "14",
+      "first_component_variance": 0.389945813427975,
+      "tsne_silhouette_score": -0.01887124963104725
+    }
+  }
+}

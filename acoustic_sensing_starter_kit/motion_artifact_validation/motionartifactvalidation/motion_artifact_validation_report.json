@@ -1,0 +1,28 @@
+{
+  "validation_summary": {
+    "total_batches_tested": 1,
+    "average_improvement": 0.0,
+    "validation_confidence": "insufficient_evidence"
+  },
+  "ab_testing_results": {
+    "balanced_collected_data_2025_12_16_v3_undersample": {
+      "accuracy_with_removal": 0.6606741573033708,
+      "accuracy_without_removal": 0.6606741573033708,
+      "improvement": 0.0
+    }
+  },
+  "quantitative_metrics": {
+    "balanced_collected_data_2025_12_16_v3_undersample": {
+      "edge": {
+        "mean_snr_before": "4.8260126",
+        "mean_snr_after": "77.71038",
+        "mean_noise_reduction": "72.88437",
+        "std_noise_reduction": "0.0",
+        "n_samples": 1
+      }
+    }
+  },
+  "recommendations": [
+    "Insufficient evidence of motion artifact removal effectiveness. Further validation needed."
+  ]
+}
