@@ -33,6 +33,81 @@ class DimensionalityReductionExperiment(BaseExperiment):
         # Load per-batch data from previous experiment
         batch_results = self.load_shared_data(shared_data, "batch_results")
 
+        # Check if validation datasets are specified
+        validation_datasets = shared_data.get("validation_datasets", [])
+        training_datasets = shared_data.get(
+            "training_datasets", list(batch_results.keys())
+        )
+
+        # COMBINE ALL DATASETS (either training only, or all if no validation)
+        if validation_datasets:
+            self.logger.info(f"✓ Using training datasets only: {training_datasets}")
+            datasets_to_use = training_datasets
+        else:
+            self.logger.info(f"✓ Combining all datasets: {list(batch_results.keys())}")
+            datasets_to_use = list(batch_results.keys())
+
+        # Combine datasets
+        X_combined_list = []
+        y_combined_list = []
+
+        for dataset_name in datasets_to_use:
+            if dataset_name in batch_results:
+                X_combined_list.append(batch_results[dataset_name]["features"])
+                y_combined_list.append(batch_results[dataset_name]["labels"])
+
+        X_combined = np.vstack(X_combined_list) if X_combined_list else np.array([])
+        y_combined = (
+            np.concatenate(y_combined_list) if y_combined_list else np.array([])
+        )
+
+        self.logger.info(
+            f"✓ Combined data: {len(X_combined)} samples, {X_combined.shape[1]} features"
+        )
+        self.logger.info(
+            f"✓ Class distribution: {dict(zip(*np.unique(y_combined, return_counts=True)))}"
+        )
+
+        # Process combined dataset
+        unique_classes = np.unique(y_combined)
+        if len(unique_classes) < 2:
+            self.logger.warning("Insufficient classes for dimensionality reduction")
+            return {"error": "Insufficient classes"}
+
+        try:
+            # Perform dimensionality reduction on COMBINED data
+            combined_reduction_results = self._perform_batch_dimensionality_reduction(
+                X_combined,
+                y_combined,
+                "combined_datasets",
+                {"classes": sorted(list(set(y_combined)))},
+            )
+            per_batch_results = {"combined_datasets": combined_reduction_results}
+
+        except Exception as e:
+            self.logger.error(f"Error processing combined datasets: {str(e)}")
+            return {"error": str(e)}
+
+        # Aggregate results
+        aggregated_results = self._aggregate_reduction_results(per_batch_results)
+
+        results = {
+            "per_batch_results": per_batch_results,
+            "aggregated_results": aggregated_results,
+            "total_batches_analyzed": 1,  # One combined dataset
+            "datasets_combined": datasets_to_use,
+        }
+
+        # Save summary
+        self._save_dimensionality_reduction_summary(
+            per_batch_results, aggregated_results
+        )
+
+        self.logger.info("Dimensionality reduction experiment completed")
+        return results
+
+    def _OLD_run_per_batch(self, batch_results):
+        """OLD METHOD - runs analysis on each batch separately (DEPRECATED)"""
         per_batch_results = {}
 
         for batch_name, batch_data in batch_results.items():

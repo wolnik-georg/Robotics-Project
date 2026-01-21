@@ -1,0 +1,55 @@
+# Example 1: Single Dataset (or multiple combined without validation)
+# All datasets are combined, then split into train/test
+
+base_data_dir: "data"
+
+output:
+  base_dir: "single_dataset_results"
+  run_name: "combined_datasets_analysis"
+
+multi_dataset_training:
+  enabled: false
+
+# All datasets will be combined for train/test split
+datasets:
+  - "balanced_dataset_workspace1_undersample"
+  - "balanced_dataset_workspace2_undersample"
+  - "balanced_dataset_workspace3_undersample"
+
+# No validation datasets specified - will use cross-validation
+validation_datasets: []
+
+experiments:
+  data_processing:
+    enabled: true
+    include_impulse_features: true
+    apply_audio_smoothing: false
+    motion_artifact_removal:
+      enabled: false
+
+  dimensionality_reduction:
+    enabled: true
+    pca_enabled: true
+    tsne_enabled: true
+    tsne_perplexity_values: [30]
+
+  discrimination_analysis:
+    enabled: true
+
+  saliency_analysis:
+    enabled: false
+
+  feature_ablation:
+    enabled: false
+
+  impulse_response:
+    enabled: false
+
+  frequency_band_ablation:
+    enabled: false
+
+  multi_dataset_training:
+    enabled: false
+
+  surface_reconstruction:
+    enabled: false

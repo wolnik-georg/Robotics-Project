@@ -1,0 +1,13 @@
+{
+  "batch_name": "balanced_collected_data_runs_2026_01_15_workspace1_undersample",
+  "num_samples": 3000,
+  "original_dimensions": 38,
+  "num_classes": 3,
+  "analysis_methods": [
+    "PCA",
+    "t-SNE"
+  ],
+  "pca_components_95": 13,
+  "first_component_variance": 0.35740839956154447,
+  "best_tsne_silhouette": 0.04640761390328407
+}

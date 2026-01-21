@@ -73,7 +73,6 @@ def setup_logging(verbose: bool = False):
     import logging
 
     level = logging.DEBUG if verbose else logging.INFO
-
     logging.basicConfig(
         level=level,
         format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
@@ -143,6 +142,20 @@ def main():
     config_file, output_dir = validate_paths(args.config_file, args.output_dir)
 
     try:
+        # Load config to check for custom output directory
+        import yaml
+
+        with open(config_file, "r") as f:
+            config = yaml.safe_load(f)
+
+        # Use output directory from config if specified, otherwise use command line arg
+        if "output" in config and "base_dir" in config["output"]:
+            output_dir = os.path.abspath(config["output"]["base_dir"])
+            Path(output_dir).mkdir(parents=True, exist_ok=True)
+            print(f"📂 Output directory (from config): {output_dir}")
+        else:
+            print(f"📂 Output directory: {output_dir}")
+
         # Initialize orchestrator
         print(f"🚀 Initializing Experiment Orchestrator...")
         print(f"📋 Config: {config_file}")

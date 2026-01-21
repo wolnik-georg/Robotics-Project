@@ -105,6 +105,22 @@ class BaseExperiment(ABC):
         self.logger.info(f"Results saved to: {filepath}")
         return filepath
 
+    def save_plot(self, fig, filename: str) -> str:
+        """
+        Save matplotlib figure to file.
+
+        Args:
+            fig: Matplotlib figure object
+            filename: Name of the output file (e.g., 'plot.png')
+
+        Returns:
+            Path to saved file
+        """
+        filepath = os.path.join(self.experiment_output_dir, filename)
+        fig.savefig(filepath, dpi=300, bbox_inches="tight")
+        self.logger.info(f"Plot saved to: {filepath}")
+        return filepath
+
     def load_shared_data(
         self, shared_data: Dict[str, Any], key: str, required: bool = True
     ) -> Any:

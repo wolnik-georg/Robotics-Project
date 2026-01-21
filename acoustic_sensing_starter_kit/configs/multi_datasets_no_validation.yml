@@ -1,0 +1,59 @@
+# Multiple Datasets Analysis WITHOUT Validation
+# Combines all datasets for train/test split
+
+base_data_dir: "data"
+
+output:
+  base_dir: "modular_analysis_results"
+  run_name: "multi_dataset_combined_analysis"
+
+# Disable the old multi_dataset_training mode
+multi_dataset_training:
+  enabled: false
+
+# List ALL datasets - they will all be combined
+datasets:
+  - "balanced_collected_data_runs_2026_01_15_workspace1_undersample"
+  - "balanced_collected_data_runs_2026_01_15_workspace_2_undersample"
+  - "balanced_collected_data_runs_2026_01_14_workspace_3_v1_undersample"
+
+# Empty validation_datasets = combine all for train/test split
+validation_datasets: []
+
+# Enable ALL experiments you want to run
+experiments:
+  data_processing:
+    enabled: true
+    include_impulse_features: true
+    apply_audio_smoothing: false
+    motion_artifact_removal:
+      enabled: false
+
+  dimensionality_reduction:
+    enabled: true
+    pca_enabled: true
+    tsne_enabled: true
+    tsne_perplexity_values: [30, 50]
+
+  discrimination_analysis:
+    enabled: true
+    # Will use standard cross-validation on combined data
+
+  saliency_analysis:
+    enabled: true
+
+  feature_ablation:
+    enabled: true
+
+  impulse_response:
+    enabled: true
+
+  frequency_band_ablation:
+    enabled: true
+
+  # Keep this disabled - we're using the standard pipeline
+  multi_dataset_training:
+    enabled: false
+
+  surface_reconstruction:
+    enabled: false

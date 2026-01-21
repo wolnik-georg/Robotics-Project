@@ -1,0 +1,74 @@
+{
+  "batch_name": "balanced_collected_data_runs_2026_01_15_workspace1_undersample",
+  "num_samples": 3000,
+  "num_classes": 3,
+  "classes": [
+    "contact",
+    "edge",
+    "no_contact"
+  ],
+  "best_classifier": {
+    "name": "Extra Trees",
+    "mean_accuracy": 0.7433333333333333,
+    "std_accuracy": 0.009128709291752753
+  },
+  "worst_classifier": {
+    "name": "Naive Bayes",
+    "mean_accuracy": 0.5926666666666666,
+    "std_accuracy": 0.008856886837057616
+  },
+  "all_classifiers_performance": {
+    "Random Forest": {
+      "mean_accuracy": 0.739,
+      "std_accuracy": 0.012978614889287865
+    },
+    "SVM (RBF)": {
+      "mean_accuracy": 0.7153333333333334,
+      "std_accuracy": 0.012710450643291765
+    },
+    "SVM (Linear)": {
+      "mean_accuracy": 0.6293333333333333,
+      "std_accuracy": 0.017562586496425975
+    },
+    "K-NN": {
+      "mean_accuracy": 0.655,
+      "std_accuracy": 0.012337837015547833
+    },
+    "Logistic Regression": {
+      "mean_accuracy": 0.614,
+      "std_accuracy": 0.02252406120870153
+    },
+    "Gradient Boosting": {
+      "mean_accuracy": 0.7263333333333333,
+      "std_accuracy": 0.012710450643291737
+    },
+    "Extra Trees": {
+      "mean_accuracy": 0.7433333333333333,
+      "std_accuracy": 0.009128709291752753
+    },
+    "AdaBoost": {
+      "mean_accuracy": 0.6593333333333333,
+      "std_accuracy": 0.010934146311237855
+    },
+    "XGBoost": {
+      "mean_accuracy": 0.7236666666666667,
+      "std_accuracy": 0.021354156504062635
+    },
+    "Naive Bayes": {
+      "mean_accuracy": 0.5926666666666666,
+      "std_accuracy": 0.008856886837057616
+    },
+    "Quadratic Discriminant Analysis": {
+      "mean_accuracy": 0.5926666666666667,
+      "std_accuracy": 0.034810598641473824
+    },
+    "Linear Discriminant Analysis": {
+      "mean_accuracy": 0.6076666666666666,
+      "std_accuracy": 0.022891046284519215
+    },
+    "Ensemble (RF + SVM)": {
+      "mean_accuracy": 0.7306666666666668,
+      "std_accuracy": 0.01302134998974972
+    }
+  }
+}

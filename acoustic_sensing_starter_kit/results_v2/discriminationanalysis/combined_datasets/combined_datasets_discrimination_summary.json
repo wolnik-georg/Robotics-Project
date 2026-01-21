@@ -1,0 +1,73 @@
+{
+  "batch_name": "combined_datasets",
+  "num_samples": 7358,
+  "num_classes": 2,
+  "classes": [
+    "contact",
+    "no_contact"
+  ],
+  "best_classifier": {
+    "name": "XGBoost",
+    "mean_accuracy": 0.9165532726923418,
+    "std_accuracy": 0.002213853123522061
+  },
+  "worst_classifier": {
+    "name": "Naive Bayes",
+    "mean_accuracy": 0.5543603877870719,
+    "std_accuracy": 0.017736877942611858
+  },
+  "all_classifiers_performance": {
+    "Random Forest": {
+      "mean_accuracy": 0.9142436748145301,
+      "std_accuracy": 0.004072214102527648
+    },
+    "SVM (RBF)": {
+      "mean_accuracy": 0.8288948659592705,
+      "std_accuracy": 0.005232551937871553
+    },
+    "SVM (Linear)": {
+      "mean_accuracy": 0.7012781529867289,
+      "std_accuracy": 0.009614291187881098
+    },
+    "K-NN": {
+      "mean_accuracy": 0.7977720531729378,
+      "std_accuracy": 0.007764847723804444
+    },
+    "Logistic Regression": {
+      "mean_accuracy": 0.6897264689799899,
+      "std_accuracy": 0.009077192477555892
+    },
+    "Gradient Boosting": {
+      "mean_accuracy": 0.8634143255105963,
+      "std_accuracy": 0.007691649080717515
+    },
+    "Extra Trees": {
+      "mean_accuracy": 0.9132932344161027,
+      "std_accuracy": 0.004788558787719075
+    },
+    "AdaBoost": {
+      "mean_accuracy": 0.7939676129814088,
+      "std_accuracy": 0.010099199081524018
+    },
+    "XGBoost": {
+      "mean_accuracy": 0.9165532726923418,
+      "std_accuracy": 0.002213853123522061
+    },
+    "Naive Bayes": {
+      "mean_accuracy": 0.5543603877870719,
+      "std_accuracy": 0.017736877942611858
+    },
+    "Quadratic Discriminant Analysis": {
+      "mean_accuracy": 0.5595247243815209,
+      "std_accuracy": 0.023181007018442088
+    },
+    "Linear Discriminant Analysis": {
+      "mean_accuracy": 0.6893205228622943,
+      "std_accuracy": 0.009581853376912317
+    },
+    "Ensemble (RF + SVM)": {
+      "mean_accuracy": 0.8801333018059292,
+      "std_accuracy": 0.012237844594567684
+    }
+  }
+}

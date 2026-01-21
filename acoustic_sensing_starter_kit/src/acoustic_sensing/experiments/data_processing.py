@@ -17,6 +17,112 @@ import librosa
 from acoustic_sensing.core.motion_artifact_removal import apply_motion_artifact_removal
 
 
+class AudioAugmenter:
+    """
+    Audio data augmentation for improving model robustness.
+
+    Applies various transformations to training audio to help models
+    generalize better across different workspaces and recording conditions.
+    """
+
+    def __init__(self, sr: int = 48000, random_state: int = 42):
+        self.sr = sr
+        self.rng = np.random.RandomState(random_state)
+
+    def augment(self, audio: np.ndarray, augment_type: str = "all") -> np.ndarray:
+        """
+        Apply augmentation to audio signal.
+
+        Args:
+            audio: Input audio signal
+            augment_type: Type of augmentation ('noise', 'time_shift', 'pitch', 'gain', 'all')
+
+        Returns:
+            Augmented audio signal
+        """
+        audio = audio.astype(np.float32)
+
+        if augment_type == "all":
+            # Apply random subset of augmentations
+            augmented = audio.copy()
+            if self.rng.random() < 0.5:
+                augmented = self._add_noise(augmented)
+            if self.rng.random() < 0.5:
+                augmented = self._time_shift(augmented)
+            if self.rng.random() < 0.3:
+                augmented = self._pitch_shift(augmented)
+            if self.rng.random() < 0.5:
+                augmented = self._gain_variation(augmented)
+            return augmented
+        elif augment_type == "noise":
+            return self._add_noise(audio)
+        elif augment_type == "time_shift":
+            return self._time_shift(audio)
+        elif augment_type == "pitch":
+            return self._pitch_shift(audio)
+        elif augment_type == "gain":
+            return self._gain_variation(audio)
+        else:
+            return audio
+
+    def _add_noise(self, audio: np.ndarray) -> np.ndarray:
+        """Add Gaussian noise at random SNR."""
+        # SNR between 20-40 dB (subtle noise)
+        snr_db = self.rng.uniform(20, 40)
+
+        signal_power = np.mean(audio**2)
+        noise_power = signal_power / (10 ** (snr_db / 10))
+        noise = self.rng.normal(0, np.sqrt(noise_power), len(audio))
+
+        return (audio + noise).astype(np.float32)
+
+    def _time_shift(self, audio: np.ndarray) -> np.ndarray:
+        """Shift audio in time (circular shift)."""
+        # Shift by up to 5% of signal length
+        max_shift = int(0.05 * len(audio))
+        shift = self.rng.randint(-max_shift, max_shift)
+
+        return np.roll(audio, shift).astype(np.float32)
+
+    def _pitch_shift(self, audio: np.ndarray) -> np.ndarray:
+        """Slightly shift pitch (simulates different materials/tensions)."""
+        # Shift by up to ±2 semitones
+        n_steps = self.rng.uniform(-2, 2)
+
+        try:
+            shifted = librosa.effects.pitch_shift(audio, sr=self.sr, n_steps=n_steps)
+            return shifted.astype(np.float32)
+        except Exception:
+            return audio
+
+    def _gain_variation(self, audio: np.ndarray) -> np.ndarray:
+        """Apply random gain (simulates different recording levels)."""
+        # Gain variation of ±3 dB
+        gain_db = self.rng.uniform(-3, 3)
+        gain = 10 ** (gain_db / 20)
+
+        return (audio * gain).astype(np.float32)
+
+    def _frequency_mask(self, audio: np.ndarray) -> np.ndarray:
+        """Apply random frequency masking (simulates room acoustics)."""
+        # Apply a random bandpass filter
+        from scipy.signal import butter, filtfilt
+
+        # Random cutoff frequencies
+        low_cut = self.rng.uniform(50, 200)
+        high_cut = self.rng.uniform(8000, 15000)
+
+        try:
+            nyquist = self.sr / 2
+            low = low_cut / nyquist
+            high = high_cut / nyquist
+            b, a = butter(2, [low, high], btype="band")
+            filtered = filtfilt(b, a, audio)
+            return filtered.astype(np.float32)
+        except Exception:
+            return audio
+
+
 class DataProcessingExperiment(BaseExperiment):
     """
     Experiment for loading and preprocessing acoustic sensing data.
@@ -55,14 +161,89 @@ class DataProcessingExperiment(BaseExperiment):
         analyzer = BatchSpecificAnalyzer(base_dir=base_data_dir)
         data_loader = GeometricDataLoader(base_dir=base_data_dir, sr=48000)
 
-        # Get available batches
-        data_dir_path = f"/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/{base_data_dir}"
-        available_batches = [
-            d
-            for d in os.listdir(data_dir_path)
-            if (d == "balanced_collected_data_2025_12_16_v3_undersample")
-            and os.path.isdir(os.path.join(data_dir_path, d))
-        ]
+        # Check if multi-dataset mode is enabled
+        multi_dataset_config = self.config.get("multi_dataset_training", {})
+        multi_dataset_enabled = multi_dataset_config.get("enabled", False)
+
+        # Get validation datasets from config (supports both single and multiple datasets)
+        validation_datasets_config = self.config.get("validation_datasets", [])
+        if not validation_datasets_config:
+            validation_datasets_config = []
+        elif isinstance(validation_datasets_config, str):
+            # Convert single string to list
+            validation_datasets_config = [validation_datasets_config]
+
+        if multi_dataset_enabled:
+            # Multi-dataset mode: process training datasets + optional validation dataset
+            self.logger.info("🔄 MULTI-DATASET MODE ENABLED")
+            training_datasets = multi_dataset_config.get("training_datasets", [])
+            validation_dataset = multi_dataset_config.get("validation_dataset", None)
+
+            if not training_datasets:
+                raise ValueError(
+                    "Multi-dataset mode requires 'training_datasets' to be specified in config"
+                )
+
+            # Combine all datasets to process
+            if validation_dataset:
+                all_datasets = training_datasets + [validation_dataset]
+                self.logger.info(f"Training datasets: {training_datasets}")
+                self.logger.info(f"Validation dataset: {validation_dataset}")
+                # Store validation info for later use
+                validation_datasets_config = [validation_dataset]
+            else:
+                all_datasets = training_datasets
+                self.logger.info(f"Training datasets: {training_datasets}")
+                self.logger.info("No validation dataset - will use train/test split")
+                validation_datasets_config = []
+
+            available_batches = all_datasets
+        else:
+            # Standard mode: Use datasets from config
+            self.logger.info("📊 STANDARD DATASET MODE")
+
+            # Get datasets from config
+            datasets_from_config = self.config.get("datasets", [])
+
+            if datasets_from_config:
+                # IMPORTANT: Load ALL datasets (training + validation)
+                # Combine datasets and validation_datasets to get all batches to load
+                available_batches = datasets_from_config.copy()
+
+                # Add validation datasets if specified
+                if validation_datasets_config:
+                    # Add validation datasets to the list of batches to load
+                    for val_dataset in validation_datasets_config:
+                        if val_dataset not in available_batches:
+                            available_batches.append(val_dataset)
+
+                    self.logger.info(
+                        f"✓ Validation datasets specified: {validation_datasets_config}"
+                    )
+                    self.logger.info(f"  Training datasets: {datasets_from_config}")
+                    self.logger.info(f"  All datasets to load: {available_batches}")
+                else:
+                    self.logger.info(
+                        "✓ No validation datasets - will combine all datasets for train/test split"
+                    )
+                    self.logger.info(
+                        f"Using datasets from config: {datasets_from_config}"
+                    )
+            else:
+                # Fallback: scan directory (legacy behavior)
+                self.logger.info(
+                    "No datasets specified in config, scanning directory..."
+                )
+                data_dir_path = f"/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/{base_data_dir}"
+                available_batches = [
+                    d
+                    for d in os.listdir(data_dir_path)
+                    if (
+                        d
+                        == "balanced_collected_data_runs_2026_01_14_workspace_3_v1_undersample"
+                    )
+                    and os.path.isdir(os.path.join(data_dir_path, d))
+                ]
 
         self.logger.info(f"Found {len(available_batches)} batches: {available_batches}")
 
@@ -90,30 +271,41 @@ class DataProcessingExperiment(BaseExperiment):
                 )
 
                 if len(audio_data) > 0:
-                    # Apply motion artifact removal if enabled
+                    # Apply motion artifact removal if enabled (disabled by default)
                     motion_removal_config = self.config.get(
-                        "motion_artifact_removal", {}
+                        "motion_artifact_removal", {"enabled": False}
                     )
                     if motion_removal_config.get("enabled", False):
+                        self.logger.info("Motion artifact removal is ENABLED")
                         static_dir = Path(
                             f"/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/{base_data_dir}/collected_data_runs_validate_2025_12_16_v3_static_reference/data"
                         )
-                        self.logger.info("Applying motion artifact removal...")
-                        audio_data = apply_motion_artifact_removal(
-                            audio_data, np.array(labels), static_dir, sr=48000
-                        )
-                        self.logger.info("Motion artifact removal completed")
 
-                        # Create motion artifact removal comparison plots
-                        self._create_motion_artifact_comparison_plots(
-                            audio_data,
-                            labels,
-                            static_dir,
-                            batch_name,
-                            self.experiment_output_dir,
-                        )
+                        # Check if static reference directory exists
+                        if not static_dir.exists():
+                            self.logger.warning(
+                                f"Static reference directory not found: {static_dir}"
+                            )
+                            self.logger.warning("Skipping motion artifact removal")
+                        else:
+                            self.logger.info("Applying motion artifact removal...")
+                            audio_data = apply_motion_artifact_removal(
+                                audio_data, np.array(labels), static_dir, sr=48000
+                            )
+                            self.logger.info("Motion artifact removal completed")
+
+                            # Create motion artifact removal comparison plots
+                            self._create_motion_artifact_comparison_plots(
+                                audio_data,
+                                labels,
+                                static_dir,
+                                batch_name,
+                                self.experiment_output_dir,
+                            )
                     else:
-                        self.logger.info("Motion artifact removal disabled")
+                        self.logger.info(
+                            "Motion artifact removal is DISABLED (default)"
+                        )
 
                     self.logger.info(
                         f"Extracting features from {len(audio_data)} audio samples..."
@@ -131,10 +323,62 @@ class DataProcessingExperiment(BaseExperiment):
                     else:
                         self.logger.info("Audio smoothing disabled")
 
-                    # Feature extraction (same as working code)
-                    feature_extractor = GeometricFeatureExtractor(sr=48000)
+                    # Feature extraction configuration
+                    # Support workspace-invariant features for better cross-workspace generalization
+                    use_workspace_invariant = self.config.get(
+                        "use_workspace_invariant_features", True  # Default to enabled
+                    )
+                    if use_workspace_invariant:
+                        self.logger.info(
+                            "✓ Workspace-invariant features ENABLED (better cross-workspace generalization)"
+                        )
+                    else:
+                        self.logger.info(
+                            "✓ Workspace-invariant features DISABLED (using original features only)"
+                        )
+
+                    # Support impulse response / transfer function features
+                    use_impulse_features = self.config.get(
+                        "use_impulse_features",
+                        False,  # Default to disabled for backward compatibility
+                    )
+                    if use_impulse_features:
+                        self.logger.info(
+                            "✓ Impulse response features ENABLED (transfer function analysis)"
+                        )
+                    else:
+                        self.logger.info("✓ Impulse response features DISABLED")
+
+                    # Support data augmentation for training data
+                    use_augmentation = self.config.get(
+                        "use_data_augmentation", False  # Default to disabled
+                    )
+                    augmentation_factor = self.config.get(
+                        "augmentation_factor", 2  # How many augmented copies per sample
+                    )
+                    # Only augment training data, not validation
+                    is_validation_batch = batch_name in validation_datasets_config
+
+                    if use_augmentation and not is_validation_batch:
+                        self.logger.info(
+                            f"✓ Data augmentation ENABLED (factor={augmentation_factor}x for training)"
+                        )
+                        augmenter = AudioAugmenter(sr=48000)
+                    else:
+                        if use_augmentation and is_validation_batch:
+                            self.logger.info(
+                                "✓ Data augmentation SKIPPED for validation data"
+                            )
+                        augmenter = None
+
+                    feature_extractor = GeometricFeatureExtractor(
+                        sr=48000,
+                        use_workspace_invariant=use_workspace_invariant,
+                        use_impulse_features=use_impulse_features,
+                    )
 
                     X_feat = []
+                    y_labels = []  # Track labels for augmented samples
                     failed_count = 0
 
                     for i, audio in enumerate(audio_data):
@@ -145,10 +389,32 @@ class DataProcessingExperiment(BaseExperiment):
                                     audio, sr=48000, cutoff=cutoff_freq
                                 )
 
+                            # Extract features from original sample
                             features = feature_extractor.extract_features(
                                 audio, method="comprehensive"
                             )
                             X_feat.append(features)
+                            y_labels.append(labels[i])
+
+                            # Apply augmentation if enabled (training data only)
+                            if augmenter is not None:
+                                for aug_idx in range(augmentation_factor):
+                                    try:
+                                        augmented_audio = augmenter.augment(
+                                            audio, augment_type="all"
+                                        )
+                                        aug_features = (
+                                            feature_extractor.extract_features(
+                                                augmented_audio, method="comprehensive"
+                                            )
+                                        )
+                                        X_feat.append(aug_features)
+                                        y_labels.append(
+                                            labels[i]
+                                        )  # Same label as original
+                                    except Exception as aug_e:
+                                        # Skip failed augmentation
+                                        pass
 
                             if (i + 1) % 50 == 0:
                                 self.logger.info(
@@ -161,6 +427,9 @@ class DataProcessingExperiment(BaseExperiment):
                             )
                             if X_feat:
                                 X_feat.append(np.zeros_like(X_feat[0]))
+                                y_labels.append(
+                                    labels[i]
+                                )  # Add label for failed sample too
                             failed_count += 1
 
                     if failed_count > 0:
@@ -168,11 +437,20 @@ class DataProcessingExperiment(BaseExperiment):
                             f"Failed to extract features from {failed_count} samples"
                         )
 
+                    # Log augmentation results
+                    if augmenter is not None:
+                        orig_count = len(audio_data)
+                        aug_count = len(X_feat)
+                        self.logger.info(
+                            f"  Augmentation: {orig_count} → {aug_count} samples ({aug_count/orig_count:.1f}x)"
+                        )
+
                     # Convert to numpy array
                     X_feat = np.array(X_feat)
-                    labels = np.array(labels)
+                    # Use y_labels (which includes augmented sample labels) instead of original labels
+                    labels = np.array(y_labels)
 
-                    # NEW: Map labels to grouped classes
+                    # Map labels to grouped classes
                     labels = self._map_labels_to_groups(labels)
                     labels = np.array(labels)
 
@@ -242,7 +520,24 @@ class DataProcessingExperiment(BaseExperiment):
             "num_classes": len(all_classes),
             "class_names": sorted(list(all_classes)),
             "batch_names": list(batch_results.keys()),
+            "validation_datasets": validation_datasets_config,  # Store validation dataset info
+            "training_datasets": [
+                b for b in batch_results.keys() if b not in validation_datasets_config
+            ],
+            "multi_dataset_mode": multi_dataset_enabled,
         }
+
+        # Add multi-dataset metadata if enabled
+        if multi_dataset_enabled:
+            results["multi_dataset_config"] = {
+                "training_datasets": multi_dataset_config.get("training_datasets", []),
+                "validation_dataset": multi_dataset_config.get(
+                    "validation_dataset", None
+                ),
+                "train_test_split": multi_dataset_config.get("train_test_split", 0.8),
+                "random_seed": multi_dataset_config.get("random_seed", 42),
+                "stratify": multi_dataset_config.get("stratify", True),
+            }
 
         # Save preprocessing summary
         summary = {
@@ -868,6 +1163,9 @@ Feature Statistics:
 
             # Get unique classes
             unique_labels = np.unique(labels)
+
+            # Compute static templates for motion artifact removal
+            templates = compute_static_templates(static_dir, sr=48000)
 
             # Store validation metrics
             validation_results = {}

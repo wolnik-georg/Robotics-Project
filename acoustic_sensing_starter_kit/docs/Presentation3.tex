@@ -1,0 +1,158 @@
+\documentclass{beamer}
+\usetheme{Madrid}
+\usecolortheme{default}
+
+\usepackage[utf8]{inputenc}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{colortbl}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\definecolor{primaryblue}{RGB}{0,100,200}  % Blue shade for primary elements
+\definecolor{successgreen}{RGB}{0,150,80}  % Green shade for success/highlights
+\definecolor{errorred}{RGB}{200,50,50}     % Red shade for poor performance
+
+\title{Geometrical Reconstruction using Acoustic Tactile Sensing}
+\author{Georg Wolnik}
+\institute{TU Berlin - Robotics and Biology Department}
+\date{\today}
+
+\begin{document}
+
+% Title slide
+\begin{frame}
+\titlepage
+\end{frame}
+
+% ───────────────────────────────────────────────
+% New Slide: Goal evolution
+% ───────────────────────────────────────────────
+\begin{frame}{Project Goals – Evolution of Scope}
+
+\begin{block}{Original very ambitious goal}
+    Reconstruction of \textbf{3D objects and surfaces}
+\end{block}
+
+\bigskip
+
+\begin{block}{Adjusted goal during the project}
+    Reconstruction of \textbf{2D objects / patterns} on a surface \\
+    (cut-out holes: circles, stars, rectangles, hexagons, etc.)
+\end{block}
+
+\bigskip
+
+\begin{alertblock}{Current realistic goal – given remaining time \& challenges}
+    Very basic 2D reconstruction
+    \begin{itemize}
+        \item distinguishing only between
+        \begin{itemize}
+            \item contact
+            \item no contact
+            \item edges of \textbf{squares}
+        \end{itemize}
+        \item limited accuracy / proof-of-concept level
+    \end{itemize}
+\end{alertblock}
+
+\end{frame}
+
+% ───────────────────────────────────────────────
+% New Slide: Planned Method Focus for Remaining Time
+% ───────────────────────────────────────────────
+\begin{frame}{Method Focus for Remaining Project Time}
+
+\begin{block}{Inspired by: VibeCheck: Using Active Acoustic Tactile Sensing for Contact-Rich Manipulation}
+    \small Kaidi Zhang et al. (arXiv:2504.15535, 2025)
+\end{block}
+
+\bigskip
+
+\textbf{Core idea I want to apply:}\vspace{0.3cm}
+
+\begin{itemize}
+    \item Collect acoustic data across \structure{multiple different workspaces / surface conditions}
+    \item Vary \textbf{object placement/position} relative to the finger/robot (e.g. center, offset, rotated...)
+    \item $\rightarrow$ Force the model to learn the actual \textbf{contact scenario} rather than robot-specific noise/vibrations
+\end{itemize}
+
+\bigskip
+
+\begin{alertblock}{Goal for my setup}
+    Implement this data collection strategy to fix current main issue: \\
+    model picks up robot/finger noise instead of true contact patterns
+\end{alertblock}
+
+\end{frame}
+
+% ───────────────────────────────────────────────
+% New Slide: Additional Data Collection Strategy
+% ───────────────────────────────────────────────
+\begin{frame}{Additional Planned Data Collection Strategy}
+
+\textbf{Goal:} Better separation of \structure{contact} vs. \structure{no-contact} signals  
+(under identical robot/finger configuration)
+
+\bigskip
+
+\begin{itemize}
+    \item Collect data with the \textbf{same 3D printed object} but \alert{without any cut-out holes} \\
+    $\quad\Rightarrow$ pure contact signal (full/solid surface)
+    
+    \bigskip
+    
+    \item Collect data \textbf{completely without any object} \\
+    $\quad\Rightarrow$ pure no-contact / background / robot-only signal
+    
+    \bigskip
+    
+    \item $\rightarrow$ Use both to create strong, clean labels for: \\
+    \quad • contact (solid object) \\
+    \quad • no-contact (nothing present) \\
+    \quad • and later: edges (when cut-outs are present)
+\end{itemize}
+
+\bigskip
+
+\begin{alertblock}{Expected benefit}
+    Model must learn actual \textbf{contact differences} instead of \\
+    confounding with slight changes in robot pose or workspace noise
+\end{alertblock}
+
+\end{frame}
+% ──────────────────────────────────────────────────────────────
+% FINAL CONCLUSION – SHORT, STRONG, MEMORABLE (one slide only)
+% ──────────────────────────────────────────────────────────────
+% ───────────────────────────────────────────────
+% Final Slide: Conclusion & Look Ahead
+% ───────────────────────────────────────────────
+\begin{frame}{Conclusion \& Look Ahead}
+
+\textbf{Summary of planned focus (remaining time):}
+\begin{itemize}
+    \item Implement VibeCheck-style data collection: \\
+      \quad multiple workspaces / object positions
+    \item Add clean solid-object and no-object recordings \\
+      \quad $\rightarrow$ strong contact vs. no-contact labels
+\end{itemize}
+
+\bigskip
+
+\begin{alertblock}{Conditional next step -- only if time remains and core proof works}
+    \small
+    If end-to-end process succeeds and ML model reliably learns \\
+    to distinguish actual contact scenarios (contact / no-contact / edges):
+    \begin{itemize}
+        \item Introduce more complex cut-out shape \\
+          \quad (e.g. hexagon, octagon...)
+    \end{itemize}
+\end{alertblock}
+
+\bigskip
+
+\centering
+\textbf{Realistic goal:} Working proof-of-concept for basic acoustic 2D contact detection
+\end{frame}
+
+\end{document}

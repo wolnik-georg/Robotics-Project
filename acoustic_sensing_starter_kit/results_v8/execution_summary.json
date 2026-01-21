@@ -1,0 +1,27 @@
+{
+  "execution_timestamp": "2026-01-21T21:06:26.906988",
+  "config_path": "/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/configs/multi_dataset_config.yml",
+  "output_directory": "/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_v8",
+  "summary": {
+    "total_experiments": 3,
+    "successful_experiments": 3,
+    "failed_experiments": 0,
+    "skipped_experiments": 0,
+    "experiment_status": {
+      "data_processing": "completed",
+      "dimensionality_reduction": "completed",
+      "discrimination_analysis": "completed"
+    },
+    "execution_time": {},
+    "key_findings": [
+      "Processed 0 samples with 55 features across 2 classes",
+      "Best classifier: PCA+MLP(Medium) with 0.0000 accuracy"
+    ]
+  },
+  "experiment_list": [
+    "data_processing",
+    "dimensionality_reduction",
+    "discrimination_analysis",
+    "_execution_summary"
+  ]
+}

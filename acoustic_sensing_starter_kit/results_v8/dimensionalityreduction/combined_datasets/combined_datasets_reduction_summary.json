@@ -1,0 +1,13 @@
+{
+  "batch_name": "combined_datasets",
+  "num_samples": 5269,
+  "original_dimensions": 55,
+  "num_classes": 2,
+  "analysis_methods": [
+    "PCA",
+    "t-SNE"
+  ],
+  "pca_components_95": 19,
+  "first_component_variance": 0.39153086765228723,
+  "best_tsne_silhouette": 0.0825623869895935
+}

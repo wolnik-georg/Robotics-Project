@@ -1,0 +1,11 @@
+{
+  "dataset_name": "runs_2026_01_15_workspace_1_squares_cutout",
+  "total_samples": 1923,
+  "samples_per_label": {
+    "contact": 1778,
+    "no_contact": 145
+  },
+  "created_by": "collect_data.py",
+  "relabeled": true,
+  "labeling_logic": "ground_truth_squares_cutout"
+}

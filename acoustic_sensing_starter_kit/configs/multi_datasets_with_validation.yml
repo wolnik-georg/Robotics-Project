@@ -1,0 +1,61 @@
+# Multiple Datasets Analysis with Validation Holdout
+# Uses the NEW validation_datasets feature
+
+base_data_dir: "data"
+
+output:
+  base_dir: "modular_analysis_results"
+  run_name: "multi_dataset_validation_analysis"
+
+# Disable the old multi_dataset_training mode
+multi_dataset_training:
+  enabled: false
+
+# List ALL datasets here
+datasets:
+  - "balanced_collected_data_runs_2026_01_15_workspace1_undersample"
+  - "balanced_collected_data_runs_2026_01_15_workspace_2_undersample"
+  - "balanced_collected_data_runs_2026_01_14_workspace_3_v1_undersample"
+
+# Specify which dataset(s) to use for validation
+# The rest will be combined for training (with 80/20 train/test split)
+validation_datasets:
+  - "balanced_collected_data_runs_2026_01_14_workspace_3_v1_undersample"
+
+# Enable ALL experiments you want to run
+experiments:
+  data_processing:
+    enabled: true
+    include_impulse_features: true
+    apply_audio_smoothing: false
+    motion_artifact_removal:
+      enabled: false
+
+  dimensionality_reduction:
+    enabled: true
+    pca_enabled: true
+    tsne_enabled: true
+    tsne_perplexity_values: [30, 50]
+
+  discrimination_analysis:
+    enabled: true
+    # Will report BOTH test accuracy AND validation accuracy
+
+  saliency_analysis:
+    enabled: true
+
+  feature_ablation:
+    enabled: true
+
+  impulse_response:
+    enabled: true
+
+  frequency_band_ablation:
+    enabled: true
+
+  # Keep this disabled - we're using the standard pipeline
+  multi_dataset_training:
+    enabled: false
+
+  surface_reconstruction:
+    enabled: false

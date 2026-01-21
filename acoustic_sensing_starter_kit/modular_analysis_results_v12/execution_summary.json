@@ -1,0 +1,28 @@
+{
+  "execution_timestamp": "2025-12-18T17:59:19.401511",
+  "config_path": "/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/configs/experiment_config.yml",
+  "output_directory": "/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/modular_analysis_results_v12",
+  "summary": {
+    "total_experiments": 4,
+    "successful_experiments": 4,
+    "failed_experiments": 0,
+    "skipped_experiments": 0,
+    "experiment_status": {
+      "data_processing": "completed",
+      "dimensionality_reduction": "completed",
+      "discrimination_analysis": "completed",
+      "impulse_response": "completed"
+    },
+    "execution_time": {},
+    "key_findings": [
+      "Processed 0 samples with 38 features across 3 classes"
+    ]
+  },
+  "experiment_list": [
+    "data_processing",
+    "dimensionality_reduction",
+    "discrimination_analysis",
+    "impulse_response",
+    "_execution_summary"
+  ]
+}

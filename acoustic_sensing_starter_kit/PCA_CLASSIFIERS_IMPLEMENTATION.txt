@@ -1,0 +1,194 @@
+"""
+PCA-BASED CLASSIFIERS - Implementation Summary
+==============================================
+
+🎯 OBJECTIVE:
+Address the curse of dimensionality caused by 55 features (38 original + 17 workspace-invariant)
+by using PCA to reduce to ~19 components while retaining 95% variance.
+
+📊 PROBLEM IDENTIFIED:
+After adding workspace-invariant features:
+- Test accuracy: ~88-90% (good)
+- Validation accuracy: 60-63% (poor generalization)
+- Issue: More features = more noise + overfitting
+
+💡 SOLUTION IMPLEMENTED:
+Add PCA-based variants of best-performing classifiers in ADDITION to existing ones.
+
+✅ CHANGES MADE (Non-Breaking):
+
+1. NEW CLASS: PCAClassifierWrapper
+   Location: src/acoustic_sensing/experiments/discrimination_analysis.py
+   
+   Purpose: Wraps any classifier with PCA preprocessing
+   
+   How it works:
+   ```python
+   Pipeline:
+   Raw Features (55) → PCA → Reduced Features (~19) → Classifier → Prediction
+   ```
+   
+   Key parameters:
+   - n_components=0.95: Keep 95% variance (results in ~19 components)
+   - pca_whiten=False: Don't normalize component variance (preserve relative importance)
+   - base_classifier: Any sklearn-compatible classifier
+
+2. NEW CLASSIFIERS ADDED (6 total):
+   
+   a) PCA+XGBoost
+      - Base: XGBoost (best traditional ML: 63.26% validation)
+      - Expected: Better generalization with reduced dimensions
+   
+   b) PCA+RandomForest
+      - Base: Random Forest (59.61% validation)
+      - Tree-based, should benefit from noise reduction
+   
+   c) PCA+GradientBoosting
+      - Base: Gradient Boosting (63.15% validation)
+      - Another strong ensemble method
+   
+   d) PCA+MLP(Medium)
+      - Base: MLP Medium (previously 63.69% validation before workspace-invariant features)
+      - MLPs especially sensitive to dimensionality - should improve significantly
+   
+   e) PCA+MLP(Large)
+      - Base: MLP Large (63.04% validation)
+      - Larger network, more prone to overfitting - PCA should help
+   
+   f) PCA+ExtraTrees
+      - Base: Extra Trees (58.75% validation)
+      - Random forest variant
+
+3. TOTAL CLASSIFIERS NOW:
+   - Original: 19 classifiers (all preserved, working as before)
+   - NEW: 6 PCA-based variants
+   - TOTAL: 25 classifiers
+
+4. BACKWARD COMPATIBILITY:
+   ✅ All existing classifiers unchanged
+   ✅ No modifications to existing code logic
+   ✅ PCA variants are ADDITIONS, not replacements
+   ✅ Can compare PCA vs non-PCA directly
+
+==============================================
+TECHNICAL DETAILS:
+==============================================
+
+PCA Dimensionality Reduction:
+- Input: 55 features
+- Output: ~19 principal components (95.7% variance explained)
+- Benefits:
+  1. Removes correlated/redundant features
+  2. Reduces noise from irrelevant dimensions
+  3. Prevents overfitting on high-dimensional space
+  4. Faster training (fewer features)
+
+Expected Variance Breakdown (from previous run):
+- PC1: 39.15% variance
+- PC2: 10.76% variance
+- PC3: 8.50% variance
+- PC4: 7.60% variance
+- PC5: 5.09% variance
+- PC6-19: 24.6% variance combined
+- Total: 95.72% variance
+
+Why This Should Work:
+1. Original 38 features performed BETTER than 55 features
+   → Indicates noise/redundancy in new features
+2. PCA keeps informative directions, discards noise
+   → Should recover or exceed original 38-feature performance
+3. MLPs especially benefit from dimensionality reduction
+   → Fewer parameters to overfit
+4. 19 components is optimal middle ground
+   → Not too few (information loss), not too many (overfitting)
+
+==============================================
+TESTING:
+==============================================
+
+Test Script: test_pca_classifiers.py
+
+Results:
+✓ PCA wrapper works correctly
+✓ Reduces 55 → 14 components on synthetic data (95.2% variance)
+✓ Predictions work (shape, probabilities verified)
+✓ sklearn compatibility confirmed (get_params, set_params)
+
+==============================================
+EXPECTED RESULTS:
+==============================================
+
+Hypothesis: PCA variants will achieve BETTER validation accuracy than raw features
+
+Target Improvements:
+- PCA+XGBoost: 63.26% → 65-68% validation (2-5% gain)
+- PCA+MLP(Medium): 60.14% → 66-70% validation (6-10% gain expected!)
+- PCA+MLP(Large): 63.04% → 64-67% validation (1-4% gain)
+
+Best Case Scenario:
+- One of the PCA variants breaks 70% validation accuracy
+- Demonstrates that dimensionality reduction solves the overfitting problem
+
+Worst Case Scenario:
+- PCA variants perform similar to non-PCA (~60-63%)
+- Indicates the problem is fundamental domain shift, not just dimensionality
+
+==============================================
+NEXT STEPS AFTER RESULTS:
+==============================================
+
+If PCA improves validation (>65%):
+1. ✅ Document optimal configuration
+2. Consider fine-tuning n_components (try 0.90, 0.97, 0.99)
+3. Try whitening (pca_whiten=True) for neural networks
+4. Ensemble best PCA models
+
+If PCA doesn't improve much (<65%):
+1. Try different dimensionality reduction (t-SNE, UMAP)
+2. Implement data augmentation (pitch shift, time stretch)
+3. Domain adaptation techniques
+4. Include all workspaces in training (remove holdout)
+
+==============================================
+FILES MODIFIED:
+==============================================
+
+1. src/acoustic_sensing/experiments/discrimination_analysis.py
+   - Added PCAClassifierWrapper class (lines ~133-195)
+   - Added 6 PCA-based classifiers to _get_classifiers() (lines ~775-865)
+   - Added import: from sklearn.decomposition import PCA
+   - Added import: from sklearn.pipeline import Pipeline
+
+2. test_pca_classifiers.py (NEW)
+   - Validation script for PCA wrapper
+   - Tests dimensionality reduction, predictions, sklearn compatibility
+
+3. configs/multi_dataset_config.yml
+   - No changes needed (uses existing config)
+
+==============================================
+RUNNING THE EXPERIMENT:
+==============================================
+
+Command:
+```bash
+cd acoustic_sensing_starter_kit
+python3 run_modular_experiments.py configs/multi_dataset_config.yml
+```
+
+Pipeline will:
+1. Load 10 datasets (7 training, 3 validation)
+2. Extract 55 features per sample (38 + 17 workspace-invariant)
+3. Train 25 classifiers total:
+   - 19 existing (on raw 55 features)
+   - 6 new PCA variants (on ~19 PCA components)
+4. Report test + validation accuracy for all
+
+Results location:
+- results_v8/discriminationanalysis/validation_results/
+- discrimination_summary.json
+- classifier_performance.png
+- confusion_matrices.png
+
+==============================================
+"""

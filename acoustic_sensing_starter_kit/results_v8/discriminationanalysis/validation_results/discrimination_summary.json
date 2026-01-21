@@ -1,0 +1,237 @@
+{
+  "validation_mode": true,
+  "training_datasets": [
+    "balanced_collected_data_runs_2026_01_15_workspace_2_squares_cutout_undersample",
+    "balanced_collected_data_runs_2026_01_15_workspace_2_pure_no_contact_undersample",
+    "balanced_collected_data_runs_2026_01_15_workspace_2_pure_contact_undersample",
+    "balanced_collected_data_runs_2026_01_14_workspace_3_pure_no_contact_undersample",
+    "balanced_collected_data_runs_2026_01_14_workspace_3_pure_contact_undersample",
+    "balanced_collected_data_runs_2025_12_15_v2_2_workspace3_squares_cutout_undersample",
+    "balanced_collected_data_runs_2025_12_17_v2_workspace_3_squares_cutout_undersample"
+  ],
+  "validation_datasets": [
+    "balanced_collected_data_runs_2026_01_15_workspace_1_squares_cutout_undersample",
+    "balanced_collected_data_runs_2026_01_15_workspace_1_pure_no_contact_undersample",
+    "balanced_collected_data_runs_2026_01_15_workspace_1_pure_contact_undersample"
+  ],
+  "num_train_samples": 4215,
+  "num_test_samples": 1054,
+  "num_val_samples": 2795,
+  "best_classifier": {
+    "name": "PCA+MLP(Medium)",
+    "test_accuracy": 0.857685009487666,
+    "validation_accuracy": 0.6522361359570662
+  },
+  "classifier_performance": {
+    "Random Forest": {
+      "test_accuracy": 0.8889943074003795,
+      "test_f1": 0.8890493493082974,
+      "validation_accuracy": 0.5960644007155635,
+      "validation_f1": 0.5994522769205878
+    },
+    "SVM (RBF)": {
+      "test_accuracy": 0.8121442125237192,
+      "test_f1": 0.8112308320980331,
+      "validation_accuracy": 0.5735241502683364,
+      "validation_f1": 0.5779305732885758
+    },
+    "SVM (Linear)": {
+      "test_accuracy": 0.6963946869070209,
+      "test_f1": 0.6926460730171504,
+      "validation_accuracy": 0.49874776386404296,
+      "validation_f1": 0.4982409947551074
+    },
+    "K-NN": {
+      "test_accuracy": 0.8036053130929791,
+      "test_f1": 0.8037876201730162,
+      "validation_accuracy": 0.5792486583184258,
+      "validation_f1": 0.5849612479231001
+    },
+    "Logistic Regression": {
+      "test_accuracy": 0.6802656546489564,
+      "test_f1": 0.6796451953911669,
+      "validation_accuracy": 0.46332737030411447,
+      "validation_f1": 0.46538437612061084
+    },
+    "Gradient Boosting": {
+      "test_accuracy": 0.864326375711575,
+      "test_f1": 0.8643804271415994,
+      "validation_accuracy": 0.631484794275492,
+      "validation_f1": 0.6354220245087875
+    },
+    "Extra Trees": {
+      "test_accuracy": 0.9032258064516129,
+      "test_f1": 0.9033012693606615,
+      "validation_accuracy": 0.5874776386404293,
+      "validation_f1": 0.5902643828974975
+    },
+    "AdaBoost": {
+      "test_accuracy": 0.8206831119544592,
+      "test_f1": 0.8200374213063794,
+      "validation_accuracy": 0.6196779964221825,
+      "validation_f1": 0.6243314911521778
+    },
+    "XGBoost": {
+      "test_accuracy": 0.888045540796964,
+      "test_f1": 0.8881247734027298,
+      "validation_accuracy": 0.6325581395348837,
+      "validation_f1": 0.6370298172097799
+    },
+    "Naive Bayes": {
+      "test_accuracy": 0.6470588235294118,
+      "test_f1": 0.6459243812059866,
+      "validation_accuracy": 0.362432915921288,
+      "validation_f1": 0.3587651079321823
+    },
+    "Quadratic Discriminant Analysis": {
+      "test_accuracy": 0.5749525616698292,
+      "test_f1": 0.5117383143948608,
+      "validation_accuracy": 0.5377459749552773,
+      "validation_f1": 0.46349844252348726
+    },
+    "MLP (Small)": {
+      "test_accuracy": 0.8851992409867173,
+      "test_f1": 0.8852561646692649,
+      "validation_accuracy": 0.6014311270125223,
+      "validation_f1": 0.604663609088798
+    },
+    "MLP (Medium)": {
+      "test_accuracy": 0.8823529411764706,
+      "test_f1": 0.8824700789406672,
+      "validation_accuracy": 0.6014311270125223,
+      "validation_f1": 0.5998006179866645
+    },
+    "MLP (Large)": {
+      "test_accuracy": 0.8889943074003795,
+      "test_f1": 0.8890973505325744,
+      "validation_accuracy": 0.6304114490161001,
+      "validation_f1": 0.6269510719671836
+    },
+    "MLP (Medium-HighReg)": {
+      "test_accuracy": 0.889943074003795,
+      "test_f1": 0.8899136044259846,
+      "validation_accuracy": 0.5871198568872987,
+      "validation_f1": 0.5845262993630275
+    },
+    "MLP (Wide)": {
+      "test_accuracy": 0.8823529411764706,
+      "test_f1": 0.8822062448293803,
+      "validation_accuracy": 0.5642218246869409,
+      "validation_f1": 0.5580779624508811
+    },
+    "MLP (Deep-Narrow)": {
+      "test_accuracy": 0.8870967741935484,
+      "test_f1": 0.8871172848538875,
+      "validation_accuracy": 0.6010733452593918,
+      "validation_f1": 0.6030933036321808
+    },
+    "Linear Discriminant Analysis": {
+      "test_accuracy": 0.6907020872865275,
+      "test_f1": 0.6904264566479157,
+      "validation_accuracy": 0.5892665474060823,
+      "validation_f1": 0.5726229758199373
+    },
+    "Ensemble (RF + SVM)": {
+      "test_accuracy": 0.8747628083491461,
+      "test_f1": 0.8747926870892017,
+      "validation_accuracy": 0.5874776386404293,
+      "validation_f1": 0.5927038756294348
+    },
+    "PCA+XGBoost": {
+      "test_accuracy": 0.8273244781783681,
+      "test_f1": 0.8268123411882892,
+      "validation_accuracy": 0.5033989266547406,
+      "validation_f1": 0.5052458683466302
+    },
+    "PCA+RandomForest": {
+      "test_accuracy": 0.7827324478178368,
+      "test_f1": 0.780195378497675,
+      "validation_accuracy": 0.4762075134168157,
+      "validation_f1": 0.4664496934220598
+    },
+    "PCA+GradientBoosting": {
+      "test_accuracy": 0.7599620493358634,
+      "test_f1": 0.75756693577545,
+      "validation_accuracy": 0.46118067978533095,
+      "validation_f1": 0.44351921181026316
+    },
+    "PCA+MLP(Medium)": {
+      "test_accuracy": 0.857685009487666,
+      "test_f1": 0.8577744420681648,
+      "validation_accuracy": 0.6522361359570662,
+      "validation_f1": 0.6557013520740796
+    },
+    "PCA+MLP(Large)": {
+      "test_accuracy": 0.8481973434535104,
+      "test_f1": 0.8482335601081231,
+      "validation_accuracy": 0.6493738819320215,
+      "validation_f1": 0.6543280360792214
+    },
+    "PCA+ExtraTrees": {
+      "test_accuracy": 0.7722960151802657,
+      "test_f1": 0.7698822540823539,
+      "validation_accuracy": 0.5123434704830053,
+      "validation_f1": 0.515637774405281
+    },
+    "PCA90+MLP(Medium)": {
+      "test_accuracy": 0.8102466793168881,
+      "test_f1": 0.8102700062971183,
+      "validation_accuracy": 0.5753130590339892,
+      "validation_f1": 0.5796041463717385
+    },
+    "PCA99+MLP(Medium)": {
+      "test_accuracy": 0.8719165085388995,
+      "test_f1": 0.8720505896481439,
+      "validation_accuracy": 0.5871198568872987,
+      "validation_f1": 0.5874318975733223
+    },
+    "PCA15+MLP(Medium)": {
+      "test_accuracy": 0.8178368121442126,
+      "test_f1": 0.817204687594473,
+      "validation_accuracy": 0.5885509838998211,
+      "validation_f1": 0.5940502616935055
+    },
+    "PCA20+MLP(Medium)": {
+      "test_accuracy": 0.857685009487666,
+      "test_f1": 0.8578359017268203,
+      "validation_accuracy": 0.6289803220035778,
+      "validation_f1": 0.6333939969802198
+    },
+    "PCA+MLP(HighReg)": {
+      "test_accuracy": 0.8633776091081594,
+      "test_f1": 0.8634388198567667,
+      "validation_accuracy": 0.6286225402504473,
+      "validation_f1": 0.6302180984236574
+    },
+    "PCA+MLP(Compact)": {
+      "test_accuracy": 0.849146110056926,
+      "test_f1": 0.849298962440838,
+      "validation_accuracy": 0.5831842576028623,
+      "validation_f1": 0.5882842776973539
+    },
+    "PCA+MLP(Wide)": {
+      "test_accuracy": 0.8500948766603416,
+      "test_f1": 0.8501620384539526,
+      "validation_accuracy": 0.6246869409660107,
+      "validation_f1": 0.6287447704262481
+    },
+    "PCA+MLP(DeepNarrow)": {
+      "test_accuracy": 0.8633776091081594,
+      "test_f1": 0.8633598167097406,
+      "validation_accuracy": 0.6465116279069767,
+      "validation_f1": 0.6512362248288551
+    },
+    "PCA+MLP(Whitened)": {
+      "test_accuracy": 0.8368121442125237,
+      "test_f1": 0.8369593703945596,
+      "validation_accuracy": 0.6196779964221825,
+      "validation_f1": 0.6250657165742557
+    },
+    "PCA90+MLP(HighReg)": {
+      "test_accuracy": 0.8111954459203036,
+      "test_f1": 0.8112508918217124,
+      "validation_accuracy": 0.5821109123434705,
+      "validation_f1": 0.5865029726783544
+    }
+  }
+}

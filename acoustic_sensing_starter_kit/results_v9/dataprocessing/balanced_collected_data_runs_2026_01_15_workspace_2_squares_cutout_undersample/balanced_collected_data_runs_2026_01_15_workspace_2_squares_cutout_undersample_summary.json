@@ -1,0 +1,20 @@
+{
+  "batch_name": "balanced_collected_data_runs_2026_01_15_workspace_2_squares_cutout_undersample",
+  "num_samples": 1080,
+  "num_features": 70,
+  "num_classes": 2,
+  "classes": [
+    "contact",
+    "no_contact"
+  ],
+  "class_distribution": {
+    "contact": "540",
+    "no_contact": "540"
+  },
+  "files_saved": [
+    "balanced_collected_data_runs_2026_01_15_workspace_2_squares_cutout_undersample_data_processing_results.json",
+    "balanced_collected_data_runs_2026_01_15_workspace_2_squares_cutout_undersample_features.npy",
+    "balanced_collected_data_runs_2026_01_15_workspace_2_squares_cutout_undersample_labels.npy",
+    "balanced_collected_data_runs_2026_01_15_workspace_2_squares_cutout_undersample_metadata.json"
+  ]
+}

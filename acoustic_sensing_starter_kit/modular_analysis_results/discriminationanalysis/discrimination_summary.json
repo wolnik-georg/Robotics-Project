@@ -1,72 +1,485 @@
 {
   "best_overall": {
-    "accuracy": 0.7775280898876404,
-    "batch": "balanced_collected_data_2025_12_16_v3_undersample",
-    "classifier": "XGBoost"
+    "accuracy": 1.0,
+    "batch": "balanced_collected_data_runs_2026_01_15_workspace_2_pure_no_contact_undersample",
+    "classifier": "Random Forest"
   },
   "per_batch_performance": {
-    "balanced_collected_data_2025_12_16_v3_undersample": {
+    "balanced_collected_data_runs_2026_01_15_workspace_2_squares_cutout_undersample": {
       "best_classifier": {
-        "name": "XGBoost",
-        "accuracy": 0.7775280898876404
+        "name": "Random Forest",
+        "accuracy": 0.5972222222222222
       },
       "cv_performance": {
         "Random Forest": {
-          "mean_accuracy": 0.7550561797752808,
-          "std_accuracy": 0.01828697470521903
+          "mean_accuracy": 0.5972222222222222,
+          "std_accuracy": 0.029133579115837565
         },
         "SVM (RBF)": {
-          "mean_accuracy": 0.7048689138576779,
-          "std_accuracy": 0.030830135771171042
+          "mean_accuracy": 0.5527777777777778,
+          "std_accuracy": 0.07317744373510827
         },
         "SVM (Linear)": {
-          "mean_accuracy": 0.6913857677902623,
-          "std_accuracy": 0.027379276228460023
+          "mean_accuracy": 0.5472222222222223,
+          "std_accuracy": 0.040824829046386304
         },
         "K-NN": {
-          "mean_accuracy": 0.6419475655430712,
-          "std_accuracy": 0.031029685658738537
+          "mean_accuracy": 0.5222222222222223,
+          "std_accuracy": 0.02576005137637696
         },
         "Logistic Regression": {
-          "mean_accuracy": 0.6898876404494383,
-          "std_accuracy": 0.026525739639888822
+          "mean_accuracy": 0.5527777777777778,
+          "std_accuracy": 0.03767961101736259
         },
         "Gradient Boosting": {
-          "mean_accuracy": 0.755056179775281,
-          "std_accuracy": 0.012667816123811038
+          "mean_accuracy": 0.5916666666666667,
+          "std_accuracy": 0.02721655269759084
         },
         "Extra Trees": {
-          "mean_accuracy": 0.7625468164794007,
-          "std_accuracy": 0.02411007781188176
+          "mean_accuracy": 0.5555555555555556,
+          "std_accuracy": 0.05892556509887897
         },
         "AdaBoost": {
-          "mean_accuracy": 0.6838951310861423,
-          "std_accuracy": 0.010215866439689804
+          "mean_accuracy": 0.5805555555555555,
+          "std_accuracy": 0.032155102507750624
         },
         "XGBoost": {
-          "mean_accuracy": 0.7775280898876404,
-          "std_accuracy": 0.016849770605546065
+          "mean_accuracy": 0.5638888888888889,
+          "std_accuracy": 0.038888888888888896
         },
         "Naive Bayes": {
-          "mean_accuracy": 0.48014981273408247,
-          "std_accuracy": 0.0679710792331126
+          "mean_accuracy": 0.5083333333333334,
+          "std_accuracy": 0.04267303193260338
         },
         "Quadratic Discriminant Analysis": {
-          "mean_accuracy": 0.6794007490636704,
-          "std_accuracy": 0.04823179035806814
+          "mean_accuracy": 0.5666666666666667,
+          "std_accuracy": 0.03447131568330794
         },
         "Linear Discriminant Analysis": {
-          "mean_accuracy": 0.6838951310861423,
-          "std_accuracy": 0.03261654090947901
+          "mean_accuracy": 0.5666666666666667,
+          "std_accuracy": 0.04598040377013013
         },
         "Ensemble (RF + SVM)": {
-          "mean_accuracy": 0.7363295880149814,
-          "std_accuracy": 0.02828645331610368
+          "mean_accuracy": 0.5944444444444446,
+          "std_accuracy": 0.04157397096415488
+        }
+      },
+      "num_classifiers_tested": 13
+    },
+    "balanced_collected_data_runs_2026_01_15_workspace_2_pure_no_contact_undersample": {
+      "best_classifier": {
+        "name": "Random Forest",
+        "accuracy": 1.0
+      },
+      "cv_performance": {
+        "Random Forest": {
+          "mean_accuracy": 1.0,
+          "std_accuracy": 0.0
+        },
+        "K-NN": {
+          "mean_accuracy": 1.0,
+          "std_accuracy": 0.0
+        },
+        "Extra Trees": {
+          "mean_accuracy": 1.0,
+          "std_accuracy": 0.0
+        },
+        "AdaBoost": {
+          "mean_accuracy": 1.0,
+          "std_accuracy": 0.0
+        },
+        "Naive Bayes": {
+          "mean_accuracy": 1.0,
+          "std_accuracy": 0.0
+        },
+        "Linear Discriminant Analysis": {
+          "mean_accuracy": 1.0,
+          "std_accuracy": 0.0
+        }
+      },
+      "num_classifiers_tested": 13
+    },
+    "balanced_collected_data_runs_2026_01_15_workspace_2_pure_contact_undersample": {
+      "best_classifier": {
+        "name": "Random Forest",
+        "accuracy": 1.0
+      },
+      "cv_performance": {
+        "Random Forest": {
+          "mean_accuracy": 1.0,
+          "std_accuracy": 0.0
+        },
+        "K-NN": {
+          "mean_accuracy": 1.0,
+          "std_accuracy": 0.0
+        },
+        "Extra Trees": {
+          "mean_accuracy": 1.0,
+          "std_accuracy": 0.0
+        },
+        "AdaBoost": {
+          "mean_accuracy": 1.0,
+          "std_accuracy": 0.0
+        },
+        "Naive Bayes": {
+          "mean_accuracy": 1.0,
+          "std_accuracy": 0.0
+        },
+        "Linear Discriminant Analysis": {
+          "mean_accuracy": 1.0,
+          "std_accuracy": 0.0
         }
       },
       "num_classifiers_tested": 13
     }
   },
-  "total_batches": 1,
-  "cross_batch_results": {}
+  "total_batches": 3,
+  "cross_batch_results": {
+    "balanced_collected_data_runs_2026_01_15_workspace_2_squares_cutout_undersample_to_balanced_collected_data_runs_2026_01_15_workspace_2_pure_no_contact_undersample": {
+      "Random Forest": {
+        "accuracy": 0.0027272727272727275,
+        "train_samples": 360,
+        "test_samples": 1100
+      },
+      "SVM (RBF)": {
+        "accuracy": 1.0,
+        "train_samples": 360,
+        "test_samples": 1100
+      },
+      "SVM (Linear)": {
+        "accuracy": 1.0,
+        "train_samples": 360,
+        "test_samples": 1100
+      },
+      "K-NN": {
+        "accuracy": 0.22090909090909092,
+        "train_samples": 360,
+        "test_samples": 1100
+      },
+      "Logistic Regression": {
+        "accuracy": 1.0,
+        "train_samples": 360,
+        "test_samples": 1100
+      },
+      "Gradient Boosting": {
+        "accuracy": 0.21818181818181817,
+        "train_samples": 360,
+        "test_samples": 1100
+      },
+      "Extra Trees": {
+        "accuracy": 0.007272727272727273,
+        "train_samples": 360,
+        "test_samples": 1100
+      },
+      "AdaBoost": {
+        "accuracy": 0.8772727272727273,
+        "train_samples": 360,
+        "test_samples": 1100
+      },
+      "XGBoost": {
+        "accuracy": 0.9181818181818182,
+        "train_samples": 360,
+        "test_samples": 1100
+      },
+      "Naive Bayes": {
+        "accuracy": 1.0,
+        "train_samples": 360,
+        "test_samples": 1100
+      },
+      "Quadratic Discriminant Analysis": {
+        "accuracy": 0.011818181818181818,
+        "train_samples": 360,
+        "test_samples": 1100
+      },
+      "Linear Discriminant Analysis": {
+        "accuracy": 1.0,
+        "train_samples": 360,
+        "test_samples": 1100
+      },
+      "Ensemble (RF + SVM)": {
+        "accuracy": 0.0027272727272727275,
+        "train_samples": 360,
+        "test_samples": 1100
+      }
+    },
+    "balanced_collected_data_runs_2026_01_15_workspace_2_squares_cutout_undersample_to_balanced_collected_data_runs_2026_01_15_workspace_2_pure_contact_undersample": {
+      "Random Forest": {
+        "accuracy": 0.9966101694915255,
+        "train_samples": 360,
+        "test_samples": 885
+      },
+      "SVM (RBF)": {
+        "accuracy": 0.0,
+        "train_samples": 360,
+        "test_samples": 885
+      },
+      "SVM (Linear)": {
+        "accuracy": 0.0,
+        "train_samples": 360,
+        "test_samples": 885
+      },
+      "K-NN": {
+        "accuracy": 0.8395480225988701,
+        "train_samples": 360,
+        "test_samples": 885
+      },
+      "Logistic Regression": {
+        "accuracy": 0.0,
+        "train_samples": 360,
+        "test_samples": 885
+      },
+      "Gradient Boosting": {
+        "accuracy": 0.7728813559322034,
+        "train_samples": 360,
+        "test_samples": 885
+      },
+      "Extra Trees": {
+        "accuracy": 0.9740112994350283,
+        "train_samples": 360,
+        "test_samples": 885
+      },
+      "AdaBoost": {
+        "accuracy": 0.23728813559322035,
+        "train_samples": 360,
+        "test_samples": 885
+      },
+      "XGBoost": {
+        "accuracy": 0.15706214689265538,
+        "train_samples": 360,
+        "test_samples": 885
+      },
+      "Naive Bayes": {
+        "accuracy": 0.0,
+        "train_samples": 360,
+        "test_samples": 885
+      },
+      "Quadratic Discriminant Analysis": {
+        "accuracy": 0.9988700564971752,
+        "train_samples": 360,
+        "test_samples": 885
+      },
+      "Linear Discriminant Analysis": {
+        "accuracy": 0.0,
+        "train_samples": 360,
+        "test_samples": 885
+      },
+      "Ensemble (RF + SVM)": {
+        "accuracy": 0.9875706214689266,
+        "train_samples": 360,
+        "test_samples": 885
+      }
+    },
+    "balanced_collected_data_runs_2026_01_15_workspace_2_pure_no_contact_undersample_to_balanced_collected_data_runs_2026_01_15_workspace_2_squares_cutout_undersample": {
+      "Random Forest": {
+        "accuracy": 0.5,
+        "train_samples": 1100,
+        "test_samples": 360
+      },
+      "SVM (RBF)": {
+        "error": "The number of classes has to be greater than one; got 1 class"
+      },
+      "SVM (Linear)": {
+        "error": "The number of classes has to be greater than one; got 1 class"
+      },
+      "K-NN": {
+        "accuracy": 0.5,
+        "train_samples": 1100,
+        "test_samples": 360
+      },
+      "Logistic Regression": {
+        "error": "This solver needs samples of at least 2 classes in the data, but the data contains only one class: np.str_('no_contact')"
+      },
+      "Gradient Boosting": {
+        "error": "y contains 1 class after sample_weight trimmed classes with zero weights, while a minimum of 2 classes are required."
+      },
+      "Extra Trees": {
+        "accuracy": 0.5,
+        "train_samples": 1100,
+        "test_samples": 360
+      },
+      "AdaBoost": {
+        "accuracy": 0.5,
+        "train_samples": 1100,
+        "test_samples": 360
+      },
+      "XGBoost": {
+        "error": "[18:01:42] /workspace/src/objective/regression_obj.cu:119: Check failed: is_valid: base_score must be in (0,1) for the logistic loss.\nStack trace:\n  [bt] (0) /home/georg/.pyenv/versions/acoustic-sensing/lib/python3.11/site-packages/xgboost/lib/libxgboost.so(+0x2bdf8c) [0x7f9fc56bdf8c]\n  [bt] (1) /home/georg/.pyenv/versions/acoustic-sensing/lib/python3.11/site-packages/xgboost/lib/libxgboost.so(+0x1077654) [0x7f9fc6477654]\n  [bt] (2) /home/georg/.pyenv/versions/acoustic-sensing/lib/python3.11/site-packages/xgboost/lib/libxgboost.so(+0x1077c75) [0x7f9fc6477c75]\n  [bt] (3) /home/georg/.pyenv/versions/acoustic-sensing/lib/python3.11/site-packages/xgboost/lib/libxgboost.so(+0x6d1ab9) [0x7f9fc5ad1ab9]\n  [bt] (4) /home/georg/.pyenv/versions/acoustic-sensing/lib/python3.11/site-packages/xgboost/lib/libxgboost.so(+0x6f4db7) [0x7f9fc5af4db7]\n  [bt] (5) /home/georg/.pyenv/versions/acoustic-sensing/lib/python3.11/site-packages/xgboost/lib/libxgboost.so(XGBoosterUpdateOneIter+0x77) [0x7f9fc55caa67]\n  [bt] (6) /lib/x86_64-linux-gnu/libffi.so.8(+0x7e2e) [0x7fa04d1dee2e]\n  [bt] (7) /lib/x86_64-linux-gnu/libffi.so.8(+0x4493) [0x7fa04d1db493]\n  [bt] (8) /home/georg/.pyenv/versions/3.11.14/lib/python3.11/lib-dynload/_ctypes.cpython-311-x86_64-linux-gnu.so(+0x13ca6) [0x7fa04ca42ca6]\n\n"
+      },
+      "Naive Bayes": {
+        "accuracy": 0.5,
+        "train_samples": 1100,
+        "test_samples": 360
+      },
+      "Quadratic Discriminant Analysis": {
+        "error": "The number of classes has to be greater than one; got 1 class"
+      },
+      "Linear Discriminant Analysis": {
+        "accuracy": 0.5,
+        "train_samples": 1100,
+        "test_samples": 360
+      },
+      "Ensemble (RF + SVM)": {
+        "error": "The number of classes has to be greater than one; got 1 class"
+      }
+    },
+    "balanced_collected_data_runs_2026_01_15_workspace_2_pure_no_contact_undersample_to_balanced_collected_data_runs_2026_01_15_workspace_2_pure_contact_undersample": {
+      "Random Forest": {
+        "accuracy": 0.0,
+        "train_samples": 1100,
+        "test_samples": 885
+      },
+      "SVM (RBF)": {
+        "error": "The number of classes has to be greater than one; got 1 class"
+      },
+      "SVM (Linear)": {
+        "error": "The number of classes has to be greater than one; got 1 class"
+      },
+      "K-NN": {
+        "accuracy": 0.0,
+        "train_samples": 1100,
+        "test_samples": 885
+      },
+      "Logistic Regression": {
+        "error": "This solver needs samples of at least 2 classes in the data, but the data contains only one class: np.str_('no_contact')"
+      },
+      "Gradient Boosting": {
+        "error": "y contains 1 class after sample_weight trimmed classes with zero weights, while a minimum of 2 classes are required."
+      },
+      "Extra Trees": {
+        "accuracy": 0.0,
+        "train_samples": 1100,
+        "test_samples": 885
+      },
+      "AdaBoost": {
+        "accuracy": 0.0,
+        "train_samples": 1100,
+        "test_samples": 885
+      },
+      "XGBoost": {
+        "error": "[18:01:43] /workspace/src/objective/regression_obj.cu:119: Check failed: is_valid: base_score must be in (0,1) for the logistic loss.\nStack trace:\n  [bt] (0) /home/georg/.pyenv/versions/acoustic-sensing/lib/python3.11/site-packages/xgboost/lib/libxgboost.so(+0x2bdf8c) [0x7f9fc56bdf8c]\n  [bt] (1) /home/georg/.pyenv/versions/acoustic-sensing/lib/python3.11/site-packages/xgboost/lib/libxgboost.so(+0x1077654) [0x7f9fc6477654]\n  [bt] (2) /home/georg/.pyenv/versions/acoustic-sensing/lib/python3.11/site-packages/xgboost/lib/libxgboost.so(+0x1077c75) [0x7f9fc6477c75]\n  [bt] (3) /home/georg/.pyenv/versions/acoustic-sensing/lib/python3.11/site-packages/xgboost/lib/libxgboost.so(+0x6d1ab9) [0x7f9fc5ad1ab9]\n  [bt] (4) /home/georg/.pyenv/versions/acoustic-sensing/lib/python3.11/site-packages/xgboost/lib/libxgboost.so(+0x6f4db7) [0x7f9fc5af4db7]\n  [bt] (5) /home/georg/.pyenv/versions/acoustic-sensing/lib/python3.11/site-packages/xgboost/lib/libxgboost.so(XGBoosterUpdateOneIter+0x77) [0x7f9fc55caa67]\n  [bt] (6) /lib/x86_64-linux-gnu/libffi.so.8(+0x7e2e) [0x7fa04d1dee2e]\n  [bt] (7) /lib/x86_64-linux-gnu/libffi.so.8(+0x4493) [0x7fa04d1db493]\n  [bt] (8) /home/georg/.pyenv/versions/3.11.14/lib/python3.11/lib-dynload/_ctypes.cpython-311-x86_64-linux-gnu.so(+0x13ca6) [0x7fa04ca42ca6]\n\n"
+      },
+      "Naive Bayes": {
+        "accuracy": 0.0,
+        "train_samples": 1100,
+        "test_samples": 885
+      },
+      "Quadratic Discriminant Analysis": {
+        "error": "The number of classes has to be greater than one; got 1 class"
+      },
+      "Linear Discriminant Analysis": {
+        "accuracy": 0.0,
+        "train_samples": 1100,
+        "test_samples": 885
+      },
+      "Ensemble (RF + SVM)": {
+        "error": "The number of classes has to be greater than one; got 1 class"
+      }
+    },
+    "balanced_collected_data_runs_2026_01_15_workspace_2_pure_contact_undersample_to_balanced_collected_data_runs_2026_01_15_workspace_2_squares_cutout_undersample": {
+      "Random Forest": {
+        "accuracy": 0.5,
+        "train_samples": 885,
+        "test_samples": 360
+      },
+      "SVM (RBF)": {
+        "error": "The number of classes has to be greater than one; got 1 class"
+      },
+      "SVM (Linear)": {
+        "error": "The number of classes has to be greater than one; got 1 class"
+      },
+      "K-NN": {
+        "accuracy": 0.5,
+        "train_samples": 885,
+        "test_samples": 360
+      },
+      "Logistic Regression": {
+        "error": "This solver needs samples of at least 2 classes in the data, but the data contains only one class: np.str_('contact')"
+      },
+      "Gradient Boosting": {
+        "error": "y contains 1 class after sample_weight trimmed classes with zero weights, while a minimum of 2 classes are required."
+      },
+      "Extra Trees": {
+        "accuracy": 0.5,
+        "train_samples": 885,
+        "test_samples": 360
+      },
+      "AdaBoost": {
+        "accuracy": 0.5,
+        "train_samples": 885,
+        "test_samples": 360
+      },
+      "XGBoost": {
+        "error": "[18:01:43] /workspace/src/objective/regression_obj.cu:119: Check failed: is_valid: base_score must be in (0,1) for the logistic loss.\nStack trace:\n  [bt] (0) /home/georg/.pyenv/versions/acoustic-sensing/lib/python3.11/site-packages/xgboost/lib/libxgboost.so(+0x2bdf8c) [0x7f9fc56bdf8c]\n  [bt] (1) /home/georg/.pyenv/versions/acoustic-sensing/lib/python3.11/site-packages/xgboost/lib/libxgboost.so(+0x1077654) [0x7f9fc6477654]\n  [bt] (2) /home/georg/.pyenv/versions/acoustic-sensing/lib/python3.11/site-packages/xgboost/lib/libxgboost.so(+0x1077c75) [0x7f9fc6477c75]\n  [bt] (3) /home/georg/.pyenv/versions/acoustic-sensing/lib/python3.11/site-packages/xgboost/lib/libxgboost.so(+0x6d1ab9) [0x7f9fc5ad1ab9]\n  [bt] (4) /home/georg/.pyenv/versions/acoustic-sensing/lib/python3.11/site-packages/xgboost/lib/libxgboost.so(+0x6f4db7) [0x7f9fc5af4db7]\n  [bt] (5) /home/georg/.pyenv/versions/acoustic-sensing/lib/python3.11/site-packages/xgboost/lib/libxgboost.so(XGBoosterUpdateOneIter+0x77) [0x7f9fc55caa67]\n  [bt] (6) /lib/x86_64-linux-gnu/libffi.so.8(+0x7e2e) [0x7fa04d1dee2e]\n  [bt] (7) /lib/x86_64-linux-gnu/libffi.so.8(+0x4493) [0x7fa04d1db493]\n  [bt] (8) /home/georg/.pyenv/versions/3.11.14/lib/python3.11/lib-dynload/_ctypes.cpython-311-x86_64-linux-gnu.so(+0x13ca6) [0x7fa04ca42ca6]\n\n"
+      },
+      "Naive Bayes": {
+        "accuracy": 0.5,
+        "train_samples": 885,
+        "test_samples": 360
+      },
+      "Quadratic Discriminant Analysis": {
+        "error": "The number of classes has to be greater than one; got 1 class"
+      },
+      "Linear Discriminant Analysis": {
+        "accuracy": 0.5,
+        "train_samples": 885,
+        "test_samples": 360
+      },
+      "Ensemble (RF + SVM)": {
+        "error": "The number of classes has to be greater than one; got 1 class"
+      }
+    },
+    "balanced_collected_data_runs_2026_01_15_workspace_2_pure_contact_undersample_to_balanced_collected_data_runs_2026_01_15_workspace_2_pure_no_contact_undersample": {
+      "Random Forest": {
+        "accuracy": 0.0,
+        "train_samples": 885,
+        "test_samples": 1100
+      },
+      "SVM (RBF)": {
+        "error": "The number of classes has to be greater than one; got 1 class"
+      },
+      "SVM (Linear)": {
+        "error": "The number of classes has to be greater than one; got 1 class"
+      },
+      "K-NN": {
+        "accuracy": 0.0,
+        "train_samples": 885,
+        "test_samples": 1100
+      },
+      "Logistic Regression": {
+        "error": "This solver needs samples of at least 2 classes in the data, but the data contains only one class: np.str_('contact')"
+      },
+      "Gradient Boosting": {
+        "error": "y contains 1 class after sample_weight trimmed classes with zero weights, while a minimum of 2 classes are required."
+      },
+      "Extra Trees": {
+        "accuracy": 0.0,
+        "train_samples": 885,
+        "test_samples": 1100
+      },
+      "AdaBoost": {
+        "accuracy": 0.0,
+        "train_samples": 885,
+        "test_samples": 1100
+      },
+      "XGBoost": {
+        "error": "[18:01:43] /workspace/src/objective/regression_obj.cu:119: Check failed: is_valid: base_score must be in (0,1) for the logistic loss.\nStack trace:\n  [bt] (0) /home/georg/.pyenv/versions/acoustic-sensing/lib/python3.11/site-packages/xgboost/lib/libxgboost.so(+0x2bdf8c) [0x7f9fc56bdf8c]\n  [bt] (1) /home/georg/.pyenv/versions/acoustic-sensing/lib/python3.11/site-packages/xgboost/lib/libxgboost.so(+0x1077654) [0x7f9fc6477654]\n  [bt] (2) /home/georg/.pyenv/versions/acoustic-sensing/lib/python3.11/site-packages/xgboost/lib/libxgboost.so(+0x1077c75) [0x7f9fc6477c75]\n  [bt] (3) /home/georg/.pyenv/versions/acoustic-sensing/lib/python3.11/site-packages/xgboost/lib/libxgboost.so(+0x6d1ab9) [0x7f9fc5ad1ab9]\n  [bt] (4) /home/georg/.pyenv/versions/acoustic-sensing/lib/python3.11/site-packages/xgboost/lib/libxgboost.so(+0x6f4db7) [0x7f9fc5af4db7]\n  [bt] (5) /home/georg/.pyenv/versions/acoustic-sensing/lib/python3.11/site-packages/xgboost/lib/libxgboost.so(XGBoosterUpdateOneIter+0x77) [0x7f9fc55caa67]\n  [bt] (6) /lib/x86_64-linux-gnu/libffi.so.8(+0x7e2e) [0x7fa04d1dee2e]\n  [bt] (7) /lib/x86_64-linux-gnu/libffi.so.8(+0x4493) [0x7fa04d1db493]\n  [bt] (8) /home/georg/.pyenv/versions/3.11.14/lib/python3.11/lib-dynload/_ctypes.cpython-311-x86_64-linux-gnu.so(+0x13ca6) [0x7fa04ca42ca6]\n\n"
+      },
+      "Naive Bayes": {
+        "accuracy": 0.0,
+        "train_samples": 885,
+        "test_samples": 1100
+      },
+      "Quadratic Discriminant Analysis": {
+        "error": "The number of classes has to be greater than one; got 1 class"
+      },
+      "Linear Discriminant Analysis": {
+        "accuracy": 0.0,
+        "train_samples": 885,
+        "test_samples": 1100
+      },
+      "Ensemble (RF + SVM)": {
+        "error": "The number of classes has to be greater than one; got 1 class"
+      }
+    }
+  }
 }

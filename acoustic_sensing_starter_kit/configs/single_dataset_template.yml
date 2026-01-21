@@ -1,0 +1,68 @@
+# Single Dataset Analysis Configuration
+# Copy and modify this for each dataset you want to analyze individually
+
+# Base data directory
+base_data_dir: "data"
+
+# Output directory - will create subdirectory for this run
+output:
+  base_dir: "single_dataset_results"
+  run_name: "workspace_2_squares_cutout_analysis"  # Change this for each dataset
+
+# Multi-Dataset Training - DISABLED for single dataset mode
+multi_dataset_training:
+  enabled: false
+
+# Datasets to process - UPDATE THIS for each dataset
+datasets:
+  - "balanced_collected_data_runs_2025_12_15_v2_2_workspace3_squares_cutout_undersample"
+
+# Optional: Validation datasets (will be held out from training, combined for validation)
+# If not specified or empty, all datasets are combined for train/test split
+# If specified, these datasets are excluded from training and used only for validation
+validation_datasets: []  # Example: ["validation_dataset_1", "validation_dataset_2"]
+
+# Analysis Experiments
+experiments:
+  data_processing:
+    enabled: true
+    include_impulse_features: true
+    apply_audio_smoothing: false
+    smoothing_cutoff_freq: 200
+    motion_artifact_removal:
+      enabled: false
+
+  dimensionality_reduction:
+    enabled: true
+    pca_enabled: true
+    pca_variance_threshold: 0.95
+    tsne_enabled: true
+    tsne_perplexity_values: [30]
+    include_umap: false
+
+  discrimination_analysis:
+    enabled: true
+    classifiers:
+      - "RandomForest"
+      - "GradientBoosting"
+      - "SVM"
+      - "KNN"
+    cross_validation_folds: 5
+
+  saliency_analysis:
+    enabled: false
+
+  feature_ablation:
+    enabled: false
+
+  impulse_response:
+    enabled: false
+
+  frequency_band_ablation:
+    enabled: false
+
+  multi_dataset_training:
+    enabled: false
+
+  surface_reconstruction:
+    enabled: false

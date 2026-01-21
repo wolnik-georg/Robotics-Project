@@ -1,0 +1,105 @@
+{
+  "validation_mode": true,
+  "training_datasets": [
+    "balanced_collected_data_runs_2026_01_15_workspace_2_squares_cutout_undersample",
+    "balanced_collected_data_runs_2026_01_15_workspace_2_pure_no_contact_undersample",
+    "balanced_collected_data_runs_2026_01_15_workspace_2_pure_contact_undersample",
+    "balanced_collected_data_runs_2026_01_15_workspace_1_squares_cutout_undersample",
+    "balanced_collected_data_runs_2026_01_15_workspace_1_pure_no_contact_undersample",
+    "balanced_collected_data_runs_2026_01_15_workspace_1_pure_contact_undersample",
+    "balanced_collected_data_runs_2025_12_15_v2_2_workspace3_squares_cutout_undersample",
+    "balanced_collected_data_runs_2025_12_17_v2_workspace_3_squares_cutout_undersample"
+  ],
+  "validation_datasets": [
+    "balanced_collected_data_runs_2026_01_14_workspace_3_pure_no_contact_undersample",
+    "balanced_collected_data_runs_2026_01_14_workspace_3_pure_contact_undersample"
+  ],
+  "num_train_samples": 4676,
+  "num_test_samples": 1170,
+  "num_val_samples": 2218,
+  "best_classifier": {
+    "name": "Logistic Regression",
+    "test_accuracy": 0.7076923076923077,
+    "validation_accuracy": 0.5477908025247971
+  },
+  "classifier_performance": {
+    "Random Forest": {
+      "test_accuracy": 0.888034188034188,
+      "test_f1": 0.8875325305667274,
+      "validation_accuracy": 0.4359783588818756,
+      "validation_f1": 0.35427002976085903
+    },
+    "SVM (RBF)": {
+      "test_accuracy": 0.8111111111111111,
+      "test_f1": 0.8069067331547203,
+      "validation_accuracy": 0.4382326420198377,
+      "validation_f1": 0.3974669495337474
+    },
+    "SVM (Linear)": {
+      "test_accuracy": 0.7,
+      "test_f1": 0.6877781121683676,
+      "validation_accuracy": 0.5428313796212805,
+      "validation_f1": 0.487275228444683
+    },
+    "K-NN": {
+      "test_accuracy": 0.7888888888888889,
+      "test_f1": 0.7878672841391471,
+      "validation_accuracy": 0.40892696122633004,
+      "validation_f1": 0.3606634544823472
+    },
+    "Logistic Regression": {
+      "test_accuracy": 0.7076923076923077,
+      "test_f1": 0.6999790259256339,
+      "validation_accuracy": 0.5477908025247971,
+      "validation_f1": 0.49851936871809616
+    },
+    "Gradient Boosting": {
+      "test_accuracy": 0.8564102564102564,
+      "test_f1": 0.8552395209697268,
+      "validation_accuracy": 0.4400360685302074,
+      "validation_f1": 0.3500800736786095
+    },
+    "Extra Trees": {
+      "test_accuracy": 0.8871794871794871,
+      "test_f1": 0.8866538560509902,
+      "validation_accuracy": 0.43011722272317404,
+      "validation_f1": 0.3355274165692657
+    },
+    "AdaBoost": {
+      "test_accuracy": 0.8076923076923077,
+      "test_f1": 0.8068306822710968,
+      "validation_accuracy": 0.5333633904418394,
+      "validation_f1": 0.5019804947301524
+    },
+    "XGBoost": {
+      "test_accuracy": 0.8794871794871795,
+      "test_f1": 0.878947227556554,
+      "validation_accuracy": 0.4792605951307484,
+      "validation_f1": 0.4217535517387617
+    },
+    "Naive Bayes": {
+      "test_accuracy": 0.582905982905983,
+      "test_f1": 0.45891822150254535,
+      "validation_accuracy": 0.4292155094679892,
+      "validation_f1": 0.3265853396300516
+    },
+    "Quadratic Discriminant Analysis": {
+      "test_accuracy": 0.6282051282051282,
+      "test_f1": 0.5349427160744665,
+      "validation_accuracy": 0.4733994589720469,
+      "validation_f1": 0.4780951643579913
+    },
+    "Linear Discriminant Analysis": {
+      "test_accuracy": 0.7162393162393162,
+      "test_f1": 0.7079854281824726,
+      "validation_accuracy": 0.5374211000901713,
+      "validation_f1": 0.4891223601729321
+    },
+    "Ensemble (RF + SVM)": {
+      "test_accuracy": 0.8658119658119658,
+      "test_f1": 0.8642717145724131,
+      "validation_accuracy": 0.4337240757439134,
+      "validation_f1": 0.3764645176155983
+    }
+  }
+}

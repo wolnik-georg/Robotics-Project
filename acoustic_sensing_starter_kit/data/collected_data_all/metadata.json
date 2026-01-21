@@ -1,17 +1,24 @@
 {
   "dataset_name": "collected_data_all",
-  "total_samples": 4512,
+  "total_samples": 15593,
   "samples_per_label": {
-    "edge": 2485,
-    "contact": 1370,
-    "no_contact": 657
+    "contact": 11225,
+    "no_contact": 4368
   },
   "created_by": "collect_data.py",
-  "labeling_logic": "ground_truth_v2.py",
+  "relabeled": true,
+  "labeling_logic": "ground_truth_squares_cutout",
   "source_datasets": [
-    "collected_data_runs_2025_12_10_v1",
-    "collected_data_runs_2025_12_11_v1",
-    "collected_data_runs_2025_12_11_v2",
-    "collected_data_runs_2025_12_11_v2_2"
+    "collected_data_runs_2025_12_15_v2_2_workspace3_squares_cutout",
+    "collected_data_runs_2025_12_17_v2_workspace_3_squares_cutout",
+    "collected_data_runs_2026_01_06_v1_workspace_2_squares_cutout",
+    "collected_data_runs_2026_01_14_workspace_3_pure_contact",
+    "collected_data_runs_2026_01_14_workspace_3_pure_no_contact",
+    "collected_data_runs_2026_01_15_workspace_1_pure_contact",
+    "collected_data_runs_2026_01_15_workspace_1_pure_no_contact",
+    "collected_data_runs_2026_01_15_workspace_1_squares_cutout",
+    "collected_data_runs_2026_01_15_workspace_2_pure_contact",
+    "collected_data_runs_2026_01_15_workspace_2_pure_no_contact",
+    "collected_data_runs_2026_01_15_workspace_2_squares_cutout"
   ]
 }

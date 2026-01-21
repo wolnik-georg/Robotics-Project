@@ -1,0 +1,24 @@
+{
+  "total_samples": 1335,
+  "total_features": 38,
+  "total_batches": 1,
+  "batch_names": [
+    "balanced_collected_data_2025_12_16_v3_undersample"
+  ],
+  "per_batch_info": {
+    "balanced_collected_data_2025_12_16_v3_undersample": {
+      "num_samples": 1335,
+      "num_classes": 3,
+      "classes": [
+        "contact",
+        "edge",
+        "no_contact"
+      ],
+      "class_distribution": {
+        "contact": "445",
+        "edge": "445",
+        "no_contact": "445"
+      }
+    }
+  }
+}

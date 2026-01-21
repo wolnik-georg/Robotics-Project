@@ -5,8 +5,8 @@ Standalone Script to Balance Collected Data by Undersampling Majority Class
 
 This script:
 1. Loads all WAV files from the collected data directory
-2. Groups labels into 3 classes (contact, no_contact, edge)
-3. Undersamples the majority class (edge) to balance
+2. Groups labels into 2 classes (contact, no_contact)
+3. Balances classes using undersampling or oversampling
 4. Saves balanced WAV files to a new folder structure
 
 Usage: python balance_dataset.py
@@ -23,13 +23,13 @@ import random
 # USER SETTINGS
 # ==================
 DATA_DIR = os.path.join(
-    "data", "collected_data_runs_2025_12_16_v3", "data"
+    "data", "collected_data_runs_2025_12_15_v2_2_workspace3_squares_cutout", "data"
 )  # Input data folder (relative path)
-OUTPUT_DIR_UNDERSAMPLE = "balanced_collected_data_2025_12_16_v3_undersample"  # Output folder for undersampled balanced data
-OUTPUT_DIR_OVERSAMPLE = "balanced_collected_data_2025_12_16_v3_oversample"  # Output folder for oversampled balanced data
+OUTPUT_DIR_UNDERSAMPLE = "balanced_collected_data_runs_2025_12_15_v2_2_workspace3_squares_cutout_undersample"  # Output folder for undersampled balanced data
+OUTPUT_DIR_OVERSAMPLE = "balanced_collected_data_runs_2025_12_15_v2_2_workspace3_squares_cutout_oversample"  # Output folder for oversampled balanced data
 SR = 48000
 RANDOM_SEED = 42
-CLASSES = ["contact", "edge", "no_contact"]
+CLASSES = ["contact", "no_contact"]
 BALANCE_METHOD = "both"  # "undersample", "oversample", or "both"
 # ==================
 
@@ -72,7 +72,7 @@ def load_data(data_dir):
 
 
 def group_labels(labels):
-    """Group raw labels into 3 classes."""
+    """Group raw labels into 2 classes: contact and no_contact."""
     grouped = []
     for label in labels:
         # Remove common prefixes
@@ -82,10 +82,10 @@ def group_labels(labels):
             grouped.append("contact")
         elif clean_label.startswith("no_surface") or clean_label == "no_contact":
             grouped.append("no_contact")
-        elif clean_label.startswith("edge") or clean_label == "edge":
-            grouped.append("edge")
         else:
-            grouped.append(clean_label)
+            # Default: treat unknown labels as no_contact or skip
+            print(f"Warning: Unknown label '{clean_label}' - treating as no_contact")
+            grouped.append("no_contact")
     return grouped
 
 
@@ -95,52 +95,77 @@ def balance_data(labels, file_paths, method="undersample"):
     file_paths = np.array(file_paths)
 
     # Get indices for each class
-    edge_indices = np.where(y == "edge")[0]
     contact_indices = np.where(y == "contact")[0]
     no_contact_indices = np.where(y == "no_contact")[0]
 
     counts = {
-        "edge": len(edge_indices),
         "contact": len(contact_indices),
         "no_contact": len(no_contact_indices),
     }
 
+    # Filter out classes with 0 samples
+    available_classes = {k: v for k, v in counts.items() if v > 0}
+
+    if len(available_classes) == 0:
+        raise ValueError("No valid samples found in any class!")
+
+    if len(available_classes) == 1:
+        # Only one class present - return all samples
+        class_name = list(available_classes.keys())[0]
+        print(
+            f"Warning: Only '{class_name}' class found with {available_classes[class_name]} samples."
+        )
+        print(f"Returning all samples without balancing.")
+        if class_name == "contact":
+            return list(contact_indices)
+        else:
+            return list(no_contact_indices)
+
+    # Both classes present - proceed with balancing
     if method == "undersample":
         # Undersample to minimum count
-        min_count = min(counts.values())
+        min_count = min(available_classes.values())
         print(f"Undersampling to {min_count} samples per class.")
 
         random.seed(RANDOM_SEED)
-        sampled_edge_indices = random.sample(list(edge_indices), min_count)
-        sampled_contact_indices = random.sample(list(contact_indices), min_count)
-        sampled_no_contact_indices = random.sample(list(no_contact_indices), min_count)
+        sampled_contact_indices = (
+            random.sample(list(contact_indices), min_count)
+            if counts["contact"] > 0
+            else []
+        )
+        sampled_no_contact_indices = (
+            random.sample(list(no_contact_indices), min_count)
+            if counts["no_contact"] > 0
+            else []
+        )
 
-        balanced_indices = (
-            list(sampled_contact_indices)
-            + list(sampled_no_contact_indices)
-            + list(sampled_edge_indices)
+        balanced_indices = list(sampled_contact_indices) + list(
+            sampled_no_contact_indices
         )
 
     elif method == "oversample":
         # Oversample to maximum count by duplicating
-        max_count = max(counts.values())
+        max_count = max(available_classes.values())
         print(f"Oversampling to {max_count} samples per class by duplication.")
 
         random.seed(RANDOM_SEED)
-        sampled_contact_indices = list(contact_indices) + random.choices(
-            list(contact_indices), k=max_count - len(contact_indices)
-        )
-        sampled_no_contact_indices = list(no_contact_indices) + random.choices(
-            list(no_contact_indices), k=max_count - len(no_contact_indices)
-        )
-        sampled_edge_indices = list(edge_indices) + random.choices(
-            list(edge_indices), k=max_count - len(edge_indices)
-        )
 
-        balanced_indices = (
-            list(sampled_contact_indices)
-            + list(sampled_no_contact_indices)
-            + list(sampled_edge_indices)
+        if counts["contact"] > 0:
+            sampled_contact_indices = list(contact_indices) + random.choices(
+                list(contact_indices), k=max_count - len(contact_indices)
+            )
+        else:
+            sampled_contact_indices = []
+
+        if counts["no_contact"] > 0:
+            sampled_no_contact_indices = list(no_contact_indices) + random.choices(
+                list(no_contact_indices), k=max_count - len(no_contact_indices)
+            )
+        else:
+            sampled_no_contact_indices = []
+
+        balanced_indices = list(sampled_contact_indices) + list(
+            sampled_no_contact_indices
         )
 
     random.shuffle(balanced_indices)
@@ -185,6 +210,15 @@ def main():
     print("Original class distribution:")
     for cls, count in sorted(original_counts.items()):
         print(f"  {cls}: {count}")
+
+    # Check if we have any data
+    if len(grouped_labels) == 0:
+        print("Error: No data found!")
+        return
+
+    # Check number of unique classes
+    unique_classes = set(grouped_labels)
+    print(f"\nFound {len(unique_classes)} unique class(es): {sorted(unique_classes)}")
 
     methods = []
     if BALANCE_METHOD in ["undersample", "both"]:

@@ -1,23 +1,43 @@
 {
-  "total_samples": 1335,
+  "total_samples": 2345,
   "total_features": 38,
-  "total_batches": 1,
+  "total_batches": 3,
   "batch_names": [
-    "balanced_collected_data_2025_12_16_v3_undersample"
+    "balanced_collected_data_runs_2026_01_15_workspace_2_squares_cutout_undersample",
+    "balanced_collected_data_runs_2026_01_15_workspace_2_pure_no_contact_undersample",
+    "balanced_collected_data_runs_2026_01_15_workspace_2_pure_contact_undersample"
   ],
   "per_batch_info": {
-    "balanced_collected_data_2025_12_16_v3_undersample": {
-      "num_samples": 1335,
-      "num_classes": 3,
+    "balanced_collected_data_runs_2026_01_15_workspace_2_squares_cutout_undersample": {
+      "num_samples": 360,
+      "num_classes": 2,
       "classes": [
         "contact",
-        "edge",
         "no_contact"
       ],
       "class_distribution": {
-        "contact": "445",
-        "edge": "445",
-        "no_contact": "445"
+        "contact": "180",
+        "no_contact": "180"
+      }
+    },
+    "balanced_collected_data_runs_2026_01_15_workspace_2_pure_no_contact_undersample": {
+      "num_samples": 1100,
+      "num_classes": 1,
+      "classes": [
+        "no_contact"
+      ],
+      "class_distribution": {
+        "no_contact": "1100"
+      }
+    },
+    "balanced_collected_data_runs_2026_01_15_workspace_2_pure_contact_undersample": {
+      "num_samples": 885,
+      "num_classes": 1,
+      "classes": [
+        "contact"
+      ],
+      "class_distribution": {
+        "contact": "885"
       }
     }
   }

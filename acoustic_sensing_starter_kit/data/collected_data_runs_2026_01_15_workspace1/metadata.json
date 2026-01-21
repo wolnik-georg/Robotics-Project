@@ -1,0 +1,12 @@
+{
+  "dataset_name": "runs_2026_01_15_workspace1",
+  "total_samples": 4428,
+  "samples_per_label": {
+    "edge": 1698,
+    "contact": 1000,
+    "no_contact": 1730
+  },
+  "created_by": "collect_data.py",
+  "relabeled": false,
+  "labeling_logic": "original_labels"
+}

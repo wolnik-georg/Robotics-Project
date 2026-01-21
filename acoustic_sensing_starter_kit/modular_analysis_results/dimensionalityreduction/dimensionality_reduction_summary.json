@@ -1,33 +1,33 @@
 {
   "pca_analysis": {
-    "avg_components_for_95_variance": 15.0,
+    "avg_components_for_95_variance": 14.0,
     "std_components_for_95_variance": 0.0,
-    "min_components_needed": "15",
-    "max_components_needed": "15"
+    "min_components_needed": "14",
+    "max_components_needed": "14"
   },
   "tsne_analysis": {
-    "avg_silhouette_score": 0.0016301473369821906,
+    "avg_silhouette_score": 0.02231987565755844,
     "std_silhouette_score": 0.0,
-    "best_silhouette_score": 0.0016301473369821906,
-    "worst_silhouette_score": 0.0016301473369821906
+    "best_silhouette_score": 0.02231987565755844,
+    "worst_silhouette_score": 0.02231987565755844
   },
   "batch_summaries": {
-    "balanced_collected_data_2025_12_16_v3_undersample": {
+    "balanced_collected_data_runs_2026_01_15_workspace_2_squares_cutout_undersample": {
       "num_samples": 0,
       "original_dimensions": 0,
-      "pca_components_95": "15",
-      "first_component_variance": 0.2311374328761709,
-      "tsne_silhouette": 0.0016301473369821906
+      "pca_components_95": "14",
+      "first_component_variance": 0.3429951331415991,
+      "tsne_silhouette": 0.02231987565755844
     }
   },
   "num_batches_analyzed": 1,
   "per_batch_insights": {
-    "balanced_collected_data_2025_12_16_v3_undersample": {
+    "balanced_collected_data_runs_2026_01_15_workspace_2_squares_cutout_undersample": {
       "original_dimensions": 0,
       "num_samples": 0,
-      "pca_components_for_95_variance": "15",
-      "first_component_variance": 0.2311374328761709,
-      "tsne_silhouette_score": 0.0016301473369821906
+      "pca_components_for_95_variance": "14",
+      "first_component_variance": 0.3429951331415991,
+      "tsne_silhouette_score": 0.02231987565755844
     }
   }
 }

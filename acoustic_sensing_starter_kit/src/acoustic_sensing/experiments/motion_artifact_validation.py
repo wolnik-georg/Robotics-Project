@@ -242,10 +242,31 @@ class MotionArtifactValidationExperiment(BaseExperiment):
                         raw_audio, static_audio
                     )
 
-                    # Calculate metrics
-                    snr_before = self._calculate_snr(raw_audio, static_audio)
-                    snr_after = self._calculate_snr(clean_audio, static_audio)
-                    noise_reduction = snr_after - snr_before
+                    # === REALISTIC SNR CALCULATION ===
+                    signal_power = np.mean(
+                        raw_audio**2
+                    )  # total power (contact + motion)
+                    template_power = np.mean(static_audio**2)  # motion noise estimate
+
+                    # Baseline SNR: total / estimated motion noise
+                    snr_before = 10 * np.log10(signal_power / (template_power + 1e-10))
+
+                    # Residual after removal (what was subtracted)
+                    removed_noise = raw_audio - clean_audio
+                    residual_power = np.mean(removed_noise**2)
+
+                    # Estimated SNR after: total signal power / residual noise power
+                    estimated_snr_after = 10 * np.log10(
+                        signal_power / (residual_power + 1e-10)
+                    )
+
+                    # SNR improvement in dB
+                    snr_improvement = estimated_snr_after - snr_before
+
+                    # Direct noise reduction: how much motion power was reduced
+                    noise_reduction_db = 10 * np.log10(
+                        (template_power + 1e-10) / (residual_power + 1e-10)
+                    )
 
                     # Spectral analysis
                     freq_before, psd_before = self._calculate_power_spectral_density(
@@ -262,8 +283,9 @@ class MotionArtifactValidationExperiment(BaseExperiment):
                     batch_metrics[class_name].append(
                         {
                             "snr_before": snr_before,
-                            "snr_after": snr_after,
-                            "noise_reduction_db": noise_reduction,
+                            "estimated_snr_after": estimated_snr_after,
+                            "snr_improvement_db": snr_improvement,
+                            "noise_reduction_db": noise_reduction_db,
                             "rms_amplitude_before": np.sqrt(np.mean(raw_audio**2)),
                             "rms_amplitude_after": np.sqrt(np.mean(clean_audio**2)),
                             "freq_range": [freq_before, freq_after],
@@ -284,7 +306,12 @@ class MotionArtifactValidationExperiment(BaseExperiment):
                     "mean_snr_before": np.mean(
                         [s["snr_before"] for s in class_samples]
                     ),
-                    "mean_snr_after": np.mean([s["snr_after"] for s in class_samples]),
+                    "mean_estimated_snr_after": np.mean(
+                        [s["estimated_snr_after"] for s in class_samples]
+                    ),
+                    "mean_snr_improvement": np.mean(
+                        [s["snr_improvement_db"] for s in class_samples]
+                    ),
                     "mean_noise_reduction": np.mean(
                         [s["noise_reduction_db"] for s in class_samples]
                     ),
@@ -341,7 +368,6 @@ class MotionArtifactValidationExperiment(BaseExperiment):
         self, ab_results: Dict, quant_metrics: Dict
     ) -> str:
         """Assess overall confidence in motion artifact removal effectiveness."""
-        # Check if improvements are consistent and significant
         improvements = [
             r["improvement"]
             for r in ab_results.values()
@@ -352,26 +378,22 @@ class MotionArtifactValidationExperiment(BaseExperiment):
             return "insufficient_data"
 
         mean_improvement = np.mean(improvements)
-        std_improvement = np.std(improvements)
 
-        # Check quantitative metrics
-        avg_noise_reduction = 0
+        # Use realistic SNR improvement for confidence
+        avg_snr_improvement = 0
         count = 0
         for batch_metrics in quant_metrics.values():
             for class_metrics in batch_metrics.values():
-                avg_noise_reduction += class_metrics["mean_noise_reduction"]
+                avg_snr_improvement += class_metrics["mean_snr_improvement"]
                 count += 1
 
-        avg_noise_reduction = avg_noise_reduction / count if count > 0 else 0
+        avg_snr_improvement = avg_snr_improvement / count if count > 0 else 0
 
-        # Determine confidence level
-        if (
-            mean_improvement > 0.05 and avg_noise_reduction > 3
-        ):  # >5% accuracy, >3dB noise reduction
+        if mean_improvement > 0.05 and avg_snr_improvement > 8:
             return "high_confidence"
-        elif mean_improvement > 0.02 and avg_noise_reduction > 1:
+        elif mean_improvement > 0.02 and avg_snr_improvement > 3:
             return "moderate_confidence"
-        elif mean_improvement > 0 and avg_noise_reduction > 0:
+        elif mean_improvement > 0 and avg_snr_improvement > 0:
             return "low_confidence"
         else:
             return "insufficient_evidence"
@@ -402,13 +424,13 @@ class MotionArtifactValidationExperiment(BaseExperiment):
                 "Insufficient evidence of motion artifact removal effectiveness. Further validation needed."
             )
 
-        # Check for class-specific insights
+        # Class-specific insights
         for batch_name, batch_metrics in quant_metrics.items():
             for class_name, class_data in batch_metrics.items():
                 noise_reduction = class_data["mean_noise_reduction"]
-                if noise_reduction < 1:
+                if noise_reduction < 3:
                     recommendations.append(
-                        f"Low noise reduction for {class_name} in {batch_name}. Consider improving static references."
+                        f"Low noise reduction for {class_name} in {batch_name}. Consider improving static references or adding more templates."
                     )
 
         return recommendations
@@ -416,16 +438,10 @@ class MotionArtifactValidationExperiment(BaseExperiment):
     def _create_validation_plots(self, ab_results: Dict, quant_metrics: Dict):
         """Create validation visualization plots."""
         try:
-            # Create output directory
             os.makedirs(self.experiment_output_dir, exist_ok=True)
 
-            # 1. A/B Testing Results Plot
             self._create_ab_testing_plot(ab_results)
-
-            # 2. Quantitative Metrics Plot
             self._create_quantitative_metrics_plot(quant_metrics)
-
-            # 3. Noise Reduction Distribution Plot
             self._create_noise_reduction_plot(quant_metrics)
 
         except Exception as e:
@@ -465,18 +481,6 @@ class MotionArtifactValidationExperiment(BaseExperiment):
         ax.legend()
         ax.grid(alpha=0.3)
 
-        # Add value labels on bars
-        for bars in [bars1, bars2]:
-            for bar in bars:
-                height = bar.get_height()
-                ax.text(
-                    bar.get_x() + bar.get_width() / 2.0,
-                    height,
-                    ".3f",
-                    ha="center",
-                    va="bottom",
-                )
-
         plt.tight_layout()
         plt.savefig(
             os.path.join(self.experiment_output_dir, "ab_testing_results.png"),
@@ -489,54 +493,46 @@ class MotionArtifactValidationExperiment(BaseExperiment):
         """Create quantitative metrics summary plot."""
         fig, axes = plt.subplots(2, 2, figsize=(16, 12))
 
-        # Collect data across all batches and classes
         snr_before = []
         snr_after = []
-        noise_reduction = []
+        snr_improvement = []
         classes = []
 
         for batch_name, batch_data in quant_metrics.items():
             for class_name, class_metrics in batch_data.items():
                 snr_before.append(class_metrics["mean_snr_before"])
-                snr_after.append(class_metrics["mean_snr_after"])
-                noise_reduction.append(class_metrics["mean_noise_reduction"])
+                snr_after.append(class_metrics["mean_estimated_snr_after"])
+                snr_improvement.append(class_metrics["mean_snr_improvement"])
                 classes.append(f"{batch_name}\n{class_name}")
 
-        # SNR Improvement
         x = np.arange(len(classes))
         axes[0, 0].bar(x, snr_before, alpha=0.6, label="Before", color="red")
         axes[0, 0].bar(x, snr_after, alpha=0.6, label="After", color="green")
         axes[0, 0].set_xticks(x)
         axes[0, 0].set_xticklabels(classes, rotation=45)
         axes[0, 0].set_ylabel("SNR (dB)")
-        axes[0, 0].set_title(
-            "Signal-to-Noise Ratio Before/After Motion Artifact Removal"
-        )
+        axes[0, 0].set_title("Estimated SNR Before/After Removal")
         axes[0, 0].legend()
         axes[0, 0].grid(alpha=0.3)
 
-        # Noise Reduction Distribution
-        axes[0, 1].hist(noise_reduction, bins=10, alpha=0.7, edgecolor="black")
-        axes[0, 1].set_xlabel("Noise Reduction (dB)")
+        axes[0, 1].hist(snr_improvement, bins=10, alpha=0.7, edgecolor="black")
+        axes[0, 1].set_xlabel("SNR Improvement (dB)")
         axes[0, 1].set_ylabel("Frequency")
-        axes[0, 1].set_title("Distribution of Noise Reduction Across Classes")
+        axes[0, 1].set_title("Distribution of SNR Improvement")
         axes[0, 1].grid(alpha=0.3)
 
-        # SNR vs Noise Reduction Scatter
-        axes[1, 0].scatter(snr_before, noise_reduction, alpha=0.6)
+        axes[1, 0].scatter(snr_before, snr_improvement, alpha=0.6)
         axes[1, 0].set_xlabel("SNR Before (dB)")
-        axes[1, 0].set_ylabel("Noise Reduction (dB)")
-        axes[1, 0].set_title("SNR Before vs Noise Reduction")
+        axes[1, 0].set_ylabel("SNR Improvement (dB)")
+        axes[1, 0].set_title("Baseline SNR vs Improvement")
         axes[1, 0].grid(alpha=0.3)
 
-        # Summary Statistics
         stats_text = f"""
 Validation Summary:
 • Average SNR Before: {np.mean(snr_before):.1f} dB
 • Average SNR After: {np.mean(snr_after):.1f} dB
-• Average Noise Reduction: {np.mean(noise_reduction):.1f} dB
+• Average SNR Improvement: {np.mean(snr_improvement):.1f} dB
 • Classes Tested: {len(classes)}
-• Consistent Improvement: {np.mean(noise_reduction) > 0}
 """
         axes[1, 1].text(
             0.1,
@@ -565,24 +561,19 @@ Validation Summary:
         """Create noise reduction analysis plot."""
         fig, ax = plt.subplots(figsize=(12, 8))
 
-        # Prepare data for box plot
         data = []
         labels = []
 
         for batch_name, batch_data in quant_metrics.items():
             for class_name, class_metrics in batch_data.items():
-                data.append(
-                    [class_metrics["mean_noise_reduction"]]
-                )  # Single value per class
+                data.append([class_metrics["mean_snr_improvement"]])
                 labels.append(f"{batch_name}\n{class_name}")
 
         if data:
             ax.boxplot(data, labels=labels)
-            ax.set_ylabel("Noise Reduction (dB)")
-            ax.set_title("Noise Reduction by Batch and Class")
+            ax.set_ylabel("SNR Improvement (dB)")
+            ax.set_title("SNR Improvement by Batch and Class")
             ax.grid(alpha=0.3)
-
-            # Add horizontal line at 0 dB
             ax.axhline(
                 y=0, color="red", linestyle="--", alpha=0.7, label="No Improvement"
             )
@@ -606,44 +597,12 @@ Validation Summary:
             _lms_adaptive_filter,
         )
 
-        # Apply the same 2-stage pipeline used in the main processing
         clean1 = _static_subtraction(audio, template)
         clean_final = _lms_adaptive_filter(clean1, template)
 
-        # Pad back to original length if necessary
         if len(clean_final) < len(audio):
             clean_final = np.pad(
                 clean_final, (0, len(audio) - len(clean_final)), "constant"
             )
 
         return clean_final.astype(np.float32)
-
-    def _calculate_snr(self, signal: np.ndarray, noise: np.ndarray) -> float:
-        """Calculate Signal-to-Noise Ratio in dB."""
-        # Ensure same length
-        min_len = min(len(signal), len(noise))
-        signal = signal[:min_len]
-        noise = noise[:min_len]
-
-        # Calculate signal power
-        signal_power = np.mean(signal**2)
-
-        # Calculate noise power (using the static reference as noise estimate)
-        noise_power = np.mean(noise**2)
-
-        # Avoid division by zero
-        if noise_power < 1e-10:
-            return float("inf")
-
-        # Calculate SNR in dB
-        snr = 10 * np.log10(signal_power / noise_power)
-        return snr
-
-    def _calculate_power_spectral_density(
-        self, audio: np.ndarray, sr: int, n_fft: int = 2048
-    ):
-        """Calculate power spectral density."""
-        import scipy.signal
-
-        freqs, psd = scipy.signal.welch(audio, fs=sr, nperseg=n_fft)
-        return freqs, psd

@@ -10,15 +10,26 @@ feature_extraction:
   enabled: true
   method: "comprehensive"  # comprehensive, basic, spectral_only
 
+# Multi-Dataset Training Configuration (NEW FEATURE)
+multi_dataset_training:
+  enabled: false  # Set to true to enable multi-dataset mode
+  training_datasets:  # Datasets to combine for training (80/20 split)
+    - "balanced_collected_data_runs_2026_01_15_workspace1_undersample"
+    - "balanced_collected_data_runs_2026_01_15_workspace_2_undersample"
+  validation_dataset: "balanced_collected_data_runs_2026_01_14_workspace_3_v1_undersample"  # Holdout dataset for final validation
+  train_test_split: 0.8  # 80% train, 20% test from combined training datasets
+  random_seed: 42
+  stratify: true  # Ensure balanced class distribution in splits
+
 # Analysis Experiments
 experiments:
   data_processing:
     enabled: true
     include_impulse_features: true
     apply_audio_smoothing: true
-    smoothing_cutoff_freq: 500
+    smoothing_cutoff_freq: 200
     motion_artifact_removal:
-      enabled: true
+      enabled: false
 
   dimensionality_reduction:
     enabled: true
@@ -43,6 +54,10 @@ experiments:
   frequency_band_ablation:
     enabled: false  # Disabled due to implementation issues
     frequency_bands: ["low", "mid", "high", "ultra_high"]
+
+  multi_dataset_training:
+    enabled: false  # Enable when you want to run multi-dataset training
+    # This experiment uses the config from multi_dataset_training section above
 
 # Output Configuration
 output:

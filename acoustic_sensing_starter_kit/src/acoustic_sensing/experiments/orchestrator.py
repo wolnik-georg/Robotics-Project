@@ -6,6 +6,8 @@ from .saliency_analysis import SaliencyAnalysisExperiment
 from .feature_ablation import FeatureAblationExperiment
 from .impulse_response import ImpulseResponseExperiment
 from .frequency_band_ablation import FrequencyBandAblationExperiment
+from .multi_dataset_training import MultiDatasetTrainingExperiment
+from .surface_reconstruction import SurfaceReconstructionExperiment
 
 from typing import Dict, Any, List, Type
 import yaml
@@ -42,6 +44,8 @@ class ExperimentOrchestrator:
             "feature_ablation": FeatureAblationExperiment,
             "impulse_response": ImpulseResponseExperiment,
             "frequency_band_ablation": FrequencyBandAblationExperiment,
+            "multi_dataset_training": MultiDatasetTrainingExperiment,
+            "surface_reconstruction": SurfaceReconstructionExperiment,
         }
 
         # Execution state
@@ -243,12 +247,25 @@ class ExperimentOrchestrator:
             exp_config = {
                 "base_data_dir": self.config.get("base_data_dir", "data"),
                 "enabled": True,
+                "multi_dataset_training": self.config.get("multi_dataset_training", {}),
+                "datasets": self.config.get("datasets", []),  # Add datasets field
+                "validation_datasets": self.config.get(
+                    "validation_datasets", []
+                ),  # Add validation datasets
             }
             # Add data_processing specific config
             data_processing_config = self.config.get("experiments", {}).get(
                 "data_processing", {}
             )
             exp_config.update(data_processing_config)
+        elif experiment_name == "multi_dataset_training":
+            # Multi-dataset training needs top-level multi_dataset_training config
+            exp_config = {
+                "enabled": self.config.get("experiments", {})
+                .get("multi_dataset_training", {})
+                .get("enabled", False),
+                "multi_dataset_training": self.config.get("multi_dataset_training", {}),
+            }
         else:
             exp_config = self.config.get("experiments", {}).get(experiment_name, {})
 
@@ -256,7 +273,10 @@ class ExperimentOrchestrator:
         experiment = experiment_class(exp_config, self.output_dir)
 
         # Check if experiment is enabled
-        if not experiment.is_enabled() and experiment_name != "data_processing":
+        if not experiment.is_enabled() and experiment_name not in [
+            "data_processing",
+            "multi_dataset_training",
+        ]:
             self.logger.info(f"Experiment {experiment_name} is disabled. Skipping.")
             return {"status": "skipped", "reason": "disabled"}
 
@@ -363,7 +383,7 @@ class ExperimentOrchestrator:
             if best_classifier:
                 findings.append(
                     f"Best classifier: {best_classifier.get('name', 'Unknown')} "
-                    f"with {best_classifier.get('accuracy', 0):.4f} accuracy"
+                    f"with {best_classifier.get('validation_accuracy', 0):.4f} validation accuracy"
                 )
 
         # Feature ablation findings

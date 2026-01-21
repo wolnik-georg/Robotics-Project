@@ -1,0 +1,36 @@
+base_data_dir: data
+datasets:
+- balanced_collected_data_runs_2026_01_15_workspace_2_squares_cutout_undersample
+- balanced_collected_data_runs_2026_01_15_workspace_2_pure_no_contact_undersample
+- balanced_collected_data_runs_2026_01_15_workspace_2_pure_contact_undersample
+- balanced_collected_data_runs_2026_01_15_workspace_1_squares_cutout_undersample
+- balanced_collected_data_runs_2026_01_15_workspace_1_pure_no_contact_undersample
+- balanced_collected_data_runs_2026_01_15_workspace_1_pure_contact_undersample
+- balanced_collected_data_runs_2026_01_14_workspace_3_pure_no_contact_undersample
+- balanced_collected_data_runs_2026_01_14_workspace_3_pure_contact_undersample
+- balanced_collected_data_runs_2025_12_15_v2_2_workspace3_squares_cutout_undersample
+- balanced_collected_data_runs_2025_12_17_v2_workspace_3_squares_cutout_undersample
+experiments:
+  data_processing:
+    apply_audio_smoothing: false
+    enabled: true
+    include_impulse_features: true
+    motion_artifact_removal:
+      enabled: false
+  dimensionality_reduction:
+    enabled: true
+  discrimination_analysis:
+    enabled: true
+  feature_ablation:
+    enabled: false
+  frequency_band_ablation:
+    enabled: false
+  impulse_response:
+    enabled: false
+  saliency_analysis:
+    enabled: false
+  surface_reconstruction:
+    enabled: false
+output:
+  base_dir: results_v3
+validation_datasets: []

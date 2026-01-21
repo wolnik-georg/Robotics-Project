@@ -1,0 +1,13 @@
+{
+  "best_perplexity": 5,
+  "best_silhouette_score": 0.0016052789287641644,
+  "perplexities_tested": [
+    "perplexity_5",
+    "perplexity_10",
+    "perplexity_20",
+    "perplexity_30",
+    "perplexity_50",
+    "best_perplexity",
+    "silhouette_score"
+  ]
+}

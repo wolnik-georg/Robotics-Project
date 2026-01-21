@@ -1,0 +1,44 @@
+{
+  "batch_name": "balanced_collected_data_runs_2026_01_15_workspace_2_pure_contact_undersample",
+  "num_samples": 885,
+  "num_classes": 1,
+  "classes": [
+    "contact"
+  ],
+  "best_classifier": {
+    "name": "Random Forest",
+    "mean_accuracy": 1.0,
+    "std_accuracy": 0.0
+  },
+  "worst_classifier": {
+    "name": "Random Forest",
+    "mean_accuracy": 1.0,
+    "std_accuracy": 0.0
+  },
+  "all_classifiers_performance": {
+    "Random Forest": {
+      "mean_accuracy": 1.0,
+      "std_accuracy": 0.0
+    },
+    "K-NN": {
+      "mean_accuracy": 1.0,
+      "std_accuracy": 0.0
+    },
+    "Extra Trees": {
+      "mean_accuracy": 1.0,
+      "std_accuracy": 0.0
+    },
+    "AdaBoost": {
+      "mean_accuracy": 1.0,
+      "std_accuracy": 0.0
+    },
+    "Naive Bayes": {
+      "mean_accuracy": 1.0,
+      "std_accuracy": 0.0
+    },
+    "Linear Discriminant Analysis": {
+      "mean_accuracy": 1.0,
+      "std_accuracy": 0.0
+    }
+  }
+}

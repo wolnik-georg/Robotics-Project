@@ -10,6 +10,8 @@ from .saliency_analysis import SaliencyAnalysisExperiment
 from .feature_ablation import FeatureAblationExperiment
 from .impulse_response import ImpulseResponseExperiment
 from .frequency_band_ablation import FrequencyBandAblationExperiment
+from .multi_dataset_training import MultiDatasetTrainingExperiment
+from .surface_reconstruction import SurfaceReconstructionExperiment
 
 __all__ = [
     "BaseExperiment",
@@ -21,4 +23,6 @@ __all__ = [
     "FeatureAblationExperiment",
     "ImpulseResponseExperiment",
     "FrequencyBandAblationExperiment",
+    "MultiDatasetTrainingExperiment",
+    "SurfaceReconstructionExperiment",
 ]

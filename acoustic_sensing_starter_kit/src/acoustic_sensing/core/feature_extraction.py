@@ -40,16 +40,28 @@ class GeometricFeatureExtractor:
     - Multi-band energy analysis
     """
 
-    def __init__(self, sr: int = 48000, n_fft: int = 4096):
+    def __init__(
+        self,
+        sr: int = 48000,
+        n_fft: int = 4096,
+        use_workspace_invariant: bool = True,
+        use_impulse_features: bool = False,
+    ):
         """
         Initialize the feature extractor.
 
         Args:
             sr: Sample rate for audio processing
             n_fft: FFT size for spectral analysis
+            use_workspace_invariant: Whether to include workspace-invariant features
+                                    for better cross-workspace generalization
+            use_impulse_features: Whether to include impulse response / transfer function
+                                 features for better material discrimination
         """
         self.sr = sr
         self.n_fft = n_fft
+        self.use_workspace_invariant = use_workspace_invariant
+        self.use_impulse_features = use_impulse_features
         self.freq_bins = librosa.fft_frequencies(sr=sr, n_fft=n_fft)
 
         # Define frequency bands based on acoustic sensing research
@@ -127,6 +139,18 @@ class GeometricFeatureExtractor:
         # 6. Multi-band energy features
         energy_feats = self._extract_energy_features(audio)
         features.extend(energy_feats)
+
+        # 7. Workspace-invariant features (optional)
+        if self.use_workspace_invariant:
+            workspace_invariant_feats = self._extract_workspace_invariant_features(
+                audio
+            )
+            features.extend(workspace_invariant_feats)
+
+        # 8. Impulse response / Transfer function features (optional)
+        if self.use_impulse_features:
+            impulse_feats = self._extract_impulse_response_features(audio)
+            features.extend(impulse_feats)
 
         return np.array(features)
 
@@ -427,6 +451,401 @@ class GeometricFeatureExtractor:
 
         return features
 
+    def _extract_workspace_invariant_features(self, audio: np.ndarray) -> List[float]:
+        """
+        Extract workspace-invariant features for better cross-workspace generalization.
+
+        These features use normalization and ratios to be less sensitive to:
+        - Room acoustics (reverberation, ambient noise)
+        - Microphone placement and sensitivity
+        - Surface material variations
+        - Recording conditions
+
+        Returns:
+            List of workspace-invariant features
+        """
+        features = []
+
+        # Compute power spectrum
+        stft = librosa.stft(audio, n_fft=self.n_fft)
+        power_spectrum = np.abs(stft) ** 2
+        power_sum = np.sum(power_spectrum, axis=1)
+        total_energy = np.sum(power_sum)
+
+        # 1. SPECTRAL BAND RATIOS (invariant to absolute amplitude)
+        # Define broader bands for robust ratios
+        bands_for_ratios = {
+            "very_low": (50, 300),
+            "low_mid": (300, 800),
+            "mid": (800, 2000),
+            "mid_high": (2000, 5000),
+            "high": (5000, 12000),
+        }
+
+        band_energies = {}
+        for band_name, (f_low, f_high) in bands_for_ratios.items():
+            band_mask = (self.freq_bins >= f_low) & (self.freq_bins <= f_high)
+            if np.any(band_mask):
+                band_energies[band_name] = np.sum(power_sum[band_mask])
+            else:
+                band_energies[band_name] = (
+                    1e-10  # Small value to avoid division by zero
+                )
+
+        # Critical ratios that capture contact vs no-contact
+        # Ratio 1: Mid to High (contact dampens high frequencies)
+        features.append(band_energies["mid"] / (band_energies["high"] + 1e-10))
+
+        # Ratio 2: Low-mid to Mid-high (resonance shift indicator)
+        features.append(band_energies["low_mid"] / (band_energies["mid_high"] + 1e-10))
+
+        # Ratio 3: Very low to High (overall spectral tilt)
+        features.append(band_energies["very_low"] / (band_energies["high"] + 1e-10))
+
+        # Ratio 4: (Low-mid + Mid) / (Mid-high + High) - contact indicator
+        numerator = band_energies["low_mid"] + band_energies["mid"]
+        denominator = band_energies["mid_high"] + band_energies["high"]
+        features.append(numerator / (denominator + 1e-10))
+
+        # 2. NORMALIZED SPECTRAL SHAPE (invariant to overall gain)
+        # Normalize power spectrum to unit energy
+        if total_energy > 0:
+            normalized_spectrum = power_sum / total_energy
+        else:
+            normalized_spectrum = power_sum
+
+        # Spectral moments on normalized spectrum
+        freqs = self.freq_bins
+
+        # Normalized centroid
+        norm_centroid = np.sum(freqs * normalized_spectrum)
+        features.append(norm_centroid / 1000)  # Scale to ~0-10 range
+
+        # Normalized spread (relative to centroid)
+        norm_spread = np.sqrt(
+            np.sum(((freqs - norm_centroid) ** 2) * normalized_spectrum)
+        )
+        features.append(norm_spread / (norm_centroid + 1e-10))
+
+        # Normalized skewness (shape asymmetry)
+        if norm_spread > 0:
+            norm_skewness = np.sum(
+                ((freqs - norm_centroid) ** 3) * normalized_spectrum
+            ) / (norm_spread**3)
+        else:
+            norm_skewness = 0
+        features.append(norm_skewness)
+
+        # 3. TEMPORAL DYNAMICS RATIOS (invariant to signal amplitude)
+        # Normalize audio to unit RMS
+        rms = np.sqrt(np.mean(audio**2))
+        if rms > 0:
+            normalized_audio = audio / rms
+        else:
+            normalized_audio = audio
+
+        # Envelope extraction
+        analytic_signal = scipy.signal.hilbert(normalized_audio)
+        envelope = np.abs(analytic_signal)
+
+        # Attack vs Decay ratio (contact has sharp attack, gradual decay)
+        if len(envelope) > 10:
+            peak_idx = np.argmax(envelope)
+            attack_len = peak_idx if peak_idx > 0 else 1
+            decay_len = len(envelope) - peak_idx if peak_idx < len(envelope) else 1
+            attack_decay_ratio = attack_len / (decay_len + 1)
+            features.append(attack_decay_ratio)
+
+            # Attack slope (steepness of onset)
+            if attack_len > 1:
+                attack_slope = envelope[peak_idx] / attack_len
+            else:
+                attack_slope = 0
+            features.append(attack_slope)
+
+            # Decay rate (exponential decay characteristic)
+            if decay_len > 1:
+                decay_envelope = envelope[peak_idx:]
+                # Fit exponential decay: avoid log(0)
+                safe_decay = np.maximum(decay_envelope, 1e-10)
+                log_decay = np.log(safe_decay)
+                if len(log_decay) > 1:
+                    decay_rate = -(log_decay[-1] - log_decay[0]) / len(log_decay)
+                else:
+                    decay_rate = 0
+            else:
+                decay_rate = 0
+            features.append(decay_rate)
+        else:
+            features.extend([0, 0, 0])
+
+        # 4. SPECTRAL FLUX (rate of spectral change - normalized)
+        if stft.shape[1] > 1:
+            spectral_flux_values = []
+            for i in range(1, stft.shape[1]):
+                prev_frame = np.abs(stft[:, i - 1])
+                curr_frame = np.abs(stft[:, i])
+                # Normalize each frame
+                prev_norm = prev_frame / (np.sum(prev_frame) + 1e-10)
+                curr_norm = curr_frame / (np.sum(curr_frame) + 1e-10)
+                flux = np.sum((curr_norm - prev_norm) ** 2)
+                spectral_flux_values.append(flux)
+
+            avg_flux = np.mean(spectral_flux_values)
+            std_flux = np.std(spectral_flux_values)
+            features.append(avg_flux)
+            features.append(std_flux)
+        else:
+            features.extend([0, 0])
+
+        # 5. ZERO CROSSING RATE RATIO (temporal texture, normalized)
+        # Compare different portions of signal
+        if len(normalized_audio) > 100:
+            zcr_full = np.sum(librosa.zero_crossings(normalized_audio)) / len(
+                normalized_audio
+            )
+
+            # ZCR in first half vs second half
+            mid_point = len(normalized_audio) // 2
+            zcr_first = (
+                np.sum(librosa.zero_crossings(normalized_audio[:mid_point])) / mid_point
+            )
+            zcr_second = np.sum(
+                librosa.zero_crossings(normalized_audio[mid_point:])
+            ) / (len(normalized_audio) - mid_point)
+            zcr_ratio = zcr_first / (zcr_second + 1e-10)
+
+            features.append(zcr_full)
+            features.append(zcr_ratio)
+        else:
+            features.extend([0, 0])
+
+        # 6. SPECTRAL CREST FACTOR (peakiness, invariant to scale)
+        # For each band, compute crest factor
+        for band_name in ["low_mid", "mid", "mid_high"]:
+            f_low, f_high = bands_for_ratios[band_name]
+            band_mask = (self.freq_bins >= f_low) & (self.freq_bins <= f_high)
+            if np.any(band_mask):
+                band_power = power_sum[band_mask]
+                if len(band_power) > 0 and np.sum(band_power) > 0:
+                    crest = np.max(band_power) / np.mean(band_power)
+                else:
+                    crest = 0
+            else:
+                crest = 0
+            features.append(crest)
+
+        return features
+
+    def _extract_impulse_response_features(self, audio: np.ndarray) -> List[float]:
+        """
+        Extract impulse response / transfer function features.
+
+        These features approximate the system's transfer function by analyzing
+        the response to the chirp sweep excitation, extracting:
+        - Resonance characteristics (peaks in frequency response)
+        - Decay properties (how quickly energy dissipates)
+        - Phase characteristics (timing relationships)
+
+        This provides workspace-invariant features by characterizing the
+        acoustic transfer function of contact vs no-contact states.
+        """
+        features = []
+
+        # Ensure audio is floating-point
+        if audio.dtype != np.float32 and audio.dtype != np.float64:
+            audio = audio.astype(np.float32)
+
+        # 1. FREQUENCY RESPONSE ANALYSIS
+        # Use larger FFT for better frequency resolution
+        n_fft_ir = min(8192, len(audio))
+
+        # Compute frequency response magnitude
+        freq_response = np.fft.rfft(audio, n=n_fft_ir)
+        freqs = np.fft.rfftfreq(n_fft_ir, 1 / self.sr)
+        magnitude = np.abs(freq_response)
+
+        # Normalize magnitude for workspace invariance
+        if np.max(magnitude) > 0:
+            magnitude_norm = magnitude / np.max(magnitude)
+        else:
+            magnitude_norm = magnitude
+
+        # 2. RESONANCE PEAK DETECTION
+        from scipy.signal import find_peaks
+
+        # Find peaks in magnitude response
+        try:
+            peaks, properties = find_peaks(
+                magnitude_norm, height=0.1, distance=20, prominence=0.05
+            )
+
+            if len(peaks) > 0:
+                # Sort peaks by magnitude
+                sorted_peak_indices = np.argsort(properties["peak_heights"])[::-1]
+                sorted_peaks = peaks[sorted_peak_indices]
+
+                # Primary resonance
+                primary_freq = freqs[sorted_peaks[0]]
+                primary_mag = magnitude_norm[sorted_peaks[0]]
+                features.append(primary_freq / 1000)  # Normalize to kHz
+                features.append(primary_mag)
+
+                # Q-factor estimation for primary resonance
+                peak_idx = sorted_peaks[0]
+                half_power = primary_mag / np.sqrt(2)
+
+                # Find -3dB bandwidth
+                left_idx = peak_idx
+                while left_idx > 0 and magnitude_norm[left_idx] > half_power:
+                    left_idx -= 1
+                right_idx = peak_idx
+                while (
+                    right_idx < len(magnitude_norm) - 1
+                    and magnitude_norm[right_idx] > half_power
+                ):
+                    right_idx += 1
+
+                if right_idx > left_idx:
+                    bandwidth = freqs[right_idx] - freqs[left_idx]
+                    q_factor = primary_freq / (bandwidth + 1e-10)
+                else:
+                    q_factor = 0
+                features.append(min(q_factor, 100))  # Cap Q-factor
+
+                # Number of significant resonances
+                features.append(min(len(peaks), 10))
+
+                # Secondary resonance if exists
+                if len(sorted_peaks) > 1:
+                    secondary_freq = freqs[sorted_peaks[1]]
+                    secondary_mag = magnitude_norm[sorted_peaks[1]]
+                    features.append(secondary_freq / 1000)
+                    features.append(secondary_mag)
+                    # Ratio between primary and secondary
+                    features.append(primary_freq / (secondary_freq + 1e-10))
+                else:
+                    features.extend([0, 0, 0])
+            else:
+                features.extend([0, 0, 0, 0, 0, 0, 0])
+        except Exception:
+            features.extend([0, 0, 0, 0, 0, 0, 0])
+
+        # 3. FREQUENCY RESPONSE SHAPE (Transfer function characteristics)
+        # Centroid of frequency response
+        if np.sum(magnitude) > 0:
+            fr_centroid = np.sum(freqs * magnitude) / np.sum(magnitude)
+            features.append(fr_centroid / 1000)
+
+            # Spread around centroid
+            fr_spread = np.sqrt(
+                np.sum((freqs - fr_centroid) ** 2 * magnitude) / np.sum(magnitude)
+            )
+            features.append(fr_spread / 1000)
+        else:
+            features.extend([0, 0])
+
+        # 4. BAND ENERGY RATIOS FROM TRANSFER FUNCTION
+        # These are more stable than raw audio band energies
+        band_ranges = [
+            (100, 500),  # Low
+            (500, 1500),  # Mid-low (resonance region)
+            (1500, 4000),  # Mid
+            (4000, 10000),  # High
+        ]
+
+        band_mags = []
+        for f_low, f_high in band_ranges:
+            mask = (freqs >= f_low) & (freqs <= f_high)
+            if np.any(mask):
+                band_mags.append(np.mean(magnitude_norm[mask]))
+            else:
+                band_mags.append(0)
+
+        # Band ratios (workspace-invariant)
+        if band_mags[3] > 0:
+            features.append(
+                band_mags[1] / (band_mags[3] + 1e-10)
+            )  # Mid-low to High ratio
+        else:
+            features.append(0)
+        if band_mags[2] > 0:
+            features.append(band_mags[0] / (band_mags[2] + 1e-10))  # Low to Mid ratio
+        else:
+            features.append(0)
+
+        # 5. DECAY CHARACTERISTICS (Impulse response decay)
+        # Analyze envelope decay
+        analytic = scipy.signal.hilbert(audio)
+        envelope = np.abs(analytic)
+
+        if len(envelope) > 100:
+            peak_idx = np.argmax(envelope)
+
+            if peak_idx < len(envelope) - 50:
+                decay_portion = envelope[peak_idx:]
+
+                # Fit exponential decay
+                decay_len = min(len(decay_portion), 1000)
+                t = np.arange(decay_len) / self.sr
+                y = decay_portion[:decay_len]
+
+                # Log-linear fit for decay rate
+                safe_y = np.maximum(y, 1e-10)
+                log_y = np.log(safe_y)
+
+                try:
+                    slope, intercept, _, _, _ = stats.linregress(t, log_y)
+                    decay_rate = -slope  # Positive = faster decay
+                    features.append(min(decay_rate, 1000))  # Cap at reasonable value
+                except Exception:
+                    features.append(0)
+
+                # T60-like measure (time to decay by 60dB)
+                try:
+                    initial_level = np.mean(envelope[peak_idx : peak_idx + 10])
+                    target_level = initial_level * 0.001  # -60dB
+                    decay_indices = np.where(decay_portion < target_level)[0]
+                    if len(decay_indices) > 0:
+                        t60 = decay_indices[0] / self.sr
+                    else:
+                        t60 = len(decay_portion) / self.sr
+                    features.append(min(t60, 5))  # Cap at 5 seconds
+                except Exception:
+                    features.append(0)
+            else:
+                features.extend([0, 0])
+        else:
+            features.extend([0, 0])
+
+        # 6. PHASE CHARACTERISTICS (can indicate material properties)
+        phase = np.angle(freq_response)
+
+        # Phase linearity (group delay flatness)
+        # Unwrap phase to avoid discontinuities
+        phase_unwrapped = np.unwrap(phase)
+
+        # Group delay is derivative of phase
+        if len(phase_unwrapped) > 2:
+            group_delay = -np.diff(phase_unwrapped) / (
+                2 * np.pi * (freqs[1] - freqs[0]) + 1e-10
+            )
+
+            # Focus on meaningful frequency range (200-5000 Hz)
+            freq_mask = (freqs[:-1] >= 200) & (freqs[:-1] <= 5000)
+            if np.any(freq_mask):
+                gd_subset = group_delay[freq_mask]
+                gd_mean = np.mean(gd_subset)
+                gd_std = np.std(gd_subset)
+                features.append(gd_mean * 1000)  # Convert to ms
+                features.append(gd_std * 1000)
+            else:
+                features.extend([0, 0])
+        else:
+            features.extend([0, 0])
+
+        return features
+
     def _extract_legacy_features(self, audio: np.ndarray) -> pd.Series:
         """Extract legacy STFT features for compatibility."""
         stft = librosa.stft(audio, n_fft=self.n_fft)
@@ -492,6 +911,53 @@ class GeometricFeatureExtractor:
             # Energy features
             band_names = [f"{band}_energy_ratio" for band in self.freq_bands.keys()]
             names.extend(band_names + ["resonance_high_ratio", "low_mid_ratio"])
+
+            # Workspace-invariant features (optional)
+            if self.use_workspace_invariant:
+                names.extend(
+                    [
+                        "wi_mid_to_high_ratio",
+                        "wi_lowmid_to_midhigh_ratio",
+                        "wi_verylow_to_high_ratio",
+                        "wi_combined_contact_ratio",
+                        "wi_norm_centroid",
+                        "wi_norm_spread_ratio",
+                        "wi_norm_skewness",
+                        "wi_attack_decay_ratio",
+                        "wi_attack_slope",
+                        "wi_decay_rate",
+                        "wi_avg_spectral_flux",
+                        "wi_std_spectral_flux",
+                        "wi_zcr_full",
+                        "wi_zcr_ratio",
+                        "wi_crest_lowmid",
+                        "wi_crest_mid",
+                        "wi_crest_midhigh",
+                    ]
+                )
+
+            # Impulse response / Transfer function features (optional)
+            if self.use_impulse_features:
+                names.extend(
+                    [
+                        "ir_primary_resonance_freq",
+                        "ir_primary_resonance_mag",
+                        "ir_q_factor",
+                        "ir_num_resonances",
+                        "ir_secondary_resonance_freq",
+                        "ir_secondary_resonance_mag",
+                        "ir_primary_secondary_ratio",
+                        "ir_freq_response_centroid",
+                        "ir_freq_response_spread",
+                        "ir_midlow_high_ratio",
+                        "ir_low_mid_ratio",
+                        "ir_decay_rate",
+                        "ir_t60",
+                        "ir_group_delay_mean",
+                        "ir_group_delay_std",
+                    ]
+                )
+
             return names
         elif method == "legacy":
             return [f"freq_{f:.1f}Hz" for f in self.freq_bins]

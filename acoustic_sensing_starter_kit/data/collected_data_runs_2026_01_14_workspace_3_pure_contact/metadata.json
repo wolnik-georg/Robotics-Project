@@ -1,0 +1,10 @@
+{
+  "dataset_name": "runs_2026_01_14_workspace_3_pure_contact",
+  "total_samples": 1393,
+  "samples_per_label": {
+    "contact": 1393
+  },
+  "created_by": "collect_data.py",
+  "relabeled": true,
+  "labeling_logic": "ground_truth_pure_contact"
+}
