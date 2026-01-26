@@ -1,0 +1,66 @@
+base_data_dir: data
+datasets:
+- balanced_collected_data_runs_2026_01_15_workspace_1_squares_cutout_undersample
+- balanced_collected_data_runs_2026_01_15_workspace_1_pure_no_contact_undersample
+- balanced_collected_data_runs_2026_01_15_workspace_1_pure_contact_undersample
+- balanced_collected_data_runs_2026_01_14_workspace_3_pure_no_contact_undersample
+- balanced_collected_data_runs_2026_01_14_workspace_3_pure_contact_undersample
+- balanced_collected_data_runs_2025_12_15_v2_2_workspace3_squares_cutout_undersample
+- balanced_collected_data_runs_2025_12_17_v2_workspace_3_squares_cutout_undersample
+dimensionality_reduction:
+  enabled: true
+  method: pca
+  n_components: 50
+discrimination_analysis:
+  enabled: true
+  methods:
+  - lda
+  - svm
+  - rf
+  - knn
+experiments:
+  data_processing:
+    apply_audio_smoothing: false
+    augmentation_factor: 2
+    enabled: true
+    motion_artifact_removal:
+      enabled: false
+    use_data_augmentation: false
+    use_impulse_features: true
+    use_workspace_invariant_features: true
+  dimensionality_reduction:
+    enabled: true
+  discrimination_analysis:
+    enabled: true
+  feature_ablation:
+    enabled: false
+  frequency_band_ablation:
+    enabled: false
+  impulse_response:
+    enabled: false
+  saliency_analysis:
+    enabled: false
+  surface_reconstruction:
+    enabled: false
+feature_extraction:
+  mode: features
+  modes:
+  - features
+  spectrogram:
+    hop_length: 256
+    n_chroma: 12
+    n_fft: 2048
+    n_mels: 128
+    n_mfcc: 13
+    time_bins: 256
+output:
+  base_dir: single_mode_test
+training:
+  model_type: mlp_top3_ensemble
+  random_seed: 42
+  stratify: true
+  train_split: 0.8
+validation_datasets:
+- balanced_collected_data_runs_2026_01_15_workspace_2_squares_cutout_undersample
+- balanced_collected_data_runs_2026_01_15_workspace_2_pure_no_contact_undersample
+- balanced_collected_data_runs_2026_01_15_workspace_2_pure_contact_undersample

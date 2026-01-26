@@ -1,0 +1,51 @@
+# Test config for verifying all three modes work
+base_data_dir: "data"
+
+datasets:
+  - "balanced_collected_data_runs_2026_01_15_workspace_1_squares_cutout_undersample"
+
+validation_datasets:
+  - "balanced_collected_data_runs_2026_01_15_workspace_2_squares_cutout_undersample"
+
+feature_extraction:
+  mode: "features"  # Test features mode
+
+  spectrogram:
+    n_fft: 2048
+    hop_length: 256
+    n_mels: 128
+    fmin: 50
+    fmax: 20000
+    time_bins: 256
+    use_log_scale: true
+
+# Minimal settings for quick testing
+use_workspace_invariant_features: true
+use_impulse_features: false
+use_contact_physics_features: true
+use_data_augmentation: false
+
+# Enable only data processing for testing
+experiments:
+  data_processing:
+    enabled: true
+    apply_audio_smoothing: false
+    use_workspace_invariant_features: true
+    use_impulse_features: false
+    use_data_augmentation: false
+    augmentation_factor: 2
+    motion_artifact_removal:
+      enabled: false
+
+  dimensionality_reduction:
+    enabled: false
+
+  discrimination_analysis:
+    enabled: false
+
+  saliency_analysis:
+    enabled: false
+
+# Output Configuration
+output:
+  base_dir: "test_output"

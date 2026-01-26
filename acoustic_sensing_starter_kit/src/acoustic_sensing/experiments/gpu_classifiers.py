@@ -81,6 +81,8 @@ class GPUMLPClassifier(BaseEstimator, ClassifierMixin):
     - Label encoding for string labels
     """
 
+    _estimator_type = "classifier"  # Required for VotingClassifier compatibility
+
     def __init__(
         self,
         hidden_layer_sizes: Tuple[int, ...] = (128, 64, 32),
@@ -114,8 +116,30 @@ class GPUMLPClassifier(BaseEstimator, ClassifierMixin):
         self.model = None
         self.classes_ = None
 
-    def fit(self, X: np.ndarray, y: np.ndarray) -> "GPUMLPClassifier":
-        """Fit the model to training data."""
+    def fit(
+        self,
+        X: np.ndarray,
+        y: np.ndarray,
+        X_val: Optional[np.ndarray] = None,
+        y_val: Optional[np.ndarray] = None,
+    ) -> "GPUMLPClassifier":
+        """
+        Fit the model to training data.
+
+        Args:
+            X: Training features
+            y: Training labels
+            X_val: Optional validation features (preferred over internal split)
+            y_val: Optional validation labels
+
+        Returns:
+            Fitted classifier
+
+        Note:
+            If X_val and y_val are provided, they will be used for validation
+            instead of splitting the training data. This is preferred for
+            3-way split pipelines where dedicated tuning data exists.
+        """
         if self.random_state is not None:
             torch.manual_seed(self.random_state)
             np.random.seed(self.random_state)
@@ -129,8 +153,20 @@ class GPUMLPClassifier(BaseEstimator, ClassifierMixin):
         X_tensor = torch.FloatTensor(X)
         y_tensor = torch.LongTensor(y_encoded)
 
-        # Split for validation if early stopping
-        if self.early_stopping:
+        # Use external validation data if provided (3-way split mode)
+        if X_val is not None and y_val is not None:
+            if self.verbose:
+                print(
+                    f"Using external validation data: {len(X_val)} samples (3-way split)"
+                )
+            X_train = X_tensor
+            y_train = y_tensor
+            y_val_encoded = self.label_encoder.transform(y_val)
+            X_val = torch.FloatTensor(X_val)
+            y_val = torch.LongTensor(y_val_encoded)
+
+        # Split for validation if early stopping and no external validation
+        elif self.early_stopping:
             n_val = int(len(X) * self.validation_fraction)
             indices = np.random.permutation(len(X))
             val_indices = indices[:n_val]

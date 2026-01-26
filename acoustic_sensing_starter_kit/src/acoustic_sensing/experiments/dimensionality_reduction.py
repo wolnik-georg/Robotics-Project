@@ -1,6 +1,9 @@
 from .base_experiment import BaseExperiment
 from typing import Dict, Any, List
 import numpy as np
+import matplotlib
+
+matplotlib.use("Agg")  # Use non-GUI backend for headless environments
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.decomposition import PCA

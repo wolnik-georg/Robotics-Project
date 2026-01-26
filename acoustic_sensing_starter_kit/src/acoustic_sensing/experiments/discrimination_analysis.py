@@ -2,6 +2,9 @@ from .base_experiment import BaseExperiment
 from typing import Dict, Any, List
 import numpy as np
 import pandas as pd
+import matplotlib
+
+matplotlib.use("Agg")  # Use non-GUI backend for headless environments
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.ensemble import (
@@ -141,7 +144,7 @@ class MLPWrapper(BaseEstimator, ClassifierMixin):
         return self.model.predict_proba(X)
 
 
-from sklearn.model_selection import cross_val_score, StratifiedKFold
+from sklearn.model_selection import cross_val_score, StratifiedKFold, RandomizedSearchCV
 from sklearn.metrics import (
     classification_report,
     confusion_matrix,
@@ -238,11 +241,125 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
 
         # Check if validation datasets are specified
         validation_datasets = shared_data.get("validation_datasets", [])
+        tuning_datasets = shared_data.get("hyperparameter_tuning_datasets", [])
+        final_test_datasets = shared_data.get("final_test_datasets", [])
         training_datasets = shared_data.get(
             "training_datasets", list(batch_results.keys())
         )
 
-        if validation_datasets:
+        # Determine split mode: 3-way, 2-way, or standard
+        if tuning_datasets and final_test_datasets:
+            # 3-WAY SPLIT MODE
+            self.logger.info("=" * 80)
+            self.logger.info("🎯 3-WAY SPLIT MODE ENABLED")
+            self.logger.info("=" * 80)
+            self.logger.info(f"📋 DATASET CONFIGURATION:")
+            self.logger.info(f"  1️⃣  TRAINING datasets ({len(training_datasets)}):")
+            for ds in training_datasets:
+                self.logger.info(f"     - {ds}")
+            self.logger.info(f"  2️⃣  TUNING datasets ({len(tuning_datasets)}):")
+            for ds in tuning_datasets:
+                self.logger.info(f"     - {ds}")
+            self.logger.info(f"  3️⃣  TEST datasets ({len(final_test_datasets)}):")
+            for ds in final_test_datasets:
+                self.logger.info(f"     - {ds}")
+            self.logger.info("=" * 80)
+
+            # Combine training datasets
+            X_train_list = []
+            y_train_list = []
+            for dataset_name in training_datasets:
+                if dataset_name in batch_results:
+                    X_train_list.append(batch_results[dataset_name]["features"])
+                    y_train_list.append(batch_results[dataset_name]["labels"])
+
+            X_train_combined = np.vstack(X_train_list) if X_train_list else np.array([])
+            y_train_combined = (
+                np.concatenate(y_train_list) if y_train_list else np.array([])
+            )
+
+            # Combine tuning datasets
+            X_tuning_list = []
+            y_tuning_list = []
+            for dataset_name in tuning_datasets:
+                if dataset_name in batch_results:
+                    X_tuning_list.append(batch_results[dataset_name]["features"])
+                    y_tuning_list.append(batch_results[dataset_name]["labels"])
+
+            X_tuning_combined = (
+                np.vstack(X_tuning_list) if X_tuning_list else np.array([])
+            )
+            y_tuning_combined = (
+                np.concatenate(y_tuning_list) if y_tuning_list else np.array([])
+            )
+
+            # Combine final test datasets
+            X_test_list = []
+            y_test_list = []
+            for dataset_name in final_test_datasets:
+                if dataset_name in batch_results:
+                    X_test_list.append(batch_results[dataset_name]["features"])
+                    y_test_list.append(batch_results[dataset_name]["labels"])
+
+            X_test_combined = np.vstack(X_test_list) if X_test_list else np.array([])
+            y_test_combined = (
+                np.concatenate(y_test_list) if y_test_list else np.array([])
+            )
+
+            self.logger.info(
+                f"✓ Combined training data: {len(X_train_combined)} samples from {len(X_train_list)} datasets"
+            )
+            self.logger.info(
+                f"✓ Combined tuning data: {len(X_tuning_combined)} samples from {len(X_tuning_list)} datasets"
+            )
+            self.logger.info(
+                f"✓ Combined final test data: {len(X_test_combined)} samples from {len(X_test_list)} datasets"
+            )
+            self.logger.info("=" * 80)
+
+            # Verify no dataset overlap
+            train_set = set(training_datasets)
+            tune_set = set(tuning_datasets)
+            test_set = set(final_test_datasets)
+            if train_set & tune_set:
+                self.logger.warning(
+                    f"⚠️  WARNING: Overlap between training and tuning: {train_set & tune_set}"
+                )
+            if train_set & test_set:
+                self.logger.warning(
+                    f"⚠️  WARNING: Overlap between training and test: {train_set & test_set}"
+                )
+            if tune_set & test_set:
+                self.logger.warning(
+                    f"⚠️  WARNING: Overlap between tuning and test: {tune_set & test_set}"
+                )
+
+            if (
+                not (train_set & tune_set)
+                and not (train_set & test_set)
+                and not (tune_set & test_set)
+            ):
+                self.logger.info(
+                    "✅ VERIFIED: No dataset overlap - proper 3-way split maintained"
+                )
+
+            # Run 3-way split analysis
+            results = self._run_with_3way_split(
+                X_train_combined,
+                y_train_combined,
+                X_tuning_combined,
+                y_tuning_combined,
+                X_test_combined,
+                y_test_combined,
+                training_datasets,
+                tuning_datasets,
+                final_test_datasets,
+                batch_results,
+            )
+
+            return results
+
+        elif validation_datasets:
             self.logger.info(f"✓ Validation mode enabled")
             self.logger.info(f"  Training datasets: {training_datasets}")
             self.logger.info(f"  Validation datasets: {validation_datasets}")
@@ -694,114 +811,503 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
 
         return results
 
+    def _run_with_3way_split(
+        self,
+        X_train: np.ndarray,
+        y_train: np.ndarray,
+        X_tuning: np.ndarray,
+        y_tuning: np.ndarray,
+        X_test: np.ndarray,
+        y_test: np.ndarray,
+        training_datasets: list,
+        tuning_datasets: list,
+        final_test_datasets: list,
+        batch_results: dict,
+    ) -> Dict[str, Any]:
+        """
+        Run discrimination analysis with 3-way split (train/tuning/test).
+
+        This implements a rigorous ML evaluation pipeline:
+        1. Train models on training datasets
+        2. Tune hyperparameters/select models on tuning datasets
+        3. Report final unbiased performance on test datasets
+
+        Args:
+            X_train: Training features
+            y_train: Training labels
+            X_tuning: Tuning features (for hyperparameter optimization)
+            y_tuning: Tuning labels
+            X_test: Final test features (for unbiased evaluation)
+            y_test: Final test labels
+            training_datasets: List of training dataset names
+            tuning_datasets: List of tuning dataset names
+            final_test_datasets: List of final test dataset names
+            batch_results: Original batch results
+
+        Returns:
+            Analysis results with train/tuning/test metrics
+        """
+        self.logger.info("=" * 80)
+        self.logger.info("Running Discrimination Analysis with 3-Way Split")
+        self.logger.info("=" * 80)
+        self.logger.info("Step 1: Train models on training datasets")
+        self.logger.info("Step 2: Tune hyperparameters on tuning datasets")
+        self.logger.info(
+            "Step 3: Final evaluation on test datasets (unbiased performance)"
+        )
+        self.logger.info("=" * 80)
+
+        self.logger.info(f"Training set: {len(X_train)} samples")
+        self.logger.info(f"Tuning set: {len(X_tuning)} samples")
+        self.logger.info(f"Test set: {len(X_test)} samples")
+
+        # Scale features
+        scaler = StandardScaler()
+        X_train_scaled = scaler.fit_transform(X_train)
+        X_tuning_scaled = scaler.transform(X_tuning)
+        X_test_scaled = scaler.transform(X_test)
+
+        # Get classifiers
+        classifiers = self._get_classifiers()
+
+        # Train and evaluate each classifier
+        results_dict = {}
+        for clf_name, clf in classifiers.items():
+            self.logger.info(f"\n{'='*60}")
+            self.logger.info(f"Training: {clf_name}")
+            self.logger.info(f"{'='*60}")
+
+            try:
+                # STEP 1: Hyperparameter tuning on training + tuning data
+                # For GPU-MLP classifiers, use external validation
+                if hasattr(clf, "fit") and "GPU-MLP" in clf_name:
+                    self.logger.info(
+                        f"  [GPU-MLP] Using dedicated tuning data for validation ({len(X_tuning_scaled)} samples)"
+                    )
+                    # GPU models handle validation internally during training
+                    clf.fit(
+                        X_train_scaled, y_train, X_val=X_tuning_scaled, y_val=y_tuning
+                    )
+                    best_clf = clf
+                    search_results = None
+                else:
+                    # Sklearn models: tune hyperparameters using RandomizedSearchCV
+                    best_clf, search_results = self._tune_hyperparameters(
+                        clf_name,
+                        clf,
+                        X_train_scaled,
+                        y_train,
+                        X_tuning_scaled,
+                        y_tuning,
+                        n_iter=20,  # Number of random parameter combinations to try
+                    )
+
+                # STEP 2: Evaluate on all three datasets
+                # Predict on train set (for overfitting analysis)
+                y_train_pred = best_clf.predict(X_train_scaled)
+                train_accuracy = accuracy_score(y_train, y_train_pred)
+                train_f1 = f1_score(y_train, y_train_pred, average="weighted")
+
+                # Predict on tuning set (validation performance)
+                y_tuning_pred = best_clf.predict(X_tuning_scaled)
+                tuning_accuracy = accuracy_score(y_tuning, y_tuning_pred)
+                tuning_f1 = f1_score(y_tuning, y_tuning_pred, average="weighted")
+
+                # Predict on test set (final unbiased evaluation)
+                y_test_pred = best_clf.predict(X_test_scaled)
+                test_accuracy = accuracy_score(y_test, y_test_pred)
+                test_f1 = f1_score(y_test, y_test_pred, average="weighted")
+
+                self.logger.info(f"\n  Results:")
+                self.logger.info(
+                    f"    Train Accuracy: {train_accuracy:.4f} | F1: {train_f1:.4f}"
+                )
+                self.logger.info(
+                    f"    Tuning Accuracy: {tuning_accuracy:.4f} | F1: {tuning_f1:.4f}"
+                )
+                self.logger.info(
+                    f"    Test Accuracy: {test_accuracy:.4f} | F1: {test_f1:.4f}"
+                )
+
+                # Store results
+                result_entry = {
+                    "train_accuracy": train_accuracy,
+                    "train_f1": train_f1,
+                    "tuning_accuracy": tuning_accuracy,
+                    "tuning_f1": tuning_f1,
+                    "test_accuracy": test_accuracy,
+                    "test_f1": test_f1,
+                    "tuning_predictions": y_tuning_pred,
+                    "test_predictions": y_test_pred,
+                    "best_estimator": best_clf,
+                }
+
+                # Add hyperparameter search info if available
+                if search_results is not None:
+                    result_entry["best_params"] = search_results.best_params_
+                    result_entry["cv_score"] = search_results.best_score_
+
+                results_dict[clf_name] = result_entry
+            except Exception as e:
+                self.logger.warning(f"  ⚠ Failed to train {clf_name}: {e}")
+                continue
+
+        # Create summary
+        results = {
+            "split_mode": "3-way",
+            "training_datasets": training_datasets,
+            "tuning_datasets": tuning_datasets,
+            "final_test_datasets": final_test_datasets,
+            "classifier_results": results_dict,
+            "num_train_samples": len(X_train),
+            "num_tuning_samples": len(X_tuning),
+            "num_test_samples": len(X_test),
+            "batch_performance_results": {},  # For compatibility
+            "cross_batch_results": {},  # For compatibility
+        }
+
+        # Find best classifier based on tuning accuracy
+        best_clf_name = max(
+            results_dict.keys(), key=lambda k: results_dict[k]["tuning_accuracy"]
+        )
+        results["best_classifier"] = {
+            "name": best_clf_name,
+            "train_accuracy": results_dict[best_clf_name]["train_accuracy"],
+            "tuning_accuracy": results_dict[best_clf_name]["tuning_accuracy"],
+            "test_accuracy": results_dict[best_clf_name]["test_accuracy"],
+        }
+
+        self.logger.info("\n" + "=" * 80)
+        self.logger.info("BEST CLASSIFIER (selected on tuning set)")
+        self.logger.info("=" * 80)
+        self.logger.info(f"Model: {best_clf_name}")
+        self.logger.info(
+            f"  Train Accuracy: {results_dict[best_clf_name]['train_accuracy']:.4f}"
+        )
+        self.logger.info(
+            f"  Tuning Accuracy: {results_dict[best_clf_name]['tuning_accuracy']:.4f}"
+        )
+        self.logger.info(
+            f"  Test Accuracy: {results_dict[best_clf_name]['test_accuracy']:.4f}"
+        )
+
+        # Save 3-way split results
+        self._save_3way_split_results(
+            results,
+            X_train,
+            y_train,
+            X_tuning,
+            y_tuning,
+            X_test,
+            y_test,
+            scaler,
+        )
+
+        return results
+
+    def _get_hyperparameter_search_spaces(self) -> Dict[str, Dict]:
+        """
+        Define hyperparameter search spaces for each classifier type.
+
+        Returns:
+            Dictionary mapping classifier names to their hyperparameter grids
+        """
+        return {
+            "Random Forest": {
+                "n_estimators": [50, 100, 200, 300],
+                "max_depth": [None, 10, 20, 30, 40],
+                "min_samples_split": [2, 5, 10],
+                "min_samples_leaf": [1, 2, 4],
+                "max_features": ["sqrt", "log2", None],
+            },
+            "SVM (RBF)": {
+                "C": [0.1, 1, 10, 100],
+                "gamma": ["scale", "auto", 0.001, 0.01, 0.1, 1],
+                "kernel": ["rbf"],
+            },
+            "SVM (Linear)": {
+                "C": [0.1, 1, 10, 100],
+                "kernel": ["linear"],
+            },
+            "K-NN": {
+                "n_neighbors": [3, 5, 7, 9, 11, 15],
+                "weights": ["uniform", "distance"],
+                "metric": ["euclidean", "manhattan", "minkowski"],
+            },
+            "Logistic Regression": {
+                "C": [0.001, 0.01, 0.1, 1, 10, 100],
+                "penalty": ["l2"],
+                "solver": ["lbfgs", "saga"],
+                "max_iter": [1000],
+            },
+            "Gradient Boosting": {
+                "n_estimators": [50, 100, 200],
+                "learning_rate": [0.01, 0.05, 0.1, 0.2],
+                "max_depth": [3, 5, 7],
+                "min_samples_split": [2, 5, 10],
+                "subsample": [0.8, 0.9, 1.0],
+            },
+            "Extra Trees": {
+                "n_estimators": [50, 100, 200, 300],
+                "max_depth": [None, 10, 20, 30],
+                "min_samples_split": [2, 5, 10],
+                "min_samples_leaf": [1, 2, 4],
+            },
+            "XGBoost": {
+                "n_estimators": [50, 100, 200],
+                "learning_rate": [0.01, 0.05, 0.1, 0.2],
+                "max_depth": [3, 5, 7, 9],
+                "subsample": [0.8, 0.9, 1.0],
+                "colsample_bytree": [0.8, 0.9, 1.0],
+            },
+        }
+
+    def _tune_hyperparameters(
+        self,
+        clf_name: str,
+        base_clf,
+        X_train: np.ndarray,
+        y_train: np.ndarray,
+        X_tuning: np.ndarray,
+        y_tuning: np.ndarray,
+        n_iter: int = 20,
+    ):
+        """
+        Tune hyperparameters using the tuning dataset.
+
+        Args:
+            clf_name: Name of the classifier
+            base_clf: Base classifier instance
+            X_train: Training features
+            y_train: Training labels
+            X_tuning: Tuning features (used as validation)
+            y_tuning: Tuning labels
+            n_iter: Number of random parameter settings to try
+
+        Returns:
+            Best estimator and search results
+        """
+        search_spaces = self._get_hyperparameter_search_spaces()
+
+        # Check if this classifier has a defined search space
+        if clf_name not in search_spaces:
+            self.logger.info(
+                f"  No hyperparameter search space defined for {clf_name}, using default parameters"
+            )
+            base_clf.fit(X_train, y_train)
+            return base_clf, None
+
+        self.logger.info(
+            f"  Tuning hyperparameters with RandomizedSearchCV ({n_iter} iterations)..."
+        )
+
+        param_grid = search_spaces[clf_name]
+
+        # Use RandomizedSearchCV for efficiency
+        search = RandomizedSearchCV(
+            base_clf,
+            param_distributions=param_grid,
+            n_iter=n_iter,
+            cv=3,  # 3-fold CV on training data
+            scoring="accuracy",
+            n_jobs=-1,  # Use all CPU cores
+            random_state=42,
+            verbose=0,
+        )
+
+        # Fit on training data (CV happens internally)
+        search.fit(X_train, y_train)
+
+        # Evaluate best model on tuning set
+        tuning_score = search.best_estimator_.score(X_tuning, y_tuning)
+
+        self.logger.info(f"  Best params: {search.best_params_}")
+        self.logger.info(f"  CV score (train): {search.best_score_:.4f}")
+        self.logger.info(f"  Tuning score: {tuning_score:.4f}")
+
+        return search.best_estimator_, search
+
     def _get_classifiers(self) -> dict:
         """Define classifiers to evaluate."""
         classifiers = {
-            "Random Forest": RandomForestClassifier(n_estimators=100, random_state=42),
-            "SVM (RBF)": SVC(kernel="rbf", random_state=42),
-            "SVM (Linear)": SVC(kernel="linear", random_state=42),
-            "K-NN": KNeighborsClassifier(n_neighbors=5),
-            "Logistic Regression": LogisticRegression(random_state=42, max_iter=1000),
-            "Gradient Boosting": GradientBoostingClassifier(random_state=42),
-            "Extra Trees": ExtraTreesClassifier(n_estimators=100, random_state=42),
-            "AdaBoost": AdaBoostClassifier(n_estimators=100, random_state=42),
-            "XGBoost": XGBoostWrapper(
-                n_estimators=100, random_state=42, eval_metric="mlogloss"
-            ),
-            "Naive Bayes": GaussianNB(),
-            "Quadratic Discriminant Analysis": QuadraticDiscriminantAnalysis(),
+            # "Random Forest": RandomForestClassifier(n_estimators=100, random_state=42),
+            # "SVM (RBF)": SVC(kernel="rbf", random_state=42),
+            # "SVM (Linear)": SVC(kernel="linear", random_state=42),
+            # "K-NN": KNeighborsClassifier(n_neighbors=5),
+            # "Logistic Regression": LogisticRegression(random_state=42, max_iter=1000),
+            # "Gradient Boosting": GradientBoostingClassifier(random_state=42),
+            # "Extra Trees": ExtraTreesClassifier(n_estimators=100, random_state=42),
+            # "AdaBoost": AdaBoostClassifier(n_estimators=100, random_state=42),
+            # "XGBoost": XGBoostWrapper(
+            #     n_estimators=100, random_state=42, eval_metric="mlogloss"
+            # ),
+            # "Naive Bayes": GaussianNB(),
+            # "Quadratic Discriminant Analysis": QuadraticDiscriminantAnalysis(),
             # MLP with regularization for better generalization
-            "MLP (Small)": MLPWrapper(
-                hidden_layer_sizes=(64, 32),
-                activation="relu",
-                solver="adam",
-                alpha=0.01,  # L2 regularization
-                batch_size=32,
-                learning_rate="adaptive",
-                learning_rate_init=0.001,
-                max_iter=500,
-                early_stopping=True,
-                validation_fraction=0.15,
-                n_iter_no_change=20,
-                random_state=42,
-                verbose=False,
-            ),
-            "MLP (Medium)": MLPWrapper(
+            # "MLP (Small)": MLPWrapper(
+            #     hidden_layer_sizes=(64, 32),
+            #     activation="relu",
+            #     solver="adam",
+            #     alpha=0.01,  # L2 regularization
+            #     batch_size=32,
+            #     learning_rate="adaptive",
+            #     learning_rate_init=0.001,
+            #     max_iter=500,
+            #     early_stopping=True,
+            #     validation_fraction=0.15,
+            #     n_iter_no_change=20,
+            #     random_state=42,
+            #     verbose=False,
+            # ),
+            # "MLP (Medium)": MLPWrapper(
+            #     hidden_layer_sizes=(128, 64, 32),
+            #     activation="relu",
+            #     solver="adam",
+            #     alpha=0.01,  # L2 regularization
+            #     batch_size=32,
+            #     learning_rate="adaptive",
+            #     learning_rate_init=0.001,
+            #     max_iter=500,
+            #     early_stopping=True,
+            #     validation_fraction=0.15,
+            #     n_iter_no_change=20,
+            #     random_state=42,
+            #     verbose=False,
+            # ),
+            # "MLP (Large)": MLPWrapper(
+            #     hidden_layer_sizes=(256, 128, 64, 32),
+            #     activation="relu",
+            #     solver="adam",
+            #     alpha=0.005,  # Less regularization for larger network
+            #     batch_size=32,
+            #     learning_rate="adaptive",
+            #     learning_rate_init=0.001,
+            #     max_iter=1000,  # Train longer
+            #     early_stopping=True,
+            #     validation_fraction=0.15,
+            #     n_iter_no_change=30,
+            #     random_state=42,
+            #     verbose=False,
+            # ),
+            # Optimized variants around Medium (which performed best)
+            "MLP (HighReg)": MLPWrapper(
                 hidden_layer_sizes=(128, 64, 32),
                 activation="relu",
                 solver="adam",
-                alpha=0.01,  # L2 regularization
+                alpha=0.1,  # Much higher regularization to prevent overfitting
                 batch_size=32,
                 learning_rate="adaptive",
                 learning_rate_init=0.001,
-                max_iter=500,
+                max_iter=1000,
                 early_stopping=True,
-                validation_fraction=0.15,
-                n_iter_no_change=20,
-                random_state=42,
-                verbose=False,
-            ),
-            "MLP (Large)": MLPWrapper(
-                hidden_layer_sizes=(256, 128, 64, 32),
-                activation="relu",
-                solver="adam",
-                alpha=0.005,  # Less regularization for larger network
-                batch_size=32,
-                learning_rate="adaptive",
-                learning_rate_init=0.001,
-                max_iter=1000,  # Train longer
-                early_stopping=True,
-                validation_fraction=0.15,
+                validation_fraction=0.2,  # More validation data for early stopping
                 n_iter_no_change=30,
                 random_state=42,
                 verbose=False,
             ),
-            # Optimized variants around Medium (which performed best)
-            "MLP (Medium-HighReg)": MLPWrapper(
-                hidden_layer_sizes=(128, 64, 32),
+            "MLP (VeryHighReg)": MLPWrapper(
+                hidden_layer_sizes=(64, 32),  # Smaller network
                 activation="relu",
                 solver="adam",
-                alpha=0.02,  # Higher regularization for better generalization
-                batch_size=32,
+                alpha=0.5,  # Very high regularization
+                batch_size=64,  # Larger batch size for stability
                 learning_rate="adaptive",
-                learning_rate_init=0.001,
-                max_iter=800,
+                learning_rate_init=0.0005,  # Lower learning rate
+                max_iter=1000,
                 early_stopping=True,
-                validation_fraction=0.15,
-                n_iter_no_change=25,  # More patience
+                validation_fraction=0.2,
+                n_iter_no_change=40,  # More patience
                 random_state=42,
                 verbose=False,
             ),
-            "MLP (Wide)": MLPWrapper(
-                hidden_layer_sizes=(256, 128),  # Fewer layers, wider
-                activation="relu",
-                solver="adam",
-                alpha=0.015,
-                batch_size=32,
-                learning_rate="adaptive",
-                learning_rate_init=0.001,
-                max_iter=600,
-                early_stopping=True,
-                validation_fraction=0.15,
-                n_iter_no_change=20,
-                random_state=42,
-                verbose=False,
+            # NEW: PCA-based variants to reduce overfitting through dimensionality reduction
+            "PCA+MLP (HighReg)": PCAClassifierWrapper(
+                base_classifier=MLPWrapper(
+                    hidden_layer_sizes=(128, 64, 32),
+                    activation="relu",
+                    solver="adam",
+                    alpha=0.1,
+                    batch_size=32,
+                    learning_rate="adaptive",
+                    learning_rate_init=0.001,
+                    max_iter=1000,
+                    early_stopping=True,
+                    validation_fraction=0.2,
+                    n_iter_no_change=30,
+                    random_state=42,
+                    verbose=False,
+                ),
+                n_components=0.95,  # Keep 95% variance (~109 components based on analysis)
+                pca_whiten=False,
             ),
-            "MLP (Deep-Narrow)": MLPWrapper(
-                hidden_layer_sizes=(64, 64, 64, 32),  # Deeper, narrower
-                activation="relu",
-                solver="adam",
-                alpha=0.012,
-                batch_size=32,
-                learning_rate="adaptive",
-                learning_rate_init=0.001,
-                max_iter=600,
-                early_stopping=True,
-                validation_fraction=0.15,
-                n_iter_no_change=20,
-                random_state=42,
-                verbose=False,
+            "PCA+MLP (VeryHighReg)": PCAClassifierWrapper(
+                base_classifier=MLPWrapper(
+                    hidden_layer_sizes=(64, 32),
+                    activation="relu",
+                    solver="adam",
+                    alpha=0.5,
+                    batch_size=64,
+                    learning_rate="adaptive",
+                    learning_rate_init=0.0005,
+                    max_iter=1000,
+                    early_stopping=True,
+                    validation_fraction=0.2,
+                    n_iter_no_change=40,
+                    random_state=42,
+                    verbose=False,
+                ),
+                n_components=0.95,
+                pca_whiten=False,
             ),
+            # # NEW: Tree-based models that often generalize better than neural networks
+            # "Random Forest (Tuned)": RandomForestClassifier(
+            #     n_estimators=200,  # More trees for better generalization
+            #     max_depth=20,  # Limit depth to prevent overfitting
+            #     min_samples_split=10,  # Require more samples to split
+            #     min_samples_leaf=5,  # Require more samples per leaf
+            #     max_features="sqrt",  # Use sqrt features for each split
+            #     random_state=42,
+            #     n_jobs=-1,  # Use all CPU cores
+            # ),
+            # "Gradient Boosting (Tuned)": GradientBoostingClassifier(
+            #     n_estimators=200,
+            #     learning_rate=0.1,
+            #     max_depth=6,  # Moderate depth
+            #     min_samples_split=20,
+            #     min_samples_leaf=10,
+            #     subsample=0.8,  # Use 80% of data for each tree (stochastic boosting)
+            #     random_state=42,
+            # ),
+            #     "MLP (Wide)": MLPWrapper(
+            #         hidden_layer_sizes=(256, 128),  # Fewer layers, wider
+            #         activation="relu",
+            #         solver="adam",
+            #         alpha=0.015,
+            #         batch_size=32,
+            #         learning_rate="adaptive",
+            #         learning_rate_init=0.001,
+            #         max_iter=600,
+            #         early_stopping=True,
+            #         validation_fraction=0.15,
+            #         n_iter_no_change=20,
+            #         random_state=42,
+            #         verbose=False,
+            #     ),
+            #     "MLP (Deep-Narrow)": MLPWrapper(
+            #         hidden_layer_sizes=(64, 64, 64, 32),  # Deeper, narrower
+            #         activation="relu",
+            #         solver="adam",
+            #         alpha=0.012,
+            #         batch_size=32,
+            #         learning_rate="adaptive",
+            #         learning_rate_init=0.001,
+            #         max_iter=600,
+            #         early_stopping=True,
+            #         validation_fraction=0.15,
+            #         n_iter_no_change=20,
+            #         random_state=42,
+            #         verbose=False,
+            #     ),
         }
 
         if self.config.get("include_lda", True):
@@ -812,9 +1318,9 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
         svm_clf = SVC(
             kernel="rbf", probability=True, random_state=42
         )  # probability=True for soft voting
-        classifiers["Ensemble (RF + SVM)"] = VotingClassifier(
-            estimators=[("rf", rf_clf), ("svm", svm_clf)], voting="soft"
-        )
+        # classifiers["Ensemble (RF + SVM)"] = VotingClassifier(
+        #     estimators=[("rf", rf_clf), ("svm", svm_clf)], voting="soft"
+        # )
 
         # ========================================================================
         # NEW: PCA-BASED VARIANTS (Dimensionality Reduction to Combat Overfitting)
@@ -824,76 +1330,76 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
         # Expected: Better generalization on validation set
 
         # PCA + XGBoost (best traditional ML)
-        classifiers["PCA+XGBoost"] = PCAClassifierWrapper(
-            base_classifier=XGBoostWrapper(
-                n_estimators=100, random_state=42, eval_metric="mlogloss"
-            ),
-            n_components=0.95,  # Keep 95% variance (~19 components)
-            pca_whiten=False,
-        )
+        # classifiers["PCA+XGBoost"] = PCAClassifierWrapper(
+        #     base_classifier=XGBoostWrapper(
+        #         n_estimators=100, random_state=42, eval_metric="mlogloss"
+        #     ),
+        #     n_components=0.95,  # Keep 95% variance (~19 components)
+        #     pca_whiten=False,
+        # )
 
-        # PCA + Random Forest
-        classifiers["PCA+RandomForest"] = PCAClassifierWrapper(
-            base_classifier=RandomForestClassifier(n_estimators=100, random_state=42),
-            n_components=0.95,
-            pca_whiten=False,
-        )
+        # # PCA + Random Forest
+        # classifiers["PCA+RandomForest"] = PCAClassifierWrapper(
+        #     base_classifier=RandomForestClassifier(n_estimators=100, random_state=42),
+        #     n_components=0.95,
+        #     pca_whiten=False,
+        # )
 
-        # PCA + Gradient Boosting
-        classifiers["PCA+GradientBoosting"] = PCAClassifierWrapper(
-            base_classifier=GradientBoostingClassifier(random_state=42),
-            n_components=0.95,
-            pca_whiten=False,
-        )
+        # # PCA + Gradient Boosting
+        # classifiers["PCA+GradientBoosting"] = PCAClassifierWrapper(
+        #     base_classifier=GradientBoostingClassifier(random_state=42),
+        #     n_components=0.95,
+        #     pca_whiten=False,
+        # )
 
-        # PCA + MLP (Medium) - previously best on validation
-        classifiers["PCA+MLP(Medium)"] = PCAClassifierWrapper(
-            base_classifier=MLPWrapper(
-                hidden_layer_sizes=(128, 64, 32),
-                activation="relu",
-                solver="adam",
-                alpha=0.01,
-                batch_size=32,
-                learning_rate="adaptive",
-                learning_rate_init=0.001,
-                max_iter=500,
-                early_stopping=True,
-                validation_fraction=0.15,
-                n_iter_no_change=20,
-                random_state=42,
-                verbose=False,
-            ),
-            n_components=0.95,
-            pca_whiten=False,
-        )
+        # # PCA + MLP (Medium) - previously best on validation
+        # classifiers["PCA+MLP(Medium)"] = PCAClassifierWrapper(
+        #     base_classifier=MLPWrapper(
+        #         hidden_layer_sizes=(128, 64, 32),
+        #         activation="relu",
+        #         solver="adam",
+        #         alpha=0.01,
+        #         batch_size=32,
+        #         learning_rate="adaptive",
+        #         learning_rate_init=0.001,
+        #         max_iter=500,
+        #         early_stopping=True,
+        #         validation_fraction=0.15,
+        #         n_iter_no_change=20,
+        #         random_state=42,
+        #         verbose=False,
+        #     ),
+        #     n_components=0.95,
+        #     pca_whiten=False,
+        # )
 
-        # PCA + MLP (Large)
-        classifiers["PCA+MLP(Large)"] = PCAClassifierWrapper(
-            base_classifier=MLPWrapper(
-                hidden_layer_sizes=(256, 128, 64, 32),
-                activation="relu",
-                solver="adam",
-                alpha=0.005,
-                batch_size=32,
-                learning_rate="adaptive",
-                learning_rate_init=0.001,
-                max_iter=1000,
-                early_stopping=True,
-                validation_fraction=0.15,
-                n_iter_no_change=30,
-                random_state=42,
-                verbose=False,
-            ),
-            n_components=0.95,
-            pca_whiten=False,
-        )
+        # # PCA + MLP (Large)
+        # classifiers["PCA+MLP(Large)"] = PCAClassifierWrapper(
+        #     base_classifier=MLPWrapper(
+        #         hidden_layer_sizes=(256, 128, 64, 32),
+        #         activation="relu",
+        #         solver="adam",
+        #         alpha=0.005,
+        #         batch_size=32,
+        #         learning_rate="adaptive",
+        #         learning_rate_init=0.001,
+        #         max_iter=1000,
+        #         early_stopping=True,
+        #         validation_fraction=0.15,
+        #         n_iter_no_change=30,
+        #         random_state=42,
+        #         verbose=False,
+        #     ),
+        #     n_components=0.95,
+        #     pca_whiten=False,
+        # )
 
-        # PCA + Extra Trees
-        classifiers["PCA+ExtraTrees"] = PCAClassifierWrapper(
-            base_classifier=ExtraTreesClassifier(n_estimators=100, random_state=42),
-            n_components=0.95,
-            pca_whiten=False,
-        )
+        # # PCA + Extra Trees
+        # classifiers["PCA+ExtraTrees"] = PCAClassifierWrapper(
+        #     base_classifier=ExtraTreesClassifier(n_estimators=100, random_state=42),
+        #     n_components=0.95,
+        #     pca_whiten=False,
+        # )
 
         # ========================================================================
         # NEW: PCA VARIANTS WITH DIFFERENT COMPONENT COUNTS (Option 1)
@@ -903,220 +1409,220 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
         # - More components (99%) = keep more information
         # - Fixed counts (15, 20, 25) = explicit control
 
-        # PCA (90% variance) + MLP - More aggressive dimensionality reduction
-        classifiers["PCA90+MLP(Medium)"] = PCAClassifierWrapper(
-            base_classifier=MLPWrapper(
-                hidden_layer_sizes=(128, 64, 32),
-                activation="relu",
-                solver="adam",
-                alpha=0.01,
-                batch_size=32,
-                learning_rate="adaptive",
-                learning_rate_init=0.001,
-                max_iter=500,
-                early_stopping=True,
-                validation_fraction=0.15,
-                n_iter_no_change=20,
-                random_state=42,
-                verbose=False,
-            ),
-            n_components=0.90,  # Keep only 90% variance
-            pca_whiten=False,
-        )
+        # # PCA (90% variance) + MLP - More aggressive dimensionality reduction
+        # classifiers["PCA90+MLP(Medium)"] = PCAClassifierWrapper(
+        #     base_classifier=MLPWrapper(
+        #         hidden_layer_sizes=(128, 64, 32),
+        #         activation="relu",
+        #         solver="adam",
+        #         alpha=0.01,
+        #         batch_size=32,
+        #         learning_rate="adaptive",
+        #         learning_rate_init=0.001,
+        #         max_iter=500,
+        #         early_stopping=True,
+        #         validation_fraction=0.15,
+        #         n_iter_no_change=20,
+        #         random_state=42,
+        #         verbose=False,
+        #     ),
+        #     n_components=0.90,  # Keep only 90% variance
+        #     pca_whiten=False,
+        # )
 
-        # PCA (99% variance) + MLP - Keep almost all information
-        classifiers["PCA99+MLP(Medium)"] = PCAClassifierWrapper(
-            base_classifier=MLPWrapper(
-                hidden_layer_sizes=(128, 64, 32),
-                activation="relu",
-                solver="adam",
-                alpha=0.01,
-                batch_size=32,
-                learning_rate="adaptive",
-                learning_rate_init=0.001,
-                max_iter=500,
-                early_stopping=True,
-                validation_fraction=0.15,
-                n_iter_no_change=20,
-                random_state=42,
-                verbose=False,
-            ),
-            n_components=0.99,  # Keep 99% variance
-            pca_whiten=False,
-        )
+        # # PCA (99% variance) + MLP - Keep almost all information
+        # classifiers["PCA99+MLP(Medium)"] = PCAClassifierWrapper(
+        #     base_classifier=MLPWrapper(
+        #         hidden_layer_sizes=(128, 64, 32),
+        #         activation="relu",
+        #         solver="adam",
+        #         alpha=0.01,
+        #         batch_size=32,
+        #         learning_rate="adaptive",
+        #         learning_rate_init=0.001,
+        #         max_iter=500,
+        #         early_stopping=True,
+        #         validation_fraction=0.15,
+        #         n_iter_no_change=20,
+        #         random_state=42,
+        #         verbose=False,
+        #     ),
+        #     n_components=0.99,  # Keep 99% variance
+        #     pca_whiten=False,
+        # )
 
-        # Fixed 15 components + MLP
-        classifiers["PCA15+MLP(Medium)"] = PCAClassifierWrapper(
-            base_classifier=MLPWrapper(
-                hidden_layer_sizes=(128, 64, 32),
-                activation="relu",
-                solver="adam",
-                alpha=0.01,
-                batch_size=32,
-                learning_rate="adaptive",
-                learning_rate_init=0.001,
-                max_iter=500,
-                early_stopping=True,
-                validation_fraction=0.15,
-                n_iter_no_change=20,
-                random_state=42,
-                verbose=False,
-            ),
-            n_components=15,  # Fixed 15 components
-            pca_whiten=False,
-        )
+        # # Fixed 15 components + MLP
+        # classifiers["PCA15+MLP(Medium)"] = PCAClassifierWrapper(
+        #     base_classifier=MLPWrapper(
+        #         hidden_layer_sizes=(128, 64, 32),
+        #         activation="relu",
+        #         solver="adam",
+        #         alpha=0.01,
+        #         batch_size=32,
+        #         learning_rate="adaptive",
+        #         learning_rate_init=0.001,
+        #         max_iter=500,
+        #         early_stopping=True,
+        #         validation_fraction=0.15,
+        #         n_iter_no_change=20,
+        #         random_state=42,
+        #         verbose=False,
+        #     ),
+        #     n_components=15,  # Fixed 15 components
+        #     pca_whiten=False,
+        # )
 
-        # Fixed 20 components + MLP
-        classifiers["PCA20+MLP(Medium)"] = PCAClassifierWrapper(
-            base_classifier=MLPWrapper(
-                hidden_layer_sizes=(128, 64, 32),
-                activation="relu",
-                solver="adam",
-                alpha=0.01,
-                batch_size=32,
-                learning_rate="adaptive",
-                learning_rate_init=0.001,
-                max_iter=500,
-                early_stopping=True,
-                validation_fraction=0.15,
-                n_iter_no_change=20,
-                random_state=42,
-                verbose=False,
-            ),
-            n_components=20,  # Fixed 20 components
-            pca_whiten=False,
-        )
+        # # Fixed 20 components + MLP
+        # classifiers["PCA20+MLP(Medium)"] = PCAClassifierWrapper(
+        #     base_classifier=MLPWrapper(
+        #         hidden_layer_sizes=(128, 64, 32),
+        #         activation="relu",
+        #         solver="adam",
+        #         alpha=0.01,
+        #         batch_size=32,
+        #         learning_rate="adaptive",
+        #         learning_rate_init=0.001,
+        #         max_iter=500,
+        #         early_stopping=True,
+        #         validation_fraction=0.15,
+        #         n_iter_no_change=20,
+        #         random_state=42,
+        #         verbose=False,
+        #     ),
+        #     n_components=20,  # Fixed 20 components
+        #     pca_whiten=False,
+        # )
 
         # ========================================================================
         # NEW: OPTIMIZED MLP ARCHITECTURES FOR PCA FEATURES (Option 2)
         # ========================================================================
         # Since PCA+MLP(Medium) works best, let's tune the MLP architecture
 
-        # Higher regularization - prevent overfitting on reduced features
-        classifiers["PCA+MLP(HighReg)"] = PCAClassifierWrapper(
-            base_classifier=MLPWrapper(
-                hidden_layer_sizes=(128, 64, 32),
-                activation="relu",
-                solver="adam",
-                alpha=0.05,  # Much higher regularization
-                batch_size=32,
-                learning_rate="adaptive",
-                learning_rate_init=0.001,
-                max_iter=800,
-                early_stopping=True,
-                validation_fraction=0.15,
-                n_iter_no_change=25,
-                random_state=42,
-                verbose=False,
-            ),
-            n_components=0.95,
-            pca_whiten=False,
-        )
+        # # Higher regularization - prevent overfitting on reduced features
+        # classifiers["PCA+MLP(HighReg)"] = PCAClassifierWrapper(
+        #     base_classifier=MLPWrapper(
+        #         hidden_layer_sizes=(128, 64, 32),
+        #         activation="relu",
+        #         solver="adam",
+        #         alpha=0.05,  # Much higher regularization
+        #         batch_size=32,
+        #         learning_rate="adaptive",
+        #         learning_rate_init=0.001,
+        #         max_iter=800,
+        #         early_stopping=True,
+        #         validation_fraction=0.15,
+        #         n_iter_no_change=25,
+        #         random_state=42,
+        #         verbose=False,
+        #     ),
+        #     n_components=0.95,
+        #     pca_whiten=False,
+        # )
 
-        # Smaller network - less capacity = less overfitting
-        classifiers["PCA+MLP(Compact)"] = PCAClassifierWrapper(
-            base_classifier=MLPWrapper(
-                hidden_layer_sizes=(64, 32),  # Smaller
-                activation="relu",
-                solver="adam",
-                alpha=0.02,
-                batch_size=32,
-                learning_rate="adaptive",
-                learning_rate_init=0.001,
-                max_iter=500,
-                early_stopping=True,
-                validation_fraction=0.15,
-                n_iter_no_change=20,
-                random_state=42,
-                verbose=False,
-            ),
-            n_components=0.95,
-            pca_whiten=False,
-        )
+        # # Smaller network - less capacity = less overfitting
+        # classifiers["PCA+MLP(Compact)"] = PCAClassifierWrapper(
+        #     base_classifier=MLPWrapper(
+        #         hidden_layer_sizes=(64, 32),  # Smaller
+        #         activation="relu",
+        #         solver="adam",
+        #         alpha=0.02,
+        #         batch_size=32,
+        #         learning_rate="adaptive",
+        #         learning_rate_init=0.001,
+        #         max_iter=500,
+        #         early_stopping=True,
+        #         validation_fraction=0.15,
+        #         n_iter_no_change=20,
+        #         random_state=42,
+        #         verbose=False,
+        #     ),
+        #     n_components=0.95,
+        #     pca_whiten=False,
+        # )
 
-        # Wider network - more neurons per layer
-        classifiers["PCA+MLP(Wide)"] = PCAClassifierWrapper(
-            base_classifier=MLPWrapper(
-                hidden_layer_sizes=(256, 128),  # Wider, fewer layers
-                activation="relu",
-                solver="adam",
-                alpha=0.02,
-                batch_size=32,
-                learning_rate="adaptive",
-                learning_rate_init=0.001,
-                max_iter=600,
-                early_stopping=True,
-                validation_fraction=0.15,
-                n_iter_no_change=20,
-                random_state=42,
-                verbose=False,
-            ),
-            n_components=0.95,
-            pca_whiten=False,
-        )
+        # # Wider network - more neurons per layer
+        # classifiers["PCA+MLP(Wide)"] = PCAClassifierWrapper(
+        #     base_classifier=MLPWrapper(
+        #         hidden_layer_sizes=(256, 128),  # Wider, fewer layers
+        #         activation="relu",
+        #         solver="adam",
+        #         alpha=0.02,
+        #         batch_size=32,
+        #         learning_rate="adaptive",
+        #         learning_rate_init=0.001,
+        #         max_iter=600,
+        #         early_stopping=True,
+        #         validation_fraction=0.15,
+        #         n_iter_no_change=20,
+        #         random_state=42,
+        #         verbose=False,
+        #     ),
+        #     n_components=0.95,
+        #     pca_whiten=False,
+        # )
 
-        # Deeper narrow network
-        classifiers["PCA+MLP(DeepNarrow)"] = PCAClassifierWrapper(
-            base_classifier=MLPWrapper(
-                hidden_layer_sizes=(64, 64, 64, 32),  # Deeper, narrower
-                activation="relu",
-                solver="adam",
-                alpha=0.015,
-                batch_size=32,
-                learning_rate="adaptive",
-                learning_rate_init=0.001,
-                max_iter=600,
-                early_stopping=True,
-                validation_fraction=0.15,
-                n_iter_no_change=20,
-                random_state=42,
-                verbose=False,
-            ),
-            n_components=0.95,
-            pca_whiten=False,
-        )
+        # # Deeper narrow network
+        # classifiers["PCA+MLP(DeepNarrow)"] = PCAClassifierWrapper(
+        #     base_classifier=MLPWrapper(
+        #         hidden_layer_sizes=(64, 64, 64, 32),  # Deeper, narrower
+        #         activation="relu",
+        #         solver="adam",
+        #         alpha=0.015,
+        #         batch_size=32,
+        #         learning_rate="adaptive",
+        #         learning_rate_init=0.001,
+        #         max_iter=600,
+        #         early_stopping=True,
+        #         validation_fraction=0.15,
+        #         n_iter_no_change=20,
+        #         random_state=42,
+        #         verbose=False,
+        #     ),
+        #     n_components=0.95,
+        #     pca_whiten=False,
+        # )
 
-        # PCA with whitening + MLP - normalize component variances
-        classifiers["PCA+MLP(Whitened)"] = PCAClassifierWrapper(
-            base_classifier=MLPWrapper(
-                hidden_layer_sizes=(128, 64, 32),
-                activation="relu",
-                solver="adam",
-                alpha=0.01,
-                batch_size=32,
-                learning_rate="adaptive",
-                learning_rate_init=0.001,
-                max_iter=500,
-                early_stopping=True,
-                validation_fraction=0.15,
-                n_iter_no_change=20,
-                random_state=42,
-                verbose=False,
-            ),
-            n_components=0.95,
-            pca_whiten=True,  # Whitening enabled
-        )
+        # # PCA with whitening + MLP - normalize component variances
+        # classifiers["PCA+MLP(Whitened)"] = PCAClassifierWrapper(
+        #     base_classifier=MLPWrapper(
+        #         hidden_layer_sizes=(128, 64, 32),
+        #         activation="relu",
+        #         solver="adam",
+        #         alpha=0.01,
+        #         batch_size=32,
+        #         learning_rate="adaptive",
+        #         learning_rate_init=0.001,
+        #         max_iter=500,
+        #         early_stopping=True,
+        #         validation_fraction=0.15,
+        #         n_iter_no_change=20,
+        #         random_state=42,
+        #         verbose=False,
+        #     ),
+        #     n_components=0.95,
+        #     pca_whiten=True,  # Whitening enabled
+        # )
 
-        # Best combo: 90% PCA + High Regularization
-        classifiers["PCA90+MLP(HighReg)"] = PCAClassifierWrapper(
-            base_classifier=MLPWrapper(
-                hidden_layer_sizes=(128, 64, 32),
-                activation="relu",
-                solver="adam",
-                alpha=0.03,  # Higher regularization
-                batch_size=32,
-                learning_rate="adaptive",
-                learning_rate_init=0.001,
-                max_iter=600,
-                early_stopping=True,
-                validation_fraction=0.15,
-                n_iter_no_change=25,
-                random_state=42,
-                verbose=False,
-            ),
-            n_components=0.90,
-            pca_whiten=False,
-        )
+        # # Best combo: 90% PCA + High Regularization
+        # classifiers["PCA90+MLP(HighReg)"] = PCAClassifierWrapper(
+        #     base_classifier=MLPWrapper(
+        #         hidden_layer_sizes=(128, 64, 32),
+        #         activation="relu",
+        #         solver="adam",
+        #         alpha=0.03,  # Higher regularization
+        #         batch_size=32,
+        #         learning_rate="adaptive",
+        #         learning_rate_init=0.001,
+        #         max_iter=600,
+        #         early_stopping=True,
+        #         validation_fraction=0.15,
+        #         n_iter_no_change=25,
+        #         random_state=42,
+        #         verbose=False,
+        #     ),
+        #     n_components=0.90,
+        #     pca_whiten=False,
+        # )
 
         # ========================================================================
         # NEW: GPU-ACCELERATED CLASSIFIERS (PyTorch + CUDA)
@@ -1127,68 +1633,68 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
             self.logger.info(f"✓ GPU classifiers enabled (device: {get_device()})")
 
             # GPU MLP (Medium) - GPU-accelerated version of best performer
-            classifiers["GPU-MLP (Medium)"] = GPUMLPClassifier(
-                hidden_layer_sizes=(128, 64, 32),
-                dropout=0.3,
-                learning_rate=0.001,
-                weight_decay=0.01,
-                batch_size=64,
-                max_epochs=500,
-                early_stopping=True,
-                patience=25,
-                validation_fraction=0.15,
-                use_batch_norm=True,
-                random_state=42,
-                verbose=False,
-            )
+            # classifiers["GPU-MLP (Medium)"] = GPUMLPClassifier(
+            #     hidden_layer_sizes=(128, 64, 32),
+            #     dropout=0.3,
+            #     learning_rate=0.001,
+            #     weight_decay=0.01,
+            #     batch_size=64,
+            #     max_epochs=500,
+            #     early_stopping=True,
+            #     patience=25,
+            #     validation_fraction=0.15,
+            #     use_batch_norm=True,
+            #     random_state=42,
+            #     verbose=False,
+            # )
 
-            # GPU MLP (Medium-HighReg) - Higher regularization for generalization
-            classifiers["GPU-MLP (Medium-HighReg)"] = GPUMLPClassifier(
-                hidden_layer_sizes=(128, 64, 32),
-                dropout=0.4,  # Higher dropout
-                learning_rate=0.001,
-                weight_decay=0.02,  # Higher L2
-                batch_size=64,
-                max_epochs=500,
-                early_stopping=True,
-                patience=30,
-                validation_fraction=0.15,
-                use_batch_norm=True,
-                random_state=42,
-                verbose=False,
-            )
+            # # GPU MLP (Medium-HighReg) - Higher regularization for generalization
+            # classifiers["GPU-MLP (Medium-HighReg)"] = GPUMLPClassifier(
+            #     hidden_layer_sizes=(128, 64, 32),
+            #     dropout=0.4,  # Higher dropout
+            #     learning_rate=0.001,
+            #     weight_decay=0.02,  # Higher L2
+            #     batch_size=64,
+            #     max_epochs=500,
+            #     early_stopping=True,
+            #     patience=30,
+            #     validation_fraction=0.15,
+            #     use_batch_norm=True,
+            #     random_state=42,
+            #     verbose=False,
+            # )
 
-            # GPU MLP (Large) - Larger network for complex patterns
-            classifiers["GPU-MLP (Large)"] = GPUMLPClassifier(
-                hidden_layer_sizes=(256, 128, 64, 32),
-                dropout=0.35,
-                learning_rate=0.001,
-                weight_decay=0.01,
-                batch_size=64,
-                max_epochs=800,
-                early_stopping=True,
-                patience=30,
-                validation_fraction=0.15,
-                use_batch_norm=True,
-                random_state=42,
-                verbose=False,
-            )
+            # # GPU MLP (Large) - Larger network for complex patterns
+            # classifiers["GPU-MLP (Large)"] = GPUMLPClassifier(
+            #     hidden_layer_sizes=(256, 128, 64, 32),
+            #     dropout=0.35,
+            #     learning_rate=0.001,
+            #     weight_decay=0.01,
+            #     batch_size=64,
+            #     max_epochs=800,
+            #     early_stopping=True,
+            #     patience=30,
+            #     validation_fraction=0.15,
+            #     use_batch_norm=True,
+            #     random_state=42,
+            #     verbose=False,
+            # )
 
-            # GPU MLP (Deep) - Deeper network
-            classifiers["GPU-MLP (Deep)"] = GPUMLPClassifier(
-                hidden_layer_sizes=(128, 128, 64, 64, 32),
-                dropout=0.35,
-                learning_rate=0.001,
-                weight_decay=0.015,
-                batch_size=64,
-                max_epochs=600,
-                early_stopping=True,
-                patience=25,
-                validation_fraction=0.15,
-                use_batch_norm=True,
-                random_state=42,
-                verbose=False,
-            )
+            # # GPU MLP (Deep) - Deeper network
+            # classifiers["GPU-MLP (Deep)"] = GPUMLPClassifier(
+            #     hidden_layer_sizes=(128, 128, 64, 64, 32),
+            #     dropout=0.35,
+            #     learning_rate=0.001,
+            #     weight_decay=0.015,
+            #     batch_size=64,
+            #     max_epochs=600,
+            #     early_stopping=True,
+            #     patience=25,
+            #     validation_fraction=0.15,
+            #     use_batch_norm=True,
+            #     random_state=42,
+            #     verbose=False,
+            # )
         else:
             self.logger.info("⚠ GPU classifiers not available (PyTorch/CUDA not found)")
 
@@ -1198,107 +1704,107 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
         # These address the overfitting issue where tree models learn absolute
         # feature values that differ between workspaces.
 
-        if GPU_AVAILABLE:
-            # Robust-normalized GPU MLP
-            classifiers["Robust-GPU-MLP (Medium)"] = NormalizedClassifierWrapper(
-                base_classifier=GPUMLPClassifier(
-                    hidden_layer_sizes=(128, 64, 32),
-                    dropout=0.3,
-                    learning_rate=0.001,
-                    weight_decay=0.01,
-                    batch_size=64,
-                    max_epochs=500,
-                    early_stopping=True,
-                    patience=25,
-                    use_batch_norm=True,
-                    random_state=42,
-                ),
-                normalization="robust",
-                clip_outliers=True,
-            )
+        # if GPU_AVAILABLE:
+        #     # Robust-normalized GPU MLP
+        #     classifiers["Robust-GPU-MLP (Medium)"] = NormalizedClassifierWrapper(
+        #         base_classifier=GPUMLPClassifier(
+        #             hidden_layer_sizes=(128, 64, 32),
+        #             dropout=0.3,
+        #             learning_rate=0.001,
+        #             weight_decay=0.01,
+        #             batch_size=64,
+        #             max_epochs=500,
+        #             early_stopping=True,
+        #             patience=25,
+        #             use_batch_norm=True,
+        #             random_state=42,
+        #         ),
+        #         normalization="robust",
+        #         clip_outliers=True,
+        #     )
 
-            # Quantile-normalized GPU MLP
-            classifiers["Quantile-GPU-MLP (Medium)"] = NormalizedClassifierWrapper(
-                base_classifier=GPUMLPClassifier(
-                    hidden_layer_sizes=(128, 64, 32),
-                    dropout=0.3,
-                    learning_rate=0.001,
-                    weight_decay=0.01,
-                    batch_size=64,
-                    max_epochs=500,
-                    early_stopping=True,
-                    patience=25,
-                    use_batch_norm=True,
-                    random_state=42,
-                ),
-                normalization="quantile",
-                clip_outliers=False,
-            )
+        #     # Quantile-normalized GPU MLP
+        #     classifiers["Quantile-GPU-MLP (Medium)"] = NormalizedClassifierWrapper(
+        #         base_classifier=GPUMLPClassifier(
+        #             hidden_layer_sizes=(128, 64, 32),
+        #             dropout=0.3,
+        #             learning_rate=0.001,
+        #             weight_decay=0.01,
+        #             batch_size=64,
+        #             max_epochs=500,
+        #             early_stopping=True,
+        #             patience=25,
+        #             use_batch_norm=True,
+        #             random_state=42,
+        #         ),
+        #         normalization="quantile",
+        #         clip_outliers=False,
+        #     )
 
-        # Robust-normalized sklearn MLP (fallback if no GPU)
-        classifiers["Robust-MLP (Medium)"] = NormalizedClassifierWrapper(
-            base_classifier=MLPWrapper(
-                hidden_layer_sizes=(128, 64, 32),
-                activation="relu",
-                solver="adam",
-                alpha=0.01,
-                batch_size=32,
-                learning_rate="adaptive",
-                learning_rate_init=0.001,
-                max_iter=500,
-                early_stopping=True,
-                validation_fraction=0.15,
-                n_iter_no_change=20,
-                random_state=42,
-                verbose=False,
-            ),
-            normalization="robust",
-            clip_outliers=True,
-        )
+        # # Robust-normalized sklearn MLP (fallback if no GPU)
+        # classifiers["Robust-MLP (Medium)"] = NormalizedClassifierWrapper(
+        #     base_classifier=MLPWrapper(
+        #         hidden_layer_sizes=(128, 64, 32),
+        #         activation="relu",
+        #         solver="adam",
+        #         alpha=0.01,
+        #         batch_size=32,
+        #         learning_rate="adaptive",
+        #         learning_rate_init=0.001,
+        #         max_iter=500,
+        #         early_stopping=True,
+        #         validation_fraction=0.15,
+        #         n_iter_no_change=20,
+        #         random_state=42,
+        #         verbose=False,
+        #     ),
+        #     normalization="robust",
+        #     clip_outliers=True,
+        # )
 
-        # Quantile-normalized sklearn MLP
-        classifiers["Quantile-MLP (Medium)"] = NormalizedClassifierWrapper(
-            base_classifier=MLPWrapper(
-                hidden_layer_sizes=(128, 64, 32),
-                activation="relu",
-                solver="adam",
-                alpha=0.01,
-                batch_size=32,
-                learning_rate="adaptive",
-                learning_rate_init=0.001,
-                max_iter=500,
-                early_stopping=True,
-                validation_fraction=0.15,
-                n_iter_no_change=20,
-                random_state=42,
-                verbose=False,
-            ),
-            normalization="quantile",
-            clip_outliers=False,
-        )
+        # # Quantile-normalized sklearn MLP
+        # classifiers["Quantile-MLP (Medium)"] = NormalizedClassifierWrapper(
+        #     base_classifier=MLPWrapper(
+        #         hidden_layer_sizes=(128, 64, 32),
+        #         activation="relu",
+        #         solver="adam",
+        #         alpha=0.01,
+        #         batch_size=32,
+        #         learning_rate="adaptive",
+        #         learning_rate_init=0.001,
+        #         max_iter=500,
+        #         early_stopping=True,
+        #         validation_fraction=0.15,
+        #         n_iter_no_change=20,
+        #         random_state=42,
+        #         verbose=False,
+        #     ),
+        #     normalization="quantile",
+        #     clip_outliers=False,
+        # )
 
         # Robust-normalized Random Forest
-        classifiers["Robust-RandomForest"] = NormalizedClassifierWrapper(
-            base_classifier=RandomForestClassifier(n_estimators=100, random_state=42),
-            normalization="robust",
-            clip_outliers=True,
-        )
+        # classifiers["Robust-RandomForest"] = NormalizedClassifierWrapper(
+        #     base_classifier=RandomForestClassifier(n_estimators=100, random_state=42),
+        #     normalization="robust",
+        #     clip_outliers=True,
+        # )
 
-        # Robust-normalized XGBoost
-        classifiers["Robust-XGBoost"] = NormalizedClassifierWrapper(
-            base_classifier=XGBoostWrapper(
-                n_estimators=100, random_state=42, eval_metric="mlogloss"
-            ),
-            normalization="robust",
-            clip_outliers=True,
-        )
+        # # Robust-normalized XGBoost
+        # classifiers["Robust-XGBoost"] = NormalizedClassifierWrapper(
+        #     base_classifier=XGBoostWrapper(
+        #         n_estimators=100, random_state=42, eval_metric="mlogloss"
+        #     ),
+        #     normalization="robust",
+        #     clip_outliers=True,
+        # )
 
-        # Robust-normalized Gradient Boosting
-        classifiers["Robust-GradientBoosting"] = NormalizedClassifierWrapper(
-            base_classifier=GradientBoostingClassifier(random_state=42),
-            normalization="robust",
-            clip_outliers=True,
-        )
+        # # Robust-normalized Gradient Boosting
+        # classifiers["Robust-GradientBoosting"] = NormalizedClassifierWrapper(
+        #     base_classifier=GradientBoostingClassifier(random_state=42),
+        #     normalization="robust",
+        #     clip_outliers=True,
+        # )
 
         # ========================================================================
         # NEW: RELATIVE FEATURE CLASSIFIERS (Ratio-based features)
@@ -1306,41 +1812,41 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
         # These compute ratios between feature groups to focus on relative
         # relationships rather than absolute values
 
-        if GPU_AVAILABLE:
-            classifiers["Relative-GPU-MLP (Medium)"] = RelativeFeatureClassifier(
-                base_classifier=GPUMLPClassifier(
-                    hidden_layer_sizes=(128, 64, 32),
-                    dropout=0.3,
-                    learning_rate=0.001,
-                    weight_decay=0.01,
-                    batch_size=64,
-                    max_epochs=500,
-                    early_stopping=True,
-                    patience=25,
-                    use_batch_norm=True,
-                    random_state=42,
-                ),
-                add_original=True,
-            )
+        # if GPU_AVAILABLE:
+        #     classifiers["Relative-GPU-MLP (Medium)"] = RelativeFeatureClassifier(
+        #         base_classifier=GPUMLPClassifier(
+        #             hidden_layer_sizes=(128, 64, 32),
+        #             dropout=0.3,
+        #             learning_rate=0.001,
+        #             weight_decay=0.01,
+        #             batch_size=64,
+        #             max_epochs=500,
+        #             early_stopping=True,
+        #             patience=25,
+        #             use_batch_norm=True,
+        #             random_state=42,
+        #         ),
+        #         add_original=True,
+        #     )
 
-        classifiers["Relative-MLP (Medium)"] = RelativeFeatureClassifier(
-            base_classifier=MLPWrapper(
-                hidden_layer_sizes=(128, 64, 32),
-                activation="relu",
-                solver="adam",
-                alpha=0.01,
-                batch_size=32,
-                learning_rate="adaptive",
-                learning_rate_init=0.001,
-                max_iter=500,
-                early_stopping=True,
-                validation_fraction=0.15,
-                n_iter_no_change=20,
-                random_state=42,
-                verbose=False,
-            ),
-            add_original=True,
-        )
+        # classifiers["Relative-MLP (Medium)"] = RelativeFeatureClassifier(
+        #     base_classifier=MLPWrapper(
+        #         hidden_layer_sizes=(128, 64, 32),
+        #         activation="relu",
+        #         solver="adam",
+        #         alpha=0.01,
+        #         batch_size=32,
+        #         learning_rate="adaptive",
+        #         learning_rate_init=0.001,
+        #         max_iter=500,
+        #         early_stopping=True,
+        #         validation_fraction=0.15,
+        #         n_iter_no_change=20,
+        #         random_state=42,
+        #         verbose=False,
+        #     ),
+        #     add_original=True,
+        # )
 
         # ========================================================================
         # OPTIMIZED MLP FROM HYPERPARAMETER TUNING
@@ -1377,26 +1883,124 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
                 random_state=42,
             )
 
-            # Second best from tuning (3-layer GELU)
-            classifiers["GPU-MLP (Tuned-GELU)"] = GPUMLPClassifier(
-                hidden_layer_sizes=(96, 160, 192),
-                dropout=0.11,
-                learning_rate=0.003,
-                weight_decay=0.0072,
-                batch_size=64,
-                max_epochs=500,
-                early_stopping=True,
-                patience=25,
-                use_batch_norm=False,
-                random_state=42,
-            )
+        #     # Second best from tuning (3-layer GELU)
+        #     classifiers["GPU-MLP (Tuned-GELU)"] = GPUMLPClassifier(
+        #         hidden_layer_sizes=(96, 160, 192),
+        #         dropout=0.11,
+        #         learning_rate=0.003,
+        #         weight_decay=0.0072,
+        #         batch_size=64,
+        #         max_epochs=500,
+        #         early_stopping=True,
+        #         patience=25,
+        #         use_batch_norm=False,
+        #         random_state=42,
+        #     )
 
         # ========================================================================
         # ENSEMBLE OF TOP GENERALIZING MODELS
         # ========================================================================
         # Combine predictions from models with best validation accuracy
+        # Expanded to 5 models for better generalization through diversity
 
         # Soft voting ensemble of top sklearn MLPs
+        classifiers["Ensemble (Top5-MLP)"] = VotingClassifier(
+            estimators=[
+                # Model 1: High regularization, medium depth
+                (
+                    "mlp_highreg",
+                    MLPWrapper(
+                        hidden_layer_sizes=(128, 64, 32),
+                        activation="relu",
+                        solver="adam",
+                        alpha=0.02,  # High regularization
+                        batch_size=32,
+                        learning_rate="adaptive",
+                        learning_rate_init=0.001,
+                        max_iter=800,
+                        early_stopping=True,
+                        validation_fraction=0.15,
+                        n_iter_no_change=25,
+                        random_state=42,
+                    ),
+                ),
+                # Model 2: Deeper architecture, moderate regularization
+                (
+                    "mlp_deep",
+                    MLPWrapper(
+                        hidden_layer_sizes=(256, 128, 64, 32),
+                        activation="relu",
+                        solver="adam",
+                        alpha=0.005,
+                        batch_size=32,
+                        learning_rate="adaptive",
+                        learning_rate_init=0.001,
+                        max_iter=1000,
+                        early_stopping=True,
+                        validation_fraction=0.15,
+                        n_iter_no_change=30,
+                        random_state=43,
+                    ),
+                ),
+                # Model 3: Wide shallow architecture (different inductive bias)
+                (
+                    "mlp_wide_shallow",
+                    MLPWrapper(
+                        hidden_layer_sizes=(256, 128),
+                        activation="relu",
+                        solver="adam",
+                        alpha=0.015,  # Moderate-high regularization
+                        batch_size=64,
+                        learning_rate="adaptive",
+                        learning_rate_init=0.0005,  # Lower LR for stability
+                        max_iter=600,
+                        early_stopping=True,
+                        validation_fraction=0.15,
+                        n_iter_no_change=25,
+                        random_state=44,
+                    ),
+                ),
+                # Model 4: Very high regularization (underfits less to training data)
+                (
+                    "mlp_veryhighreg",
+                    MLPWrapper(
+                        hidden_layer_sizes=(96, 48, 24),
+                        activation="relu",
+                        solver="adam",
+                        alpha=0.05,  # Very high regularization for generalization
+                        batch_size=32,
+                        learning_rate="adaptive",
+                        learning_rate_init=0.001,
+                        max_iter=500,
+                        early_stopping=True,
+                        validation_fraction=0.15,
+                        n_iter_no_change=20,
+                        random_state=45,
+                    ),
+                ),
+                # Model 5: Tanh activation (different non-linearity for diversity)
+                (
+                    "mlp_tanh",
+                    MLPWrapper(
+                        hidden_layer_sizes=(128, 64, 32),
+                        activation="tanh",  # Different activation function
+                        solver="adam",
+                        alpha=0.01,
+                        batch_size=32,
+                        learning_rate="adaptive",
+                        learning_rate_init=0.001,
+                        max_iter=700,
+                        early_stopping=True,
+                        validation_fraction=0.15,
+                        n_iter_no_change=25,
+                        random_state=46,
+                    ),
+                ),
+            ],
+            voting="soft",
+        )
+
+        # Original Top3 ensemble (best performer in v3 experiments)
         classifiers["Ensemble (Top3-MLP)"] = VotingClassifier(
             estimators=[
                 (
@@ -1430,7 +2034,7 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
                         early_stopping=True,
                         validation_fraction=0.15,
                         n_iter_no_change=30,
-                        random_state=43,  # Different seed for diversity
+                        random_state=43,
                     ),
                 ),
                 (
@@ -1447,12 +2051,165 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
                         early_stopping=True,
                         validation_fraction=0.15,
                         n_iter_no_change=20,
-                        random_state=44,  # Different seed for diversity
+                        random_state=44,
                     ),
                 ),
             ],
             voting="soft",
         )
+
+        # ========================================================================
+        # MEGA-ENSEMBLE: Diverse architectures for better generalization
+        # ========================================================================
+        # Combines top performers from different model families:
+        # - GPU-MLP variants (different regularization/depth) - GPU auto-detected
+        # - Tree-based models (capture non-linear patterns)
+        # Note: GPUMLPClassifier automatically falls back to CPU if GPU unavailable
+
+        if GPU_AVAILABLE:
+            classifiers["MegaEnsemble-Diverse"] = VotingClassifier(
+                estimators=[
+                    # Best individual model: GPU-MLP with high regularization
+                    (
+                        "gpu_mlp_highreg_best",
+                        GPUMLPClassifier(
+                            hidden_layer_sizes=(128, 64),
+                            dropout=0.1,
+                            learning_rate=0.001,
+                            weight_decay=0.01,
+                            batch_size=32,
+                            max_epochs=800,
+                            early_stopping=True,
+                            patience=25,
+                            use_batch_norm=False,
+                            random_state=42,
+                        ),
+                    ),
+                    # GPU-MLP with different architecture
+                    (
+                        "gpu_mlp_tuned",
+                        GPUMLPClassifier(
+                            hidden_layer_sizes=(128, 96, 64),
+                            dropout=0.15,
+                            learning_rate=0.001,
+                            weight_decay=0.01,
+                            batch_size=32,
+                            max_epochs=500,
+                            early_stopping=True,
+                            patience=25,
+                            use_batch_norm=False,
+                            random_state=42,
+                        ),
+                    ),
+                    # Gradient Boosting for tree-based perspective
+                    (
+                        "gradient_boost",
+                        GradientBoostingClassifier(
+                            n_estimators=150,
+                            max_depth=5,
+                            learning_rate=0.1,
+                            subsample=0.8,
+                            min_samples_split=10,
+                            random_state=42,
+                        ),
+                    ),
+                    # XGBoost for different boosting approach
+                    (
+                        "xgboost",
+                        XGBoostWrapper(
+                            n_estimators=200,
+                            random_state=42,
+                        ),
+                    ),
+                    # Large GPU-MLP with lower regularization
+                    (
+                        "gpu_mlp_large_lowreg",
+                        GPUMLPClassifier(
+                            hidden_layer_sizes=(256, 128, 64),
+                            dropout=0.05,
+                            learning_rate=0.001,
+                            weight_decay=0.001,
+                            batch_size=32,
+                            max_epochs=1000,
+                            early_stopping=True,
+                            patience=30,
+                            use_batch_norm=False,
+                            random_state=43,
+                        ),
+                    ),
+                    # Robust GPU-MLP (different feature preprocessing)
+                    (
+                        "gpu_mlp_robust",
+                        NormalizedClassifierWrapper(
+                            base_classifier=GPUMLPClassifier(
+                                hidden_layer_sizes=(128, 64),
+                                dropout=0.1,
+                                learning_rate=0.001,
+                                weight_decay=0.005,
+                                batch_size=32,
+                                max_epochs=500,
+                                early_stopping=True,
+                                patience=20,
+                                use_batch_norm=False,
+                                random_state=44,
+                            ),
+                            normalization="robust",
+                        ),
+                    ),
+                ],
+                voting="soft",
+            )
+
+            # Compact mega-ensemble with just the top 3 diverse models
+            classifiers["MegaEnsemble-Top3"] = VotingClassifier(
+                estimators=[
+                    # Best GPU-MLP (high regularization)
+                    (
+                        "gpu_mlp_best",
+                        GPUMLPClassifier(
+                            hidden_layer_sizes=(128, 64),
+                            dropout=0.1,
+                            learning_rate=0.001,
+                            weight_decay=0.01,
+                            batch_size=32,
+                            max_epochs=800,
+                            early_stopping=True,
+                            patience=25,
+                            use_batch_norm=False,
+                            random_state=42,
+                        ),
+                    ),
+                    # GPU-MLP tuned architecture
+                    (
+                        "gpu_mlp_tuned_best",
+                        GPUMLPClassifier(
+                            hidden_layer_sizes=(128, 96, 64),
+                            dropout=0.15,
+                            learning_rate=0.001,
+                            weight_decay=0.01,
+                            batch_size=32,
+                            max_epochs=500,
+                            early_stopping=True,
+                            patience=25,
+                            use_batch_norm=False,
+                            random_state=43,
+                        ),
+                    ),
+                    # Best tree model for diversity
+                    (
+                        "gradient_boost_best",
+                        GradientBoostingClassifier(
+                            n_estimators=150,
+                            max_depth=5,
+                            learning_rate=0.1,
+                            subsample=0.8,
+                            min_samples_split=10,
+                            random_state=42,
+                        ),
+                    ),
+                ],
+                voting="soft",
+            )
 
         return classifiers
 
@@ -1521,6 +2278,72 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
             output_dir,
         )
 
+    def _save_3way_split_results(
+        self,
+        results: dict,
+        X_train: np.ndarray,
+        y_train: np.ndarray,
+        X_tuning: np.ndarray,
+        y_tuning: np.ndarray,
+        X_test: np.ndarray,
+        y_test: np.ndarray,
+        scaler,
+    ):
+        """Save 3-way split mode results to disk."""
+        import json
+        import matplotlib.pyplot as plt
+        from sklearn.metrics import confusion_matrix
+        import seaborn as sns
+
+        # Create output directory
+        output_dir = os.path.join(self.experiment_output_dir, "3way_split_results")
+        os.makedirs(output_dir, exist_ok=True)
+
+        # Prepare serializable results
+        classifier_results = results["classifier_results"]
+        serializable_results = {
+            "split_mode": "3-way",
+            "training_datasets": results["training_datasets"],
+            "tuning_datasets": results["tuning_datasets"],
+            "final_test_datasets": results["final_test_datasets"],
+            "num_train_samples": results["num_train_samples"],
+            "num_tuning_samples": results["num_tuning_samples"],
+            "num_test_samples": results["num_test_samples"],
+            "best_classifier": results["best_classifier"],
+            "classifier_performance": {},
+        }
+
+        # Store performance for each classifier
+        for clf_name, clf_results in classifier_results.items():
+            serializable_results["classifier_performance"][clf_name] = {
+                "train_accuracy": float(clf_results["train_accuracy"]),
+                "train_f1": float(clf_results["train_f1"]),
+                "tuning_accuracy": float(clf_results["tuning_accuracy"]),
+                "tuning_f1": float(clf_results["tuning_f1"]),
+                "test_accuracy": float(clf_results["test_accuracy"]),
+                "test_f1": float(clf_results["test_f1"]),
+            }
+
+        # Save JSON results
+        results_path = os.path.join(output_dir, "discrimination_summary.json")
+        with open(results_path, "w") as f:
+            json.dump(serializable_results, f, indent=2)
+
+        self.logger.info(f"3-way split results saved to: {results_path}")
+
+        # Create performance comparison plot
+        self._create_3way_performance_plot(classifier_results, output_dir)
+
+        # Create confusion matrices for best classifier
+        best_clf_name = results["best_classifier"]["name"]
+        self._create_3way_confusion_matrices(
+            classifier_results[best_clf_name],
+            y_tuning,
+            y_test,
+            best_clf_name,
+            output_dir,
+        )
+
     def _create_validation_performance_plot(
         self, classifier_results: dict, output_dir: str
     ):
@@ -1567,6 +2390,120 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
         plt.close()
 
         self.logger.info(f"Performance plot saved to: {plot_path}")
+
+    def _create_3way_performance_plot(self, classifier_results: dict, output_dir: str):
+        """Create bar plot comparing train, tuning, and test performance."""
+        import matplotlib.pyplot as plt
+
+        clf_names = list(classifier_results.keys())
+        train_accs = [r["train_accuracy"] for r in classifier_results.values()]
+        tuning_accs = [r["tuning_accuracy"] for r in classifier_results.values()]
+        test_accs = [r["test_accuracy"] for r in classifier_results.values()]
+
+        fig, ax = plt.subplots(figsize=(18, 8))
+        x = np.arange(len(clf_names))
+        width = 0.25
+
+        ax.bar(
+            x - width,
+            train_accs,
+            width,
+            label="Train Accuracy",
+            alpha=0.7,
+            color="lightblue",
+        )
+        ax.bar(
+            x,
+            tuning_accs,
+            width,
+            label="Tuning Accuracy (Hyperparameter Selection)",
+            alpha=0.8,
+            color="orange",
+        )
+        ax.bar(
+            x + width,
+            test_accs,
+            width,
+            label="Test Accuracy (Final Evaluation)",
+            alpha=0.8,
+            color="green",
+        )
+
+        ax.set_ylabel("Accuracy")
+        ax.set_title("Classifier Performance: 3-Way Split (Train / Tuning / Test)")
+        ax.set_xticks(x)
+        ax.set_xticklabels(clf_names, rotation=45, ha="right")
+        ax.legend()
+        ax.grid(True, alpha=0.3)
+
+        # Add horizontal line at best tuning accuracy
+        best_tuning_acc = max(tuning_accs)
+        ax.axhline(
+            y=best_tuning_acc,
+            color="r",
+            linestyle="--",
+            alpha=0.3,
+            label=f"Best Tuning Acc: {best_tuning_acc:.3f}",
+        )
+
+        plt.tight_layout()
+
+        plot_path = os.path.join(output_dir, "classifier_performance_3way.png")
+        plt.savefig(plot_path, dpi=300, bbox_inches="tight")
+        plt.close()
+
+        self.logger.info(f"3-way performance plot saved to: {plot_path}")
+
+    def _create_3way_confusion_matrices(
+        self,
+        clf_results: dict,
+        y_tuning: np.ndarray,
+        y_test: np.ndarray,
+        clf_name: str,
+        output_dir: str,
+    ):
+        """Create confusion matrices for tuning and test sets."""
+        import matplotlib.pyplot as plt
+        from sklearn.metrics import confusion_matrix
+        import seaborn as sns
+
+        fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+
+        # Tuning set confusion matrix
+        cm_tuning = confusion_matrix(y_tuning, clf_results["tuning_predictions"])
+        sns.heatmap(
+            cm_tuning,
+            annot=True,
+            fmt="d",
+            cmap="Blues",
+            ax=axes[0],
+            cbar=True,
+        )
+        axes[0].set_title(f"{clf_name}\nTuning Set Confusion Matrix")
+        axes[0].set_ylabel("True Label")
+        axes[0].set_xlabel("Predicted Label")
+
+        # Test set confusion matrix
+        cm_test = confusion_matrix(y_test, clf_results["test_predictions"])
+        sns.heatmap(
+            cm_test,
+            annot=True,
+            fmt="d",
+            cmap="Greens",
+            ax=axes[1],
+            cbar=True,
+        )
+        axes[1].set_title(f"{clf_name}\nTest Set Confusion Matrix")
+        axes[1].set_ylabel("True Label")
+        axes[1].set_xlabel("Predicted Label")
+
+        plt.tight_layout()
+
+        cm_path = os.path.join(output_dir, f"confusion_matrices_3way_{clf_name}.png")
+        plt.savefig(cm_path, dpi=300, bbox_inches="tight")
+        plt.close()
+
+        self.logger.info(f"3-way confusion matrices saved to: {cm_path}")
 
     def _create_validation_confusion_matrices(
         self,

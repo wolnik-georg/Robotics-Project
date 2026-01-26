@@ -252,6 +252,15 @@ class ExperimentOrchestrator:
                 "validation_datasets": self.config.get(
                     "validation_datasets", []
                 ),  # Add validation datasets
+                "hyperparameter_tuning_datasets": self.config.get(
+                    "hyperparameter_tuning_datasets", []
+                ),  # Add tuning datasets for 3-way split
+                "final_test_datasets": self.config.get(
+                    "final_test_datasets", []
+                ),  # Add final test datasets for 3-way split
+                "feature_extraction": self.config.get(
+                    "feature_extraction", {}
+                ),  # Add feature extraction config (features/spectrogram/both)
             }
             # Add data_processing specific config
             data_processing_config = self.config.get("experiments", {}).get(

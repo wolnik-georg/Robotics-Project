@@ -6,3 +6,6 @@ scikit-learn>=0.20.0
 jacktools~=1.0.1  # install via pip install zita-tools/zita-jacktools
 scipy
 soundfile
+torch>=2.0.0  # For GPU acceleration
+torchaudio>=2.0.0  # GPU-accelerated audio processing
+cupy-cuda12x  # GPU-accelerated numpy operations (adjust cuda version as needed)

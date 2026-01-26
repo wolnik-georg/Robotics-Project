@@ -1,0 +1,1674 @@
+2026-01-23 18:35:30,179 - ORCHESTRATOR - INFO - Starting experiment orchestration...
+2026-01-23 18:35:30 - experiment_orchestrator - INFO - Starting experiment orchestration...
+2026-01-23 18:35:30,179 - ORCHESTRATOR - INFO - Execution order: ['data_processing', 'dimensionality_reduction', 'discrimination_analysis']
+2026-01-23 18:35:30 - experiment_orchestrator - INFO - Execution order: ['data_processing', 'dimensionality_reduction', 'discrimination_analysis']
+2026-01-23 18:35:30,179 - ORCHESTRATOR - INFO - Executing experiment: data_processing
+2026-01-23 18:35:30 - experiment_orchestrator - INFO - Executing experiment: data_processing
+2026-01-23 18:35:30,179 - dataprocessing - INFO - Starting data processing experiment...
+2026-01-23 18:35:30 - acoustic_sensing.dataprocessing - INFO - Starting data processing experiment...
+2026-01-23 18:35:32,698 - dataprocessing - INFO - 📊 STANDARD DATASET MODE
+2026-01-23 18:35:32 - acoustic_sensing.dataprocessing - INFO - 📊 STANDARD DATASET MODE
+2026-01-23 18:35:32,698 - dataprocessing - INFO - ✓ Hyperparameter tuning datasets specified: ['balanced_collected_data_runs_2026_01_15_workspace_1_pure_no_contact_undersample', 'balanced_collected_data_runs_2026_01_15_workspace_1_pure_contact_undersample']
+2026-01-23 18:35:32 - acoustic_sensing.dataprocessing - INFO - ✓ Hyperparameter tuning datasets specified: ['balanced_collected_data_runs_2026_01_15_workspace_1_pure_no_contact_undersample', 'balanced_collected_data_runs_2026_01_15_workspace_1_pure_contact_undersample']
+2026-01-23 18:35:32,698 - dataprocessing - INFO - ✓ Final test datasets specified: ['balanced_collected_data_runs_2026_01_15_workspace_2_pure_no_contact_undersample', 'balanced_collected_data_runs_2026_01_15_workspace_2_pure_contact_undersample']
+2026-01-23 18:35:32 - acoustic_sensing.dataprocessing - INFO - ✓ Final test datasets specified: ['balanced_collected_data_runs_2026_01_15_workspace_2_pure_no_contact_undersample', 'balanced_collected_data_runs_2026_01_15_workspace_2_pure_contact_undersample']
+2026-01-23 18:35:32,698 - dataprocessing - INFO - 🎯 3-WAY SPLIT MODE ENABLED
+2026-01-23 18:35:32 - acoustic_sensing.dataprocessing - INFO - 🎯 3-WAY SPLIT MODE ENABLED
+2026-01-23 18:35:32,698 - dataprocessing - INFO -   Step 1: Training datasets for initial training
+2026-01-23 18:35:32 - acoustic_sensing.dataprocessing - INFO -   Step 1: Training datasets for initial training
+2026-01-23 18:35:32,698 - dataprocessing - INFO -   Step 2: Tuning datasets for hyperparameter optimization
+2026-01-23 18:35:32 - acoustic_sensing.dataprocessing - INFO -   Step 2: Tuning datasets for hyperparameter optimization
+2026-01-23 18:35:32,698 - dataprocessing - INFO -   Step 3: Final test datasets for unbiased evaluation
+2026-01-23 18:35:32 - acoustic_sensing.dataprocessing - INFO -   Step 3: Final test datasets for unbiased evaluation
+2026-01-23 18:35:32,698 - dataprocessing - INFO - Found 6 batches: ['balanced_collected_data_runs_2026_01_14_workspace_3_pure_no_contact_undersample', 'balanced_collected_data_runs_2026_01_14_workspace_3_pure_contact_undersample', 'balanced_collected_data_runs_2026_01_15_workspace_1_pure_no_contact_undersample', 'balanced_collected_data_runs_2026_01_15_workspace_1_pure_contact_undersample', 'balanced_collected_data_runs_2026_01_15_workspace_2_pure_no_contact_undersample', 'balanced_collected_data_runs_2026_01_15_workspace_2_pure_contact_undersample']
+2026-01-23 18:35:32 - acoustic_sensing.dataprocessing - INFO - Found 6 batches: ['balanced_collected_data_runs_2026_01_14_workspace_3_pure_no_contact_undersample', 'balanced_collected_data_runs_2026_01_14_workspace_3_pure_contact_undersample', 'balanced_collected_data_runs_2026_01_15_workspace_1_pure_no_contact_undersample', 'balanced_collected_data_runs_2026_01_15_workspace_1_pure_contact_undersample', 'balanced_collected_data_runs_2026_01_15_workspace_2_pure_no_contact_undersample', 'balanced_collected_data_runs_2026_01_15_workspace_2_pure_contact_undersample']
+2026-01-23 18:35:32,698 - dataprocessing - INFO - Processing balanced_collected_data_runs_2026_01_14_workspace_3_pure_no_contact_undersample...
+2026-01-23 18:35:32 - acoustic_sensing.dataprocessing - INFO - Processing balanced_collected_data_runs_2026_01_14_workspace_3_pure_no_contact_undersample...
+2026-01-23 18:35:33,920 - dataprocessing - INFO - Motion artifact removal is DISABLED (default)
+2026-01-23 18:35:33 - acoustic_sensing.dataprocessing - INFO - Motion artifact removal is DISABLED (default)
+2026-01-23 18:35:33,920 - dataprocessing - INFO - Extracting features from 825 audio samples...
+2026-01-23 18:35:33 - acoustic_sensing.dataprocessing - INFO - Extracting features from 825 audio samples...
+2026-01-23 18:35:33,920 - dataprocessing - INFO - Audio smoothing disabled
+2026-01-23 18:35:33 - acoustic_sensing.dataprocessing - INFO - Audio smoothing disabled
+2026-01-23 18:35:33,920 - dataprocessing - INFO - ✓ Workspace-invariant features ENABLED (better cross-workspace generalization)
+2026-01-23 18:35:33 - acoustic_sensing.dataprocessing - INFO - ✓ Workspace-invariant features ENABLED (better cross-workspace generalization)
+2026-01-23 18:35:33,920 - dataprocessing - INFO - ✓ Impulse response features ENABLED (transfer function analysis)
+2026-01-23 18:35:33 - acoustic_sensing.dataprocessing - INFO - ✓ Impulse response features ENABLED (transfer function analysis)
+2026-01-23 18:35:33,920 - dataprocessing - INFO - ✓ Contact physics features ENABLED (damping, energy transfer, harmonic distortion)
+2026-01-23 18:35:33 - acoustic_sensing.dataprocessing - INFO - ✓ Contact physics features ENABLED (damping, energy transfer, harmonic distortion)
+2026-01-23 18:35:33,920 - dataprocessing - INFO - ✓ Data augmentation ENABLED (factor=2x for training)
+2026-01-23 18:35:33 - acoustic_sensing.dataprocessing - INFO - ✓ Data augmentation ENABLED (factor=2x for training)
+2026-01-23 18:35:38,431 - dataprocessing - INFO -   Processed 50/825 samples
+2026-01-23 18:35:38 - acoustic_sensing.dataprocessing - INFO -   Processed 50/825 samples
+2026-01-23 18:35:42,435 - dataprocessing - INFO -   Processed 100/825 samples
+2026-01-23 18:35:42 - acoustic_sensing.dataprocessing - INFO -   Processed 100/825 samples
+2026-01-23 18:35:46,583 - dataprocessing - INFO -   Processed 150/825 samples
+2026-01-23 18:35:46 - acoustic_sensing.dataprocessing - INFO -   Processed 150/825 samples
+2026-01-23 18:35:50,516 - dataprocessing - INFO -   Processed 200/825 samples
+2026-01-23 18:35:50 - acoustic_sensing.dataprocessing - INFO -   Processed 200/825 samples
+2026-01-23 18:35:54,670 - dataprocessing - INFO -   Processed 250/825 samples
+2026-01-23 18:35:54 - acoustic_sensing.dataprocessing - INFO -   Processed 250/825 samples
+2026-01-23 18:36:01,202 - dataprocessing - INFO -   Processed 300/825 samples
+2026-01-23 18:36:01 - acoustic_sensing.dataprocessing - INFO -   Processed 300/825 samples
+2026-01-23 18:36:05,492 - dataprocessing - INFO -   Processed 350/825 samples
+2026-01-23 18:36:05 - acoustic_sensing.dataprocessing - INFO -   Processed 350/825 samples
+2026-01-23 18:36:09,509 - dataprocessing - INFO -   Processed 400/825 samples
+2026-01-23 18:36:09 - acoustic_sensing.dataprocessing - INFO -   Processed 400/825 samples
+2026-01-23 18:36:13,486 - dataprocessing - INFO -   Processed 450/825 samples
+2026-01-23 18:36:13 - acoustic_sensing.dataprocessing - INFO -   Processed 450/825 samples
+2026-01-23 18:36:18,215 - dataprocessing - INFO -   Processed 500/825 samples
+2026-01-23 18:36:18 - acoustic_sensing.dataprocessing - INFO -   Processed 500/825 samples
+2026-01-23 18:36:23,090 - dataprocessing - INFO -   Processed 550/825 samples
+2026-01-23 18:36:23 - acoustic_sensing.dataprocessing - INFO -   Processed 550/825 samples
+2026-01-23 18:36:28,036 - dataprocessing - INFO -   Processed 600/825 samples
+2026-01-23 18:36:28 - acoustic_sensing.dataprocessing - INFO -   Processed 600/825 samples
+2026-01-23 18:36:33,026 - dataprocessing - INFO -   Processed 650/825 samples
+2026-01-23 18:36:33 - acoustic_sensing.dataprocessing - INFO -   Processed 650/825 samples
+2026-01-23 18:36:38,062 - dataprocessing - INFO -   Processed 700/825 samples
+2026-01-23 18:36:38 - acoustic_sensing.dataprocessing - INFO -   Processed 700/825 samples
+2026-01-23 18:36:43,040 - dataprocessing - INFO -   Processed 750/825 samples
+2026-01-23 18:36:43 - acoustic_sensing.dataprocessing - INFO -   Processed 750/825 samples
+2026-01-23 18:36:48,420 - dataprocessing - INFO -   Processed 800/825 samples
+2026-01-23 18:36:48 - acoustic_sensing.dataprocessing - INFO -   Processed 800/825 samples
+2026-01-23 18:36:51,018 - dataprocessing - INFO -   Augmentation: 825 → 2475 samples (3.0x)
+2026-01-23 18:36:51 - acoustic_sensing.dataprocessing - INFO -   Augmentation: 825 → 2475 samples (3.0x)
+2026-01-23 18:36:51,022 - dataprocessing - INFO - Loaded 2475 feature vectors from balanced_collected_data_runs_2026_01_14_workspace_3_pure_no_contact_undersample with 1 classes
+2026-01-23 18:36:51 - acoustic_sensing.dataprocessing - INFO - Loaded 2475 feature vectors from balanced_collected_data_runs_2026_01_14_workspace_3_pure_no_contact_undersample with 1 classes
+2026-01-23 18:36:51,039 - dataprocessing - INFO - Batch balanced_collected_data_runs_2026_01_14_workspace_3_pure_no_contact_undersample data processing results saved to: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3/dataprocessing/balanced_collected_data_runs_2026_01_14_workspace_3_pure_no_contact_undersample
+2026-01-23 18:36:51 - acoustic_sensing.dataprocessing - INFO - Batch balanced_collected_data_runs_2026_01_14_workspace_3_pure_no_contact_undersample data processing results saved to: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3/dataprocessing/balanced_collected_data_runs_2026_01_14_workspace_3_pure_no_contact_undersample
+2026-01-23 18:36:53,422 - dataprocessing - INFO - Creating spectrogram from sample file: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/data/balanced_collected_data_runs_2026_01_14_workspace_3_pure_no_contact_undersample/data/677_no_contact.wav
+2026-01-23 18:36:53 - acoustic_sensing.dataprocessing - INFO - Creating spectrogram from sample file: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/data/balanced_collected_data_runs_2026_01_14_workspace_3_pure_no_contact_undersample/data/677_no_contact.wav
+2026-01-23 18:36:53,847 - dataprocessing - INFO - Spectrogram saved to /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3/dataprocessing/balanced_collected_data_runs_2026_01_14_workspace_3_pure_no_contact_undersample
+2026-01-23 18:36:53 - acoustic_sensing.dataprocessing - INFO - Spectrogram saved to /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3/dataprocessing/balanced_collected_data_runs_2026_01_14_workspace_3_pure_no_contact_undersample
+2026-01-23 18:36:53,847 - dataprocessing - INFO - Processing balanced_collected_data_runs_2026_01_14_workspace_3_pure_contact_undersample...
+2026-01-23 18:36:53 - acoustic_sensing.dataprocessing - INFO - Processing balanced_collected_data_runs_2026_01_14_workspace_3_pure_contact_undersample...
+2026-01-23 18:36:55,310 - dataprocessing - INFO - Motion artifact removal is DISABLED (default)
+2026-01-23 18:36:55 - acoustic_sensing.dataprocessing - INFO - Motion artifact removal is DISABLED (default)
+2026-01-23 18:36:55,310 - dataprocessing - INFO - Extracting features from 1393 audio samples...
+2026-01-23 18:36:55 - acoustic_sensing.dataprocessing - INFO - Extracting features from 1393 audio samples...
+2026-01-23 18:36:55,310 - dataprocessing - INFO - Audio smoothing disabled
+2026-01-23 18:36:55 - acoustic_sensing.dataprocessing - INFO - Audio smoothing disabled
+2026-01-23 18:36:55,310 - dataprocessing - INFO - ✓ Workspace-invariant features ENABLED (better cross-workspace generalization)
+2026-01-23 18:36:55 - acoustic_sensing.dataprocessing - INFO - ✓ Workspace-invariant features ENABLED (better cross-workspace generalization)
+2026-01-23 18:36:55,310 - dataprocessing - INFO - ✓ Impulse response features ENABLED (transfer function analysis)
+2026-01-23 18:36:55 - acoustic_sensing.dataprocessing - INFO - ✓ Impulse response features ENABLED (transfer function analysis)
+2026-01-23 18:36:55,310 - dataprocessing - INFO - ✓ Contact physics features ENABLED (damping, energy transfer, harmonic distortion)
+2026-01-23 18:36:55 - acoustic_sensing.dataprocessing - INFO - ✓ Contact physics features ENABLED (damping, energy transfer, harmonic distortion)
+2026-01-23 18:36:55,310 - dataprocessing - INFO - ✓ Data augmentation ENABLED (factor=2x for training)
+2026-01-23 18:36:55 - acoustic_sensing.dataprocessing - INFO - ✓ Data augmentation ENABLED (factor=2x for training)
+2026-01-23 18:37:00,309 - dataprocessing - INFO -   Processed 50/1393 samples
+2026-01-23 18:37:00 - acoustic_sensing.dataprocessing - INFO -   Processed 50/1393 samples
+2026-01-23 18:37:05,497 - dataprocessing - INFO -   Processed 100/1393 samples
+2026-01-23 18:37:05 - acoustic_sensing.dataprocessing - INFO -   Processed 100/1393 samples
+2026-01-23 18:37:10,692 - dataprocessing - INFO -   Processed 150/1393 samples
+2026-01-23 18:37:10 - acoustic_sensing.dataprocessing - INFO -   Processed 150/1393 samples
+2026-01-23 18:37:15,970 - dataprocessing - INFO -   Processed 200/1393 samples
+2026-01-23 18:37:15 - acoustic_sensing.dataprocessing - INFO -   Processed 200/1393 samples
+2026-01-23 18:37:21,030 - dataprocessing - INFO -   Processed 250/1393 samples
+2026-01-23 18:37:21 - acoustic_sensing.dataprocessing - INFO -   Processed 250/1393 samples
+2026-01-23 18:37:26,117 - dataprocessing - INFO -   Processed 300/1393 samples
+2026-01-23 18:37:26 - acoustic_sensing.dataprocessing - INFO -   Processed 300/1393 samples
+2026-01-23 18:37:31,207 - dataprocessing - INFO -   Processed 350/1393 samples
+2026-01-23 18:37:31 - acoustic_sensing.dataprocessing - INFO -   Processed 350/1393 samples
+2026-01-23 18:37:36,237 - dataprocessing - INFO -   Processed 400/1393 samples
+2026-01-23 18:37:36 - acoustic_sensing.dataprocessing - INFO -   Processed 400/1393 samples
+2026-01-23 18:37:41,178 - dataprocessing - INFO -   Processed 450/1393 samples
+2026-01-23 18:37:41 - acoustic_sensing.dataprocessing - INFO -   Processed 450/1393 samples
+2026-01-23 18:37:47,043 - dataprocessing - INFO -   Processed 500/1393 samples
+2026-01-23 18:37:47 - acoustic_sensing.dataprocessing - INFO -   Processed 500/1393 samples
+2026-01-23 18:37:52,089 - dataprocessing - INFO -   Processed 550/1393 samples
+2026-01-23 18:37:52 - acoustic_sensing.dataprocessing - INFO -   Processed 550/1393 samples
+2026-01-23 18:37:57,051 - dataprocessing - INFO -   Processed 600/1393 samples
+2026-01-23 18:37:57 - acoustic_sensing.dataprocessing - INFO -   Processed 600/1393 samples
+2026-01-23 18:38:02,032 - dataprocessing - INFO -   Processed 650/1393 samples
+2026-01-23 18:38:02 - acoustic_sensing.dataprocessing - INFO -   Processed 650/1393 samples
+2026-01-23 18:38:06,994 - dataprocessing - INFO -   Processed 700/1393 samples
+2026-01-23 18:38:06 - acoustic_sensing.dataprocessing - INFO -   Processed 700/1393 samples
+2026-01-23 18:38:11,963 - dataprocessing - INFO -   Processed 750/1393 samples
+2026-01-23 18:38:11 - acoustic_sensing.dataprocessing - INFO -   Processed 750/1393 samples
+2026-01-23 18:38:17,104 - dataprocessing - INFO -   Processed 800/1393 samples
+2026-01-23 18:38:17 - acoustic_sensing.dataprocessing - INFO -   Processed 800/1393 samples
+2026-01-23 18:38:22,146 - dataprocessing - INFO -   Processed 850/1393 samples
+2026-01-23 18:38:22 - acoustic_sensing.dataprocessing - INFO -   Processed 850/1393 samples
+2026-01-23 18:38:27,033 - dataprocessing - INFO -   Processed 900/1393 samples
+2026-01-23 18:38:27 - acoustic_sensing.dataprocessing - INFO -   Processed 900/1393 samples
+2026-01-23 18:38:32,057 - dataprocessing - INFO -   Processed 950/1393 samples
+2026-01-23 18:38:32 - acoustic_sensing.dataprocessing - INFO -   Processed 950/1393 samples
+2026-01-23 18:38:37,296 - dataprocessing - INFO -   Processed 1000/1393 samples
+2026-01-23 18:38:37 - acoustic_sensing.dataprocessing - INFO -   Processed 1000/1393 samples
+2026-01-23 18:38:45,422 - dataprocessing - INFO -   Processed 1050/1393 samples
+2026-01-23 18:38:45 - acoustic_sensing.dataprocessing - INFO -   Processed 1050/1393 samples
+2026-01-23 18:38:50,954 - dataprocessing - INFO -   Processed 1100/1393 samples
+2026-01-23 18:38:50 - acoustic_sensing.dataprocessing - INFO -   Processed 1100/1393 samples
+2026-01-23 18:38:56,333 - dataprocessing - INFO -   Processed 1150/1393 samples
+2026-01-23 18:38:56 - acoustic_sensing.dataprocessing - INFO -   Processed 1150/1393 samples
+2026-01-23 18:39:01,740 - dataprocessing - INFO -   Processed 1200/1393 samples
+2026-01-23 18:39:01 - acoustic_sensing.dataprocessing - INFO -   Processed 1200/1393 samples
+2026-01-23 18:39:07,222 - dataprocessing - INFO -   Processed 1250/1393 samples
+2026-01-23 18:39:07 - acoustic_sensing.dataprocessing - INFO -   Processed 1250/1393 samples
+2026-01-23 18:39:12,712 - dataprocessing - INFO -   Processed 1300/1393 samples
+2026-01-23 18:39:12 - acoustic_sensing.dataprocessing - INFO -   Processed 1300/1393 samples
+2026-01-23 18:39:18,159 - dataprocessing - INFO -   Processed 1350/1393 samples
+2026-01-23 18:39:18 - acoustic_sensing.dataprocessing - INFO -   Processed 1350/1393 samples
+2026-01-23 18:39:22,885 - dataprocessing - INFO -   Augmentation: 1393 → 4179 samples (3.0x)
+2026-01-23 18:39:22 - acoustic_sensing.dataprocessing - INFO -   Augmentation: 1393 → 4179 samples (3.0x)
+2026-01-23 18:39:22,893 - dataprocessing - INFO - Loaded 4179 feature vectors from balanced_collected_data_runs_2026_01_14_workspace_3_pure_contact_undersample with 1 classes
+2026-01-23 18:39:22 - acoustic_sensing.dataprocessing - INFO - Loaded 4179 feature vectors from balanced_collected_data_runs_2026_01_14_workspace_3_pure_contact_undersample with 1 classes
+2026-01-23 18:39:22,919 - dataprocessing - INFO - Batch balanced_collected_data_runs_2026_01_14_workspace_3_pure_contact_undersample data processing results saved to: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3/dataprocessing/balanced_collected_data_runs_2026_01_14_workspace_3_pure_contact_undersample
+2026-01-23 18:39:22 - acoustic_sensing.dataprocessing - INFO - Batch balanced_collected_data_runs_2026_01_14_workspace_3_pure_contact_undersample data processing results saved to: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3/dataprocessing/balanced_collected_data_runs_2026_01_14_workspace_3_pure_contact_undersample
+2026-01-23 18:39:25,096 - dataprocessing - INFO - Creating spectrogram from sample file: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/data/balanced_collected_data_runs_2026_01_14_workspace_3_pure_contact_undersample/data/615_contact.wav
+2026-01-23 18:39:25 - acoustic_sensing.dataprocessing - INFO - Creating spectrogram from sample file: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/data/balanced_collected_data_runs_2026_01_14_workspace_3_pure_contact_undersample/data/615_contact.wav
+2026-01-23 18:39:25,517 - dataprocessing - INFO - Spectrogram saved to /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3/dataprocessing/balanced_collected_data_runs_2026_01_14_workspace_3_pure_contact_undersample
+2026-01-23 18:39:25 - acoustic_sensing.dataprocessing - INFO - Spectrogram saved to /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3/dataprocessing/balanced_collected_data_runs_2026_01_14_workspace_3_pure_contact_undersample
+2026-01-23 18:39:25,517 - dataprocessing - INFO - Processing balanced_collected_data_runs_2026_01_15_workspace_1_pure_no_contact_undersample...
+2026-01-23 18:39:25 - acoustic_sensing.dataprocessing - INFO - Processing balanced_collected_data_runs_2026_01_15_workspace_1_pure_no_contact_undersample...
+2026-01-23 18:39:27,243 - dataprocessing - INFO - Motion artifact removal is DISABLED (default)
+2026-01-23 18:39:27 - acoustic_sensing.dataprocessing - INFO - Motion artifact removal is DISABLED (default)
+2026-01-23 18:39:27,243 - dataprocessing - INFO - Extracting features from 1585 audio samples...
+2026-01-23 18:39:27 - acoustic_sensing.dataprocessing - INFO - Extracting features from 1585 audio samples...
+2026-01-23 18:39:27,243 - dataprocessing - INFO - Audio smoothing disabled
+2026-01-23 18:39:27 - acoustic_sensing.dataprocessing - INFO - Audio smoothing disabled
+2026-01-23 18:39:27,243 - dataprocessing - INFO - ✓ Workspace-invariant features ENABLED (better cross-workspace generalization)
+2026-01-23 18:39:27 - acoustic_sensing.dataprocessing - INFO - ✓ Workspace-invariant features ENABLED (better cross-workspace generalization)
+2026-01-23 18:39:27,244 - dataprocessing - INFO - ✓ Impulse response features ENABLED (transfer function analysis)
+2026-01-23 18:39:27 - acoustic_sensing.dataprocessing - INFO - ✓ Impulse response features ENABLED (transfer function analysis)
+2026-01-23 18:39:27,244 - dataprocessing - INFO - ✓ Contact physics features ENABLED (damping, energy transfer, harmonic distortion)
+2026-01-23 18:39:27 - acoustic_sensing.dataprocessing - INFO - ✓ Contact physics features ENABLED (damping, energy transfer, harmonic distortion)
+2026-01-23 18:39:27,244 - dataprocessing - INFO - ✓ Data augmentation SKIPPED for tuning data
+2026-01-23 18:39:27 - acoustic_sensing.dataprocessing - INFO - ✓ Data augmentation SKIPPED for tuning data
+2026-01-23 18:39:28,970 - dataprocessing - INFO -   Processed 50/1585 samples
+2026-01-23 18:39:28 - acoustic_sensing.dataprocessing - INFO -   Processed 50/1585 samples
+2026-01-23 18:39:30,505 - dataprocessing - INFO -   Processed 100/1585 samples
+2026-01-23 18:39:30 - acoustic_sensing.dataprocessing - INFO -   Processed 100/1585 samples
+2026-01-23 18:39:32,084 - dataprocessing - INFO -   Processed 150/1585 samples
+2026-01-23 18:39:32 - acoustic_sensing.dataprocessing - INFO -   Processed 150/1585 samples
+2026-01-23 18:39:33,651 - dataprocessing - INFO -   Processed 200/1585 samples
+2026-01-23 18:39:33 - acoustic_sensing.dataprocessing - INFO -   Processed 200/1585 samples
+2026-01-23 18:39:35,294 - dataprocessing - INFO -   Processed 250/1585 samples
+2026-01-23 18:39:35 - acoustic_sensing.dataprocessing - INFO -   Processed 250/1585 samples
+2026-01-23 18:39:36,935 - dataprocessing - INFO -   Processed 300/1585 samples
+2026-01-23 18:39:36 - acoustic_sensing.dataprocessing - INFO -   Processed 300/1585 samples
+2026-01-23 18:39:38,519 - dataprocessing - INFO -   Processed 350/1585 samples
+2026-01-23 18:39:38 - acoustic_sensing.dataprocessing - INFO -   Processed 350/1585 samples
+2026-01-23 18:39:40,070 - dataprocessing - INFO -   Processed 400/1585 samples
+2026-01-23 18:39:40 - acoustic_sensing.dataprocessing - INFO -   Processed 400/1585 samples
+2026-01-23 18:39:41,644 - dataprocessing - INFO -   Processed 450/1585 samples
+2026-01-23 18:39:41 - acoustic_sensing.dataprocessing - INFO -   Processed 450/1585 samples
+2026-01-23 18:39:43,199 - dataprocessing - INFO -   Processed 500/1585 samples
+2026-01-23 18:39:43 - acoustic_sensing.dataprocessing - INFO -   Processed 500/1585 samples
+2026-01-23 18:39:44,985 - dataprocessing - INFO -   Processed 550/1585 samples
+2026-01-23 18:39:44 - acoustic_sensing.dataprocessing - INFO -   Processed 550/1585 samples
+2026-01-23 18:39:46,654 - dataprocessing - INFO -   Processed 600/1585 samples
+2026-01-23 18:39:46 - acoustic_sensing.dataprocessing - INFO -   Processed 600/1585 samples
+2026-01-23 18:39:48,219 - dataprocessing - INFO -   Processed 650/1585 samples
+2026-01-23 18:39:48 - acoustic_sensing.dataprocessing - INFO -   Processed 650/1585 samples
+2026-01-23 18:39:49,768 - dataprocessing - INFO -   Processed 700/1585 samples
+2026-01-23 18:39:49 - acoustic_sensing.dataprocessing - INFO -   Processed 700/1585 samples
+2026-01-23 18:39:51,354 - dataprocessing - INFO -   Processed 750/1585 samples
+2026-01-23 18:39:51 - acoustic_sensing.dataprocessing - INFO -   Processed 750/1585 samples
+2026-01-23 18:39:52,984 - dataprocessing - INFO -   Processed 800/1585 samples
+2026-01-23 18:39:52 - acoustic_sensing.dataprocessing - INFO -   Processed 800/1585 samples
+2026-01-23 18:39:54,604 - dataprocessing - INFO -   Processed 850/1585 samples
+2026-01-23 18:39:54 - acoustic_sensing.dataprocessing - INFO -   Processed 850/1585 samples
+2026-01-23 18:39:56,185 - dataprocessing - INFO -   Processed 900/1585 samples
+2026-01-23 18:39:56 - acoustic_sensing.dataprocessing - INFO -   Processed 900/1585 samples
+2026-01-23 18:39:57,755 - dataprocessing - INFO -   Processed 950/1585 samples
+2026-01-23 18:39:57 - acoustic_sensing.dataprocessing - INFO -   Processed 950/1585 samples
+2026-01-23 18:39:59,354 - dataprocessing - INFO -   Processed 1000/1585 samples
+2026-01-23 18:39:59 - acoustic_sensing.dataprocessing - INFO -   Processed 1000/1585 samples
+2026-01-23 18:40:00,918 - dataprocessing - INFO -   Processed 1050/1585 samples
+2026-01-23 18:40:00 - acoustic_sensing.dataprocessing - INFO -   Processed 1050/1585 samples
+2026-01-23 18:40:02,483 - dataprocessing - INFO -   Processed 1100/1585 samples
+2026-01-23 18:40:02 - acoustic_sensing.dataprocessing - INFO -   Processed 1100/1585 samples
+2026-01-23 18:40:04,133 - dataprocessing - INFO -   Processed 1150/1585 samples
+2026-01-23 18:40:04 - acoustic_sensing.dataprocessing - INFO -   Processed 1150/1585 samples
+2026-01-23 18:40:05,700 - dataprocessing - INFO -   Processed 1200/1585 samples
+2026-01-23 18:40:05 - acoustic_sensing.dataprocessing - INFO -   Processed 1200/1585 samples
+2026-01-23 18:40:07,258 - dataprocessing - INFO -   Processed 1250/1585 samples
+2026-01-23 18:40:07 - acoustic_sensing.dataprocessing - INFO -   Processed 1250/1585 samples
+2026-01-23 18:40:08,849 - dataprocessing - INFO -   Processed 1300/1585 samples
+2026-01-23 18:40:08 - acoustic_sensing.dataprocessing - INFO -   Processed 1300/1585 samples
+2026-01-23 18:40:10,405 - dataprocessing - INFO -   Processed 1350/1585 samples
+2026-01-23 18:40:10 - acoustic_sensing.dataprocessing - INFO -   Processed 1350/1585 samples
+2026-01-23 18:40:12,027 - dataprocessing - INFO -   Processed 1400/1585 samples
+2026-01-23 18:40:12 - acoustic_sensing.dataprocessing - INFO -   Processed 1400/1585 samples
+2026-01-23 18:40:14,446 - dataprocessing - INFO -   Processed 1450/1585 samples
+2026-01-23 18:40:14 - acoustic_sensing.dataprocessing - INFO -   Processed 1450/1585 samples
+2026-01-23 18:40:16,852 - dataprocessing - INFO -   Processed 1500/1585 samples
+2026-01-23 18:40:16 - acoustic_sensing.dataprocessing - INFO -   Processed 1500/1585 samples
+2026-01-23 18:40:19,242 - dataprocessing - INFO -   Processed 1550/1585 samples
+2026-01-23 18:40:19 - acoustic_sensing.dataprocessing - INFO -   Processed 1550/1585 samples
+2026-01-23 18:40:20,972 - dataprocessing - INFO - Loaded 1585 feature vectors from balanced_collected_data_runs_2026_01_15_workspace_1_pure_no_contact_undersample with 1 classes
+2026-01-23 18:40:20 - acoustic_sensing.dataprocessing - INFO - Loaded 1585 feature vectors from balanced_collected_data_runs_2026_01_15_workspace_1_pure_no_contact_undersample with 1 classes
+2026-01-23 18:40:20,998 - dataprocessing - INFO - Batch balanced_collected_data_runs_2026_01_15_workspace_1_pure_no_contact_undersample data processing results saved to: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3/dataprocessing/balanced_collected_data_runs_2026_01_15_workspace_1_pure_no_contact_undersample
+2026-01-23 18:40:20 - acoustic_sensing.dataprocessing - INFO - Batch balanced_collected_data_runs_2026_01_15_workspace_1_pure_no_contact_undersample data processing results saved to: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3/dataprocessing/balanced_collected_data_runs_2026_01_15_workspace_1_pure_no_contact_undersample
+2026-01-23 18:40:23,056 - dataprocessing - INFO - Creating spectrogram from sample file: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/data/balanced_collected_data_runs_2026_01_15_workspace_1_pure_no_contact_undersample/data/677_no_contact.wav
+2026-01-23 18:40:23 - acoustic_sensing.dataprocessing - INFO - Creating spectrogram from sample file: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/data/balanced_collected_data_runs_2026_01_15_workspace_1_pure_no_contact_undersample/data/677_no_contact.wav
+2026-01-23 18:40:23,459 - dataprocessing - INFO - Spectrogram saved to /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3/dataprocessing/balanced_collected_data_runs_2026_01_15_workspace_1_pure_no_contact_undersample
+2026-01-23 18:40:23 - acoustic_sensing.dataprocessing - INFO - Spectrogram saved to /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3/dataprocessing/balanced_collected_data_runs_2026_01_15_workspace_1_pure_no_contact_undersample
+2026-01-23 18:40:23,460 - dataprocessing - INFO - Processing balanced_collected_data_runs_2026_01_15_workspace_1_pure_contact_undersample...
+2026-01-23 18:40:23 - acoustic_sensing.dataprocessing - INFO - Processing balanced_collected_data_runs_2026_01_15_workspace_1_pure_contact_undersample...
+2026-01-23 18:40:24,423 - dataprocessing - INFO - Motion artifact removal is DISABLED (default)
+2026-01-23 18:40:24 - acoustic_sensing.dataprocessing - INFO - Motion artifact removal is DISABLED (default)
+2026-01-23 18:40:24,423 - dataprocessing - INFO - Extracting features from 920 audio samples...
+2026-01-23 18:40:24 - acoustic_sensing.dataprocessing - INFO - Extracting features from 920 audio samples...
+2026-01-23 18:40:24,423 - dataprocessing - INFO - Audio smoothing disabled
+2026-01-23 18:40:24 - acoustic_sensing.dataprocessing - INFO - Audio smoothing disabled
+2026-01-23 18:40:24,423 - dataprocessing - INFO - ✓ Workspace-invariant features ENABLED (better cross-workspace generalization)
+2026-01-23 18:40:24 - acoustic_sensing.dataprocessing - INFO - ✓ Workspace-invariant features ENABLED (better cross-workspace generalization)
+2026-01-23 18:40:24,423 - dataprocessing - INFO - ✓ Impulse response features ENABLED (transfer function analysis)
+2026-01-23 18:40:24 - acoustic_sensing.dataprocessing - INFO - ✓ Impulse response features ENABLED (transfer function analysis)
+2026-01-23 18:40:24,423 - dataprocessing - INFO - ✓ Contact physics features ENABLED (damping, energy transfer, harmonic distortion)
+2026-01-23 18:40:24 - acoustic_sensing.dataprocessing - INFO - ✓ Contact physics features ENABLED (damping, energy transfer, harmonic distortion)
+2026-01-23 18:40:24,423 - dataprocessing - INFO - ✓ Data augmentation SKIPPED for tuning data
+2026-01-23 18:40:24 - acoustic_sensing.dataprocessing - INFO - ✓ Data augmentation SKIPPED for tuning data
+2026-01-23 18:40:26,156 - dataprocessing - INFO -   Processed 50/920 samples
+2026-01-23 18:40:26 - acoustic_sensing.dataprocessing - INFO -   Processed 50/920 samples
+2026-01-23 18:40:27,825 - dataprocessing - INFO -   Processed 100/920 samples
+2026-01-23 18:40:27 - acoustic_sensing.dataprocessing - INFO -   Processed 100/920 samples
+2026-01-23 18:40:29,480 - dataprocessing - INFO -   Processed 150/920 samples
+2026-01-23 18:40:29 - acoustic_sensing.dataprocessing - INFO -   Processed 150/920 samples
+2026-01-23 18:40:31,093 - dataprocessing - INFO -   Processed 200/920 samples
+2026-01-23 18:40:31 - acoustic_sensing.dataprocessing - INFO -   Processed 200/920 samples
+2026-01-23 18:40:32,730 - dataprocessing - INFO -   Processed 250/920 samples
+2026-01-23 18:40:32 - acoustic_sensing.dataprocessing - INFO -   Processed 250/920 samples
+2026-01-23 18:40:34,360 - dataprocessing - INFO -   Processed 300/920 samples
+2026-01-23 18:40:34 - acoustic_sensing.dataprocessing - INFO -   Processed 300/920 samples
+2026-01-23 18:40:35,939 - dataprocessing - INFO -   Processed 350/920 samples
+2026-01-23 18:40:35 - acoustic_sensing.dataprocessing - INFO -   Processed 350/920 samples
+2026-01-23 18:40:37,516 - dataprocessing - INFO -   Processed 400/920 samples
+2026-01-23 18:40:37 - acoustic_sensing.dataprocessing - INFO -   Processed 400/920 samples
+2026-01-23 18:40:39,075 - dataprocessing - INFO -   Processed 450/920 samples
+2026-01-23 18:40:39 - acoustic_sensing.dataprocessing - INFO -   Processed 450/920 samples
+2026-01-23 18:40:40,687 - dataprocessing - INFO -   Processed 500/920 samples
+2026-01-23 18:40:40 - acoustic_sensing.dataprocessing - INFO -   Processed 500/920 samples
+2026-01-23 18:40:42,272 - dataprocessing - INFO -   Processed 550/920 samples
+2026-01-23 18:40:42 - acoustic_sensing.dataprocessing - INFO -   Processed 550/920 samples
+2026-01-23 18:40:44,159 - dataprocessing - INFO -   Processed 600/920 samples
+2026-01-23 18:40:44 - acoustic_sensing.dataprocessing - INFO -   Processed 600/920 samples
+2026-01-23 18:40:45,810 - dataprocessing - INFO -   Processed 650/920 samples
+2026-01-23 18:40:45 - acoustic_sensing.dataprocessing - INFO -   Processed 650/920 samples
+2026-01-23 18:40:47,453 - dataprocessing - INFO -   Processed 700/920 samples
+2026-01-23 18:40:47 - acoustic_sensing.dataprocessing - INFO -   Processed 700/920 samples
+2026-01-23 18:40:49,152 - dataprocessing - INFO -   Processed 750/920 samples
+2026-01-23 18:40:49 - acoustic_sensing.dataprocessing - INFO -   Processed 750/920 samples
+2026-01-23 18:40:50,757 - dataprocessing - INFO -   Processed 800/920 samples
+2026-01-23 18:40:50 - acoustic_sensing.dataprocessing - INFO -   Processed 800/920 samples
+2026-01-23 18:40:52,420 - dataprocessing - INFO -   Processed 850/920 samples
+2026-01-23 18:40:52 - acoustic_sensing.dataprocessing - INFO -   Processed 850/920 samples
+2026-01-23 18:40:54,072 - dataprocessing - INFO -   Processed 900/920 samples
+2026-01-23 18:40:54 - acoustic_sensing.dataprocessing - INFO -   Processed 900/920 samples
+2026-01-23 18:40:54,694 - dataprocessing - INFO - Loaded 920 feature vectors from balanced_collected_data_runs_2026_01_15_workspace_1_pure_contact_undersample with 1 classes
+2026-01-23 18:40:54 - acoustic_sensing.dataprocessing - INFO - Loaded 920 feature vectors from balanced_collected_data_runs_2026_01_15_workspace_1_pure_contact_undersample with 1 classes
+2026-01-23 18:40:54,706 - dataprocessing - INFO - Batch balanced_collected_data_runs_2026_01_15_workspace_1_pure_contact_undersample data processing results saved to: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3/dataprocessing/balanced_collected_data_runs_2026_01_15_workspace_1_pure_contact_undersample
+2026-01-23 18:40:54 - acoustic_sensing.dataprocessing - INFO - Batch balanced_collected_data_runs_2026_01_15_workspace_1_pure_contact_undersample data processing results saved to: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3/dataprocessing/balanced_collected_data_runs_2026_01_15_workspace_1_pure_contact_undersample
+2026-01-23 18:40:56,880 - dataprocessing - INFO - Creating spectrogram from sample file: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/data/balanced_collected_data_runs_2026_01_15_workspace_1_pure_contact_undersample/data/615_contact.wav
+2026-01-23 18:40:56 - acoustic_sensing.dataprocessing - INFO - Creating spectrogram from sample file: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/data/balanced_collected_data_runs_2026_01_15_workspace_1_pure_contact_undersample/data/615_contact.wav
+2026-01-23 18:40:57,295 - dataprocessing - INFO - Spectrogram saved to /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3/dataprocessing/balanced_collected_data_runs_2026_01_15_workspace_1_pure_contact_undersample
+2026-01-23 18:40:57 - acoustic_sensing.dataprocessing - INFO - Spectrogram saved to /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3/dataprocessing/balanced_collected_data_runs_2026_01_15_workspace_1_pure_contact_undersample
+2026-01-23 18:40:57,295 - dataprocessing - INFO - Processing balanced_collected_data_runs_2026_01_15_workspace_2_pure_no_contact_undersample...
+2026-01-23 18:40:57 - acoustic_sensing.dataprocessing - INFO - Processing balanced_collected_data_runs_2026_01_15_workspace_2_pure_no_contact_undersample...
+2026-01-23 18:40:58,418 - dataprocessing - INFO - Motion artifact removal is DISABLED (default)
+2026-01-23 18:40:58 - acoustic_sensing.dataprocessing - INFO - Motion artifact removal is DISABLED (default)
+2026-01-23 18:40:58,418 - dataprocessing - INFO - Extracting features from 1100 audio samples...
+2026-01-23 18:40:58 - acoustic_sensing.dataprocessing - INFO - Extracting features from 1100 audio samples...
+2026-01-23 18:40:58,418 - dataprocessing - INFO - Audio smoothing disabled
+2026-01-23 18:40:58 - acoustic_sensing.dataprocessing - INFO - Audio smoothing disabled
+2026-01-23 18:40:58,418 - dataprocessing - INFO - ✓ Workspace-invariant features ENABLED (better cross-workspace generalization)
+2026-01-23 18:40:58 - acoustic_sensing.dataprocessing - INFO - ✓ Workspace-invariant features ENABLED (better cross-workspace generalization)
+2026-01-23 18:40:58,419 - dataprocessing - INFO - ✓ Impulse response features ENABLED (transfer function analysis)
+2026-01-23 18:40:58 - acoustic_sensing.dataprocessing - INFO - ✓ Impulse response features ENABLED (transfer function analysis)
+2026-01-23 18:40:58,419 - dataprocessing - INFO - ✓ Contact physics features ENABLED (damping, energy transfer, harmonic distortion)
+2026-01-23 18:40:58 - acoustic_sensing.dataprocessing - INFO - ✓ Contact physics features ENABLED (damping, energy transfer, harmonic distortion)
+2026-01-23 18:40:58,419 - dataprocessing - INFO - ✓ Data augmentation SKIPPED for test data
+2026-01-23 18:40:58 - acoustic_sensing.dataprocessing - INFO - ✓ Data augmentation SKIPPED for test data
+2026-01-23 18:41:00,065 - dataprocessing - INFO -   Processed 50/1100 samples
+2026-01-23 18:41:00 - acoustic_sensing.dataprocessing - INFO -   Processed 50/1100 samples
+2026-01-23 18:41:01,682 - dataprocessing - INFO -   Processed 100/1100 samples
+2026-01-23 18:41:01 - acoustic_sensing.dataprocessing - INFO -   Processed 100/1100 samples
+2026-01-23 18:41:03,403 - dataprocessing - INFO -   Processed 150/1100 samples
+2026-01-23 18:41:03 - acoustic_sensing.dataprocessing - INFO -   Processed 150/1100 samples
+2026-01-23 18:41:05,036 - dataprocessing - INFO -   Processed 200/1100 samples
+2026-01-23 18:41:05 - acoustic_sensing.dataprocessing - INFO -   Processed 200/1100 samples
+2026-01-23 18:41:06,692 - dataprocessing - INFO -   Processed 250/1100 samples
+2026-01-23 18:41:06 - acoustic_sensing.dataprocessing - INFO -   Processed 250/1100 samples
+2026-01-23 18:41:08,312 - dataprocessing - INFO -   Processed 300/1100 samples
+2026-01-23 18:41:08 - acoustic_sensing.dataprocessing - INFO -   Processed 300/1100 samples
+2026-01-23 18:41:09,956 - dataprocessing - INFO -   Processed 350/1100 samples
+2026-01-23 18:41:09 - acoustic_sensing.dataprocessing - INFO -   Processed 350/1100 samples
+2026-01-23 18:41:11,590 - dataprocessing - INFO -   Processed 400/1100 samples
+2026-01-23 18:41:11 - acoustic_sensing.dataprocessing - INFO -   Processed 400/1100 samples
+2026-01-23 18:41:13,238 - dataprocessing - INFO -   Processed 450/1100 samples
+2026-01-23 18:41:13 - acoustic_sensing.dataprocessing - INFO -   Processed 450/1100 samples
+2026-01-23 18:41:14,971 - dataprocessing - INFO -   Processed 500/1100 samples
+2026-01-23 18:41:14 - acoustic_sensing.dataprocessing - INFO -   Processed 500/1100 samples
+2026-01-23 18:41:16,644 - dataprocessing - INFO -   Processed 550/1100 samples
+2026-01-23 18:41:16 - acoustic_sensing.dataprocessing - INFO -   Processed 550/1100 samples
+2026-01-23 18:41:18,306 - dataprocessing - INFO -   Processed 600/1100 samples
+2026-01-23 18:41:18 - acoustic_sensing.dataprocessing - INFO -   Processed 600/1100 samples
+2026-01-23 18:41:20,821 - dataprocessing - INFO -   Processed 650/1100 samples
+2026-01-23 18:41:20 - acoustic_sensing.dataprocessing - INFO -   Processed 650/1100 samples
+2026-01-23 18:41:23,430 - dataprocessing - INFO -   Processed 700/1100 samples
+2026-01-23 18:41:23 - acoustic_sensing.dataprocessing - INFO -   Processed 700/1100 samples
+2026-01-23 18:41:25,445 - dataprocessing - INFO -   Processed 750/1100 samples
+2026-01-23 18:41:25 - acoustic_sensing.dataprocessing - INFO -   Processed 750/1100 samples
+2026-01-23 18:41:27,329 - dataprocessing - INFO -   Processed 800/1100 samples
+2026-01-23 18:41:27 - acoustic_sensing.dataprocessing - INFO -   Processed 800/1100 samples
+2026-01-23 18:41:29,343 - dataprocessing - INFO -   Processed 850/1100 samples
+2026-01-23 18:41:29 - acoustic_sensing.dataprocessing - INFO -   Processed 850/1100 samples
+2026-01-23 18:41:31,455 - dataprocessing - INFO -   Processed 900/1100 samples
+2026-01-23 18:41:31 - acoustic_sensing.dataprocessing - INFO -   Processed 900/1100 samples
+2026-01-23 18:41:33,412 - dataprocessing - INFO -   Processed 950/1100 samples
+2026-01-23 18:41:33 - acoustic_sensing.dataprocessing - INFO -   Processed 950/1100 samples
+2026-01-23 18:41:35,499 - dataprocessing - INFO -   Processed 1000/1100 samples
+2026-01-23 18:41:35 - acoustic_sensing.dataprocessing - INFO -   Processed 1000/1100 samples
+2026-01-23 18:41:37,455 - dataprocessing - INFO -   Processed 1050/1100 samples
+2026-01-23 18:41:37 - acoustic_sensing.dataprocessing - INFO -   Processed 1050/1100 samples
+2026-01-23 18:41:39,414 - dataprocessing - INFO -   Processed 1100/1100 samples
+2026-01-23 18:41:39 - acoustic_sensing.dataprocessing - INFO -   Processed 1100/1100 samples
+2026-01-23 18:41:39,417 - dataprocessing - INFO - Loaded 1100 feature vectors from balanced_collected_data_runs_2026_01_15_workspace_2_pure_no_contact_undersample with 1 classes
+2026-01-23 18:41:39 - acoustic_sensing.dataprocessing - INFO - Loaded 1100 feature vectors from balanced_collected_data_runs_2026_01_15_workspace_2_pure_no_contact_undersample with 1 classes
+2026-01-23 18:41:39,433 - dataprocessing - INFO - Batch balanced_collected_data_runs_2026_01_15_workspace_2_pure_no_contact_undersample data processing results saved to: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3/dataprocessing/balanced_collected_data_runs_2026_01_15_workspace_2_pure_no_contact_undersample
+2026-01-23 18:41:39 - acoustic_sensing.dataprocessing - INFO - Batch balanced_collected_data_runs_2026_01_15_workspace_2_pure_no_contact_undersample data processing results saved to: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3/dataprocessing/balanced_collected_data_runs_2026_01_15_workspace_2_pure_no_contact_undersample
+2026-01-23 18:41:41,527 - dataprocessing - INFO - Creating spectrogram from sample file: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/data/balanced_collected_data_runs_2026_01_15_workspace_2_pure_no_contact_undersample/data/677_no_contact.wav
+2026-01-23 18:41:41 - acoustic_sensing.dataprocessing - INFO - Creating spectrogram from sample file: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/data/balanced_collected_data_runs_2026_01_15_workspace_2_pure_no_contact_undersample/data/677_no_contact.wav
+2026-01-23 18:41:41,935 - dataprocessing - INFO - Spectrogram saved to /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3/dataprocessing/balanced_collected_data_runs_2026_01_15_workspace_2_pure_no_contact_undersample
+2026-01-23 18:41:41 - acoustic_sensing.dataprocessing - INFO - Spectrogram saved to /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3/dataprocessing/balanced_collected_data_runs_2026_01_15_workspace_2_pure_no_contact_undersample
+2026-01-23 18:41:41,935 - dataprocessing - INFO - Processing balanced_collected_data_runs_2026_01_15_workspace_2_pure_contact_undersample...
+2026-01-23 18:41:41 - acoustic_sensing.dataprocessing - INFO - Processing balanced_collected_data_runs_2026_01_15_workspace_2_pure_contact_undersample...
+2026-01-23 18:41:42,894 - dataprocessing - INFO - Motion artifact removal is DISABLED (default)
+2026-01-23 18:41:42 - acoustic_sensing.dataprocessing - INFO - Motion artifact removal is DISABLED (default)
+2026-01-23 18:41:42,894 - dataprocessing - INFO - Extracting features from 885 audio samples...
+2026-01-23 18:41:42 - acoustic_sensing.dataprocessing - INFO - Extracting features from 885 audio samples...
+2026-01-23 18:41:42,894 - dataprocessing - INFO - Audio smoothing disabled
+2026-01-23 18:41:42 - acoustic_sensing.dataprocessing - INFO - Audio smoothing disabled
+2026-01-23 18:41:42,894 - dataprocessing - INFO - ✓ Workspace-invariant features ENABLED (better cross-workspace generalization)
+2026-01-23 18:41:42 - acoustic_sensing.dataprocessing - INFO - ✓ Workspace-invariant features ENABLED (better cross-workspace generalization)
+2026-01-23 18:41:42,894 - dataprocessing - INFO - ✓ Impulse response features ENABLED (transfer function analysis)
+2026-01-23 18:41:42 - acoustic_sensing.dataprocessing - INFO - ✓ Impulse response features ENABLED (transfer function analysis)
+2026-01-23 18:41:42,894 - dataprocessing - INFO - ✓ Contact physics features ENABLED (damping, energy transfer, harmonic distortion)
+2026-01-23 18:41:42 - acoustic_sensing.dataprocessing - INFO - ✓ Contact physics features ENABLED (damping, energy transfer, harmonic distortion)
+2026-01-23 18:41:42,894 - dataprocessing - INFO - ✓ Data augmentation SKIPPED for test data
+2026-01-23 18:41:42 - acoustic_sensing.dataprocessing - INFO - ✓ Data augmentation SKIPPED for test data
+2026-01-23 18:41:44,967 - dataprocessing - INFO -   Processed 50/885 samples
+2026-01-23 18:41:44 - acoustic_sensing.dataprocessing - INFO -   Processed 50/885 samples
+2026-01-23 18:41:46,509 - dataprocessing - INFO -   Processed 100/885 samples
+2026-01-23 18:41:46 - acoustic_sensing.dataprocessing - INFO -   Processed 100/885 samples
+2026-01-23 18:41:47,993 - dataprocessing - INFO -   Processed 150/885 samples
+2026-01-23 18:41:47 - acoustic_sensing.dataprocessing - INFO -   Processed 150/885 samples
+2026-01-23 18:41:49,963 - dataprocessing - INFO -   Processed 200/885 samples
+2026-01-23 18:41:49 - acoustic_sensing.dataprocessing - INFO -   Processed 200/885 samples
+2026-01-23 18:41:52,110 - dataprocessing - INFO -   Processed 250/885 samples
+2026-01-23 18:41:52 - acoustic_sensing.dataprocessing - INFO -   Processed 250/885 samples
+2026-01-23 18:41:54,291 - dataprocessing - INFO -   Processed 300/885 samples
+2026-01-23 18:41:54 - acoustic_sensing.dataprocessing - INFO -   Processed 300/885 samples
+2026-01-23 18:41:55,907 - dataprocessing - INFO -   Processed 350/885 samples
+2026-01-23 18:41:55 - acoustic_sensing.dataprocessing - INFO -   Processed 350/885 samples
+2026-01-23 18:41:57,624 - dataprocessing - INFO -   Processed 400/885 samples
+2026-01-23 18:41:57 - acoustic_sensing.dataprocessing - INFO -   Processed 400/885 samples
+2026-01-23 18:41:59,420 - dataprocessing - INFO -   Processed 450/885 samples
+2026-01-23 18:41:59 - acoustic_sensing.dataprocessing - INFO -   Processed 450/885 samples
+2026-01-23 18:42:01,291 - dataprocessing - INFO -   Processed 500/885 samples
+2026-01-23 18:42:01 - acoustic_sensing.dataprocessing - INFO -   Processed 500/885 samples
+2026-01-23 18:42:03,457 - dataprocessing - INFO -   Processed 550/885 samples
+2026-01-23 18:42:03 - acoustic_sensing.dataprocessing - INFO -   Processed 550/885 samples
+2026-01-23 18:42:05,955 - dataprocessing - INFO -   Processed 600/885 samples
+2026-01-23 18:42:05 - acoustic_sensing.dataprocessing - INFO -   Processed 600/885 samples
+2026-01-23 18:42:09,535 - dataprocessing - INFO -   Processed 650/885 samples
+2026-01-23 18:42:09 - acoustic_sensing.dataprocessing - INFO -   Processed 650/885 samples
+2026-01-23 18:42:13,208 - dataprocessing - INFO -   Processed 700/885 samples
+2026-01-23 18:42:13 - acoustic_sensing.dataprocessing - INFO -   Processed 700/885 samples
+2026-01-23 18:42:16,352 - dataprocessing - INFO -   Processed 750/885 samples
+2026-01-23 18:42:16 - acoustic_sensing.dataprocessing - INFO -   Processed 750/885 samples
+2026-01-23 18:42:19,260 - dataprocessing - INFO -   Processed 800/885 samples
+2026-01-23 18:42:19 - acoustic_sensing.dataprocessing - INFO -   Processed 800/885 samples
+2026-01-23 18:42:22,172 - dataprocessing - INFO -   Processed 850/885 samples
+2026-01-23 18:42:22 - acoustic_sensing.dataprocessing - INFO -   Processed 850/885 samples
+2026-01-23 18:42:24,143 - dataprocessing - INFO - Loaded 885 feature vectors from balanced_collected_data_runs_2026_01_15_workspace_2_pure_contact_undersample with 1 classes
+2026-01-23 18:42:24 - acoustic_sensing.dataprocessing - INFO - Loaded 885 feature vectors from balanced_collected_data_runs_2026_01_15_workspace_2_pure_contact_undersample with 1 classes
+2026-01-23 18:42:24,153 - dataprocessing - INFO - Batch balanced_collected_data_runs_2026_01_15_workspace_2_pure_contact_undersample data processing results saved to: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3/dataprocessing/balanced_collected_data_runs_2026_01_15_workspace_2_pure_contact_undersample
+2026-01-23 18:42:24 - acoustic_sensing.dataprocessing - INFO - Batch balanced_collected_data_runs_2026_01_15_workspace_2_pure_contact_undersample data processing results saved to: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3/dataprocessing/balanced_collected_data_runs_2026_01_15_workspace_2_pure_contact_undersample
+2026-01-23 18:42:26,619 - dataprocessing - INFO - Creating spectrogram from sample file: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/data/balanced_collected_data_runs_2026_01_15_workspace_2_pure_contact_undersample/data/615_contact.wav
+2026-01-23 18:42:26 - acoustic_sensing.dataprocessing - INFO - Creating spectrogram from sample file: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/data/balanced_collected_data_runs_2026_01_15_workspace_2_pure_contact_undersample/data/615_contact.wav
+2026-01-23 18:42:27,021 - dataprocessing - INFO - Spectrogram saved to /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3/dataprocessing/balanced_collected_data_runs_2026_01_15_workspace_2_pure_contact_undersample
+2026-01-23 18:42:27 - acoustic_sensing.dataprocessing - INFO - Spectrogram saved to /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3/dataprocessing/balanced_collected_data_runs_2026_01_15_workspace_2_pure_contact_undersample
+2026-01-23 18:42:27,021 - dataprocessing - INFO - Processed 6 batches with 11144 total samples
+2026-01-23 18:42:27 - acoustic_sensing.dataprocessing - INFO - Processed 6 batches with 11144 total samples
+2026-01-23 18:42:27,021 - dataprocessing - INFO - balanced_collected_data_runs_2026_01_14_workspace_3_pure_no_contact_undersample: 2475 samples, 1 classes
+2026-01-23 18:42:27 - acoustic_sensing.dataprocessing - INFO - balanced_collected_data_runs_2026_01_14_workspace_3_pure_no_contact_undersample: 2475 samples, 1 classes
+2026-01-23 18:42:27,021 - dataprocessing - INFO - balanced_collected_data_runs_2026_01_14_workspace_3_pure_contact_undersample: 4179 samples, 1 classes
+2026-01-23 18:42:27 - acoustic_sensing.dataprocessing - INFO - balanced_collected_data_runs_2026_01_14_workspace_3_pure_contact_undersample: 4179 samples, 1 classes
+2026-01-23 18:42:27,021 - dataprocessing - INFO - balanced_collected_data_runs_2026_01_15_workspace_1_pure_no_contact_undersample: 1585 samples, 1 classes
+2026-01-23 18:42:27 - acoustic_sensing.dataprocessing - INFO - balanced_collected_data_runs_2026_01_15_workspace_1_pure_no_contact_undersample: 1585 samples, 1 classes
+2026-01-23 18:42:27,021 - dataprocessing - INFO - balanced_collected_data_runs_2026_01_15_workspace_1_pure_contact_undersample: 920 samples, 1 classes
+2026-01-23 18:42:27 - acoustic_sensing.dataprocessing - INFO - balanced_collected_data_runs_2026_01_15_workspace_1_pure_contact_undersample: 920 samples, 1 classes
+2026-01-23 18:42:27,022 - dataprocessing - INFO - balanced_collected_data_runs_2026_01_15_workspace_2_pure_no_contact_undersample: 1100 samples, 1 classes
+2026-01-23 18:42:27 - acoustic_sensing.dataprocessing - INFO - balanced_collected_data_runs_2026_01_15_workspace_2_pure_no_contact_undersample: 1100 samples, 1 classes
+2026-01-23 18:42:27,022 - dataprocessing - INFO - balanced_collected_data_runs_2026_01_15_workspace_2_pure_contact_undersample: 885 samples, 1 classes
+2026-01-23 18:42:27 - acoustic_sensing.dataprocessing - INFO - balanced_collected_data_runs_2026_01_15_workspace_2_pure_contact_undersample: 885 samples, 1 classes
+2026-01-23 18:42:27,022 - dataprocessing - INFO - Results saved to: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3/dataprocessing/data_processing_summary.json
+2026-01-23 18:42:27 - acoustic_sensing.dataprocessing - INFO - Results saved to: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3/dataprocessing/data_processing_summary.json
+2026-01-23 18:42:27,022 - dataprocessing - INFO - Data processing experiment completed successfully
+2026-01-23 18:42:27 - acoustic_sensing.dataprocessing - INFO - Data processing experiment completed successfully
+2026-01-23 18:42:27,307 - dataprocessing - INFO - Updated shared data with keys: ['batch_results', 'total_batches', 'total_samples', 'num_features', 'num_classes', 'class_names', 'batch_names', 'validation_datasets', 'hyperparameter_tuning_datasets', 'final_test_datasets', 'training_datasets', 'multi_dataset_mode']
+2026-01-23 18:42:27 - acoustic_sensing.dataprocessing - INFO - Updated shared data with keys: ['batch_results', 'total_batches', 'total_samples', 'num_features', 'num_classes', 'class_names', 'batch_names', 'validation_datasets', 'hyperparameter_tuning_datasets', 'final_test_datasets', 'training_datasets', 'multi_dataset_mode']
+2026-01-23 18:42:27,308 - ORCHESTRATOR - INFO - ✓ Completed: data_processing
+2026-01-23 18:42:27 - experiment_orchestrator - INFO - ✓ Completed: data_processing
+2026-01-23 18:42:27,308 - ORCHESTRATOR - INFO - Executing experiment: dimensionality_reduction
+2026-01-23 18:42:27 - experiment_orchestrator - INFO - Executing experiment: dimensionality_reduction
+2026-01-23 18:42:27,308 - dimensionalityreduction - INFO - Starting dimensionality reduction experiment...
+2026-01-23 18:42:27 - acoustic_sensing.dimensionalityreduction - INFO - Starting dimensionality reduction experiment...
+2026-01-23 18:42:27,308 - dimensionalityreduction - INFO - ✓ Combining all datasets: ['balanced_collected_data_runs_2026_01_14_workspace_3_pure_no_contact_undersample', 'balanced_collected_data_runs_2026_01_14_workspace_3_pure_contact_undersample', 'balanced_collected_data_runs_2026_01_15_workspace_1_pure_no_contact_undersample', 'balanced_collected_data_runs_2026_01_15_workspace_1_pure_contact_undersample', 'balanced_collected_data_runs_2026_01_15_workspace_2_pure_no_contact_undersample', 'balanced_collected_data_runs_2026_01_15_workspace_2_pure_contact_undersample']
+2026-01-23 18:42:27 - acoustic_sensing.dimensionalityreduction - INFO - ✓ Combining all datasets: ['balanced_collected_data_runs_2026_01_14_workspace_3_pure_no_contact_undersample', 'balanced_collected_data_runs_2026_01_14_workspace_3_pure_contact_undersample', 'balanced_collected_data_runs_2026_01_15_workspace_1_pure_no_contact_undersample', 'balanced_collected_data_runs_2026_01_15_workspace_1_pure_contact_undersample', 'balanced_collected_data_runs_2026_01_15_workspace_2_pure_no_contact_undersample', 'balanced_collected_data_runs_2026_01_15_workspace_2_pure_contact_undersample']
+2026-01-23 18:42:27,309 - dimensionalityreduction - INFO - ✓ Combined data: 11144 samples, 80 features
+2026-01-23 18:42:27 - acoustic_sensing.dimensionalityreduction - INFO - ✓ Combined data: 11144 samples, 80 features
+2026-01-23 18:42:27,310 - dimensionalityreduction - INFO - ✓ Class distribution: {np.str_('contact'): np.int64(5984), np.str_('no_contact'): np.int64(5160)}
+2026-01-23 18:42:27 - acoustic_sensing.dimensionalityreduction - INFO - ✓ Class distribution: {np.str_('contact'): np.int64(5984), np.str_('no_contact'): np.int64(5160)}
+2026-01-23 18:42:27,312 - dimensionalityreduction - INFO - Performing PCA analysis for combined_datasets...
+2026-01-23 18:42:27 - acoustic_sensing.dimensionalityreduction - INFO - Performing PCA analysis for combined_datasets...
+2026-01-23 18:42:27,367 - dimensionalityreduction - INFO - Components needed for 95.0% variance: 30
+2026-01-23 18:42:27 - acoustic_sensing.dimensionalityreduction - INFO - Components needed for 95.0% variance: 30
+2026-01-23 18:42:27,415 - dimensionalityreduction - INFO - Results saved to: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3/dimensionalityreduction/pca_summary_combined_datasets.json
+2026-01-23 18:42:27 - acoustic_sensing.dimensionalityreduction - INFO - Results saved to: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3/dimensionalityreduction/pca_summary_combined_datasets.json
+2026-01-23 18:42:27,415 - dimensionalityreduction - INFO - Performing t-SNE analysis for combined_datasets...
+2026-01-23 18:42:27 - acoustic_sensing.dimensionalityreduction - INFO - Performing t-SNE analysis for combined_datasets...
+2026-01-23 18:42:27,461 - dimensionalityreduction - INFO - Applied PCA preprocessing for t-SNE (reduced to 50 dimensions)
+2026-01-23 18:42:27 - acoustic_sensing.dimensionalityreduction - INFO - Applied PCA preprocessing for t-SNE (reduced to 50 dimensions)
+2026-01-23 18:42:27,461 - dimensionalityreduction - INFO - Running t-SNE with perplexity 5...
+2026-01-23 18:42:27 - acoustic_sensing.dimensionalityreduction - INFO - Running t-SNE with perplexity 5...
+2026-01-23 18:42:45,732 - dimensionalityreduction - INFO - Running t-SNE with perplexity 10...
+2026-01-23 18:42:45 - acoustic_sensing.dimensionalityreduction - INFO - Running t-SNE with perplexity 10...
+2026-01-23 18:43:05,114 - dimensionalityreduction - INFO - Running t-SNE with perplexity 20...
+2026-01-23 18:43:05 - acoustic_sensing.dimensionalityreduction - INFO - Running t-SNE with perplexity 20...
+2026-01-23 18:43:25,556 - dimensionalityreduction - INFO - Running t-SNE with perplexity 30...
+2026-01-23 18:43:25 - acoustic_sensing.dimensionalityreduction - INFO - Running t-SNE with perplexity 30...
+2026-01-23 18:43:46,648 - dimensionalityreduction - INFO - Running t-SNE with perplexity 50...
+2026-01-23 18:43:46 - acoustic_sensing.dimensionalityreduction - INFO - Running t-SNE with perplexity 50...
+2026-01-23 18:44:09,258 - dimensionalityreduction - INFO - Results saved to: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3/dimensionalityreduction/tsne_summary_combined_datasets.json
+2026-01-23 18:44:09 - acoustic_sensing.dimensionalityreduction - INFO - Results saved to: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3/dimensionalityreduction/tsne_summary_combined_datasets.json
+2026-01-23 18:44:12,917 - dimensionalityreduction - INFO - Batch combined_datasets reduction results saved to: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3/dimensionalityreduction/combined_datasets
+2026-01-23 18:44:12 - acoustic_sensing.dimensionalityreduction - INFO - Batch combined_datasets reduction results saved to: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3/dimensionalityreduction/combined_datasets
+2026-01-23 18:44:12,919 - dimensionalityreduction - INFO - Results saved to: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3/dimensionalityreduction/dimensionality_reduction_per_batch_results.json
+2026-01-23 18:44:12 - acoustic_sensing.dimensionalityreduction - INFO - Results saved to: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3/dimensionalityreduction/dimensionality_reduction_per_batch_results.json
+2026-01-23 18:44:12,919 - dimensionalityreduction - INFO - Results saved to: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3/dimensionalityreduction/dimensionality_reduction_summary.json
+2026-01-23 18:44:12 - acoustic_sensing.dimensionalityreduction - INFO - Results saved to: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3/dimensionalityreduction/dimensionality_reduction_summary.json
+2026-01-23 18:44:12,919 - dimensionalityreduction - INFO - Dimensionality reduction experiment completed
+2026-01-23 18:44:12 - acoustic_sensing.dimensionalityreduction - INFO - Dimensionality reduction experiment completed
+2026-01-23 18:44:12,919 - dimensionalityreduction - INFO - Updated shared data with keys: ['per_batch_results', 'aggregated_results', 'total_batches_analyzed', 'datasets_combined']
+2026-01-23 18:44:12 - acoustic_sensing.dimensionalityreduction - INFO - Updated shared data with keys: ['per_batch_results', 'aggregated_results', 'total_batches_analyzed', 'datasets_combined']
+2026-01-23 18:44:12,919 - ORCHESTRATOR - INFO - ✓ Completed: dimensionality_reduction
+2026-01-23 18:44:12 - experiment_orchestrator - INFO - ✓ Completed: dimensionality_reduction
+2026-01-23 18:44:12,919 - ORCHESTRATOR - INFO - Executing experiment: discrimination_analysis
+2026-01-23 18:44:12 - experiment_orchestrator - INFO - Executing experiment: discrimination_analysis
+2026-01-23 18:44:12,919 - discriminationanalysis - INFO - Starting discrimination analysis experiment...
+2026-01-23 18:44:12 - acoustic_sensing.discriminationanalysis - INFO - Starting discrimination analysis experiment...
+2026-01-23 18:44:12,919 - discriminationanalysis - INFO - ================================================================================
+2026-01-23 18:44:12 - acoustic_sensing.discriminationanalysis - INFO - ================================================================================
+2026-01-23 18:44:12,919 - discriminationanalysis - INFO - 🎯 3-WAY SPLIT MODE ENABLED
+2026-01-23 18:44:12 - acoustic_sensing.discriminationanalysis - INFO - 🎯 3-WAY SPLIT MODE ENABLED
+2026-01-23 18:44:12,919 - discriminationanalysis - INFO - ================================================================================
+2026-01-23 18:44:12 - acoustic_sensing.discriminationanalysis - INFO - ================================================================================
+2026-01-23 18:44:12,919 - discriminationanalysis - INFO - 📋 DATASET CONFIGURATION:
+2026-01-23 18:44:12 - acoustic_sensing.discriminationanalysis - INFO - 📋 DATASET CONFIGURATION:
+2026-01-23 18:44:12,919 - discriminationanalysis - INFO -   1️⃣  TRAINING datasets (2):
+2026-01-23 18:44:12 - acoustic_sensing.discriminationanalysis - INFO -   1️⃣  TRAINING datasets (2):
+2026-01-23 18:44:12,919 - discriminationanalysis - INFO -      - balanced_collected_data_runs_2026_01_14_workspace_3_pure_no_contact_undersample
+2026-01-23 18:44:12 - acoustic_sensing.discriminationanalysis - INFO -      - balanced_collected_data_runs_2026_01_14_workspace_3_pure_no_contact_undersample
+2026-01-23 18:44:12,919 - discriminationanalysis - INFO -      - balanced_collected_data_runs_2026_01_14_workspace_3_pure_contact_undersample
+2026-01-23 18:44:12 - acoustic_sensing.discriminationanalysis - INFO -      - balanced_collected_data_runs_2026_01_14_workspace_3_pure_contact_undersample
+2026-01-23 18:44:12,919 - discriminationanalysis - INFO -   2️⃣  TUNING datasets (2):
+2026-01-23 18:44:12 - acoustic_sensing.discriminationanalysis - INFO -   2️⃣  TUNING datasets (2):
+2026-01-23 18:44:12,919 - discriminationanalysis - INFO -      - balanced_collected_data_runs_2026_01_15_workspace_1_pure_no_contact_undersample
+2026-01-23 18:44:12 - acoustic_sensing.discriminationanalysis - INFO -      - balanced_collected_data_runs_2026_01_15_workspace_1_pure_no_contact_undersample
+2026-01-23 18:44:12,919 - discriminationanalysis - INFO -      - balanced_collected_data_runs_2026_01_15_workspace_1_pure_contact_undersample
+2026-01-23 18:44:12 - acoustic_sensing.discriminationanalysis - INFO -      - balanced_collected_data_runs_2026_01_15_workspace_1_pure_contact_undersample
+2026-01-23 18:44:12,919 - discriminationanalysis - INFO -   3️⃣  TEST datasets (2):
+2026-01-23 18:44:12 - acoustic_sensing.discriminationanalysis - INFO -   3️⃣  TEST datasets (2):
+2026-01-23 18:44:12,919 - discriminationanalysis - INFO -      - balanced_collected_data_runs_2026_01_15_workspace_2_pure_no_contact_undersample
+2026-01-23 18:44:12 - acoustic_sensing.discriminationanalysis - INFO -      - balanced_collected_data_runs_2026_01_15_workspace_2_pure_no_contact_undersample
+2026-01-23 18:44:12,919 - discriminationanalysis - INFO -      - balanced_collected_data_runs_2026_01_15_workspace_2_pure_contact_undersample
+2026-01-23 18:44:12 - acoustic_sensing.discriminationanalysis - INFO -      - balanced_collected_data_runs_2026_01_15_workspace_2_pure_contact_undersample
+2026-01-23 18:44:12,919 - discriminationanalysis - INFO - ================================================================================
+2026-01-23 18:44:12 - acoustic_sensing.discriminationanalysis - INFO - ================================================================================
+2026-01-23 18:44:12,920 - discriminationanalysis - INFO - ✓ Combined training data: 6654 samples from 2 datasets
+2026-01-23 18:44:12 - acoustic_sensing.discriminationanalysis - INFO - ✓ Combined training data: 6654 samples from 2 datasets
+2026-01-23 18:44:12,920 - discriminationanalysis - INFO - ✓ Combined tuning data: 2505 samples from 2 datasets
+2026-01-23 18:44:12 - acoustic_sensing.discriminationanalysis - INFO - ✓ Combined tuning data: 2505 samples from 2 datasets
+2026-01-23 18:44:12,920 - discriminationanalysis - INFO - ✓ Combined final test data: 1985 samples from 2 datasets
+2026-01-23 18:44:12 - acoustic_sensing.discriminationanalysis - INFO - ✓ Combined final test data: 1985 samples from 2 datasets
+2026-01-23 18:44:12,920 - discriminationanalysis - INFO - ================================================================================
+2026-01-23 18:44:12 - acoustic_sensing.discriminationanalysis - INFO - ================================================================================
+2026-01-23 18:44:12,920 - discriminationanalysis - INFO - ✅ VERIFIED: No dataset overlap - proper 3-way split maintained
+2026-01-23 18:44:12 - acoustic_sensing.discriminationanalysis - INFO - ✅ VERIFIED: No dataset overlap - proper 3-way split maintained
+2026-01-23 18:44:12,920 - discriminationanalysis - INFO - ================================================================================
+2026-01-23 18:44:12 - acoustic_sensing.discriminationanalysis - INFO - ================================================================================
+2026-01-23 18:44:12,920 - discriminationanalysis - INFO - Running Discrimination Analysis with 3-Way Split
+2026-01-23 18:44:12 - acoustic_sensing.discriminationanalysis - INFO - Running Discrimination Analysis with 3-Way Split
+2026-01-23 18:44:12,920 - discriminationanalysis - INFO - ================================================================================
+2026-01-23 18:44:12 - acoustic_sensing.discriminationanalysis - INFO - ================================================================================
+2026-01-23 18:44:12,920 - discriminationanalysis - INFO - Step 1: Train models on training datasets
+2026-01-23 18:44:12 - acoustic_sensing.discriminationanalysis - INFO - Step 1: Train models on training datasets
+2026-01-23 18:44:12,920 - discriminationanalysis - INFO - Step 2: Tune hyperparameters on tuning datasets
+2026-01-23 18:44:12 - acoustic_sensing.discriminationanalysis - INFO - Step 2: Tune hyperparameters on tuning datasets
+2026-01-23 18:44:12,920 - discriminationanalysis - INFO - Step 3: Final evaluation on test datasets (unbiased performance)
+2026-01-23 18:44:12 - acoustic_sensing.discriminationanalysis - INFO - Step 3: Final evaluation on test datasets (unbiased performance)
+2026-01-23 18:44:12,920 - discriminationanalysis - INFO - ================================================================================
+2026-01-23 18:44:12 - acoustic_sensing.discriminationanalysis - INFO - ================================================================================
+2026-01-23 18:44:12,920 - discriminationanalysis - INFO - Training set: 6654 samples
+2026-01-23 18:44:12 - acoustic_sensing.discriminationanalysis - INFO - Training set: 6654 samples
+2026-01-23 18:44:12,920 - discriminationanalysis - INFO - Tuning set: 2505 samples
+2026-01-23 18:44:12 - acoustic_sensing.discriminationanalysis - INFO - Tuning set: 2505 samples
+2026-01-23 18:44:12,920 - discriminationanalysis - INFO - Test set: 1985 samples
+2026-01-23 18:44:12 - acoustic_sensing.discriminationanalysis - INFO - Test set: 1985 samples
+2026-01-23 18:44:13,043 - discriminationanalysis - INFO - ✓ GPU classifiers enabled (device: cuda)
+2026-01-23 18:44:13 - acoustic_sensing.discriminationanalysis - INFO - ✓ GPU classifiers enabled (device: cuda)
+2026-01-23 18:44:13,044 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:44:13 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:44:13,044 - discriminationanalysis - INFO - Training: Random Forest
+2026-01-23 18:44:13 - acoustic_sensing.discriminationanalysis - INFO - Training: Random Forest
+2026-01-23 18:44:13,044 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:44:13 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:44:13,044 - discriminationanalysis - INFO -   Tuning hyperparameters with RandomizedSearchCV (20 iterations)...
+2026-01-23 18:44:13 - acoustic_sensing.discriminationanalysis - INFO -   Tuning hyperparameters with RandomizedSearchCV (20 iterations)...
+📂 Output directory: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/modular_analysis_results
+📂 Output directory (from config): /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3
+🚀 Initializing Experiment Orchestrator...
+📋 Config: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/configs/3way_split_config.yml
+✅ Validating configuration...
+
+🎯 Enabled experiments: discrimination_analysis, data_processing, dimensionality_reduction
+
+🏃 Running experiments...
+==================================================
+Warning: Could not import existing pipeline components
+2026-01-23 18:46:17,581 - discriminationanalysis - INFO -   Best params: {'n_estimators': 200, 'min_samples_split': 5, 'min_samples_leaf': 1, 'max_features': 'sqrt', 'max_depth': None}
+2026-01-23 18:46:17 - acoustic_sensing.discriminationanalysis - INFO -   Best params: {'n_estimators': 200, 'min_samples_split': 5, 'min_samples_leaf': 1, 'max_features': 'sqrt', 'max_depth': None}
+2026-01-23 18:46:17,581 - discriminationanalysis - INFO -   CV score (train): 0.8485
+2026-01-23 18:46:17 - acoustic_sensing.discriminationanalysis - INFO -   CV score (train): 0.8485
+2026-01-23 18:46:17,581 - discriminationanalysis - INFO -   Tuning score: 0.5369
+2026-01-23 18:46:17 - acoustic_sensing.discriminationanalysis - INFO -   Tuning score: 0.5369
+2026-01-23 18:46:17,705 - discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:46:17 - acoustic_sensing.discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:46:17,705 - discriminationanalysis - INFO -     Train Accuracy: 1.0000 | F1: 1.0000
+2026-01-23 18:46:17 - acoustic_sensing.discriminationanalysis - INFO -     Train Accuracy: 1.0000 | F1: 1.0000
+2026-01-23 18:46:17,705 - discriminationanalysis - INFO -     Tuning Accuracy: 0.5369 | F1: 0.5184
+2026-01-23 18:46:17 - acoustic_sensing.discriminationanalysis - INFO -     Tuning Accuracy: 0.5369 | F1: 0.5184
+2026-01-23 18:46:17,705 - discriminationanalysis - INFO -     Test Accuracy: 0.4091 | F1: 0.2597
+2026-01-23 18:46:17 - acoustic_sensing.discriminationanalysis - INFO -     Test Accuracy: 0.4091 | F1: 0.2597
+2026-01-23 18:46:17,705 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:46:17 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:46:17,705 - discriminationanalysis - INFO - Training: SVM (RBF)
+2026-01-23 18:46:17 - acoustic_sensing.discriminationanalysis - INFO - Training: SVM (RBF)
+2026-01-23 18:46:17,705 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:46:17 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:46:17,705 - discriminationanalysis - INFO -   Tuning hyperparameters with RandomizedSearchCV (20 iterations)...
+2026-01-23 18:46:17 - acoustic_sensing.discriminationanalysis - INFO -   Tuning hyperparameters with RandomizedSearchCV (20 iterations)...
+2026-01-23 18:46:30,239 - discriminationanalysis - INFO -   Best params: {'kernel': 'rbf', 'gamma': 0.01, 'C': 100}
+2026-01-23 18:46:30 - acoustic_sensing.discriminationanalysis - INFO -   Best params: {'kernel': 'rbf', 'gamma': 0.01, 'C': 100}
+2026-01-23 18:46:30,239 - discriminationanalysis - INFO -   CV score (train): 0.8078
+2026-01-23 18:46:30 - acoustic_sensing.discriminationanalysis - INFO -   CV score (train): 0.8078
+2026-01-23 18:46:30,239 - discriminationanalysis - INFO -   Tuning score: 0.5218
+2026-01-23 18:46:30 - acoustic_sensing.discriminationanalysis - INFO -   Tuning score: 0.5218
+2026-01-23 18:46:31,523 - discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:46:31 - acoustic_sensing.discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:46:31,524 - discriminationanalysis - INFO -     Train Accuracy: 0.9767 | F1: 0.9767
+2026-01-23 18:46:31 - acoustic_sensing.discriminationanalysis - INFO -     Train Accuracy: 0.9767 | F1: 0.9767
+2026-01-23 18:46:31,524 - discriminationanalysis - INFO -     Tuning Accuracy: 0.5218 | F1: 0.5159
+2026-01-23 18:46:31 - acoustic_sensing.discriminationanalysis - INFO -     Tuning Accuracy: 0.5218 | F1: 0.5159
+2026-01-23 18:46:31,524 - discriminationanalysis - INFO -     Test Accuracy: 0.0322 | F1: 0.0296
+2026-01-23 18:46:31 - acoustic_sensing.discriminationanalysis - INFO -     Test Accuracy: 0.0322 | F1: 0.0296
+2026-01-23 18:46:31,524 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:46:31 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:46:31,524 - discriminationanalysis - INFO - Training: SVM (Linear)
+2026-01-23 18:46:31 - acoustic_sensing.discriminationanalysis - INFO - Training: SVM (Linear)
+2026-01-23 18:46:31,524 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:46:31 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:46:31,524 - discriminationanalysis - INFO -   Tuning hyperparameters with RandomizedSearchCV (20 iterations)...
+2026-01-23 18:46:31 - acoustic_sensing.discriminationanalysis - INFO -   Tuning hyperparameters with RandomizedSearchCV (20 iterations)...
+2026-01-23 18:49:11,649 - discriminationanalysis - INFO -   Best params: {'kernel': 'linear', 'C': 100}
+2026-01-23 18:49:11 - acoustic_sensing.discriminationanalysis - INFO -   Best params: {'kernel': 'linear', 'C': 100}
+2026-01-23 18:49:11,649 - discriminationanalysis - INFO -   CV score (train): 0.7663
+2026-01-23 18:49:11 - acoustic_sensing.discriminationanalysis - INFO -   CV score (train): 0.7663
+2026-01-23 18:49:11,649 - discriminationanalysis - INFO -   Tuning score: 0.4307
+2026-01-23 18:49:11 - acoustic_sensing.discriminationanalysis - INFO -   Tuning score: 0.4307
+2026-01-23 18:49:12,256 - discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:49:12 - acoustic_sensing.discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:49:12,256 - discriminationanalysis - INFO -     Train Accuracy: 0.7863 | F1: 0.7861
+2026-01-23 18:49:12 - acoustic_sensing.discriminationanalysis - INFO -     Train Accuracy: 0.7863 | F1: 0.7861
+2026-01-23 18:49:12,256 - discriminationanalysis - INFO -     Tuning Accuracy: 0.4307 | F1: 0.3886
+2026-01-23 18:49:12 - acoustic_sensing.discriminationanalysis - INFO -     Tuning Accuracy: 0.4307 | F1: 0.3886
+2026-01-23 18:49:12,256 - discriminationanalysis - INFO -     Test Accuracy: 0.3154 | F1: 0.2845
+2026-01-23 18:49:12 - acoustic_sensing.discriminationanalysis - INFO -     Test Accuracy: 0.3154 | F1: 0.2845
+2026-01-23 18:49:12,256 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:49:12 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:49:12,256 - discriminationanalysis - INFO - Training: K-NN
+2026-01-23 18:49:12 - acoustic_sensing.discriminationanalysis - INFO - Training: K-NN
+2026-01-23 18:49:12,256 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:49:12 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:49:12,256 - discriminationanalysis - INFO -   Tuning hyperparameters with RandomizedSearchCV (20 iterations)...
+2026-01-23 18:49:12 - acoustic_sensing.discriminationanalysis - INFO -   Tuning hyperparameters with RandomizedSearchCV (20 iterations)...
+2026-01-23 18:49:13,504 - discriminationanalysis - INFO -   Best params: {'weights': 'distance', 'n_neighbors': 11, 'metric': 'manhattan'}
+2026-01-23 18:49:13 - acoustic_sensing.discriminationanalysis - INFO -   Best params: {'weights': 'distance', 'n_neighbors': 11, 'metric': 'manhattan'}
+2026-01-23 18:49:13,504 - discriminationanalysis - INFO -   CV score (train): 0.7158
+2026-01-23 18:49:13 - acoustic_sensing.discriminationanalysis - INFO -   CV score (train): 0.7158
+2026-01-23 18:49:13,504 - discriminationanalysis - INFO -   Tuning score: 0.4898
+2026-01-23 18:49:13 - acoustic_sensing.discriminationanalysis - INFO -   Tuning score: 0.4898
+2026-01-23 18:49:14,009 - discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:49:14 - acoustic_sensing.discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:49:14,010 - discriminationanalysis - INFO -     Train Accuracy: 1.0000 | F1: 1.0000
+2026-01-23 18:49:14 - acoustic_sensing.discriminationanalysis - INFO -     Train Accuracy: 1.0000 | F1: 1.0000
+2026-01-23 18:49:14,010 - discriminationanalysis - INFO -     Tuning Accuracy: 0.4898 | F1: 0.4759
+2026-01-23 18:49:14 - acoustic_sensing.discriminationanalysis - INFO -     Tuning Accuracy: 0.4898 | F1: 0.4759
+2026-01-23 18:49:14,010 - discriminationanalysis - INFO -     Test Accuracy: 0.3300 | F1: 0.2352
+2026-01-23 18:49:14 - acoustic_sensing.discriminationanalysis - INFO -     Test Accuracy: 0.3300 | F1: 0.2352
+2026-01-23 18:49:14,010 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:49:14 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:49:14,010 - discriminationanalysis - INFO - Training: Logistic Regression
+2026-01-23 18:49:14 - acoustic_sensing.discriminationanalysis - INFO - Training: Logistic Regression
+2026-01-23 18:49:14,010 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:49:14 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:49:14,010 - discriminationanalysis - INFO -   Tuning hyperparameters with RandomizedSearchCV (20 iterations)...
+2026-01-23 18:49:14 - acoustic_sensing.discriminationanalysis - INFO -   Tuning hyperparameters with RandomizedSearchCV (20 iterations)...
+2026-01-23 18:49:24,555 - discriminationanalysis - INFO -   Best params: {'solver': 'lbfgs', 'penalty': 'l2', 'max_iter': 1000, 'C': 100}
+2026-01-23 18:49:24 - acoustic_sensing.discriminationanalysis - INFO -   Best params: {'solver': 'lbfgs', 'penalty': 'l2', 'max_iter': 1000, 'C': 100}
+2026-01-23 18:49:24,556 - discriminationanalysis - INFO -   CV score (train): 0.7378
+2026-01-23 18:49:24 - acoustic_sensing.discriminationanalysis - INFO -   CV score (train): 0.7378
+2026-01-23 18:49:24,556 - discriminationanalysis - INFO -   Tuning score: 0.3904
+2026-01-23 18:49:24 - acoustic_sensing.discriminationanalysis - INFO -   Tuning score: 0.3904
+2026-01-23 18:49:24,593 - discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:49:24 - acoustic_sensing.discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:49:24,594 - discriminationanalysis - INFO -     Train Accuracy: 0.7586 | F1: 0.7536
+2026-01-23 18:49:24 - acoustic_sensing.discriminationanalysis - INFO -     Train Accuracy: 0.7586 | F1: 0.7536
+2026-01-23 18:49:24,594 - discriminationanalysis - INFO -     Tuning Accuracy: 0.3904 | F1: 0.2756
+2026-01-23 18:49:24 - acoustic_sensing.discriminationanalysis - INFO -     Tuning Accuracy: 0.3904 | F1: 0.2756
+2026-01-23 18:49:24,594 - discriminationanalysis - INFO -     Test Accuracy: 0.3985 | F1: 0.2633
+2026-01-23 18:49:24 - acoustic_sensing.discriminationanalysis - INFO -     Test Accuracy: 0.3985 | F1: 0.2633
+2026-01-23 18:49:24,594 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:49:24 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:49:24,594 - discriminationanalysis - INFO - Training: Gradient Boosting
+2026-01-23 18:49:24 - acoustic_sensing.discriminationanalysis - INFO - Training: Gradient Boosting
+2026-01-23 18:49:24,594 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:49:24 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:49:24,594 - discriminationanalysis - INFO -   Tuning hyperparameters with RandomizedSearchCV (20 iterations)...
+2026-01-23 18:49:24 - acoustic_sensing.discriminationanalysis - INFO -   Tuning hyperparameters with RandomizedSearchCV (20 iterations)...
+2026-01-23 18:51:25,795 - discriminationanalysis - INFO -   Best params: {'subsample': 1.0, 'n_estimators': 100, 'min_samples_split': 2, 'max_depth': 7, 'learning_rate': 0.2}
+2026-01-23 18:51:25 - acoustic_sensing.discriminationanalysis - INFO -   Best params: {'subsample': 1.0, 'n_estimators': 100, 'min_samples_split': 2, 'max_depth': 7, 'learning_rate': 0.2}
+2026-01-23 18:51:25,795 - discriminationanalysis - INFO -   CV score (train): 0.8568
+2026-01-23 18:51:25 - acoustic_sensing.discriminationanalysis - INFO -   CV score (train): 0.8568
+2026-01-23 18:51:25,795 - discriminationanalysis - INFO -   Tuning score: 0.5593
+2026-01-23 18:51:25 - acoustic_sensing.discriminationanalysis - INFO -   Tuning score: 0.5593
+2026-01-23 18:51:25,824 - discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:51:25 - acoustic_sensing.discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:51:25,824 - discriminationanalysis - INFO -     Train Accuracy: 1.0000 | F1: 1.0000
+2026-01-23 18:51:25 - acoustic_sensing.discriminationanalysis - INFO -     Train Accuracy: 1.0000 | F1: 1.0000
+2026-01-23 18:51:25,824 - discriminationanalysis - INFO -     Tuning Accuracy: 0.5593 | F1: 0.5454
+2026-01-23 18:51:25 - acoustic_sensing.discriminationanalysis - INFO -     Tuning Accuracy: 0.5593 | F1: 0.5454
+2026-01-23 18:51:25,824 - discriminationanalysis - INFO -     Test Accuracy: 0.4146 | F1: 0.2630
+2026-01-23 18:51:25 - acoustic_sensing.discriminationanalysis - INFO -     Test Accuracy: 0.4146 | F1: 0.2630
+2026-01-23 18:51:25,824 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:51:25 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:51:25,824 - discriminationanalysis - INFO - Training: Extra Trees
+2026-01-23 18:51:25 - acoustic_sensing.discriminationanalysis - INFO - Training: Extra Trees
+2026-01-23 18:51:25,824 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:51:25 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:51:25,824 - discriminationanalysis - INFO -   Tuning hyperparameters with RandomizedSearchCV (20 iterations)...
+2026-01-23 18:51:25 - acoustic_sensing.discriminationanalysis - INFO -   Tuning hyperparameters with RandomizedSearchCV (20 iterations)...
+2026-01-23 18:51:29,816 - discriminationanalysis - INFO -   Best params: {'n_estimators': 200, 'min_samples_split': 5, 'min_samples_leaf': 2, 'max_depth': None}
+2026-01-23 18:51:29 - acoustic_sensing.discriminationanalysis - INFO -   Best params: {'n_estimators': 200, 'min_samples_split': 5, 'min_samples_leaf': 2, 'max_depth': None}
+2026-01-23 18:51:29,816 - discriminationanalysis - INFO -   CV score (train): 0.8356
+2026-01-23 18:51:29 - acoustic_sensing.discriminationanalysis - INFO -   CV score (train): 0.8356
+2026-01-23 18:51:29,816 - discriminationanalysis - INFO -   Tuning score: 0.5094
+2026-01-23 18:51:29 - acoustic_sensing.discriminationanalysis - INFO -   Tuning score: 0.5094
+2026-01-23 18:51:29,994 - discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:51:29 - acoustic_sensing.discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:51:29,994 - discriminationanalysis - INFO -     Train Accuracy: 1.0000 | F1: 1.0000
+2026-01-23 18:51:29 - acoustic_sensing.discriminationanalysis - INFO -     Train Accuracy: 1.0000 | F1: 1.0000
+2026-01-23 18:51:29,994 - discriminationanalysis - INFO -     Tuning Accuracy: 0.5094 | F1: 0.4906
+2026-01-23 18:51:29 - acoustic_sensing.discriminationanalysis - INFO -     Tuning Accuracy: 0.5094 | F1: 0.4906
+2026-01-23 18:51:29,994 - discriminationanalysis - INFO -     Test Accuracy: 0.3824 | F1: 0.2497
+2026-01-23 18:51:29 - acoustic_sensing.discriminationanalysis - INFO -     Test Accuracy: 0.3824 | F1: 0.2497
+2026-01-23 18:51:29,994 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:51:29 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:51:29,994 - discriminationanalysis - INFO - Training: AdaBoost
+2026-01-23 18:51:29 - acoustic_sensing.discriminationanalysis - INFO - Training: AdaBoost
+2026-01-23 18:51:29,994 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:51:29 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:51:29,994 - discriminationanalysis - INFO -   No hyperparameter search space defined for AdaBoost, using default parameters
+2026-01-23 18:51:29 - acoustic_sensing.discriminationanalysis - INFO -   No hyperparameter search space defined for AdaBoost, using default parameters
+2026-01-23 18:51:34,309 - discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:51:34 - acoustic_sensing.discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:51:34,309 - discriminationanalysis - INFO -     Train Accuracy: 0.8399 | F1: 0.8368
+2026-01-23 18:51:34 - acoustic_sensing.discriminationanalysis - INFO -     Train Accuracy: 0.8399 | F1: 0.8368
+2026-01-23 18:51:34,309 - discriminationanalysis - INFO -     Tuning Accuracy: 0.5872 | F1: 0.5680
+2026-01-23 18:51:34 - acoustic_sensing.discriminationanalysis - INFO -     Tuning Accuracy: 0.5872 | F1: 0.5680
+2026-01-23 18:51:34,309 - discriminationanalysis - INFO -     Test Accuracy: 0.3496 | F1: 0.2317
+2026-01-23 18:51:34 - acoustic_sensing.discriminationanalysis - INFO -     Test Accuracy: 0.3496 | F1: 0.2317
+2026-01-23 18:51:34,309 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:51:34 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:51:34,309 - discriminationanalysis - INFO - Training: XGBoost
+2026-01-23 18:51:34 - acoustic_sensing.discriminationanalysis - INFO - Training: XGBoost
+2026-01-23 18:51:34,309 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:51:34 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:51:34,309 - discriminationanalysis - INFO -   Tuning hyperparameters with RandomizedSearchCV (20 iterations)...
+2026-01-23 18:51:34 - acoustic_sensing.discriminationanalysis - INFO -   Tuning hyperparameters with RandomizedSearchCV (20 iterations)...
+2026-01-23 18:51:35,487 - discriminationanalysis - WARNING -   ⚠ Failed to train XGBoost: Invalid parameter 'subsample' for estimator XGBoostWrapper(). Valid parameters are: ['eval_metric', 'n_estimators', 'random_state'].
+2026-01-23 18:51:35 - acoustic_sensing.discriminationanalysis - WARNING -   ⚠ Failed to train XGBoost: Invalid parameter 'subsample' for estimator XGBoostWrapper(). Valid parameters are: ['eval_metric', 'n_estimators', 'random_state'].
+2026-01-23 18:51:35,487 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:51:35 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:51:35,487 - discriminationanalysis - INFO - Training: Naive Bayes
+2026-01-23 18:51:35 - acoustic_sensing.discriminationanalysis - INFO - Training: Naive Bayes
+2026-01-23 18:51:35,487 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:51:35 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:51:35,487 - discriminationanalysis - INFO -   No hyperparameter search space defined for Naive Bayes, using default parameters
+2026-01-23 18:51:35 - acoustic_sensing.discriminationanalysis - INFO -   No hyperparameter search space defined for Naive Bayes, using default parameters
+2026-01-23 18:51:35,506 - discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:51:35 - acoustic_sensing.discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:51:35,506 - discriminationanalysis - INFO -     Train Accuracy: 0.5135 | F1: 0.5040
+2026-01-23 18:51:35 - acoustic_sensing.discriminationanalysis - INFO -     Train Accuracy: 0.5135 | F1: 0.5040
+2026-01-23 18:51:35,506 - discriminationanalysis - INFO -     Tuning Accuracy: 0.5533 | F1: 0.5206
+2026-01-23 18:51:35 - acoustic_sensing.discriminationanalysis - INFO -     Tuning Accuracy: 0.5533 | F1: 0.5206
+2026-01-23 18:51:35,506 - discriminationanalysis - INFO -     Test Accuracy: 0.0393 | F1: 0.0398
+2026-01-23 18:51:35 - acoustic_sensing.discriminationanalysis - INFO -     Test Accuracy: 0.0393 | F1: 0.0398
+2026-01-23 18:51:35,506 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:51:35 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:51:35,506 - discriminationanalysis - INFO - Training: Quadratic Discriminant Analysis
+2026-01-23 18:51:35 - acoustic_sensing.discriminationanalysis - INFO - Training: Quadratic Discriminant Analysis
+2026-01-23 18:51:35,506 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:51:35 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:51:35,506 - discriminationanalysis - INFO -   No hyperparameter search space defined for Quadratic Discriminant Analysis, using default parameters
+2026-01-23 18:51:35 - acoustic_sensing.discriminationanalysis - INFO -   No hyperparameter search space defined for Quadratic Discriminant Analysis, using default parameters
+2026-01-23 18:51:35,665 - discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:51:35 - acoustic_sensing.discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:51:35,665 - discriminationanalysis - INFO -     Train Accuracy: 0.7495 | F1: 0.7520
+2026-01-23 18:51:35 - acoustic_sensing.discriminationanalysis - INFO -     Train Accuracy: 0.7495 | F1: 0.7520
+2026-01-23 18:51:35,665 - discriminationanalysis - INFO -     Tuning Accuracy: 0.5573 | F1: 0.5479
+2026-01-23 18:51:35 - acoustic_sensing.discriminationanalysis - INFO -     Tuning Accuracy: 0.5573 | F1: 0.5479
+2026-01-23 18:51:35,665 - discriminationanalysis - INFO -     Test Accuracy: 0.3496 | F1: 0.2358
+2026-01-23 18:51:35 - acoustic_sensing.discriminationanalysis - INFO -     Test Accuracy: 0.3496 | F1: 0.2358
+2026-01-23 18:51:35,665 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:51:35 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:51:35,665 - discriminationanalysis - INFO - Training: MLP (Small)
+2026-01-23 18:51:35 - acoustic_sensing.discriminationanalysis - INFO - Training: MLP (Small)
+2026-01-23 18:51:35,665 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:51:35 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:51:35,665 - discriminationanalysis - INFO -   No hyperparameter search space defined for MLP (Small), using default parameters
+2026-01-23 18:51:35 - acoustic_sensing.discriminationanalysis - INFO -   No hyperparameter search space defined for MLP (Small), using default parameters
+2026-01-23 18:51:37,297 - discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:51:37 - acoustic_sensing.discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:51:37,297 - discriminationanalysis - INFO -     Train Accuracy: 0.9289 | F1: 0.9279
+2026-01-23 18:51:37 - acoustic_sensing.discriminationanalysis - INFO -     Train Accuracy: 0.9289 | F1: 0.9279
+2026-01-23 18:51:37,297 - discriminationanalysis - INFO -     Tuning Accuracy: 0.4503 | F1: 0.3870
+2026-01-23 18:51:37 - acoustic_sensing.discriminationanalysis - INFO -     Tuning Accuracy: 0.4503 | F1: 0.3870
+2026-01-23 18:51:37,297 - discriminationanalysis - INFO -     Test Accuracy: 0.1945 | F1: 0.1465
+2026-01-23 18:51:37 - acoustic_sensing.discriminationanalysis - INFO -     Test Accuracy: 0.1945 | F1: 0.1465
+2026-01-23 18:51:37,297 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:51:37 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:51:37,297 - discriminationanalysis - INFO - Training: MLP (Medium)
+2026-01-23 18:51:37 - acoustic_sensing.discriminationanalysis - INFO - Training: MLP (Medium)
+2026-01-23 18:51:37,297 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:51:37 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:51:37,297 - discriminationanalysis - INFO -   No hyperparameter search space defined for MLP (Medium), using default parameters
+2026-01-23 18:51:37 - acoustic_sensing.discriminationanalysis - INFO -   No hyperparameter search space defined for MLP (Medium), using default parameters
+2026-01-23 18:51:41,178 - discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:51:41 - acoustic_sensing.discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:51:41,179 - discriminationanalysis - INFO -     Train Accuracy: 0.9125 | F1: 0.9117
+2026-01-23 18:51:41 - acoustic_sensing.discriminationanalysis - INFO -     Train Accuracy: 0.9125 | F1: 0.9117
+2026-01-23 18:51:41,179 - discriminationanalysis - INFO -     Tuning Accuracy: 0.5058 | F1: 0.4937
+2026-01-23 18:51:41 - acoustic_sensing.discriminationanalysis - INFO -     Tuning Accuracy: 0.5058 | F1: 0.4937
+2026-01-23 18:51:41,179 - discriminationanalysis - INFO -     Test Accuracy: 0.1683 | F1: 0.1300
+2026-01-23 18:51:41 - acoustic_sensing.discriminationanalysis - INFO -     Test Accuracy: 0.1683 | F1: 0.1300
+2026-01-23 18:51:41,179 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:51:41 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:51:41,179 - discriminationanalysis - INFO - Training: MLP (Large)
+2026-01-23 18:51:41 - acoustic_sensing.discriminationanalysis - INFO - Training: MLP (Large)
+2026-01-23 18:51:41,179 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:51:41 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:51:41,179 - discriminationanalysis - INFO -   No hyperparameter search space defined for MLP (Large), using default parameters
+2026-01-23 18:51:41 - acoustic_sensing.discriminationanalysis - INFO -   No hyperparameter search space defined for MLP (Large), using default parameters
+2026-01-23 18:52:04,070 - discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:52:04 - acoustic_sensing.discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:52:04,070 - discriminationanalysis - INFO -     Train Accuracy: 0.9648 | F1: 0.9647
+2026-01-23 18:52:04 - acoustic_sensing.discriminationanalysis - INFO -     Train Accuracy: 0.9648 | F1: 0.9647
+2026-01-23 18:52:04,070 - discriminationanalysis - INFO -     Tuning Accuracy: 0.4938 | F1: 0.4762
+2026-01-23 18:52:04 - acoustic_sensing.discriminationanalysis - INFO -     Tuning Accuracy: 0.4938 | F1: 0.4762
+2026-01-23 18:52:04,070 - discriminationanalysis - INFO -     Test Accuracy: 0.3703 | F1: 0.2453
+2026-01-23 18:52:04 - acoustic_sensing.discriminationanalysis - INFO -     Test Accuracy: 0.3703 | F1: 0.2453
+2026-01-23 18:52:04,070 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:52:04 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:52:04,070 - discriminationanalysis - INFO - Training: MLP (Medium-HighReg)
+2026-01-23 18:52:04 - acoustic_sensing.discriminationanalysis - INFO - Training: MLP (Medium-HighReg)
+2026-01-23 18:52:04,070 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:52:04 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:52:04,070 - discriminationanalysis - INFO -   No hyperparameter search space defined for MLP (Medium-HighReg), using default parameters
+2026-01-23 18:52:04 - acoustic_sensing.discriminationanalysis - INFO -   No hyperparameter search space defined for MLP (Medium-HighReg), using default parameters
+2026-01-23 18:52:08,811 - discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:52:08 - acoustic_sensing.discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:52:08,811 - discriminationanalysis - INFO -     Train Accuracy: 0.9277 | F1: 0.9276
+2026-01-23 18:52:08 - acoustic_sensing.discriminationanalysis - INFO -     Train Accuracy: 0.9277 | F1: 0.9276
+2026-01-23 18:52:08,811 - discriminationanalysis - INFO -     Tuning Accuracy: 0.4974 | F1: 0.4828
+2026-01-23 18:52:08 - acoustic_sensing.discriminationanalysis - INFO -     Tuning Accuracy: 0.4974 | F1: 0.4828
+2026-01-23 18:52:08,811 - discriminationanalysis - INFO -     Test Accuracy: 0.2040 | F1: 0.1542
+2026-01-23 18:52:08 - acoustic_sensing.discriminationanalysis - INFO -     Test Accuracy: 0.2040 | F1: 0.1542
+2026-01-23 18:52:08,811 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:52:08 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:52:08,811 - discriminationanalysis - INFO - Training: MLP (Wide)
+2026-01-23 18:52:08 - acoustic_sensing.discriminationanalysis - INFO - Training: MLP (Wide)
+2026-01-23 18:52:08,811 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:52:08 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:52:08,811 - discriminationanalysis - INFO -   No hyperparameter search space defined for MLP (Wide), using default parameters
+2026-01-23 18:52:08 - acoustic_sensing.discriminationanalysis - INFO -   No hyperparameter search space defined for MLP (Wide), using default parameters
+2026-01-23 18:52:15,893 - discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:52:15 - acoustic_sensing.discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:52:15,893 - discriminationanalysis - INFO -     Train Accuracy: 0.9163 | F1: 0.9153
+2026-01-23 18:52:15 - acoustic_sensing.discriminationanalysis - INFO -     Train Accuracy: 0.9163 | F1: 0.9153
+2026-01-23 18:52:15,893 - discriminationanalysis - INFO -     Tuning Accuracy: 0.5277 | F1: 0.5261
+2026-01-23 18:52:15 - acoustic_sensing.discriminationanalysis - INFO -     Tuning Accuracy: 0.5277 | F1: 0.5261
+2026-01-23 18:52:15,894 - discriminationanalysis - INFO -     Test Accuracy: 0.1139 | F1: 0.0941
+2026-01-23 18:52:15 - acoustic_sensing.discriminationanalysis - INFO -     Test Accuracy: 0.1139 | F1: 0.0941
+2026-01-23 18:52:15,894 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:52:15 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:52:15,894 - discriminationanalysis - INFO - Training: MLP (Deep-Narrow)
+2026-01-23 18:52:15 - acoustic_sensing.discriminationanalysis - INFO - Training: MLP (Deep-Narrow)
+2026-01-23 18:52:15,894 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:52:15 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:52:15,894 - discriminationanalysis - INFO -   No hyperparameter search space defined for MLP (Deep-Narrow), using default parameters
+2026-01-23 18:52:15 - acoustic_sensing.discriminationanalysis - INFO -   No hyperparameter search space defined for MLP (Deep-Narrow), using default parameters
+2026-01-23 18:52:20,423 - discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:52:20 - acoustic_sensing.discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:52:20,423 - discriminationanalysis - INFO -     Train Accuracy: 0.9593 | F1: 0.9590
+2026-01-23 18:52:20 - acoustic_sensing.discriminationanalysis - INFO -     Train Accuracy: 0.9593 | F1: 0.9590
+2026-01-23 18:52:20,423 - discriminationanalysis - INFO -     Tuning Accuracy: 0.5337 | F1: 0.5261
+2026-01-23 18:52:20 - acoustic_sensing.discriminationanalysis - INFO -     Tuning Accuracy: 0.5337 | F1: 0.5261
+2026-01-23 18:52:20,423 - discriminationanalysis - INFO -     Test Accuracy: 0.2574 | F1: 0.1842
+2026-01-23 18:52:20 - acoustic_sensing.discriminationanalysis - INFO -     Test Accuracy: 0.2574 | F1: 0.1842
+2026-01-23 18:52:20,423 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:52:20 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:52:20,423 - discriminationanalysis - INFO - Training: Linear Discriminant Analysis
+2026-01-23 18:52:20 - acoustic_sensing.discriminationanalysis - INFO - Training: Linear Discriminant Analysis
+2026-01-23 18:52:20,424 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:52:20 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:52:20,424 - discriminationanalysis - INFO -   No hyperparameter search space defined for Linear Discriminant Analysis, using default parameters
+2026-01-23 18:52:20 - acoustic_sensing.discriminationanalysis - INFO -   No hyperparameter search space defined for Linear Discriminant Analysis, using default parameters
+2026-01-23 18:52:20,637 - discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:52:20 - acoustic_sensing.discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:52:20,637 - discriminationanalysis - INFO -     Train Accuracy: 0.7319 | F1: 0.7199
+2026-01-23 18:52:20 - acoustic_sensing.discriminationanalysis - INFO -     Train Accuracy: 0.7319 | F1: 0.7199
+2026-01-23 18:52:20,637 - discriminationanalysis - INFO -     Tuning Accuracy: 0.3784 | F1: 0.2349
+2026-01-23 18:52:20 - acoustic_sensing.discriminationanalysis - INFO -     Tuning Accuracy: 0.3784 | F1: 0.2349
+2026-01-23 18:52:20,637 - discriminationanalysis - INFO -     Test Accuracy: 0.3940 | F1: 0.2574
+2026-01-23 18:52:20 - acoustic_sensing.discriminationanalysis - INFO -     Test Accuracy: 0.3940 | F1: 0.2574
+2026-01-23 18:52:20,637 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:52:20 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:52:20,637 - discriminationanalysis - INFO - Training: Ensemble (RF + SVM)
+2026-01-23 18:52:20 - acoustic_sensing.discriminationanalysis - INFO - Training: Ensemble (RF + SVM)
+2026-01-23 18:52:20,637 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:52:20 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:52:20,637 - discriminationanalysis - INFO -   No hyperparameter search space defined for Ensemble (RF + SVM), using default parameters
+2026-01-23 18:52:20 - acoustic_sensing.discriminationanalysis - INFO -   No hyperparameter search space defined for Ensemble (RF + SVM), using default parameters
+2026-01-23 18:52:30,089 - discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:52:30 - acoustic_sensing.discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:52:30,089 - discriminationanalysis - INFO -     Train Accuracy: 0.9848 | F1: 0.9848
+2026-01-23 18:52:30 - acoustic_sensing.discriminationanalysis - INFO -     Train Accuracy: 0.9848 | F1: 0.9848
+2026-01-23 18:52:30,089 - discriminationanalysis - INFO -     Tuning Accuracy: 0.4615 | F1: 0.4193
+2026-01-23 18:52:30 - acoustic_sensing.discriminationanalysis - INFO -     Tuning Accuracy: 0.4615 | F1: 0.4193
+2026-01-23 18:52:30,089 - discriminationanalysis - INFO -     Test Accuracy: 0.1078 | F1: 0.0874
+2026-01-23 18:52:30 - acoustic_sensing.discriminationanalysis - INFO -     Test Accuracy: 0.1078 | F1: 0.0874
+2026-01-23 18:52:30,089 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:52:30 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:52:30,089 - discriminationanalysis - INFO - Training: PCA+XGBoost
+2026-01-23 18:52:30 - acoustic_sensing.discriminationanalysis - INFO - Training: PCA+XGBoost
+2026-01-23 18:52:30,089 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:52:30 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:52:30,089 - discriminationanalysis - INFO -   No hyperparameter search space defined for PCA+XGBoost, using default parameters
+2026-01-23 18:52:30 - acoustic_sensing.discriminationanalysis - INFO -   No hyperparameter search space defined for PCA+XGBoost, using default parameters
+2026-01-23 18:52:30,503 - discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:52:30 - acoustic_sensing.discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:52:30,503 - discriminationanalysis - INFO -     Train Accuracy: 0.9994 | F1: 0.9994
+2026-01-23 18:52:30 - acoustic_sensing.discriminationanalysis - INFO -     Train Accuracy: 0.9994 | F1: 0.9994
+2026-01-23 18:52:30,503 - discriminationanalysis - INFO -     Tuning Accuracy: 0.5146 | F1: 0.4837
+2026-01-23 18:52:30 - acoustic_sensing.discriminationanalysis - INFO -     Tuning Accuracy: 0.5146 | F1: 0.4837
+2026-01-23 18:52:30,503 - discriminationanalysis - INFO -     Test Accuracy: 0.2912 | F1: 0.2046
+2026-01-23 18:52:30 - acoustic_sensing.discriminationanalysis - INFO -     Test Accuracy: 0.2912 | F1: 0.2046
+2026-01-23 18:52:30,503 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:52:30 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:52:30,503 - discriminationanalysis - INFO - Training: PCA+RandomForest
+2026-01-23 18:52:30 - acoustic_sensing.discriminationanalysis - INFO - Training: PCA+RandomForest
+2026-01-23 18:52:30,503 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:52:30 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:52:30,503 - discriminationanalysis - INFO -   No hyperparameter search space defined for PCA+RandomForest, using default parameters
+2026-01-23 18:52:30 - acoustic_sensing.discriminationanalysis - INFO -   No hyperparameter search space defined for PCA+RandomForest, using default parameters
+2026-01-23 18:52:32,688 - discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:52:32 - acoustic_sensing.discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:52:32,688 - discriminationanalysis - INFO -     Train Accuracy: 1.0000 | F1: 1.0000
+2026-01-23 18:52:32 - acoustic_sensing.discriminationanalysis - INFO -     Train Accuracy: 1.0000 | F1: 1.0000
+2026-01-23 18:52:32,688 - discriminationanalysis - INFO -     Tuning Accuracy: 0.4950 | F1: 0.4413
+2026-01-23 18:52:32 - acoustic_sensing.discriminationanalysis - INFO -     Tuning Accuracy: 0.4950 | F1: 0.4413
+2026-01-23 18:52:32,688 - discriminationanalysis - INFO -     Test Accuracy: 0.3668 | F1: 0.2436
+2026-01-23 18:52:32 - acoustic_sensing.discriminationanalysis - INFO -     Test Accuracy: 0.3668 | F1: 0.2436
+2026-01-23 18:52:32,689 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:52:32 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:52:32,689 - discriminationanalysis - INFO - Training: PCA+GradientBoosting
+2026-01-23 18:52:32 - acoustic_sensing.discriminationanalysis - INFO - Training: PCA+GradientBoosting
+2026-01-23 18:52:32,689 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:52:32 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:52:32,689 - discriminationanalysis - INFO -   No hyperparameter search space defined for PCA+GradientBoosting, using default parameters
+2026-01-23 18:52:32 - acoustic_sensing.discriminationanalysis - INFO -   No hyperparameter search space defined for PCA+GradientBoosting, using default parameters
+2026-01-23 18:52:37,675 - discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:52:37 - acoustic_sensing.discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:52:37,675 - discriminationanalysis - INFO -     Train Accuracy: 0.7552 | F1: 0.7381
+2026-01-23 18:52:37 - acoustic_sensing.discriminationanalysis - INFO -     Train Accuracy: 0.7552 | F1: 0.7381
+2026-01-23 18:52:37,675 - discriminationanalysis - INFO -     Tuning Accuracy: 0.5405 | F1: 0.5043
+2026-01-23 18:52:37 - acoustic_sensing.discriminationanalysis - INFO -     Tuning Accuracy: 0.5405 | F1: 0.5043
+2026-01-23 18:52:37,675 - discriminationanalysis - INFO -     Test Accuracy: 0.2957 | F1: 0.2077
+2026-01-23 18:52:37 - acoustic_sensing.discriminationanalysis - INFO -     Test Accuracy: 0.2957 | F1: 0.2077
+2026-01-23 18:52:37,675 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:52:37 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:52:37,675 - discriminationanalysis - INFO - Training: PCA+MLP(Medium)
+2026-01-23 18:52:37 - acoustic_sensing.discriminationanalysis - INFO - Training: PCA+MLP(Medium)
+2026-01-23 18:52:37,675 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:52:37 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:52:37,675 - discriminationanalysis - INFO -   No hyperparameter search space defined for PCA+MLP(Medium), using default parameters
+2026-01-23 18:52:37 - acoustic_sensing.discriminationanalysis - INFO -   No hyperparameter search space defined for PCA+MLP(Medium), using default parameters
+2026-01-23 18:52:43,360 - discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:52:43 - acoustic_sensing.discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:52:43,360 - discriminationanalysis - INFO -     Train Accuracy: 0.9677 | F1: 0.9677
+2026-01-23 18:52:43 - acoustic_sensing.discriminationanalysis - INFO -     Train Accuracy: 0.9677 | F1: 0.9677
+2026-01-23 18:52:43,360 - discriminationanalysis - INFO -     Tuning Accuracy: 0.6008 | F1: 0.6069
+2026-01-23 18:52:43 - acoustic_sensing.discriminationanalysis - INFO -     Tuning Accuracy: 0.6008 | F1: 0.6069
+2026-01-23 18:52:43,360 - discriminationanalysis - INFO -     Test Accuracy: 0.3894 | F1: 0.2633
+2026-01-23 18:52:43 - acoustic_sensing.discriminationanalysis - INFO -     Test Accuracy: 0.3894 | F1: 0.2633
+2026-01-23 18:52:43,360 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:52:43 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:52:43,360 - discriminationanalysis - INFO - Training: PCA+MLP(Large)
+2026-01-23 18:52:43 - acoustic_sensing.discriminationanalysis - INFO - Training: PCA+MLP(Large)
+2026-01-23 18:52:43,360 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:52:43 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:52:43,360 - discriminationanalysis - INFO -   No hyperparameter search space defined for PCA+MLP(Large), using default parameters
+2026-01-23 18:52:43 - acoustic_sensing.discriminationanalysis - INFO -   No hyperparameter search space defined for PCA+MLP(Large), using default parameters
+2026-01-23 18:52:55,128 - discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:52:55 - acoustic_sensing.discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:52:55,129 - discriminationanalysis - INFO -     Train Accuracy: 0.9273 | F1: 0.9265
+2026-01-23 18:52:55 - acoustic_sensing.discriminationanalysis - INFO -     Train Accuracy: 0.9273 | F1: 0.9265
+2026-01-23 18:52:55,129 - discriminationanalysis - INFO -     Tuning Accuracy: 0.6128 | F1: 0.6191
+2026-01-23 18:52:55 - acoustic_sensing.discriminationanalysis - INFO -     Tuning Accuracy: 0.6128 | F1: 0.6191
+2026-01-23 18:52:55,129 - discriminationanalysis - INFO -     Test Accuracy: 0.3950 | F1: 0.2631
+2026-01-23 18:52:55 - acoustic_sensing.discriminationanalysis - INFO -     Test Accuracy: 0.3950 | F1: 0.2631
+2026-01-23 18:52:55,129 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:52:55 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:52:55,129 - discriminationanalysis - INFO - Training: PCA+ExtraTrees
+2026-01-23 18:52:55 - acoustic_sensing.discriminationanalysis - INFO - Training: PCA+ExtraTrees
+2026-01-23 18:52:55,129 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:52:55 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:52:55,129 - discriminationanalysis - INFO -   No hyperparameter search space defined for PCA+ExtraTrees, using default parameters
+2026-01-23 18:52:55 - acoustic_sensing.discriminationanalysis - INFO -   No hyperparameter search space defined for PCA+ExtraTrees, using default parameters
+2026-01-23 18:52:55,837 - discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:52:55 - acoustic_sensing.discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:52:55,837 - discriminationanalysis - INFO -     Train Accuracy: 1.0000 | F1: 1.0000
+2026-01-23 18:52:55 - acoustic_sensing.discriminationanalysis - INFO -     Train Accuracy: 1.0000 | F1: 1.0000
+2026-01-23 18:52:55,837 - discriminationanalysis - INFO -     Tuning Accuracy: 0.4774 | F1: 0.4107
+2026-01-23 18:52:55 - acoustic_sensing.discriminationanalysis - INFO -     Tuning Accuracy: 0.4774 | F1: 0.4107
+2026-01-23 18:52:55,837 - discriminationanalysis - INFO -     Test Accuracy: 0.3662 | F1: 0.2412
+2026-01-23 18:52:55 - acoustic_sensing.discriminationanalysis - INFO -     Test Accuracy: 0.3662 | F1: 0.2412
+2026-01-23 18:52:55,837 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:52:55 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:52:55,837 - discriminationanalysis - INFO - Training: PCA90+MLP(Medium)
+2026-01-23 18:52:55 - acoustic_sensing.discriminationanalysis - INFO - Training: PCA90+MLP(Medium)
+2026-01-23 18:52:55,837 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:52:55 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:52:55,837 - discriminationanalysis - INFO -   No hyperparameter search space defined for PCA90+MLP(Medium), using default parameters
+2026-01-23 18:52:55 - acoustic_sensing.discriminationanalysis - INFO -   No hyperparameter search space defined for PCA90+MLP(Medium), using default parameters
+2026-01-23 18:53:01,091 - discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:53:01 - acoustic_sensing.discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:53:01,091 - discriminationanalysis - INFO -     Train Accuracy: 0.9005 | F1: 0.9000
+2026-01-23 18:53:01 - acoustic_sensing.discriminationanalysis - INFO -     Train Accuracy: 0.9005 | F1: 0.9000
+2026-01-23 18:53:01,091 - discriminationanalysis - INFO -     Tuning Accuracy: 0.5062 | F1: 0.4613
+2026-01-23 18:53:01 - acoustic_sensing.discriminationanalysis - INFO -     Tuning Accuracy: 0.5062 | F1: 0.4613
+2026-01-23 18:53:01,091 - discriminationanalysis - INFO -     Test Accuracy: 0.4423 | F1: 0.2821
+2026-01-23 18:53:01 - acoustic_sensing.discriminationanalysis - INFO -     Test Accuracy: 0.4423 | F1: 0.2821
+2026-01-23 18:53:01,091 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:53:01 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:53:01,091 - discriminationanalysis - INFO - Training: PCA99+MLP(Medium)
+2026-01-23 18:53:01 - acoustic_sensing.discriminationanalysis - INFO - Training: PCA99+MLP(Medium)
+2026-01-23 18:53:01,091 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:53:01 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:53:01,091 - discriminationanalysis - INFO -   No hyperparameter search space defined for PCA99+MLP(Medium), using default parameters
+2026-01-23 18:53:01 - acoustic_sensing.discriminationanalysis - INFO -   No hyperparameter search space defined for PCA99+MLP(Medium), using default parameters
+2026-01-23 18:53:04,725 - discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:53:04 - acoustic_sensing.discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:53:04,726 - discriminationanalysis - INFO -     Train Accuracy: 0.9515 | F1: 0.9515
+2026-01-23 18:53:04 - acoustic_sensing.discriminationanalysis - INFO -     Train Accuracy: 0.9515 | F1: 0.9515
+2026-01-23 18:53:04,726 - discriminationanalysis - INFO -     Tuning Accuracy: 0.5609 | F1: 0.5622
+2026-01-23 18:53:04 - acoustic_sensing.discriminationanalysis - INFO -     Tuning Accuracy: 0.5609 | F1: 0.5622
+2026-01-23 18:53:04,726 - discriminationanalysis - INFO -     Test Accuracy: 0.1945 | F1: 0.1511
+2026-01-23 18:53:04 - acoustic_sensing.discriminationanalysis - INFO -     Test Accuracy: 0.1945 | F1: 0.1511
+2026-01-23 18:53:04,726 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:53:04 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:53:04,726 - discriminationanalysis - INFO - Training: PCA15+MLP(Medium)
+2026-01-23 18:53:04 - acoustic_sensing.discriminationanalysis - INFO - Training: PCA15+MLP(Medium)
+2026-01-23 18:53:04,726 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:53:04 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:53:04,726 - discriminationanalysis - INFO -   No hyperparameter search space defined for PCA15+MLP(Medium), using default parameters
+2026-01-23 18:53:04 - acoustic_sensing.discriminationanalysis - INFO -   No hyperparameter search space defined for PCA15+MLP(Medium), using default parameters
+2026-01-23 18:53:09,174 - discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:53:09 - acoustic_sensing.discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:53:09,175 - discriminationanalysis - INFO -     Train Accuracy: 0.8210 | F1: 0.8186
+2026-01-23 18:53:09 - acoustic_sensing.discriminationanalysis - INFO -     Train Accuracy: 0.8210 | F1: 0.8186
+2026-01-23 18:53:09,175 - discriminationanalysis - INFO -     Tuning Accuracy: 0.5485 | F1: 0.5164
+2026-01-23 18:53:09 - acoustic_sensing.discriminationanalysis - INFO -     Tuning Accuracy: 0.5485 | F1: 0.5164
+2026-01-23 18:53:09,175 - discriminationanalysis - INFO -     Test Accuracy: 0.4101 | F1: 0.2633
+2026-01-23 18:53:09 - acoustic_sensing.discriminationanalysis - INFO -     Test Accuracy: 0.4101 | F1: 0.2633
+2026-01-23 18:53:09,175 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:53:09 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:53:09,175 - discriminationanalysis - INFO - Training: PCA20+MLP(Medium)
+2026-01-23 18:53:09 - acoustic_sensing.discriminationanalysis - INFO - Training: PCA20+MLP(Medium)
+2026-01-23 18:53:09,175 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:53:09 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:53:09,175 - discriminationanalysis - INFO -   No hyperparameter search space defined for PCA20+MLP(Medium), using default parameters
+2026-01-23 18:53:09 - acoustic_sensing.discriminationanalysis - INFO -   No hyperparameter search space defined for PCA20+MLP(Medium), using default parameters
+2026-01-23 18:53:12,154 - discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:53:12 - acoustic_sensing.discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:53:12,154 - discriminationanalysis - INFO -     Train Accuracy: 0.8159 | F1: 0.8134
+2026-01-23 18:53:12 - acoustic_sensing.discriminationanalysis - INFO -     Train Accuracy: 0.8159 | F1: 0.8134
+2026-01-23 18:53:12,154 - discriminationanalysis - INFO -     Tuning Accuracy: 0.5401 | F1: 0.5000
+2026-01-23 18:53:12 - acoustic_sensing.discriminationanalysis - INFO -     Tuning Accuracy: 0.5401 | F1: 0.5000
+2026-01-23 18:53:12,155 - discriminationanalysis - INFO -     Test Accuracy: 0.4126 | F1: 0.2637
+2026-01-23 18:53:12 - acoustic_sensing.discriminationanalysis - INFO -     Test Accuracy: 0.4126 | F1: 0.2637
+2026-01-23 18:53:12,155 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:53:12 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:53:12,155 - discriminationanalysis - INFO - Training: PCA+MLP(HighReg)
+2026-01-23 18:53:12 - acoustic_sensing.discriminationanalysis - INFO - Training: PCA+MLP(HighReg)
+2026-01-23 18:53:12,155 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:53:12 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:53:12,155 - discriminationanalysis - INFO -   No hyperparameter search space defined for PCA+MLP(HighReg), using default parameters
+2026-01-23 18:53:12 - acoustic_sensing.discriminationanalysis - INFO -   No hyperparameter search space defined for PCA+MLP(HighReg), using default parameters
+2026-01-23 18:53:18,692 - discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:53:18 - acoustic_sensing.discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:53:18,693 - discriminationanalysis - INFO -     Train Accuracy: 0.9349 | F1: 0.9347
+2026-01-23 18:53:18 - acoustic_sensing.discriminationanalysis - INFO -     Train Accuracy: 0.9349 | F1: 0.9347
+2026-01-23 18:53:18,693 - discriminationanalysis - INFO -     Tuning Accuracy: 0.6279 | F1: 0.6346
+2026-01-23 18:53:18 - acoustic_sensing.discriminationanalysis - INFO -     Tuning Accuracy: 0.6279 | F1: 0.6346
+2026-01-23 18:53:18,693 - discriminationanalysis - INFO -     Test Accuracy: 0.3804 | F1: 0.2588
+2026-01-23 18:53:18 - acoustic_sensing.discriminationanalysis - INFO -     Test Accuracy: 0.3804 | F1: 0.2588
+2026-01-23 18:53:18,693 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:53:18 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:53:18,693 - discriminationanalysis - INFO - Training: PCA+MLP(Compact)
+2026-01-23 18:53:18 - acoustic_sensing.discriminationanalysis - INFO - Training: PCA+MLP(Compact)
+2026-01-23 18:53:18,693 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:53:18 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:53:18,693 - discriminationanalysis - INFO -   No hyperparameter search space defined for PCA+MLP(Compact), using default parameters
+2026-01-23 18:53:18 - acoustic_sensing.discriminationanalysis - INFO -   No hyperparameter search space defined for PCA+MLP(Compact), using default parameters
+2026-01-23 18:53:22,044 - discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:53:22 - acoustic_sensing.discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:53:22,044 - discriminationanalysis - INFO -     Train Accuracy: 0.9237 | F1: 0.9227
+2026-01-23 18:53:22 - acoustic_sensing.discriminationanalysis - INFO -     Train Accuracy: 0.9237 | F1: 0.9227
+2026-01-23 18:53:22,045 - discriminationanalysis - INFO -     Tuning Accuracy: 0.5661 | F1: 0.5666
+2026-01-23 18:53:22 - acoustic_sensing.discriminationanalysis - INFO -     Tuning Accuracy: 0.5661 | F1: 0.5666
+2026-01-23 18:53:22,045 - discriminationanalysis - INFO -     Test Accuracy: 0.3446 | F1: 0.2366
+2026-01-23 18:53:22 - acoustic_sensing.discriminationanalysis - INFO -     Test Accuracy: 0.3446 | F1: 0.2366
+2026-01-23 18:53:22,045 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:53:22 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:53:22,045 - discriminationanalysis - INFO - Training: PCA+MLP(Wide)
+2026-01-23 18:53:22 - acoustic_sensing.discriminationanalysis - INFO - Training: PCA+MLP(Wide)
+2026-01-23 18:53:22,045 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:53:22 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:53:22,045 - discriminationanalysis - INFO -   No hyperparameter search space defined for PCA+MLP(Wide), using default parameters
+2026-01-23 18:53:22 - acoustic_sensing.discriminationanalysis - INFO -   No hyperparameter search space defined for PCA+MLP(Wide), using default parameters
+2026-01-23 18:53:29,818 - discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:53:29 - acoustic_sensing.discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:53:29,818 - discriminationanalysis - INFO -     Train Accuracy: 0.9417 | F1: 0.9416
+2026-01-23 18:53:29 - acoustic_sensing.discriminationanalysis - INFO -     Train Accuracy: 0.9417 | F1: 0.9416
+2026-01-23 18:53:29,818 - discriminationanalysis - INFO -     Tuning Accuracy: 0.5972 | F1: 0.6027
+2026-01-23 18:53:29 - acoustic_sensing.discriminationanalysis - INFO -     Tuning Accuracy: 0.5972 | F1: 0.6027
+2026-01-23 18:53:29,819 - discriminationanalysis - INFO -     Test Accuracy: 0.3970 | F1: 0.2656
+2026-01-23 18:53:29 - acoustic_sensing.discriminationanalysis - INFO -     Test Accuracy: 0.3970 | F1: 0.2656
+2026-01-23 18:53:29,819 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:53:29 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:53:29,819 - discriminationanalysis - INFO - Training: PCA+MLP(DeepNarrow)
+2026-01-23 18:53:29 - acoustic_sensing.discriminationanalysis - INFO - Training: PCA+MLP(DeepNarrow)
+2026-01-23 18:53:29,819 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:53:29 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:53:29,819 - discriminationanalysis - INFO -   No hyperparameter search space defined for PCA+MLP(DeepNarrow), using default parameters
+2026-01-23 18:53:29 - acoustic_sensing.discriminationanalysis - INFO -   No hyperparameter search space defined for PCA+MLP(DeepNarrow), using default parameters
+2026-01-23 18:53:34,690 - discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:53:34 - acoustic_sensing.discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:53:34,691 - discriminationanalysis - INFO -     Train Accuracy: 0.9516 | F1: 0.9515
+2026-01-23 18:53:34 - acoustic_sensing.discriminationanalysis - INFO -     Train Accuracy: 0.9516 | F1: 0.9515
+2026-01-23 18:53:34,691 - discriminationanalysis - INFO -     Tuning Accuracy: 0.5497 | F1: 0.5512
+2026-01-23 18:53:34 - acoustic_sensing.discriminationanalysis - INFO -     Tuning Accuracy: 0.5497 | F1: 0.5512
+2026-01-23 18:53:34,691 - discriminationanalysis - INFO -     Test Accuracy: 0.4207 | F1: 0.2706
+2026-01-23 18:53:34 - acoustic_sensing.discriminationanalysis - INFO -     Test Accuracy: 0.4207 | F1: 0.2706
+2026-01-23 18:53:34,691 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:53:34 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:53:34,691 - discriminationanalysis - INFO - Training: PCA+MLP(Whitened)
+2026-01-23 18:53:34 - acoustic_sensing.discriminationanalysis - INFO - Training: PCA+MLP(Whitened)
+2026-01-23 18:53:34,691 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:53:34 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:53:34,691 - discriminationanalysis - INFO -   No hyperparameter search space defined for PCA+MLP(Whitened), using default parameters
+2026-01-23 18:53:34 - acoustic_sensing.discriminationanalysis - INFO -   No hyperparameter search space defined for PCA+MLP(Whitened), using default parameters
+2026-01-23 18:53:39,030 - discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:53:39 - acoustic_sensing.discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:53:39,030 - discriminationanalysis - INFO -     Train Accuracy: 0.9438 | F1: 0.9436
+2026-01-23 18:53:39 - acoustic_sensing.discriminationanalysis - INFO -     Train Accuracy: 0.9438 | F1: 0.9436
+2026-01-23 18:53:39,030 - discriminationanalysis - INFO -     Tuning Accuracy: 0.5281 | F1: 0.5240
+2026-01-23 18:53:39 - acoustic_sensing.discriminationanalysis - INFO -     Tuning Accuracy: 0.5281 | F1: 0.5240
+2026-01-23 18:53:39,030 - discriminationanalysis - INFO -     Test Accuracy: 0.3416 | F1: 0.2382
+2026-01-23 18:53:39 - acoustic_sensing.discriminationanalysis - INFO -     Test Accuracy: 0.3416 | F1: 0.2382
+2026-01-23 18:53:39,030 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:53:39 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:53:39,030 - discriminationanalysis - INFO - Training: PCA90+MLP(HighReg)
+2026-01-23 18:53:39 - acoustic_sensing.discriminationanalysis - INFO - Training: PCA90+MLP(HighReg)
+2026-01-23 18:53:39,030 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:53:39 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:53:39,030 - discriminationanalysis - INFO -   No hyperparameter search space defined for PCA90+MLP(HighReg), using default parameters
+2026-01-23 18:53:39 - acoustic_sensing.discriminationanalysis - INFO -   No hyperparameter search space defined for PCA90+MLP(HighReg), using default parameters
+2026-01-23 18:53:48,898 - discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:53:48 - acoustic_sensing.discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:53:48,899 - discriminationanalysis - INFO -     Train Accuracy: 0.9268 | F1: 0.9266
+2026-01-23 18:53:48 - acoustic_sensing.discriminationanalysis - INFO -     Train Accuracy: 0.9268 | F1: 0.9266
+2026-01-23 18:53:48,899 - discriminationanalysis - INFO -     Tuning Accuracy: 0.5126 | F1: 0.4715
+2026-01-23 18:53:48 - acoustic_sensing.discriminationanalysis - INFO -     Tuning Accuracy: 0.5126 | F1: 0.4715
+2026-01-23 18:53:48,899 - discriminationanalysis - INFO -     Test Accuracy: 0.4413 | F1: 0.2816
+2026-01-23 18:53:48 - acoustic_sensing.discriminationanalysis - INFO -     Test Accuracy: 0.4413 | F1: 0.2816
+2026-01-23 18:53:48,899 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:53:48 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:53:48,899 - discriminationanalysis - INFO - Training: GPU-MLP (Medium)
+2026-01-23 18:53:48 - acoustic_sensing.discriminationanalysis - INFO - Training: GPU-MLP (Medium)
+2026-01-23 18:53:48,899 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:53:48 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:53:48,899 - discriminationanalysis - INFO -   [GPU-MLP] Using dedicated tuning data for validation (2505 samples)
+2026-01-23 18:53:48 - acoustic_sensing.discriminationanalysis - INFO -   [GPU-MLP] Using dedicated tuning data for validation (2505 samples)
+2026-01-23 18:53:53,122 - discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:53:53 - acoustic_sensing.discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:53:53,123 - discriminationanalysis - INFO -     Train Accuracy: 0.6575 | F1: 0.6140
+2026-01-23 18:53:53 - acoustic_sensing.discriminationanalysis - INFO -     Train Accuracy: 0.6575 | F1: 0.6140
+2026-01-23 18:53:53,123 - discriminationanalysis - INFO -     Tuning Accuracy: 0.4072 | F1: 0.2811
+2026-01-23 18:53:53 - acoustic_sensing.discriminationanalysis - INFO -     Tuning Accuracy: 0.4072 | F1: 0.2811
+2026-01-23 18:53:53,123 - discriminationanalysis - INFO -     Test Accuracy: 0.3320 | F1: 0.2222
+2026-01-23 18:53:53 - acoustic_sensing.discriminationanalysis - INFO -     Test Accuracy: 0.3320 | F1: 0.2222
+2026-01-23 18:53:53,123 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:53:53 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:53:53,123 - discriminationanalysis - INFO - Training: GPU-MLP (Medium-HighReg)
+2026-01-23 18:53:53 - acoustic_sensing.discriminationanalysis - INFO - Training: GPU-MLP (Medium-HighReg)
+2026-01-23 18:53:53,123 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:53:53 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:53:53,123 - discriminationanalysis - INFO -   [GPU-MLP] Using dedicated tuning data for validation (2505 samples)
+2026-01-23 18:53:53 - acoustic_sensing.discriminationanalysis - INFO -   [GPU-MLP] Using dedicated tuning data for validation (2505 samples)
+2026-01-23 18:53:57,285 - discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:53:57 - acoustic_sensing.discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:53:57,285 - discriminationanalysis - INFO -     Train Accuracy: 0.6222 | F1: 0.5091
+2026-01-23 18:53:57 - acoustic_sensing.discriminationanalysis - INFO -     Train Accuracy: 0.6222 | F1: 0.5091
+2026-01-23 18:53:57,285 - discriminationanalysis - INFO -     Tuning Accuracy: 0.3673 | F1: 0.1973
+2026-01-23 18:53:57 - acoustic_sensing.discriminationanalysis - INFO -     Tuning Accuracy: 0.3673 | F1: 0.1973
+2026-01-23 18:53:57,285 - discriminationanalysis - INFO -     Test Accuracy: 0.4458 | F1: 0.2758
+2026-01-23 18:53:57 - acoustic_sensing.discriminationanalysis - INFO -     Test Accuracy: 0.4458 | F1: 0.2758
+2026-01-23 18:53:57,285 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:53:57 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:53:57,285 - discriminationanalysis - INFO - Training: GPU-MLP (Large)
+2026-01-23 18:53:57 - acoustic_sensing.discriminationanalysis - INFO - Training: GPU-MLP (Large)
+2026-01-23 18:53:57,285 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:53:57 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:53:57,285 - discriminationanalysis - INFO -   [GPU-MLP] Using dedicated tuning data for validation (2505 samples)
+2026-01-23 18:53:57 - acoustic_sensing.discriminationanalysis - INFO -   [GPU-MLP] Using dedicated tuning data for validation (2505 samples)
+2026-01-23 18:54:02,068 - discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:54:02 - acoustic_sensing.discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:54:02,068 - discriminationanalysis - INFO -     Train Accuracy: 0.6480 | F1: 0.5431
+2026-01-23 18:54:02 - acoustic_sensing.discriminationanalysis - INFO -     Train Accuracy: 0.6480 | F1: 0.5431
+2026-01-23 18:54:02,068 - discriminationanalysis - INFO -     Tuning Accuracy: 0.3784 | F1: 0.2222
+2026-01-23 18:54:02 - acoustic_sensing.discriminationanalysis - INFO -     Tuning Accuracy: 0.3784 | F1: 0.2222
+2026-01-23 18:54:02,068 - discriminationanalysis - INFO -     Test Accuracy: 0.4166 | F1: 0.2622
+2026-01-23 18:54:02 - acoustic_sensing.discriminationanalysis - INFO -     Test Accuracy: 0.4166 | F1: 0.2622
+2026-01-23 18:54:02,068 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:54:02 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:54:02,068 - discriminationanalysis - INFO - Training: GPU-MLP (Deep)
+2026-01-23 18:54:02 - acoustic_sensing.discriminationanalysis - INFO - Training: GPU-MLP (Deep)
+2026-01-23 18:54:02,068 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:54:02 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:54:02,068 - discriminationanalysis - INFO -   [GPU-MLP] Using dedicated tuning data for validation (2505 samples)
+2026-01-23 18:54:02 - acoustic_sensing.discriminationanalysis - INFO -   [GPU-MLP] Using dedicated tuning data for validation (2505 samples)
+2026-01-23 18:54:06,572 - discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:54:06 - acoustic_sensing.discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:54:06,572 - discriminationanalysis - INFO -     Train Accuracy: 0.6180 | F1: 0.5078
+2026-01-23 18:54:06 - acoustic_sensing.discriminationanalysis - INFO -     Train Accuracy: 0.6180 | F1: 0.5078
+2026-01-23 18:54:06,572 - discriminationanalysis - INFO -     Tuning Accuracy: 0.3681 | F1: 0.2004
+2026-01-23 18:54:06 - acoustic_sensing.discriminationanalysis - INFO -     Tuning Accuracy: 0.3681 | F1: 0.2004
+2026-01-23 18:54:06,572 - discriminationanalysis - INFO -     Test Accuracy: 0.4458 | F1: 0.2750
+2026-01-23 18:54:06 - acoustic_sensing.discriminationanalysis - INFO -     Test Accuracy: 0.4458 | F1: 0.2750
+2026-01-23 18:54:06,572 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:54:06 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:54:06,572 - discriminationanalysis - INFO - Training: Robust-GPU-MLP (Medium)
+2026-01-23 18:54:06 - acoustic_sensing.discriminationanalysis - INFO - Training: Robust-GPU-MLP (Medium)
+2026-01-23 18:54:06,572 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:54:06 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:54:06,572 - discriminationanalysis - INFO -   [GPU-MLP] Using dedicated tuning data for validation (2505 samples)
+2026-01-23 18:54:06 - acoustic_sensing.discriminationanalysis - INFO -   [GPU-MLP] Using dedicated tuning data for validation (2505 samples)
+2026-01-23 18:54:06,572 - discriminationanalysis - WARNING -   ⚠ Failed to train Robust-GPU-MLP (Medium): NormalizedClassifierWrapper.fit() got an unexpected keyword argument 'X_val'
+2026-01-23 18:54:06 - acoustic_sensing.discriminationanalysis - WARNING -   ⚠ Failed to train Robust-GPU-MLP (Medium): NormalizedClassifierWrapper.fit() got an unexpected keyword argument 'X_val'
+2026-01-23 18:54:06,572 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:54:06 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:54:06,572 - discriminationanalysis - INFO - Training: Quantile-GPU-MLP (Medium)
+2026-01-23 18:54:06 - acoustic_sensing.discriminationanalysis - INFO - Training: Quantile-GPU-MLP (Medium)
+2026-01-23 18:54:06,572 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:54:06 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:54:06,572 - discriminationanalysis - INFO -   [GPU-MLP] Using dedicated tuning data for validation (2505 samples)
+2026-01-23 18:54:06 - acoustic_sensing.discriminationanalysis - INFO -   [GPU-MLP] Using dedicated tuning data for validation (2505 samples)
+2026-01-23 18:54:06,572 - discriminationanalysis - WARNING -   ⚠ Failed to train Quantile-GPU-MLP (Medium): NormalizedClassifierWrapper.fit() got an unexpected keyword argument 'X_val'
+2026-01-23 18:54:06 - acoustic_sensing.discriminationanalysis - WARNING -   ⚠ Failed to train Quantile-GPU-MLP (Medium): NormalizedClassifierWrapper.fit() got an unexpected keyword argument 'X_val'
+2026-01-23 18:54:06,573 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:54:06 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:54:06,573 - discriminationanalysis - INFO - Training: Robust-MLP (Medium)
+2026-01-23 18:54:06 - acoustic_sensing.discriminationanalysis - INFO - Training: Robust-MLP (Medium)
+2026-01-23 18:54:06,573 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:54:06 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:54:06,573 - discriminationanalysis - INFO -   No hyperparameter search space defined for Robust-MLP (Medium), using default parameters
+2026-01-23 18:54:06 - acoustic_sensing.discriminationanalysis - INFO -   No hyperparameter search space defined for Robust-MLP (Medium), using default parameters
+2026-01-23 18:54:11,843 - discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:54:11 - acoustic_sensing.discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:54:11,843 - discriminationanalysis - INFO -     Train Accuracy: 0.9451 | F1: 0.9447
+2026-01-23 18:54:11 - acoustic_sensing.discriminationanalysis - INFO -     Train Accuracy: 0.9451 | F1: 0.9447
+2026-01-23 18:54:11,843 - discriminationanalysis - INFO -     Tuning Accuracy: 0.5449 | F1: 0.5373
+2026-01-23 18:54:11 - acoustic_sensing.discriminationanalysis - INFO -     Tuning Accuracy: 0.5449 | F1: 0.5373
+2026-01-23 18:54:11,843 - discriminationanalysis - INFO -     Test Accuracy: 0.3919 | F1: 0.2542
+2026-01-23 18:54:11 - acoustic_sensing.discriminationanalysis - INFO -     Test Accuracy: 0.3919 | F1: 0.2542
+2026-01-23 18:54:11,843 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:54:11 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:54:11,843 - discriminationanalysis - INFO - Training: Quantile-MLP (Medium)
+2026-01-23 18:54:11 - acoustic_sensing.discriminationanalysis - INFO - Training: Quantile-MLP (Medium)
+2026-01-23 18:54:11,843 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:54:11 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:54:11,843 - discriminationanalysis - INFO -   No hyperparameter search space defined for Quantile-MLP (Medium), using default parameters
+2026-01-23 18:54:11 - acoustic_sensing.discriminationanalysis - INFO -   No hyperparameter search space defined for Quantile-MLP (Medium), using default parameters
+2026-01-23 18:54:16,052 - discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:54:16 - acoustic_sensing.discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:54:16,052 - discriminationanalysis - INFO -     Train Accuracy: 0.9420 | F1: 0.9412
+2026-01-23 18:54:16 - acoustic_sensing.discriminationanalysis - INFO -     Train Accuracy: 0.9420 | F1: 0.9412
+2026-01-23 18:54:16,052 - discriminationanalysis - INFO -     Tuning Accuracy: 0.5589 | F1: 0.5533
+2026-01-23 18:54:16 - acoustic_sensing.discriminationanalysis - INFO -     Tuning Accuracy: 0.5589 | F1: 0.5533
+2026-01-23 18:54:16,052 - discriminationanalysis - INFO -     Test Accuracy: 0.3214 | F1: 0.2182
+2026-01-23 18:54:16 - acoustic_sensing.discriminationanalysis - INFO -     Test Accuracy: 0.3214 | F1: 0.2182
+2026-01-23 18:54:16,052 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:54:16 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:54:16,052 - discriminationanalysis - INFO - Training: Robust-RandomForest
+2026-01-23 18:54:16 - acoustic_sensing.discriminationanalysis - INFO - Training: Robust-RandomForest
+2026-01-23 18:54:16,052 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:54:16 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:54:16,052 - discriminationanalysis - INFO -   No hyperparameter search space defined for Robust-RandomForest, using default parameters
+2026-01-23 18:54:16 - acoustic_sensing.discriminationanalysis - INFO -   No hyperparameter search space defined for Robust-RandomForest, using default parameters
+2026-01-23 18:54:18,642 - discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:54:18 - acoustic_sensing.discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:54:18,642 - discriminationanalysis - INFO -     Train Accuracy: 1.0000 | F1: 1.0000
+2026-01-23 18:54:18 - acoustic_sensing.discriminationanalysis - INFO -     Train Accuracy: 1.0000 | F1: 1.0000
+2026-01-23 18:54:18,642 - discriminationanalysis - INFO -     Tuning Accuracy: 0.5313 | F1: 0.5120
+2026-01-23 18:54:18 - acoustic_sensing.discriminationanalysis - INFO -     Tuning Accuracy: 0.5313 | F1: 0.5120
+2026-01-23 18:54:18,642 - discriminationanalysis - INFO -     Test Accuracy: 0.4096 | F1: 0.2599
+2026-01-23 18:54:18 - acoustic_sensing.discriminationanalysis - INFO -     Test Accuracy: 0.4096 | F1: 0.2599
+2026-01-23 18:54:18,642 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:54:18 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:54:18,642 - discriminationanalysis - INFO - Training: Robust-XGBoost
+2026-01-23 18:54:18 - acoustic_sensing.discriminationanalysis - INFO - Training: Robust-XGBoost
+2026-01-23 18:54:18,642 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:54:18 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:54:18,642 - discriminationanalysis - INFO -   No hyperparameter search space defined for Robust-XGBoost, using default parameters
+2026-01-23 18:54:18 - acoustic_sensing.discriminationanalysis - INFO -   No hyperparameter search space defined for Robust-XGBoost, using default parameters
+2026-01-23 18:54:18,929 - discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:54:18 - acoustic_sensing.discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:54:18,929 - discriminationanalysis - INFO -     Train Accuracy: 1.0000 | F1: 1.0000
+2026-01-23 18:54:18 - acoustic_sensing.discriminationanalysis - INFO -     Train Accuracy: 1.0000 | F1: 1.0000
+2026-01-23 18:54:18,929 - discriminationanalysis - INFO -     Tuning Accuracy: 0.5597 | F1: 0.5453
+2026-01-23 18:54:18 - acoustic_sensing.discriminationanalysis - INFO -     Tuning Accuracy: 0.5597 | F1: 0.5453
+2026-01-23 18:54:18,929 - discriminationanalysis - INFO -     Test Accuracy: 0.4096 | F1: 0.2615
+2026-01-23 18:54:18 - acoustic_sensing.discriminationanalysis - INFO -     Test Accuracy: 0.4096 | F1: 0.2615
+2026-01-23 18:54:18,929 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:54:18 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:54:18,929 - discriminationanalysis - INFO - Training: Robust-GradientBoosting
+2026-01-23 18:54:18 - acoustic_sensing.discriminationanalysis - INFO - Training: Robust-GradientBoosting
+2026-01-23 18:54:18,929 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:54:18 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:54:18,929 - discriminationanalysis - INFO -   No hyperparameter search space defined for Robust-GradientBoosting, using default parameters
+2026-01-23 18:54:18 - acoustic_sensing.discriminationanalysis - INFO -   No hyperparameter search space defined for Robust-GradientBoosting, using default parameters
+2026-01-23 18:54:29,679 - discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:54:29 - acoustic_sensing.discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:54:29,679 - discriminationanalysis - INFO -     Train Accuracy: 0.8966 | F1: 0.8944
+2026-01-23 18:54:29 - acoustic_sensing.discriminationanalysis - INFO -     Train Accuracy: 0.8966 | F1: 0.8944
+2026-01-23 18:54:29,679 - discriminationanalysis - INFO -     Tuning Accuracy: 0.5848 | F1: 0.5719
+2026-01-23 18:54:29 - acoustic_sensing.discriminationanalysis - INFO -     Tuning Accuracy: 0.5848 | F1: 0.5719
+2026-01-23 18:54:29,679 - discriminationanalysis - INFO -     Test Accuracy: 0.3758 | F1: 0.2451
+2026-01-23 18:54:29 - acoustic_sensing.discriminationanalysis - INFO -     Test Accuracy: 0.3758 | F1: 0.2451
+2026-01-23 18:54:29,679 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:54:29 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:54:29,679 - discriminationanalysis - INFO - Training: Relative-GPU-MLP (Medium)
+2026-01-23 18:54:29 - acoustic_sensing.discriminationanalysis - INFO - Training: Relative-GPU-MLP (Medium)
+2026-01-23 18:54:29,679 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:54:29 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:54:29,679 - discriminationanalysis - INFO -   [GPU-MLP] Using dedicated tuning data for validation (2505 samples)
+2026-01-23 18:54:29 - acoustic_sensing.discriminationanalysis - INFO -   [GPU-MLP] Using dedicated tuning data for validation (2505 samples)
+2026-01-23 18:54:29,679 - discriminationanalysis - WARNING -   ⚠ Failed to train Relative-GPU-MLP (Medium): RelativeFeatureClassifier.fit() got an unexpected keyword argument 'X_val'
+2026-01-23 18:54:29 - acoustic_sensing.discriminationanalysis - WARNING -   ⚠ Failed to train Relative-GPU-MLP (Medium): RelativeFeatureClassifier.fit() got an unexpected keyword argument 'X_val'
+2026-01-23 18:54:29,679 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:54:29 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:54:29,679 - discriminationanalysis - INFO - Training: Relative-MLP (Medium)
+2026-01-23 18:54:29 - acoustic_sensing.discriminationanalysis - INFO - Training: Relative-MLP (Medium)
+2026-01-23 18:54:29,679 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:54:29 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:54:29,680 - discriminationanalysis - INFO -   No hyperparameter search space defined for Relative-MLP (Medium), using default parameters
+2026-01-23 18:54:29 - acoustic_sensing.discriminationanalysis - INFO -   No hyperparameter search space defined for Relative-MLP (Medium), using default parameters
+2026-01-23 18:54:33,517 - discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:54:33 - acoustic_sensing.discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:54:33,517 - discriminationanalysis - INFO -     Train Accuracy: 0.8954 | F1: 0.8926
+2026-01-23 18:54:33 - acoustic_sensing.discriminationanalysis - INFO -     Train Accuracy: 0.8954 | F1: 0.8926
+2026-01-23 18:54:33,517 - discriminationanalysis - INFO -     Tuning Accuracy: 0.5377 | F1: 0.5346
+2026-01-23 18:54:33 - acoustic_sensing.discriminationanalysis - INFO -     Tuning Accuracy: 0.5377 | F1: 0.5346
+2026-01-23 18:54:33,517 - discriminationanalysis - INFO -     Test Accuracy: 0.1839 | F1: 0.1438
+2026-01-23 18:54:33 - acoustic_sensing.discriminationanalysis - INFO -     Test Accuracy: 0.1839 | F1: 0.1438
+2026-01-23 18:54:33,517 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:54:33 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:54:33,517 - discriminationanalysis - INFO - Training: GPU-MLP (Tuned)
+2026-01-23 18:54:33 - acoustic_sensing.discriminationanalysis - INFO - Training: GPU-MLP (Tuned)
+2026-01-23 18:54:33,517 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:54:33 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:54:33,517 - discriminationanalysis - INFO -   [GPU-MLP] Using dedicated tuning data for validation (2505 samples)
+2026-01-23 18:54:33 - acoustic_sensing.discriminationanalysis - INFO -   [GPU-MLP] Using dedicated tuning data for validation (2505 samples)
+2026-01-23 18:54:38,931 - discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:54:38 - acoustic_sensing.discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:54:38,931 - discriminationanalysis - INFO -     Train Accuracy: 0.6280 | F1: 0.4846
+2026-01-23 18:54:38 - acoustic_sensing.discriminationanalysis - INFO -     Train Accuracy: 0.6280 | F1: 0.4846
+2026-01-23 18:54:38,931 - discriminationanalysis - INFO -     Tuning Accuracy: 0.3673 | F1: 0.1973
+2026-01-23 18:54:38 - acoustic_sensing.discriminationanalysis - INFO -     Tuning Accuracy: 0.3673 | F1: 0.1973
+2026-01-23 18:54:38,931 - discriminationanalysis - INFO -     Test Accuracy: 0.4458 | F1: 0.2750
+2026-01-23 18:54:38 - acoustic_sensing.discriminationanalysis - INFO -     Test Accuracy: 0.4458 | F1: 0.2750
+2026-01-23 18:54:38,931 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:54:38 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:54:38,931 - discriminationanalysis - INFO - Training: GPU-MLP (Tuned-HighReg)
+2026-01-23 18:54:38 - acoustic_sensing.discriminationanalysis - INFO - Training: GPU-MLP (Tuned-HighReg)
+2026-01-23 18:54:38,931 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:54:38 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:54:38,931 - discriminationanalysis - INFO -   [GPU-MLP] Using dedicated tuning data for validation (2505 samples)
+2026-01-23 18:54:38 - acoustic_sensing.discriminationanalysis - INFO -   [GPU-MLP] Using dedicated tuning data for validation (2505 samples)
+2026-01-23 18:54:45,330 - discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:54:45 - acoustic_sensing.discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:54:45,331 - discriminationanalysis - INFO -     Train Accuracy: 0.6280 | F1: 0.4846
+2026-01-23 18:54:45 - acoustic_sensing.discriminationanalysis - INFO -     Train Accuracy: 0.6280 | F1: 0.4846
+2026-01-23 18:54:45,331 - discriminationanalysis - INFO -     Tuning Accuracy: 0.3673 | F1: 0.1973
+2026-01-23 18:54:45 - acoustic_sensing.discriminationanalysis - INFO -     Tuning Accuracy: 0.3673 | F1: 0.1973
+2026-01-23 18:54:45,331 - discriminationanalysis - INFO -     Test Accuracy: 0.4458 | F1: 0.2750
+2026-01-23 18:54:45 - acoustic_sensing.discriminationanalysis - INFO -     Test Accuracy: 0.4458 | F1: 0.2750
+2026-01-23 18:54:45,331 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:54:45 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:54:45,331 - discriminationanalysis - INFO - Training: GPU-MLP (Tuned-GELU)
+2026-01-23 18:54:45 - acoustic_sensing.discriminationanalysis - INFO - Training: GPU-MLP (Tuned-GELU)
+2026-01-23 18:54:45,331 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:54:45 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:54:45,331 - discriminationanalysis - INFO -   [GPU-MLP] Using dedicated tuning data for validation (2505 samples)
+2026-01-23 18:54:45 - acoustic_sensing.discriminationanalysis - INFO -   [GPU-MLP] Using dedicated tuning data for validation (2505 samples)
+2026-01-23 18:54:48,405 - discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:54:48 - acoustic_sensing.discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:54:48,405 - discriminationanalysis - INFO -     Train Accuracy: 0.6954 | F1: 0.6902
+2026-01-23 18:54:48 - acoustic_sensing.discriminationanalysis - INFO -     Train Accuracy: 0.6954 | F1: 0.6902
+2026-01-23 18:54:48,405 - discriminationanalysis - INFO -     Tuning Accuracy: 0.4507 | F1: 0.3938
+2026-01-23 18:54:48 - acoustic_sensing.discriminationanalysis - INFO -     Tuning Accuracy: 0.4507 | F1: 0.3938
+2026-01-23 18:54:48,405 - discriminationanalysis - INFO -     Test Accuracy: 0.1406 | F1: 0.1126
+2026-01-23 18:54:48 - acoustic_sensing.discriminationanalysis - INFO -     Test Accuracy: 0.1406 | F1: 0.1126
+2026-01-23 18:54:48,405 - discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:54:48 - acoustic_sensing.discriminationanalysis - INFO - 
+============================================================
+2026-01-23 18:54:48,405 - discriminationanalysis - INFO - Training: Ensemble (Top3-MLP)
+2026-01-23 18:54:48 - acoustic_sensing.discriminationanalysis - INFO - Training: Ensemble (Top3-MLP)
+2026-01-23 18:54:48,405 - discriminationanalysis - INFO - ============================================================
+2026-01-23 18:54:48 - acoustic_sensing.discriminationanalysis - INFO - ============================================================
+2026-01-23 18:54:48,405 - discriminationanalysis - INFO -   No hyperparameter search space defined for Ensemble (Top3-MLP), using default parameters
+2026-01-23 18:54:48 - acoustic_sensing.discriminationanalysis - INFO -   No hyperparameter search space defined for Ensemble (Top3-MLP), using default parameters
+2026-01-23 18:55:37,532 - discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:55:37 - acoustic_sensing.discriminationanalysis - INFO - 
+  Results:
+2026-01-23 18:55:37,532 - discriminationanalysis - INFO -     Train Accuracy: 0.9755 | F1: 0.9754
+2026-01-23 18:55:37 - acoustic_sensing.discriminationanalysis - INFO -     Train Accuracy: 0.9755 | F1: 0.9754
+2026-01-23 18:55:37,532 - discriminationanalysis - INFO -     Tuning Accuracy: 0.5381 | F1: 0.5291
+2026-01-23 18:55:37 - acoustic_sensing.discriminationanalysis - INFO -     Tuning Accuracy: 0.5381 | F1: 0.5291
+2026-01-23 18:55:37,532 - discriminationanalysis - INFO -     Test Accuracy: 0.2484 | F1: 0.1805
+2026-01-23 18:55:37 - acoustic_sensing.discriminationanalysis - INFO -     Test Accuracy: 0.2484 | F1: 0.1805
+2026-01-23 18:55:37,532 - discriminationanalysis - INFO - 
+================================================================================
+2026-01-23 18:55:37 - acoustic_sensing.discriminationanalysis - INFO - 
+================================================================================
+2026-01-23 18:55:37,532 - discriminationanalysis - INFO - BEST CLASSIFIER (selected on tuning set)
+2026-01-23 18:55:37 - acoustic_sensing.discriminationanalysis - INFO - BEST CLASSIFIER (selected on tuning set)
+2026-01-23 18:55:37,532 - discriminationanalysis - INFO - ================================================================================
+2026-01-23 18:55:37 - acoustic_sensing.discriminationanalysis - INFO - ================================================================================
+2026-01-23 18:55:37,532 - discriminationanalysis - INFO - Model: PCA+MLP(HighReg)
+2026-01-23 18:55:37 - acoustic_sensing.discriminationanalysis - INFO - Model: PCA+MLP(HighReg)
+2026-01-23 18:55:37,532 - discriminationanalysis - INFO -   Train Accuracy: 0.9349
+2026-01-23 18:55:37 - acoustic_sensing.discriminationanalysis - INFO -   Train Accuracy: 0.9349
+2026-01-23 18:55:37,532 - discriminationanalysis - INFO -   Tuning Accuracy: 0.6279
+2026-01-23 18:55:37 - acoustic_sensing.discriminationanalysis - INFO -   Tuning Accuracy: 0.6279
+2026-01-23 18:55:37,532 - discriminationanalysis - INFO -   Test Accuracy: 0.3804
+2026-01-23 18:55:37 - acoustic_sensing.discriminationanalysis - INFO -   Test Accuracy: 0.3804
+2026-01-23 18:55:37,534 - discriminationanalysis - INFO - 3-way split results saved to: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3/discriminationanalysis/3way_split_results/discrimination_summary.json
+2026-01-23 18:55:37 - acoustic_sensing.discriminationanalysis - INFO - 3-way split results saved to: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3/discriminationanalysis/3way_split_results/discrimination_summary.json
+2026-01-23 18:55:38,261 - discriminationanalysis - INFO - 3-way performance plot saved to: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3/discriminationanalysis/3way_split_results/classifier_performance_3way.png
+2026-01-23 18:55:38 - acoustic_sensing.discriminationanalysis - INFO - 3-way performance plot saved to: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3/discriminationanalysis/3way_split_results/classifier_performance_3way.png
+2026-01-23 18:55:38,592 - discriminationanalysis - INFO - 3-way confusion matrices saved to: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3/discriminationanalysis/3way_split_results/confusion_matrices_3way_PCA+MLP(HighReg).png
+2026-01-23 18:55:38 - acoustic_sensing.discriminationanalysis - INFO - 3-way confusion matrices saved to: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3/discriminationanalysis/3way_split_results/confusion_matrices_3way_PCA+MLP(HighReg).png
+2026-01-23 18:55:38,593 - discriminationanalysis - INFO - Updated shared data with keys: ['split_mode', 'training_datasets', 'tuning_datasets', 'final_test_datasets', 'classifier_results', 'num_train_samples', 'num_tuning_samples', 'num_test_samples', 'batch_performance_results', 'cross_batch_results', 'best_classifier']
+2026-01-23 18:55:38 - acoustic_sensing.discriminationanalysis - INFO - Updated shared data with keys: ['split_mode', 'training_datasets', 'tuning_datasets', 'final_test_datasets', 'classifier_results', 'num_train_samples', 'num_tuning_samples', 'num_test_samples', 'batch_performance_results', 'cross_batch_results', 'best_classifier']
+2026-01-23 18:55:38,593 - ORCHESTRATOR - INFO - ✓ Completed: discrimination_analysis
+2026-01-23 18:55:38 - experiment_orchestrator - INFO - ✓ Completed: discrimination_analysis
+2026-01-23 18:55:38,848 - ORCHESTRATOR - INFO - Results saved to /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3
+2026-01-23 18:55:38 - experiment_orchestrator - INFO - Results saved to /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3
+2026-01-23 18:55:38,848 - ORCHESTRATOR - INFO - Summary available at: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3/execution_summary.json
+2026-01-23 18:55:38 - experiment_orchestrator - INFO - Summary available at: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3/execution_summary.json
+2026-01-23 18:55:38,848 - ORCHESTRATOR - INFO - Experiment orchestration completed
+2026-01-23 18:55:38 - experiment_orchestrator - INFO - Experiment orchestration completed
+
+==================================================
+📊 EXECUTION SUMMARY
+==================================================
+✅ Successful: 3
+❌ Failed: 0
+⏭️  Skipped: 0
+
+🔍 Key Findings:
+   • Processed 0 samples with 80 features across 2 classes
+   • Best classifier: PCA+MLP(HighReg) with 0.0000 validation accuracy
+
+📁 Results saved to: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3
+   📄 Summary: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/results_3way_split_v3/execution_summary.json
+   📊 Individual experiment results in subdirectories
+
+🎉 Experiment execution completed!

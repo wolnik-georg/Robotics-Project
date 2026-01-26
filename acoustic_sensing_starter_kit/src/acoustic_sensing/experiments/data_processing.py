@@ -1,5 +1,5 @@
 from .base_experiment import BaseExperiment
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -15,6 +15,97 @@ from scipy.signal import butter, filtfilt  # Add for audio smoothing
 from pathlib import Path
 import librosa
 from acoustic_sensing.core.motion_artifact_removal import apply_motion_artifact_removal
+from acoustic_sensing.core.feature_extraction import HAS_GPU_SUPPORT
+
+
+class PerSampleNormalizer:
+    """
+    Per-sample feature normalization for improved cross-workspace generalization.
+
+    Unlike global normalization (StandardScaler), this normalizes each sample
+    independently, making features invariant to:
+    - Recording gain/volume differences
+    - Background noise levels
+    - Microphone sensitivity variations
+
+    Methods:
+    - 'zscore': Per-sample z-score (mean=0, std=1 for each sample)
+    - 'minmax': Per-sample min-max scaling (0-1 range for each sample)
+    - 'robust': Per-sample robust scaling using median and IQR
+    - 'l2': L2 normalization (unit norm for each sample)
+    """
+
+    def __init__(self, method: str = "zscore", epsilon: float = 1e-10):
+        """
+        Initialize the per-sample normalizer.
+
+        Args:
+            method: Normalization method ('zscore', 'minmax', 'robust', 'l2')
+            epsilon: Small value to avoid division by zero
+        """
+        self.method = method.lower()
+        self.epsilon = epsilon
+
+    def normalize(self, features: np.ndarray) -> np.ndarray:
+        """
+        Normalize a single feature vector (per-sample).
+
+        Args:
+            features: 1D numpy array of features for one sample
+
+        Returns:
+            Normalized feature vector
+        """
+        features = np.asarray(features, dtype=np.float64)
+
+        if self.method == "zscore":
+            # Per-sample z-score normalization
+            mean = np.mean(features)
+            std = np.std(features)
+            if std < self.epsilon:
+                std = 1.0
+            return (features - mean) / std
+
+        elif self.method == "minmax":
+            # Per-sample min-max normalization to [0, 1]
+            min_val = np.min(features)
+            max_val = np.max(features)
+            range_val = max_val - min_val
+            if range_val < self.epsilon:
+                range_val = 1.0
+            return (features - min_val) / range_val
+
+        elif self.method == "robust":
+            # Per-sample robust normalization using median and IQR
+            median = np.median(features)
+            q75, q25 = np.percentile(features, [75, 25])
+            iqr = q75 - q25
+            if iqr < self.epsilon:
+                iqr = 1.0
+            return (features - median) / iqr
+
+        elif self.method == "l2":
+            # L2 normalization (unit norm)
+            norm = np.linalg.norm(features)
+            if norm < self.epsilon:
+                norm = 1.0
+            return features / norm
+
+        else:
+            # No normalization (pass through)
+            return features
+
+    def normalize_batch(self, X: np.ndarray) -> np.ndarray:
+        """
+        Normalize a batch of samples (each row is normalized independently).
+
+        Args:
+            X: 2D numpy array of shape (n_samples, n_features)
+
+        Returns:
+            Normalized array of same shape
+        """
+        return np.array([self.normalize(row) for row in X])
 
 
 class AudioAugmenter:
@@ -371,116 +462,508 @@ class DataProcessingExperiment(BaseExperiment):
                             )
                         augmenter = None
 
-                    feature_extractor = GeometricFeatureExtractor(
-                        sr=48000,
-                        use_workspace_invariant=use_workspace_invariant,
-                        use_impulse_features=use_impulse_features,
+                    # Get feature extraction mode(s) from config
+                    feature_extraction_config = self.config.get(
+                        "feature_extraction", {}
                     )
 
-                    X_feat = []
-                    y_labels = []  # Track labels for augmented samples
-                    failed_count = 0
+                    # Per-sample feature normalization configuration
+                    # This normalizes each sample independently for better workspace generalization
+                    normalization_config = feature_extraction_config.get(
+                        "normalization", {}
+                    )
+                    use_per_sample_norm = normalization_config.get("enabled", False)
+                    norm_method = normalization_config.get("method", "zscore")
 
-                    for i, audio in enumerate(audio_data):
-                        try:
-                            # Apply smoothing if enabled
-                            if apply_smoothing:
-                                audio = self._apply_high_pass_filter(
-                                    audio, sr=48000, cutoff=cutoff_freq
-                                )
+                    if use_per_sample_norm:
+                        self.logger.info(
+                            f"✓ Per-sample normalization ENABLED (method={norm_method})"
+                        )
+                        per_sample_normalizer = PerSampleNormalizer(method=norm_method)
+                    else:
+                        self.logger.info("✓ Per-sample normalization DISABLED")
+                        per_sample_normalizer = None
 
-                            # Extract features from original sample
-                            features = feature_extractor.extract_features(
-                                audio, method="comprehensive"
+                    # Check if multiple modes are specified
+                    extraction_modes = feature_extraction_config.get("modes", None)
+                    if extraction_modes is None:
+                        # Single mode (backward compatibility)
+                        extraction_modes = [
+                            feature_extraction_config.get("mode", "features")
+                        ]
+
+                    spectrogram_params = feature_extraction_config.get(
+                        "spectrogram", {}
+                    )
+
+                    # Helper function to filter parameters for each extraction mode
+                    def filter_params_for_mode(mode: str, all_params: dict) -> dict:
+                        """Filter spectrogram parameters to only include those accepted by each method."""
+                        if mode == "spectrogram":
+                            # extract_spectrogram accepts: n_fft, hop_length, n_mels, fmin, fmax, time_bins, use_log_scale
+                            return {
+                                k: v
+                                for k, v in all_params.items()
+                                if k
+                                in [
+                                    "n_fft",
+                                    "hop_length",
+                                    "n_mels",
+                                    "fmin",
+                                    "fmax",
+                                    "time_bins",
+                                    "use_log_scale",
+                                ]
+                            }
+                        elif mode == "mfcc":
+                            # extract_mfcc accepts: n_mfcc, n_fft, hop_length, n_mels, fmin, fmax
+                            return {
+                                k: v
+                                for k, v in all_params.items()
+                                if k
+                                in [
+                                    "n_mfcc",
+                                    "n_fft",
+                                    "hop_length",
+                                    "n_mels",
+                                    "fmin",
+                                    "fmax",
+                                ]
+                            }
+                        elif mode in ["magnitude_spectrum", "power_spectrum"]:
+                            # extract_magnitude_spectrum and extract_power_spectrum accept: n_fft, hop_length, normalize
+                            return {
+                                k: v
+                                for k, v in all_params.items()
+                                if k in ["n_fft", "hop_length", "normalize"]
+                            }
+                        elif mode == "chroma":
+                            # extract_chroma_features accepts: n_chroma, n_fft, hop_length
+                            return {
+                                k: v
+                                for k, v in all_params.items()
+                                if k in ["n_chroma", "n_fft", "hop_length"]
+                            }
+                        else:
+                            # For other modes, return empty dict (they don't use spectrogram_params)
+                            return {}
+
+                    # Process each mode
+                    for extraction_mode in extraction_modes:
+                        self.logger.info(
+                            f"\n🔄 Processing feature extraction mode: {extraction_mode}"
+                        )
+
+                        # Log extraction mode details
+                        if extraction_mode == "features":
+                            self.logger.info(
+                                "✓ Using hand-crafted features (65 dimensions)"
                             )
-                            X_feat.append(features)
-                            y_labels.append(labels[i])
+                        elif extraction_mode == "spectrogram":
+                            n_mels = spectrogram_params.get("n_mels", 64)
+                            time_bins = spectrogram_params.get("time_bins", 128)
+                            self.logger.info(
+                                f"✓ Using mel spectrograms ({n_mels}×{time_bins} = {n_mels*time_bins} dimensions)"
+                            )
+                        elif extraction_mode == "both":
+                            n_mels = spectrogram_params.get("n_mels", 64)
+                            time_bins = spectrogram_params.get("time_bins", 128)
+                            self.logger.info(
+                                f"✓ Using BOTH features + FULL spectrograms (65 + {n_mels*time_bins} = {65 + n_mels*time_bins} dimensions)"
+                            )
+                        elif extraction_mode == "mfcc":
+                            n_mfcc = spectrogram_params.get("n_mfcc", 13)
+                            time_bins = spectrogram_params.get("time_bins", 128)
+                            self.logger.info(
+                                f"✓ Using MFCC features ({n_mfcc}×{time_bins} = {n_mfcc*time_bins} dimensions)"
+                            )
+                        elif extraction_mode == "magnitude_spectrum":
+                            n_fft = spectrogram_params.get("n_fft", 2048)
+                            time_bins = spectrogram_params.get("time_bins", 128)
+                            freq_bins = n_fft // 2 + 1
+                            self.logger.info(
+                                f"✓ Using magnitude spectrum ({freq_bins}×{time_bins} = {freq_bins*time_bins} dimensions)"
+                            )
+                        elif extraction_mode == "power_spectrum":
+                            n_fft = spectrogram_params.get("n_fft", 2048)
+                            time_bins = spectrogram_params.get("time_bins", 128)
+                            freq_bins = n_fft // 2 + 1
+                            self.logger.info(
+                                f"✓ Using power spectrum ({freq_bins}×{time_bins} = {freq_bins*time_bins} dimensions)"
+                            )
+                        elif extraction_mode == "chroma":
+                            n_chroma = spectrogram_params.get("n_chroma", 12)
+                            time_bins = spectrogram_params.get("time_bins", 128)
+                            self.logger.info(
+                                f"✓ Using chroma features ({n_chroma}×{time_bins} = {n_chroma*time_bins} dimensions)"
+                            )
 
-                            # Apply augmentation if enabled (training data only)
-                            if augmenter is not None:
-                                for aug_idx in range(augmentation_factor):
-                                    try:
-                                        augmented_audio = augmenter.augment(
-                                            audio, augment_type="all"
+                        # Create mode-specific key for storing results
+                        mode_key = (
+                            f"{batch_name}_{extraction_mode}"
+                            if len(extraction_modes) > 1
+                            else batch_name
+                        )
+
+                        feature_extractor = GeometricFeatureExtractor(
+                            sr=48000,
+                            use_workspace_invariant=use_workspace_invariant,
+                            use_impulse_features=use_impulse_features,
+                        )
+
+                        X_feat = []
+                        y_labels = []  # Track labels for augmented samples
+                        failed_count = 0
+
+                        for i, audio in enumerate(audio_data):
+                            try:
+                                # Apply smoothing if enabled
+                                if apply_smoothing:
+                                    audio = self._apply_high_pass_filter(
+                                        audio, sr=48000, cutoff=cutoff_freq
+                                    )
+
+                                # Extract features based on mode
+                                if extraction_mode == "features":
+                                    # Hand-crafted features (current default)
+                                    features = feature_extractor.extract_features(
+                                        audio, method="comprehensive"
+                                    )
+                                elif extraction_mode == "spectrogram":
+                                    # Spectrogram representation
+                                    filtered_params = filter_params_for_mode(
+                                        extraction_mode, spectrogram_params
+                                    )
+                                    # Use GPU acceleration if available
+                                    if (
+                                        hasattr(
+                                            feature_extractor, "extract_spectrogram_gpu"
                                         )
-                                        aug_features = (
-                                            feature_extractor.extract_features(
-                                                augmented_audio, method="comprehensive"
+                                        and HAS_GPU_SUPPORT
+                                    ):
+                                        spectrogram = (
+                                            feature_extractor.extract_spectrogram_gpu(
+                                                audio, **filtered_params
                                             )
                                         )
-                                        X_feat.append(aug_features)
-                                        y_labels.append(
-                                            labels[i]
-                                        )  # Same label as original
-                                    except Exception as aug_e:
-                                        # Skip failed augmentation
-                                        pass
+                                    else:
+                                        spectrogram = (
+                                            feature_extractor.extract_spectrogram(
+                                                audio, **filtered_params
+                                            )
+                                        )
+                                    # Flatten to 1D for compatibility with sklearn models
+                                    features = spectrogram.flatten()
+                                elif extraction_mode == "mfcc":
+                                    # MFCC features
+                                    filtered_params = filter_params_for_mode(
+                                        extraction_mode, spectrogram_params
+                                    )
+                                    # Use GPU acceleration if available
+                                    if (
+                                        hasattr(feature_extractor, "extract_mfcc_gpu")
+                                        and HAS_GPU_SUPPORT
+                                    ):
+                                        mfcc = feature_extractor.extract_mfcc_gpu(
+                                            audio, **filtered_params
+                                        )
+                                    else:
+                                        mfcc = feature_extractor.extract_mfcc(
+                                            audio, **filtered_params
+                                        )
+                                    # Flatten to 1D for compatibility with sklearn models
+                                    features = mfcc.flatten()
+                                elif extraction_mode == "magnitude_spectrum":
+                                    # Magnitude spectrum
+                                    filtered_params = filter_params_for_mode(
+                                        extraction_mode, spectrogram_params
+                                    )
+                                    # Use GPU acceleration if available
+                                    if (
+                                        hasattr(
+                                            feature_extractor,
+                                            "extract_magnitude_spectrum_gpu",
+                                        )
+                                        and HAS_GPU_SUPPORT
+                                    ):
+                                        mag_spec = feature_extractor.extract_magnitude_spectrum_gpu(
+                                            audio, **filtered_params
+                                        )
+                                    else:
+                                        mag_spec = feature_extractor.extract_magnitude_spectrum(
+                                            audio, **filtered_params
+                                        )
+                                    # Flatten to 1D for compatibility with sklearn models
+                                    features = mag_spec.flatten()
+                                elif extraction_mode == "power_spectrum":
+                                    # Power spectrum
+                                    filtered_params = filter_params_for_mode(
+                                        extraction_mode, spectrogram_params
+                                    )
+                                    # Use GPU acceleration if available
+                                    if (
+                                        hasattr(
+                                            feature_extractor,
+                                            "extract_power_spectrum_gpu",
+                                        )
+                                        and HAS_GPU_SUPPORT
+                                    ):
+                                        power_spec = feature_extractor.extract_power_spectrum_gpu(
+                                            audio, **filtered_params
+                                        )
+                                    else:
+                                        power_spec = (
+                                            feature_extractor.extract_power_spectrum(
+                                                audio, **filtered_params
+                                            )
+                                        )
+                                    # Flatten to 1D for compatibility with sklearn models
+                                    features = power_spec.flatten()
+                                elif extraction_mode == "chroma":
+                                    # Chroma features
+                                    filtered_params = filter_params_for_mode(
+                                        extraction_mode, spectrogram_params
+                                    )
+                                    chroma = feature_extractor.extract_chroma_features(
+                                        audio, **filtered_params
+                                    )
+                                    # Flatten to 1D for compatibility with sklearn models
+                                    features = chroma.flatten()
+                                elif extraction_mode == "both":
+                                    # Both features and FULL spectrogram
+                                    hand_features = feature_extractor.extract_features(
+                                        audio, method="comprehensive"
+                                    )
+                                    filtered_params = filter_params_for_mode(
+                                        "spectrogram", spectrogram_params
+                                    )
+                                    # Use GPU acceleration if available
+                                    if (
+                                        hasattr(
+                                            feature_extractor, "extract_spectrogram_gpu"
+                                        )
+                                        and HAS_GPU_SUPPORT
+                                    ):
+                                        spectrogram = (
+                                            feature_extractor.extract_spectrogram_gpu(
+                                                audio, **filtered_params
+                                            )
+                                        )
+                                    else:
+                                        spectrogram = (
+                                            feature_extractor.extract_spectrogram(
+                                                audio, **filtered_params
+                                            )
+                                        )
+                                    # Use FULL spectrogram (no dimensionality reduction)
+                                    spectrogram_full = spectrogram.flatten()
+                                    # Concatenate hand-crafted features + full spectrogram
+                                    features = np.concatenate(
+                                        [hand_features, spectrogram_full]
+                                    )
+                                else:
+                                    raise ValueError(
+                                        f"Unknown extraction mode: {extraction_mode}"
+                                    )
 
-                            if (i + 1) % 50 == 0:
-                                self.logger.info(
-                                    f"  Processed {i + 1}/{len(audio_data)} samples"
-                                )
+                                # Apply per-sample normalization if enabled
+                                if per_sample_normalizer is not None:
+                                    features = per_sample_normalizer.normalize(features)
 
-                        except Exception as e:
-                            self.logger.warning(
-                                f"Failed to extract features from sample {i}: {e}"
-                            )
-                            if X_feat:
-                                X_feat.append(np.zeros_like(X_feat[0]))
-                                y_labels.append(
-                                    labels[i]
-                                )  # Add label for failed sample too
-                            failed_count += 1
+                                X_feat.append(features)
+                                y_labels.append(labels[i])
 
-                    if failed_count > 0:
-                        self.logger.warning(
-                            f"Failed to extract features from {failed_count} samples"
-                        )
+                                # Apply augmentation if enabled (training data only)
+                                if augmenter is not None:
+                                    for aug_idx in range(augmentation_factor):
+                                        try:
+                                            augmented_audio = augmenter.augment(
+                                                audio, augment_type="all"
+                                            )
 
-                    # Log augmentation results
-                    if augmenter is not None:
-                        orig_count = len(audio_data)
-                        aug_count = len(X_feat)
+                                            # Extract features from augmented audio (same mode)
+                                            if extraction_mode == "features":
+                                                aug_features = (
+                                                    feature_extractor.extract_features(
+                                                        augmented_audio,
+                                                        method="comprehensive",
+                                                    )
+                                                )
+                                            elif extraction_mode == "spectrogram":
+                                                # Use GPU acceleration if available
+                                                if (
+                                                    hasattr(
+                                                        feature_extractor,
+                                                        "extract_spectrogram_gpu",
+                                                    )
+                                                    and HAS_GPU_SUPPORT
+                                                ):
+                                                    aug_spectrogram = feature_extractor.extract_spectrogram_gpu(
+                                                        augmented_audio,
+                                                        **spectrogram_params,
+                                                    )
+                                                else:
+                                                    aug_spectrogram = feature_extractor.extract_spectrogram(
+                                                        augmented_audio,
+                                                        **spectrogram_params,
+                                                    )
+                                                aug_features = aug_spectrogram.flatten()
+                                            elif extraction_mode == "mfcc":
+                                                # Use GPU acceleration if available
+                                                if (
+                                                    hasattr(
+                                                        feature_extractor,
+                                                        "extract_mfcc_gpu",
+                                                    )
+                                                    and HAS_GPU_SUPPORT
+                                                ):
+                                                    aug_mfcc = feature_extractor.extract_mfcc_gpu(
+                                                        augmented_audio,
+                                                        **spectrogram_params,
+                                                    )
+                                                else:
+                                                    aug_mfcc = (
+                                                        feature_extractor.extract_mfcc(
+                                                            augmented_audio,
+                                                            **spectrogram_params,
+                                                        )
+                                                    )
+                                                aug_features = aug_mfcc.flatten()
+                                            elif (
+                                                extraction_mode == "magnitude_spectrum"
+                                            ):
+                                                # Use GPU acceleration if available
+                                                if (
+                                                    hasattr(
+                                                        feature_extractor,
+                                                        "extract_magnitude_spectrum_gpu",
+                                                    )
+                                                    and HAS_GPU_SUPPORT
+                                                ):
+                                                    aug_mag_spec = feature_extractor.extract_magnitude_spectrum_gpu(
+                                                        augmented_audio,
+                                                        **spectrogram_params,
+                                                    )
+                                                else:
+                                                    aug_mag_spec = feature_extractor.extract_magnitude_spectrum(
+                                                        augmented_audio,
+                                                        **spectrogram_params,
+                                                    )
+                                                aug_features = aug_mag_spec.flatten()
+                                            elif extraction_mode == "power_spectrum":
+                                                # Use GPU acceleration if available
+                                                if (
+                                                    hasattr(
+                                                        feature_extractor,
+                                                        "extract_power_spectrum_gpu",
+                                                    )
+                                                    and HAS_GPU_SUPPORT
+                                                ):
+                                                    aug_power_spec = feature_extractor.extract_power_spectrum_gpu(
+                                                        augmented_audio,
+                                                        **spectrogram_params,
+                                                    )
+                                                else:
+                                                    aug_power_spec = feature_extractor.extract_power_spectrum(
+                                                        augmented_audio,
+                                                        **spectrogram_params,
+                                                    )
+                                                aug_features = aug_power_spec.flatten()
+                                            elif extraction_mode == "chroma":
+                                                aug_chroma = feature_extractor.extract_chroma_features(
+                                                    augmented_audio,
+                                                    **spectrogram_params,
+                                                )
+                                                aug_features = aug_chroma.flatten()
+                                            elif extraction_mode == "both":
+                                                aug_hand_features = (
+                                                    feature_extractor.extract_features(
+                                                        augmented_audio,
+                                                        method="comprehensive",
+                                                    )
+                                                )
+                                                aug_spectrogram = feature_extractor.extract_spectrogram(
+                                                    augmented_audio,
+                                                    **spectrogram_params,
+                                                )
+                                                # Use FULL spectrogram (same as main features)
+                                                aug_spectrogram_full = (
+                                                    aug_spectrogram.flatten()
+                                                )
+                                                aug_features = np.concatenate(
+                                                    [
+                                                        aug_hand_features,
+                                                        aug_spectrogram_full,
+                                                    ]
+                                                )
+
+                                            # Apply per-sample normalization to augmented features
+                                            if per_sample_normalizer is not None:
+                                                aug_features = (
+                                                    per_sample_normalizer.normalize(
+                                                        aug_features
+                                                    )
+                                                )
+
+                                            X_feat.append(aug_features)
+                                            y_labels.append(
+                                                labels[i]
+                                            )  # Same label as original
+                                        except Exception as aug_e:
+                                            # Skip failed augmentation
+                                            pass
+
+                                if (i + 1) % 50 == 0:
+                                    self.logger.info(
+                                        f"  Processed {i + 1}/{len(audio_data)} samples"
+                                    )
+
+                            except Exception as e:
+                                failed_count += 1
+                                if failed_count <= 5:  # Only log first few failures
+                                    self.logger.warning(
+                                        f"Failed to process sample {i}: {str(e)}"
+                                    )
+
+                        # Log processing results
                         self.logger.info(
-                            f"  Augmentation: {orig_count} → {aug_count} samples ({aug_count/orig_count:.1f}x)"
+                            f"✓ Processed {len(X_feat)} samples ({failed_count} failed)"
                         )
 
-                    # Convert to numpy array
-                    X_feat = np.array(X_feat)
-                    # Use y_labels (which includes augmented sample labels) instead of original labels
-                    labels = np.array(y_labels)
+                        # Convert to numpy arrays
+                        X_feat = np.array(X_feat)
+                        y_labels = np.array(y_labels)
 
-                    # Map labels to grouped classes
-                    labels = self._map_labels_to_groups(labels)
-                    labels = np.array(labels)
+                        # Use y_labels (which includes augmented sample labels) instead of original labels
+                        labels = np.array(y_labels)
 
-                    # Update actual_classes to reflect grouped labels
-                    actual_classes = sorted(list(set(labels)))
+                        # Map labels to grouped classes
+                        labels = self._map_labels_to_groups(labels)
+                        labels = np.array(labels)
 
-                    # Store results for this batch
-                    batch_results[batch_name] = {
-                        "features": X_feat,
-                        "labels": labels,
-                        "metadata": metadata,
-                        "num_samples": len(X_feat),
-                        "num_features": len(X_feat[0]) if len(X_feat) > 0 else 0,
-                        "classes": actual_classes,
-                        "class_distribution": dict(
-                            zip(*np.unique(labels, return_counts=True))
-                        ),
-                    }
+                        # Update actual_classes to reflect grouped labels
+                        actual_classes = sorted(list(set(labels)))
 
-                    self.logger.info(
-                        f"Loaded {len(X_feat)} feature vectors from {batch_name} with {len(actual_classes)} classes"
-                    )
+                        # Store results for this batch and mode
+                        batch_results[mode_key] = {
+                            "features": X_feat,
+                            "labels": labels,
+                            "metadata": metadata,
+                            "num_samples": len(X_feat),
+                            "num_features": len(X_feat[0]) if len(X_feat) > 0 else 0,
+                            "classes": actual_classes,
+                            "class_distribution": dict(
+                                zip(*np.unique(labels, return_counts=True))
+                            ),
+                            "extraction_mode": extraction_mode,  # Store which mode was used
+                        }
 
-                    # Save batch-specific results
-                    self._save_batch_data_processing_results(
-                        batch_results[batch_name], batch_name
-                    )
+                        self.logger.info(
+                            f"✓ Stored results for {mode_key}: {len(X_feat)} samples, {len(X_feat[0]) if len(X_feat) > 0 else 0} features"
+                        )
 
-                    # Create batch-specific plots
-                    self._create_batch_plots(batch_results[batch_name], batch_name)
+                    # Skip the rest of the processing since we've handled it in the loop
+                    continue
                 else:
                     self.logger.warning(f"No audio data loaded from {batch_name}")
 

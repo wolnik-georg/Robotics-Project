@@ -17,6 +17,9 @@ Author: Enhanced for geometric discrimination analysis
 
 import numpy as np
 import pandas as pd
+import matplotlib
+
+matplotlib.use("Agg")  # Use non-GUI backend for headless environments
 import matplotlib.pyplot as plt
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC

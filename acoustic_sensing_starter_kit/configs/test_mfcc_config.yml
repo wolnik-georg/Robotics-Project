@@ -1,0 +1,29 @@
+experiment:
+  name: "mfcc_feature_test"
+  description: "Test MFCC features for acoustic contact detection"
+
+data:
+  train_workspaces: ["WS1", "WS3"]
+  test_workspaces: ["WS2"]
+  balance_method: "oversample"
+
+feature_extraction:
+  mode: "mfcc"
+  spectrogram:
+    n_mfcc: 13
+    n_fft: 2048
+    hop_length: 512
+    n_mels: 128
+    time_bins: 128
+
+model:
+  type: "random_forest"
+  n_estimators: 100
+  max_depth: 10
+
+training:
+  augmentation: false
+
+output:
+  save_models: true
+  save_results: true

@@ -27,6 +27,50 @@ validation_datasets: [
   "balanced_collected_data_runs_2026_01_15_workspace_1_pure_contact_undersample"
 ]
 
+# Feature Extraction Mode Configuration
+# Choose between hand-crafted features, spectrograms, or both
+# Now supports multiple modes for comparison
+feature_extraction:
+  modes:  # NEW: List of modes to test sequentially
+    - "features"           # Hand-crafted features (65 dimensions)
+    # - "spectrogram"        # Mel spectrograms
+    # - "mfcc"              # MFCC features (13 × time_frames)
+    # - "magnitude_spectrum" # Raw magnitude spectrum
+    # - "power_spectrum"     # Power spectrum
+    # - "chroma"             # Chroma features (12 bins)
+    # - "both"               # Hand-crafted + full spectrograms
+  
+  # Default mode (for backward compatibility - will be overridden by modes list)
+  mode: "both"  # Options: "features" | "spectrogram" | "mfcc" | "magnitude_spectrum" | "power_spectrum" | "chroma" | "both"
+  
+  # Spectrogram extraction parameters (used for spectrogram, mfcc, magnitude_spectrum, power_spectrum, chroma, both modes)
+  # Optimized for 48kHz audio with contact detection
+  spectrogram:
+    n_fft: 1024          # REDUCED: FFT window size → freq resolution = 48000/1024 = 46.9 Hz/bin
+    hop_length: 512      # REDUCED: Hop between windows → 50% overlap (balance between time/freq resolution)
+    n_mels: 64           # Mel bins for spectrograms
+    time_bins: 64        # FIXED time bins (instead of dynamic)
+    n_mfcc: 13           # MFCC coefficients
+    n_chroma: 12         # Chroma bins
+    n_mels: 128          # Number of mel frequency bins (doubled for better resolution)
+    fmin: 50             # Minimum frequency (Hz) - skip low-freq noise
+    fmax: 20000          # Maximum frequency (Hz) - use FULL spectrum up to Nyquist-2kHz
+    time_bins: 256       # Number of time bins (doubled for better temporal detail)
+    use_log_scale: true  # Use dB scale (recommended for ML)
+    
+    # MFCC-specific parameters
+    n_mfcc: 13           # Number of MFCC coefficients
+    
+    # Chroma-specific parameters  
+    n_chroma: 12         # Number of chroma bins
+    
+  # Per-sample normalization options
+  # NOTE: Testing showed this HURTS performance (-5.8% validation accuracy)
+  # The absolute magnitude of features carries discriminative information
+  normalization:
+    enabled: false       # DISABLED - hurt validation accuracy
+    method: "zscore"     # Options: "zscore" (mean=0, std=1), "minmax" (0-1), "robust" (median/IQR), "l2" (unit norm)
+
 # Analysis Experiments
 experiments:
   data_processing:
@@ -62,6 +106,6 @@ experiments:
 
 # Output Configuration
 output:
-  base_dir: "results_v11"  # New version with tuned MLP + ensemble
+  base_dir: "handcrafted_features_v7_mega_ensemble_fixed"  # Fixed mega-ensemble (removed conditionals)
 
 # Analysis Experiments (Standard Pipeline)

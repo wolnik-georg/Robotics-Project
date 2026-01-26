@@ -26,6 +26,18 @@ from sklearn.preprocessing import StandardScaler
 import warnings
 from typing import Dict, List, Tuple, Optional, Union
 
+# GPU acceleration imports (optional)
+try:
+    import torch
+    import torchaudio
+    import torchaudio.transforms as T
+
+    HAS_GPU_SUPPORT = torch.cuda.is_available()
+    print(f"GPU acceleration available: {HAS_GPU_SUPPORT}")
+except ImportError:
+    HAS_GPU_SUPPORT = False
+    print("GPU acceleration not available - using CPU-only processing")
+
 
 class GeometricFeatureExtractor:
     """
@@ -46,6 +58,7 @@ class GeometricFeatureExtractor:
         n_fft: int = 4096,
         use_workspace_invariant: bool = True,
         use_impulse_features: bool = False,
+        use_contact_physics_features: bool = True,
     ):
         """
         Initialize the feature extractor.
@@ -57,11 +70,15 @@ class GeometricFeatureExtractor:
                                     for better cross-workspace generalization
             use_impulse_features: Whether to include impulse response / transfer function
                                  features for better material discrimination
+            use_contact_physics_features: Whether to include contact physics features
+                                          (damping, energy transfer, etc.) for better
+                                          contact detection accuracy
         """
         self.sr = sr
         self.n_fft = n_fft
         self.use_workspace_invariant = use_workspace_invariant
         self.use_impulse_features = use_impulse_features
+        self.use_contact_physics_features = use_contact_physics_features
         self.freq_bins = librosa.fft_frequencies(sr=sr, n_fft=n_fft)
 
         # Define frequency bands based on acoustic sensing research
@@ -151,6 +168,11 @@ class GeometricFeatureExtractor:
         if self.use_impulse_features:
             impulse_feats = self._extract_impulse_response_features(audio)
             features.extend(impulse_feats)
+
+        # 9. Contact physics features (optional) - NEW!
+        if self.use_contact_physics_features:
+            contact_physics_feats = self._extract_contact_physics_features(audio)
+            features.extend(contact_physics_feats)
 
         return np.array(features)
 
@@ -846,6 +868,195 @@ class GeometricFeatureExtractor:
 
         return features
 
+    def _extract_contact_physics_features(self, audio: np.ndarray) -> List[float]:
+        """
+        Extract physics-informed features that capture contact mechanics.
+
+        These features model the actual physical phenomena that occur during
+        acoustic tactile contact:
+        - Impact transients (sharp onset when contact occurs)
+        - Damping changes (contact damps vibrations faster)
+        - Energy transfer (contact dissipates energy into surface)
+        - Nonlinear effects (harmonic distortion from contact mechanics)
+        - Resonance shifts (contact changes system resonances)
+
+        Expected to improve cross-workspace generalization by focusing on
+        universal physics rather than workspace-specific acoustics.
+
+        Returns:
+            List of 10 contact physics features
+        """
+        features = []
+
+        # Ensure audio is floating-point
+        if audio.dtype != np.float32 and audio.dtype != np.float64:
+            audio = audio.astype(np.float32)
+
+        # ==================================================================
+        # Feature 1-2: Impact Transient Detection
+        # Contact creates sharp onset in amplitude envelope
+        # ==================================================================
+        onset_env = librosa.onset.onset_strength(y=audio, sr=self.sr)
+
+        # Maximum onset strength (sharpness of impact)
+        impact_sharpness = np.max(onset_env) if len(onset_env) > 0 else 0.0
+        features.append(impact_sharpness)
+
+        # Onset slope (how quickly amplitude rises)
+        if len(onset_env) > 1:
+            onset_diff = np.diff(onset_env)
+            max_slope = np.max(onset_diff) if len(onset_diff) > 0 else 0.0
+        else:
+            max_slope = 0.0
+        features.append(max_slope)
+
+        # ==================================================================
+        # Feature 3-4: Damping Coefficient Analysis
+        # Contact increases damping → faster decay of vibrations
+        # ==================================================================
+        # Compute envelope of signal
+        analytic_signal = scipy.signal.hilbert(audio)
+        amplitude_envelope = np.abs(analytic_signal)
+
+        # Fit exponential decay to envelope: A(t) = A0 * exp(-α*t)
+        # Higher α = more damping = likely contact
+        time_vector = np.arange(len(amplitude_envelope)) / self.sr
+
+        # Only fit to decaying portion (after initial peak)
+        peak_idx = np.argmax(amplitude_envelope)
+        if peak_idx < len(amplitude_envelope) - 10:
+            decay_envelope = amplitude_envelope[peak_idx:]
+            decay_time = time_vector[peak_idx:] - time_vector[peak_idx]
+
+            # Avoid log of zero
+            decay_envelope = np.maximum(decay_envelope, 1e-10)
+
+            # Linear fit in log space: log(A) = log(A0) - α*t
+            try:
+                with warnings.catch_warnings():
+                    warnings.simplefilter("ignore")
+                    coeffs = np.polyfit(
+                        decay_time[: len(decay_envelope)], np.log(decay_envelope), deg=1
+                    )
+                    damping_coefficient = -coeffs[0]  # α (negative slope)
+            except:
+                damping_coefficient = 0.0
+        else:
+            damping_coefficient = 0.0
+
+        features.append(damping_coefficient)
+
+        # Decay rate (ratio of end to peak amplitude)
+        decay_ratio = amplitude_envelope[-1] / (amplitude_envelope[peak_idx] + 1e-10)
+        features.append(decay_ratio)
+
+        # ==================================================================
+        # Feature 5: Energy Transfer Rate
+        # Contact dissipates energy into surface → energy drops faster
+        # ==================================================================
+        # Divide signal into 4 quarters, measure energy in each
+        quarter_len = len(audio) // 4
+        if quarter_len > 0:
+            energies = []
+            for i in range(4):
+                start = i * quarter_len
+                end = start + quarter_len if i < 3 else len(audio)
+                quarter_energy = np.sum(audio[start:end] ** 2)
+                energies.append(quarter_energy)
+
+            # Energy transfer rate: how much energy is lost from start to end
+            # Ratio of last quarter to first quarter (lower = more dissipation)
+            energy_transfer_rate = 1.0 - (energies[-1] / (energies[0] + 1e-10))
+            energy_transfer_rate = np.clip(energy_transfer_rate, 0, 1)
+        else:
+            energy_transfer_rate = 0.0
+
+        features.append(energy_transfer_rate)
+
+        # ==================================================================
+        # Feature 6-7: Harmonic Distortion
+        # Nonlinear contact mechanics introduce harmonics
+        # ==================================================================
+        # Compute power spectrum
+        fft_vals = np.fft.rfft(audio)
+        power_spectrum = np.abs(fft_vals) ** 2
+        freqs = np.fft.rfftfreq(len(audio), 1 / self.sr)
+
+        # Find fundamental frequency (first major peak)
+        # Look in reasonable range (100-2000 Hz for contact sounds)
+        fund_mask = (freqs >= 100) & (freqs <= 2000)
+        if np.any(fund_mask):
+            fund_spectrum = power_spectrum[fund_mask]
+            fund_freqs = freqs[fund_mask]
+            fund_idx = np.argmax(fund_spectrum)
+            fundamental_freq = fund_freqs[fund_idx]
+            fundamental_power = fund_spectrum[fund_idx]
+
+            # Measure power at harmonics (2f, 3f, 4f, 5f)
+            harmonic_power = 0.0
+            for n in [2, 3, 4, 5]:
+                harmonic_freq = n * fundamental_freq
+                # Find closest frequency bin
+                harmonic_idx = np.argmin(np.abs(freqs - harmonic_freq))
+                if harmonic_idx < len(power_spectrum):
+                    harmonic_power += power_spectrum[harmonic_idx]
+
+            # Total Harmonic Distortion (THD) = harmonics / fundamental
+            thd = harmonic_power / (fundamental_power + 1e-10)
+        else:
+            thd = 0.0
+            fundamental_freq = 0.0
+
+        features.append(thd)
+        features.append(fundamental_freq)
+
+        # ==================================================================
+        # Feature 8: Resonance Frequency Shift
+        # Contact changes system resonances (chamber deformation)
+        # ==================================================================
+        # Compare resonance band energy to total energy
+        resonance_mask = (freqs >= 450) & (freqs <= 850)
+        if np.any(resonance_mask):
+            resonance_power = np.sum(power_spectrum[resonance_mask])
+            total_power = np.sum(power_spectrum) + 1e-10
+            resonance_ratio = resonance_power / total_power
+        else:
+            resonance_ratio = 0.0
+
+        features.append(resonance_ratio)
+
+        # ==================================================================
+        # Feature 9: Contact Duration Estimation
+        # How long is the signal above a threshold?
+        # ==================================================================
+        # Threshold at 20% of peak amplitude
+        threshold = 0.2 * np.max(amplitude_envelope)
+        above_threshold = amplitude_envelope > threshold
+        contact_duration_samples = np.sum(above_threshold)
+        contact_duration_sec = contact_duration_samples / self.sr
+
+        features.append(contact_duration_sec)
+
+        # ==================================================================
+        # Feature 10: High-Frequency Damping Ratio
+        # Contact specifically damps high frequencies (>2kHz)
+        # ==================================================================
+        # Compare high-frequency energy to low-frequency energy
+        low_mask = (freqs >= 100) & (freqs <= 1000)
+        high_mask = (freqs >= 2000) & (freqs <= 8000)
+
+        if np.any(low_mask) and np.any(high_mask):
+            low_energy = np.sum(power_spectrum[low_mask])
+            high_energy = np.sum(power_spectrum[high_mask])
+            # Ratio: lower means more HF damping (typical for contact)
+            hf_damping_ratio = high_energy / (low_energy + 1e-10)
+        else:
+            hf_damping_ratio = 0.0
+
+        features.append(hf_damping_ratio)
+
+        return features
+
     def _extract_legacy_features(self, audio: np.ndarray) -> pd.Series:
         """Extract legacy STFT features for compatibility."""
         stft = librosa.stft(audio, n_fft=self.n_fft)
@@ -964,6 +1175,547 @@ class GeometricFeatureExtractor:
         else:
             return [f"feature_{i}" for i in range(50)]  # Generic fallback
 
+    def extract_spectrogram(
+        self,
+        audio: np.ndarray,
+        n_fft: int = 512,
+        hop_length: int = 128,
+        n_mels: int = 64,
+        fmin: float = 0,
+        fmax: float = 8000,
+        time_bins: int = 128,
+        use_log_scale: bool = True,
+    ) -> np.ndarray:
+        """
+        Extract mel spectrogram representation of audio signal.
+
+        This provides a time-frequency representation that can be used as an
+        alternative to hand-crafted features, especially for deep learning models.
+
+        Args:
+            audio: Input audio waveform
+            n_fft: FFT window size (default: 512)
+            hop_length: Hop length for STFT (default: 128)
+            n_mels: Number of mel frequency bins (default: 64)
+            fmin: Minimum frequency in Hz (default: 0)
+            fmax: Maximum frequency in Hz (default: 8000)
+            time_bins: Target number of time bins for consistent shape (default: 128)
+            use_log_scale: Apply log scaling (dB scale) for better ML performance
+
+        Returns:
+            Mel spectrogram of shape (n_mels, time_bins)
+
+        Example:
+            >>> extractor = GeometricFeatureExtractor(sr=48000)
+            >>> audio = load_audio("contact.wav")
+            >>> spectrogram = extractor.extract_spectrogram(audio)
+            >>> print(spectrogram.shape)  # (64, 128)
+        """
+        # Ensure audio is floating-point
+        if audio.dtype != np.float32 and audio.dtype != np.float64:
+            audio = audio.astype(np.float32)
+
+        # Use instance sample rate if fmax is default
+        if fmax == 8000 and hasattr(self, "sr"):
+            fmax = min(8000, self.sr // 2)  # Nyquist limit
+
+        # Compute mel spectrogram
+        mel_spec = librosa.feature.melspectrogram(
+            y=audio,
+            sr=self.sr,
+            n_fft=n_fft,
+            hop_length=hop_length,
+            n_mels=n_mels,
+            fmin=fmin,
+            fmax=fmax,
+        )
+
+        # Apply log scaling (convert to decibel scale)
+        if use_log_scale:
+            mel_spec = librosa.power_to_db(mel_spec, ref=np.max)
+
+        # Resize to fixed temporal dimension for consistent input shape
+        if mel_spec.shape[1] != time_bins:
+            # Pad or truncate to match time_bins
+            if mel_spec.shape[1] < time_bins:
+                # Pad with zeros
+                pad_width = time_bins - mel_spec.shape[1]
+                mel_spec = np.pad(mel_spec, ((0, 0), (0, pad_width)), mode="constant")
+            else:
+                # Truncate
+                mel_spec = mel_spec[:, :time_bins]
+
+        return mel_spec  # Shape: (n_mels, time_bins)
+
+    def extract_features_or_spectrogram(
+        self,
+        audio: np.ndarray,
+        mode: str = "features",
+        spectrogram_params: Optional[Dict] = None,
+    ) -> Union[np.ndarray, Dict[str, np.ndarray]]:
+        """
+        Unified interface for feature extraction with mode selection.
+
+        This method allows easy switching between hand-crafted features,
+        spectrograms, or both, making it simple to experiment with different
+        input representations for ML models.
+
+        Args:
+            audio: Input audio waveform
+            mode: Extraction mode - one of:
+                  - "features": Hand-crafted feature vector (default)
+                  - "spectrogram": Mel spectrogram (2D time-frequency)
+                  - "both": Both features and spectrogram
+            spectrogram_params: Optional dict of parameters for spectrogram extraction
+                               (only used when mode="spectrogram" or mode="both")
+
+        Returns:
+            If mode="features": 1D feature vector (80 dims)
+            If mode="spectrogram": 2D spectrogram (n_mels × time_bins)
+            If mode="both": dict with keys "features" and "spectrogram"
+
+        Example:
+            >>> extractor = GeometricFeatureExtractor(sr=48000)
+            >>> audio = load_audio("contact.wav")
+            >>>
+            >>> # Extract features (default)
+            >>> features = extractor.extract_features_or_spectrogram(audio, mode="features")
+            >>>
+            >>> # Extract spectrogram
+            >>> spec = extractor.extract_features_or_spectrogram(audio, mode="spectrogram")
+            >>>
+            >>> # Extract both
+            >>> both = extractor.extract_features_or_spectrogram(audio, mode="both")
+            >>> features = both["features"]
+            >>> spec = both["spectrogram"]
+        """
+        if mode == "features":
+            return self.extract_features(audio, method="comprehensive")
+
+        elif mode == "spectrogram":
+            params = spectrogram_params or {}
+            return self.extract_spectrogram(audio, **params)
+
+        elif mode == "both":
+            features = self.extract_features(audio, method="comprehensive")
+            params = spectrogram_params or {}
+            spectrogram = self.extract_spectrogram(audio, **params)
+            return {"features": features, "spectrogram": spectrogram}
+
+        else:
+            raise ValueError(
+                f"Unknown mode: {mode}. Must be 'features', 'spectrogram', or 'both'"
+            )
+
+    def extract_mfcc(
+        self,
+        audio: np.ndarray,
+        n_mfcc: int = 13,
+        n_fft: int = 2048,
+        hop_length: int = 512,
+        n_mels: int = 128,
+        fmin: int = 0,
+        fmax: Optional[int] = None,
+    ) -> np.ndarray:
+        """
+        Extract Mel-frequency cepstral coefficients (MFCCs).
+
+        MFCCs provide a compact representation of the spectral envelope,
+        focusing on perceptually relevant frequency bands.
+
+        Args:
+            audio: Input audio waveform
+            n_mfcc: Number of MFCC coefficients to return
+            n_fft: FFT window size
+            hop_length: Hop length between windows
+            n_mels: Number of mel bands
+            fmin: Minimum frequency
+            fmax: Maximum frequency (default: sr/2)
+
+        Returns:
+            MFCC matrix of shape (n_mfcc, time_frames)
+
+        Example:
+            >>> extractor = GeometricFeatureExtractor(sr=48000)
+            >>> audio = load_audio("contact.wav")
+            >>> mfcc = extractor.extract_mfcc(audio, n_mfcc=13)
+            >>> print(mfcc.shape)  # (13, time_frames)
+        """
+        # Ensure audio is floating-point
+        if audio.dtype != np.float32 and audio.dtype != np.float64:
+            audio = audio.astype(np.float32)
+
+        # Extract MFCCs
+        mfcc = librosa.feature.mfcc(
+            y=audio,
+            sr=self.sr,
+            n_mfcc=n_mfcc,
+            n_fft=n_fft,
+            hop_length=hop_length,
+            n_mels=n_mels,
+            fmin=fmin,
+            fmax=fmax,
+        )
+
+        return mfcc  # Shape: (n_mfcc, time_frames)
+
+    def extract_magnitude_spectrum(
+        self,
+        audio: np.ndarray,
+        n_fft: int = 2048,
+        hop_length: int = 512,
+        normalize: bool = True,
+    ) -> np.ndarray:
+        """
+        Extract magnitude spectrum using STFT.
+
+        This provides the raw frequency domain representation,
+        showing magnitude at each frequency bin over time.
+
+        Args:
+            audio: Input audio waveform
+            n_fft: FFT window size
+            hop_length: Hop length between windows
+            normalize: Whether to normalize by maximum value
+
+        Returns:
+            Magnitude spectrum of shape (n_fft//2 + 1, time_frames)
+
+        Example:
+            >>> extractor = GeometricFeatureExtractor(sr=48000)
+            >>> audio = load_audio("contact.wav")
+            >>> mag_spec = extractor.extract_magnitude_spectrum(audio)
+            >>> print(mag_spec.shape)  # (1025, time_frames)
+        """
+        # Ensure audio is floating-point
+        if audio.dtype != np.float32 and audio.dtype != np.float64:
+            audio = audio.astype(np.float32)
+
+        # Compute STFT
+        stft = librosa.stft(
+            y=audio,
+            n_fft=n_fft,
+            hop_length=hop_length,
+        )
+
+        # Get magnitude spectrum
+        mag_spec = np.abs(stft)
+
+        # Normalize if requested
+        if normalize and np.max(mag_spec) > 0:
+            mag_spec = mag_spec / np.max(mag_spec)
+
+        return mag_spec  # Shape: (n_fft//2 + 1, time_frames)
+
+    def extract_power_spectrum(
+        self,
+        audio: np.ndarray,
+        n_fft: int = 2048,
+        hop_length: int = 512,
+        normalize: bool = True,
+    ) -> np.ndarray:
+        """
+        Extract power spectrum using STFT.
+
+        Power spectrum emphasizes energy distribution across frequencies,
+        which may be more relevant for contact detection.
+
+        Args:
+            audio: Input audio waveform
+            n_fft: FFT window size
+            hop_length: Hop length between windows
+            normalize: Whether to normalize by maximum value
+
+        Returns:
+            Power spectrum of shape (n_fft//2 + 1, time_frames)
+
+        Example:
+            >>> extractor = GeometricFeatureExtractor(sr=48000)
+            >>> audio = load_audio("contact.wav")
+            >>> power_spec = extractor.extract_power_spectrum(audio)
+            >>> print(power_spec.shape)  # (1025, time_frames)
+        """
+        # Ensure audio is floating-point
+        if audio.dtype != np.float32 and audio.dtype != np.float64:
+            audio = audio.astype(np.float32)
+
+        # Compute STFT
+        stft = librosa.stft(
+            y=audio,
+            n_fft=n_fft,
+            hop_length=hop_length,
+        )
+
+        # Get power spectrum (magnitude squared)
+        power_spec = np.abs(stft) ** 2
+
+        # Normalize if requested
+        if normalize and np.max(power_spec) > 0:
+            power_spec = power_spec / np.max(power_spec)
+
+        return power_spec  # Shape: (n_fft//2 + 1, time_frames)
+
+    def extract_chroma_features(
+        self,
+        audio: np.ndarray,
+        n_chroma: int = 12,
+        n_fft: int = 2048,
+        hop_length: int = 512,
+    ) -> np.ndarray:
+        """
+        Extract chroma features representing pitch classes.
+
+        Chroma features fold the spectrum into 12 pitch classes,
+        useful if there are harmonic patterns in the contact sounds.
+
+        Args:
+            audio: Input audio waveform
+            n_chroma: Number of chroma bins (12 for full octave)
+            n_fft: FFT window size
+            hop_length: Hop length between windows
+
+        Returns:
+            Chroma features of shape (n_chroma, time_frames)
+
+        Example:
+            >>> extractor = GeometricFeatureExtractor(sr=48000)
+            >>> audio = load_audio("contact.wav")
+            >>> chroma = extractor.extract_chroma_features(audio)
+            >>> print(chroma.shape)  # (12, time_frames)
+        """
+        # Ensure audio is floating-point
+        if audio.dtype != np.float32 and audio.dtype != np.float64:
+            audio = audio.astype(np.float32)
+
+        # Extract chroma features
+        chroma = librosa.feature.chroma_stft(
+            y=audio,
+            sr=self.sr,
+            n_chroma=n_chroma,
+            n_fft=n_fft,
+            hop_length=hop_length,
+        )
+
+        return chroma  # Shape: (n_chroma, time_frames)
+
+    # GPU-Accelerated Methods
+    def extract_mfcc_gpu(
+        self,
+        audio: np.ndarray,
+        n_mfcc: int = 13,
+        n_fft: int = 2048,
+        hop_length: int = 512,
+        n_mels: int = 128,
+        fmin: int = 0,
+        fmax: Optional[int] = None,
+    ) -> np.ndarray:
+        """
+        GPU-accelerated MFCC extraction using TorchAudio.
+
+        Significantly faster than CPU-based librosa for large datasets.
+
+        Args:
+            audio: Input audio waveform
+            n_mfcc: Number of MFCC coefficients
+            n_fft: FFT window size
+            hop_length: Hop length between windows
+            n_mels: Number of mel bands
+            fmin: Minimum frequency
+            fmax: Maximum frequency
+
+        Returns:
+            MFCC matrix of shape (n_mfcc, time_frames)
+        """
+        if not HAS_GPU_SUPPORT:
+            # Fallback to CPU method
+            return self.extract_mfcc(
+                audio, n_mfcc, n_fft, hop_length, n_mels, fmin, fmax
+            )
+
+        # Ensure audio is floating-point
+        if audio.dtype != np.float32 and audio.dtype != np.float64:
+            audio = audio.astype(np.float32)
+
+        # Convert to torch tensor and move to GPU
+        audio_tensor = torch.from_numpy(audio).float().cuda()
+
+        # Create MFCC transform
+        mfcc_transform = T.MFCC(
+            sample_rate=self.sr,
+            n_mfcc=n_mfcc,
+            melkwargs={
+                "n_fft": n_fft,
+                "hop_length": hop_length,
+                "n_mels": n_mels,
+                "f_min": fmin,
+                "f_max": fmax if fmax else self.sr // 2,
+            },
+        ).cuda()
+
+        # Extract MFCCs
+        mfcc = mfcc_transform(audio_tensor.unsqueeze(0))  # Add batch dimension
+
+        # Remove batch dimension and convert back to numpy
+        return mfcc.squeeze(0).cpu().numpy()
+
+    def extract_magnitude_spectrum_gpu(
+        self,
+        audio: np.ndarray,
+        n_fft: int = 2048,
+        hop_length: int = 512,
+        normalize: bool = True,
+    ) -> np.ndarray:
+        """
+        GPU-accelerated magnitude spectrum extraction using TorchAudio.
+
+        Args:
+            audio: Input audio waveform
+            n_fft: FFT window size
+            hop_length: Hop length between windows
+            normalize: Whether to normalize by maximum value
+
+        Returns:
+            Magnitude spectrum of shape (n_fft//2 + 1, time_frames)
+        """
+        if not HAS_GPU_SUPPORT:
+            return self.extract_magnitude_spectrum(audio, n_fft, hop_length, normalize)
+
+        # Ensure audio is floating-point
+        if audio.dtype != np.float32 and audio.dtype != np.float64:
+            audio = audio.astype(np.float32)
+
+        # Convert to torch tensor and move to GPU
+        audio_tensor = torch.from_numpy(audio).float().cuda()
+
+        # Compute STFT
+        stft = torch.stft(
+            audio_tensor,
+            n_fft=n_fft,
+            hop_length=hop_length,
+            window=torch.hann_window(n_fft).cuda(),
+            return_complex=True,
+        )
+
+        # Get magnitude spectrum
+        mag_spec = torch.abs(stft)
+
+        # Normalize if requested
+        if normalize and torch.max(mag_spec) > 0:
+            mag_spec = mag_spec / torch.max(mag_spec)
+
+        # Convert back to numpy
+        return mag_spec.cpu().numpy()
+
+    def extract_power_spectrum_gpu(
+        self,
+        audio: np.ndarray,
+        n_fft: int = 2048,
+        hop_length: int = 512,
+        normalize: bool = True,
+    ) -> np.ndarray:
+        """
+        GPU-accelerated power spectrum extraction using TorchAudio.
+
+        Args:
+            audio: Input audio waveform
+            n_fft: FFT window size
+            hop_length: Hop length between windows
+            normalize: Whether to normalize by maximum value
+
+        Returns:
+            Power spectrum of shape (n_fft//2 + 1, time_frames)
+        """
+        if not HAS_GPU_SUPPORT:
+            return self.extract_power_spectrum(audio, n_fft, hop_length, normalize)
+
+        # Ensure audio is floating-point
+        if audio.dtype != np.float32 and audio.dtype != np.float64:
+            audio = audio.astype(np.float32)
+
+        # Convert to torch tensor and move to GPU
+        audio_tensor = torch.from_numpy(audio).float().cuda()
+
+        # Compute STFT
+        stft = torch.stft(
+            audio_tensor,
+            n_fft=n_fft,
+            hop_length=hop_length,
+            window=torch.hann_window(n_fft).cuda(),
+            return_complex=True,
+        )
+
+        # Get power spectrum (magnitude squared)
+        power_spec = torch.abs(stft) ** 2
+
+        # Normalize if requested
+        if normalize and torch.max(power_spec) > 0:
+            power_spec = power_spec / torch.max(power_spec)
+
+        # Convert back to numpy
+        return power_spec.cpu().numpy()
+
+    def extract_spectrogram_gpu(
+        self,
+        audio: np.ndarray,
+        n_fft: int = 2048,
+        hop_length: int = 512,
+        n_mels: int = 128,
+        fmin: int = 0,
+        fmax: Optional[int] = None,
+        normalize: bool = True,
+    ) -> np.ndarray:
+        """
+        GPU-accelerated mel spectrogram extraction using TorchAudio.
+
+        Args:
+            audio: Input audio waveform
+            n_fft: FFT window size
+            hop_length: Hop length between windows
+            n_mels: Number of mel bands
+            fmin: Minimum frequency
+            fmax: Maximum frequency
+            normalize: Whether to normalize by maximum value
+
+        Returns:
+            Mel spectrogram of shape (n_mels, time_frames)
+        """
+        if not HAS_GPU_SUPPORT:
+            return self.extract_spectrogram(
+                audio, n_fft, hop_length, n_mels, fmin, fmax, normalize
+            )
+
+        # Ensure audio is floating-point
+        if audio.dtype != np.float32 and audio.dtype != np.float64:
+            audio = audio.astype(np.float32)
+
+        # Convert to torch tensor and move to GPU
+        audio_tensor = torch.from_numpy(audio).float().cuda()
+
+        # Create mel spectrogram transform
+        mel_transform = T.MelSpectrogram(
+            sample_rate=self.sr,
+            n_fft=n_fft,
+            hop_length=hop_length,
+            n_mels=n_mels,
+            f_min=fmin,
+            f_max=fmax if fmax else self.sr // 2,
+        ).cuda()
+
+        # Extract mel spectrogram
+        mel_spec = mel_transform(audio_tensor.unsqueeze(0))  # Add batch dimension
+
+        # Convert to decibels (log scale)
+        mel_spec_db = torchaudio.transforms.AmplitudeToDB()(mel_spec)
+
+        # Normalize if requested
+        if normalize:
+            mel_spec_db = (mel_spec_db - torch.mean(mel_spec_db)) / (
+                torch.std(mel_spec_db) + 1e-8
+            )
+
+        # Remove batch dimension and convert back to numpy
+        return mel_spec_db.squeeze(0).cpu().numpy()
+
 
 def extract_features(
     audio: np.ndarray, method: str = "comprehensive", sr: int = 48000, **kwargs
@@ -986,6 +1738,138 @@ def extract_features(
 
     extractor = GeometricFeatureExtractor(sr=sr, **kwargs)
     return extractor.extract_features(audio, method=method)
+
+    def extract_spectrogram(
+        self,
+        audio: np.ndarray,
+        n_fft: int = 512,
+        hop_length: int = 128,
+        n_mels: int = 64,
+        fmin: float = 0,
+        fmax: float = 8000,
+        time_bins: int = 128,
+        use_log_scale: bool = True,
+    ) -> np.ndarray:
+        """
+        Extract mel spectrogram representation of audio signal.
+
+        This provides a time-frequency representation that can be used as an
+        alternative to hand-crafted features, especially for deep learning models.
+
+        Args:
+            audio: Input audio waveform
+            n_fft: FFT window size (default: 512)
+            hop_length: Hop length for STFT (default: 128)
+            n_mels: Number of mel frequency bins (default: 64)
+            fmin: Minimum frequency in Hz (default: 0)
+            fmax: Maximum frequency in Hz (default: 8000)
+            time_bins: Target number of time bins for consistent shape (default: 128)
+            use_log_scale: Apply log scaling (dB scale) for better ML performance
+
+        Returns:
+            Mel spectrogram of shape (n_mels, time_bins)
+
+        Example:
+            >>> extractor = GeometricFeatureExtractor(sr=48000)
+            >>> audio = load_audio("contact.wav")
+            >>> spectrogram = extractor.extract_spectrogram(audio)
+            >>> print(spectrogram.shape)  # (64, 128)
+        """
+        # Ensure audio is floating-point
+        if audio.dtype != np.float32 and audio.dtype != np.float64:
+            audio = audio.astype(np.float32)
+
+        # Use instance sample rate if fmax is default
+        if fmax == 8000 and hasattr(self, "sr"):
+            fmax = min(8000, self.sr // 2)  # Nyquist limit
+
+        # Compute mel spectrogram
+        mel_spec = librosa.feature.melspectrogram(
+            y=audio,
+            sr=self.sr,
+            n_fft=n_fft,
+            hop_length=hop_length,
+            n_mels=n_mels,
+            fmin=fmin,
+            fmax=fmax,
+        )
+
+        # Apply log scaling (convert to decibel scale)
+        if use_log_scale:
+            mel_spec = librosa.power_to_db(mel_spec, ref=np.max)
+
+        # Resize to fixed temporal dimension for consistent input shape
+        if mel_spec.shape[1] != time_bins:
+            # Pad or truncate to match time_bins
+            if mel_spec.shape[1] < time_bins:
+                # Pad with zeros
+                pad_width = time_bins - mel_spec.shape[1]
+                mel_spec = np.pad(mel_spec, ((0, 0), (0, pad_width)), mode="constant")
+            else:
+                # Truncate
+                mel_spec = mel_spec[:, :time_bins]
+
+        return mel_spec  # Shape: (n_mels, time_bins)
+
+    def extract_features_or_spectrogram(
+        self,
+        audio: np.ndarray,
+        mode: str = "features",
+        spectrogram_params: Optional[Dict] = None,
+    ) -> Union[np.ndarray, Dict[str, np.ndarray]]:
+        """
+        Unified interface for feature extraction with mode selection.
+
+        This method allows easy switching between hand-crafted features,
+        spectrograms, or both, making it simple to experiment with different
+        input representations for ML models.
+
+        Args:
+            audio: Input audio waveform
+            mode: Extraction mode - one of:
+                  - "features": Hand-crafted feature vector (default)
+                  - "spectrogram": Mel spectrogram (2D time-frequency)
+                  - "both": Both features and spectrogram
+            spectrogram_params: Optional dict of parameters for spectrogram extraction
+                               (only used when mode="spectrogram" or mode="both")
+
+        Returns:
+            If mode="features": 1D feature vector (80 dims)
+            If mode="spectrogram": 2D spectrogram (n_mels × time_bins)
+            If mode="both": dict with keys "features" and "spectrogram"
+
+        Example:
+            >>> extractor = GeometricFeatureExtractor(sr=48000)
+            >>> audio = load_audio("contact.wav")
+            >>>
+            >>> # Extract features (default)
+            >>> features = extractor.extract_features_or_spectrogram(audio, mode="features")
+            >>>
+            >>> # Extract spectrogram
+            >>> spec = extractor.extract_features_or_spectrogram(audio, mode="spectrogram")
+            >>>
+            >>> # Extract both
+            >>> both = extractor.extract_features_or_spectrogram(audio, mode="both")
+            >>> features = both["features"]
+            >>> spec = both["spectrogram"]
+        """
+        if mode == "features":
+            return self.extract_features(audio, method="comprehensive")
+
+        elif mode == "spectrogram":
+            params = spectrogram_params or {}
+            return self.extract_spectrogram(audio, **params)
+
+        elif mode == "both":
+            features = self.extract_features(audio, method="comprehensive")
+            params = spectrogram_params or {}
+            spectrogram = self.extract_spectrogram(audio, **params)
+            return {"features": features, "spectrogram": spectrogram}
+
+        else:
+            raise ValueError(
+                f"Unknown mode: {mode}. Must be 'features', 'spectrogram', or 'both'"
+            )
 
 
 # Backward compatibility functions

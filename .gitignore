@@ -5,3 +5,8 @@ acoustic_sensing_starter_kit/material_tapping/
 acoustic_sensing_starter_kit/tap_no_tap/
 acoustic_sensing_starter_kit/wood_metall/
 acoustic_sensing_starter_kit/material_tapping_demo/
+*.png
+*.mp4
+*.json
+*.npy
+*.pkl

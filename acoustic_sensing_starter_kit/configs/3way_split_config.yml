@@ -1,0 +1,70 @@
+# 3-Way Split Pipeline Configuration
+# This implements a rigorous ML evaluation pipeline with separate datasets for:
+# 1. Training: Initial model training
+# 2. Tuning: Hyperparameter optimization and model selection
+# 3. Testing: Final unbiased performance evaluation
+
+# Base data directory
+base_data_dir: "data"
+
+# STEP 1: Training datasets (for initial model training)
+datasets:
+  - "balanced_collected_data_runs_2026_01_14_workspace_3_pure_no_contact_undersample"
+  - "balanced_collected_data_runs_2026_01_14_workspace_3_pure_contact_undersample"
+  # - "balanced_collected_data_runs_2025_12_15_v2_2_workspace3_squares_cutout_undersample"
+  # - "balanced_collected_data_runs_2025_12_17_v2_workspace_3_squares_cutout_undersample"
+
+# STEP 2: Tuning datasets (for hyperparameter optimization and model selection)
+# These datasets are used to select the best model and tune hyperparameters
+hyperparameter_tuning_datasets:
+  # - "balanced_collected_data_runs_2026_01_15_workspace_1_squares_cutout_undersample"
+  - "balanced_collected_data_runs_2026_01_15_workspace_1_pure_no_contact_undersample"
+  - "balanced_collected_data_runs_2026_01_15_workspace_1_pure_contact_undersample"
+
+# STEP 3: Final test datasets (for unbiased final evaluation)
+# These datasets are ONLY used for final performance reporting
+# They are completely held out until the end
+final_test_datasets:
+  # - "balanced_collected_data_runs_2026_01_15_workspace_2_squares_cutout_undersample"
+  - "balanced_collected_data_runs_2026_01_15_workspace_2_pure_no_contact_undersample"
+  - "balanced_collected_data_runs_2026_01_15_workspace_2_pure_contact_undersample"
+
+# Analysis Experiments
+experiments:
+  data_processing:
+    enabled: true
+    apply_audio_smoothing: false
+    use_workspace_invariant_features: true
+    use_impulse_features: true
+    use_contact_physics_features: true  # NEW: Physics-informed contact features (damping, energy transfer, etc.)
+    use_data_augmentation: true
+    augmentation_factor: 2
+    motion_artifact_removal:
+      enabled: false
+
+  dimensionality_reduction:
+    enabled: true
+
+  discrimination_analysis:
+    enabled: true
+
+  saliency_analysis:
+    enabled: false
+
+  feature_ablation:
+    enabled: false
+
+  impulse_response:
+    enabled: false
+
+  frequency_band_ablation:
+    enabled: false
+
+  surface_reconstruction:
+    enabled: false
+
+# Output Configuration
+output:
+  base_dir: "results_3way_split_v3"
+
+# Analysis Experiments (3-Way Split Pipeline)

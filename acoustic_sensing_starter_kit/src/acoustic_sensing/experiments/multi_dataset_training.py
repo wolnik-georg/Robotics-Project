@@ -1,7 +1,10 @@
 from .base_experiment import BaseExperiment
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
 import numpy as np
 import pandas as pd
+import matplotlib
+
+matplotlib.use("Agg")  # Use non-GUI backend for headless environments
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
@@ -36,13 +39,13 @@ class MultiDatasetTrainingExperiment(BaseExperiment):
 
     def run(self, shared_data: Dict[str, Any]) -> Dict[str, Any]:
         """
-        Run multi-dataset training and validation.
+        Run multi-dataset training and validation for all feature extraction modes.
 
         Args:
             shared_data: Contains processed data from data_processing experiment
 
         Returns:
-            Dictionary containing training results and validation metrics
+            Dictionary containing training results and validation metrics for all modes
         """
         self.logger.info("=" * 80)
         self.logger.info("Starting Multi-Dataset Training & Validation Experiment")
@@ -71,20 +74,85 @@ class MultiDatasetTrainingExperiment(BaseExperiment):
                 "Must specify 'training_datasets' (list) and 'validation_dataset' (string) in config"
             )
 
-        self.logger.info(f"📚 Training Datasets: {training_dataset_names}")
-        self.logger.info(f"🎯 Validation Dataset: {validation_dataset_name}")
-        self.logger.info(
-            f"📊 Train/Test Split: {train_split*100:.0f}% / {(1-train_split)*100:.0f}%"
-        )
-        self.logger.info(f"🔀 Random Seed: {random_seed}")
-        self.logger.info(f"⚖️  Stratified Split: {stratify}")
-
         # Get batch results from data_processing
         batch_results = shared_data.get("batch_results", {})
         if not batch_results:
             raise ValueError(
                 "No batch_results found in shared_data. Run data_processing first."
             )
+
+        # Detect feature extraction modes
+        all_keys = list(batch_results.keys())
+
+        # Check if we have mode-suffixed keys (e.g., "dataset_features", "dataset_spectrogram")
+        mode_suffixed_keys = [
+            k
+            for k in all_keys
+            if "_" in k
+            and k.split("_", 1)[1]
+            in [
+                "features",
+                "spectrogram",
+                "mfcc",
+                "magnitude_spectrum",
+                "power_spectrum",
+                "chroma",
+                "both",
+            ]
+        ]
+
+        if mode_suffixed_keys:
+            # Multiple modes detected - extract unique modes
+            modes = set()
+            base_datasets = set()
+            for key in mode_suffixed_keys:
+                base, mode = key.rsplit("_", 1)
+                modes.add(mode)
+                base_datasets.add(base)
+
+            modes = sorted(list(modes))
+            base_datasets = sorted(list(base_datasets))
+
+            self.logger.info(f"🔍 Detected multiple feature extraction modes: {modes}")
+            self.logger.info(f"📊 Base datasets: {base_datasets}")
+
+            # Run training for each mode
+            all_results = {}
+            for mode in modes:
+                self.logger.info(f"\n{'='*80}")
+                self.logger.info(f"🎯 Processing mode: {mode}")
+                self.logger.info(f"{'='*80}")
+
+                mode_results = self._run_single_mode(
+                    mode,
+                    training_dataset_names,
+                    validation_dataset_name,
+                    batch_results,
+                    train_split,
+                    random_seed,
+                    stratify,
+                )
+                all_results[mode] = mode_results
+
+            # Generate summary across all modes
+            summary = self._generate_multi_mode_summary(all_results)
+            all_results["_multi_mode_summary"] = summary
+
+            return all_results
+
+        else:
+            # Single mode (backward compatibility)
+            self.logger.info("🔍 Single feature extraction mode detected")
+            results = self._run_single_mode(
+                None,
+                training_dataset_names,
+                validation_dataset_name,
+                batch_results,
+                train_split,
+                random_seed,
+                stratify,
+            )
+            return results
 
         # Combine training datasets
         self.logger.info("\n" + "=" * 80)
@@ -824,3 +892,187 @@ class MultiDatasetTrainingExperiment(BaseExperiment):
         plt.tight_layout()
         self.save_plot(fig, "generalization_analysis.png")
         plt.close()
+
+    def _run_single_mode(
+        self,
+        mode: Optional[str],
+        training_dataset_names: List[str],
+        validation_dataset_name: str,
+        batch_results: Dict[str, Any],
+        train_split: float,
+        random_seed: int,
+        stratify: bool,
+    ) -> Dict[str, Any]:
+        """
+        Run training and validation for a single feature extraction mode.
+
+        Args:
+            mode: Feature extraction mode (None for single mode backward compatibility)
+            training_dataset_names: List of training dataset names
+            validation_dataset_name: Validation dataset name
+            batch_results: Processed batch data
+            train_split: Train/test split ratio
+            random_seed: Random seed
+            stratify: Whether to stratify splits
+
+        Returns:
+            Results dictionary for this mode
+        """
+        # Determine dataset key format
+        if mode is not None:
+            # Multi-mode: keys are "dataset_mode"
+            training_keys = [f"{name}_{mode}" for name in training_dataset_names]
+            validation_key = f"{validation_dataset_name}_{mode}"
+        else:
+            # Single mode: keys are just dataset names
+            training_keys = training_dataset_names
+            validation_key = validation_dataset_name
+
+        self.logger.info(f"📚 Training Datasets: {training_keys}")
+        self.logger.info(f"🎯 Validation Dataset: {validation_key}")
+        self.logger.info(
+            f"📊 Train/Test Split: {train_split*100:.0f}% / {(1-train_split)*100:.0f}%"
+        )
+        self.logger.info(f"🔀 Random Seed: {random_seed}")
+        self.logger.info(f"⚖️  Stratified Split: {stratify}")
+
+        # Combine training datasets
+        X_train_combined = []
+        y_train_combined = []
+
+        for dataset_key in training_keys:
+            if dataset_key not in batch_results:
+                raise ValueError(
+                    f"Training dataset '{dataset_key}' not found in processed data"
+                )
+
+            batch_data = batch_results[dataset_key]
+            X = batch_data["features"]
+            y = batch_data["labels"]
+
+            self.logger.info(f"  {dataset_key}: {len(X)} samples")
+            X_train_combined.append(X)
+            y_train_combined.append(y)
+
+        # Concatenate all training data
+        X_train_combined = np.vstack(X_train_combined)
+        y_train_combined = np.concatenate(y_train_combined)
+
+        self.logger.info(f"✅ Combined Training Data: {len(X_train_combined)} samples")
+
+        # Continue with the rest of the training logic...
+        # Get validation data
+        if validation_key not in batch_results:
+            raise ValueError(
+                f"Validation dataset '{validation_key}' not found in processed data"
+            )
+
+        validation_data = batch_results[validation_key]
+        X_validation = validation_data["features"]
+        y_validation = validation_data["labels"]
+
+        self.logger.info(f"✅ Validation Data: {len(X_validation)} samples")
+
+        # Split training data into train/test
+        X_train, X_test, y_train, y_test = train_test_split(
+            X_train_combined,
+            y_train_combined,
+            test_size=1 - train_split,
+            random_state=random_seed,
+            stratify=y_train_combined if stratify else None,
+        )
+
+        self.logger.info(f"✅ Training split: {len(X_train)} train, {len(X_test)} test")
+
+        # Get feature names from first batch (consistent across all batches)
+        first_batch_key = training_keys[0]
+        feature_names = self._get_feature_names(batch_results[first_batch_key])
+
+        # Get unique classes
+        classes = sorted(list(set(y_train)))
+        self.logger.info(f"🏷️  Classes: {classes}")
+
+        # Run model training and evaluation
+        results = self._run_model_training(
+            X_train,
+            X_test,
+            y_train,
+            y_test,
+            X_validation,
+            y_validation,
+            classes,
+            feature_names,
+        )
+
+        return results
+
+    def _generate_multi_mode_summary(
+        self, all_results: Dict[str, Dict[str, Any]]
+    ) -> Dict[str, Any]:
+        """
+        Generate summary comparing performance across all modes.
+
+        Args:
+            all_results: Results for each mode
+
+        Returns:
+            Summary dictionary
+        """
+        self.logger.info("\n" + "=" * 80)
+        self.logger.info("📊 MULTI-MODE COMPARISON SUMMARY")
+        self.logger.info("=" * 80)
+
+        summary = {"modes_compared": list(all_results.keys()), "mode_performance": {}}
+
+        # Extract key metrics for each mode
+        for mode, results in all_results.items():
+            if mode.startswith("_"):
+                continue  # Skip summary keys
+
+            # Get top model performance
+            if "models" in results and results["models"]:
+                top_model = max(
+                    results["models"].values(),
+                    key=lambda x: x.get("validation_accuracy", 0),
+                )
+
+                summary["mode_performance"][mode] = {
+                    "validation_accuracy": top_model.get("validation_accuracy", 0),
+                    "test_accuracy": top_model.get("test_accuracy", 0),
+                    "top_model": top_model.get("model_name", "unknown"),
+                    "num_features": results.get("num_features", 0),
+                    "num_samples": results.get("num_samples", 0),
+                }
+
+                self.logger.info(f"🎯 {mode}:")
+                self.logger.info(
+                    f"   Validation: {top_model.get('validation_accuracy', 0):.3f}"
+                )
+                self.logger.info(f"   Test: {top_model.get('test_accuracy', 0):.3f}")
+                self.logger.info(f"   Features: {results.get('num_features', 0)}")
+                self.logger.info(
+                    f"   Top Model: {top_model.get('model_name', 'unknown')}"
+                )
+            else:
+                self.logger.warning(f"⚠️  No model results found for mode {mode}")
+
+        # Rank modes by validation accuracy
+        if summary["mode_performance"]:
+            ranked_modes = sorted(
+                summary["mode_performance"].items(),
+                key=lambda x: x[1]["validation_accuracy"],
+                reverse=True,
+            )
+
+            summary["ranking"] = ranked_modes
+            summary["best_mode"] = ranked_modes[0][0]
+            summary["best_validation_accuracy"] = ranked_modes[0][1][
+                "validation_accuracy"
+            ]
+
+            self.logger.info(
+                f"\n🏆 BEST MODE: {summary['best_mode']} "
+                f"({summary['best_validation_accuracy']:.3f} validation accuracy)"
+            )
+
+        return summary

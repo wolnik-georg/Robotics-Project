@@ -109,6 +109,25 @@ class GeometricDimensionalityAnalyzer:
         self.results["pca"] = results
         return X_pca, results
 
+    def transform_pca(self, X: np.ndarray) -> np.ndarray:
+        """
+        Apply pre-fitted PCA transformation to new data.
+
+        Args:
+            X: Feature matrix to transform (n_samples, n_features)
+
+        Returns:
+            X_pca: Transformed data using the fitted PCA model
+        """
+        if "pca" not in self.results:
+            raise ValueError("PCA model not fitted. Call fit_transform_pca first.")
+
+        # Use the stored scaler and PCA model
+        X_scaled = self.results["pca"]["scaler"].transform(X)
+        X_pca = self.results["pca"]["model"].transform(X_scaled)
+
+        return X_pca
+
     def fit_transform_tsne(
         self,
         X: np.ndarray,
