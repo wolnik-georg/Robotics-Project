@@ -6,34 +6,41 @@ base_data_dir: "data"
 
 # Datasets to process (will be combined for training/testing)
 datasets:
+  # TRAINING: Workspaces 1 & 2 (all surfaces - cutout + pure contact + pure no-contact)
   - "balanced_collected_data_runs_2026_01_15_workspace_2_squares_cutout_undersample"
   - "balanced_collected_data_runs_2026_01_15_workspace_2_pure_no_contact_undersample"
   - "balanced_collected_data_runs_2026_01_15_workspace_2_pure_contact_undersample"
 
-  # - "balanced_collected_data_runs_2026_01_15_workspace_1_squares_cutout_undersample"
-  # - "balanced_collected_data_runs_2026_01_15_workspace_1_pure_no_contact_undersample"
-  # - "balanced_collected_data_runs_2026_01_15_workspace_1_pure_contact_undersample"
-
-  - "balanced_collected_data_runs_2026_01_14_workspace_3_pure_no_contact_undersample"
-  - "balanced_collected_data_runs_2026_01_14_workspace_3_pure_contact_undersample"
-
-  - "balanced_collected_data_runs_2025_12_15_v2_2_workspace3_squares_cutout_undersample"
-  - "balanced_collected_data_runs_2025_12_17_v2_workspace_3_squares_cutout_undersample"
+  - "balanced_collected_data_runs_2026_01_15_workspace_1_squares_cutout_undersample"
+  - "balanced_collected_data_runs_2026_01_15_workspace_1_pure_no_contact_undersample"
+  - "balanced_collected_data_runs_2026_01_15_workspace_1_pure_contact_undersample"
+  
 # Optional: Specify datasets to use for validation (holdout)
 # Leave empty [] to combine all datasets for train/test split
 validation_datasets: [
-  "balanced_collected_data_runs_2026_01_15_workspace_1_squares_cutout_undersample",
-  "balanced_collected_data_runs_2026_01_15_workspace_1_pure_no_contact_undersample",
-  "balanced_collected_data_runs_2026_01_15_workspace_1_pure_contact_undersample"
+  # VALIDATION: Workspace 3 (cutout surfaces only - Pattern A)
+  "balanced_collected_data_runs_2025_12_15_v2_2_workspace3_squares_cutout_undersample",
+  # Or use the newer workspace 3 cutout if available:
+  # "balanced_collected_data_runs_2025_12_17_v2_workspace_3_squares_cutout_undersample"
 ]
+
+# Domain Adaptation Configuration
+# Test hypothesis: Does adding hold-out data to training improve generalization?
+domain_adaptation:
+  enabled: false  # Enable to mix hold-out data into training
+  holdout_train_split: 0.3  # Fraction of hold-out data to add to training (0.0-1.0)
+  # When enabled:
+  #   - holdout_train_split (e.g., 0.3) goes to training
+  #   - (1 - holdout_train_split) (e.g., 0.7) stays for validation
+  # This tests if models memorized surface patterns vs learning general contact detection
 
 # Feature Extraction Mode Configuration
 # Choose between hand-crafted features, spectrograms, or both
 # Now supports multiple modes for comparison
 feature_extraction:
   modes:  # NEW: List of modes to test sequentially
-    - "features"           # Hand-crafted features (65 dimensions)
-    # - "spectrogram"        # Mel spectrograms
+    # - "features"           # Hand-crafted features (65 dimensions)
+    - "spectrogram"        # Mel spectrograms (128×256 = 32,768 dimensions)
     # - "mfcc"              # MFCC features (13 × time_frames)
     # - "magnitude_spectrum" # Raw magnitude spectrum
     # - "power_spectrum"     # Power spectrum
@@ -41,7 +48,7 @@ feature_extraction:
     # - "both"               # Hand-crafted + full spectrograms
   
   # Default mode (for backward compatibility - will be overridden by modes list)
-  mode: "both"  # Options: "features" | "spectrogram" | "mfcc" | "magnitude_spectrum" | "power_spectrum" | "chroma" | "both"
+  mode: "spectrogram"  # Options: "features" | "spectrogram" | "mfcc" | "magnitude_spectrum" | "power_spectrum" | "chroma" | "both"
   
   # Spectrogram extraction parameters (used for spectrogram, mfcc, magnitude_spectrum, power_spectrum, chroma, both modes)
   # Optimized for 48kHz audio with contact detection
@@ -77,9 +84,10 @@ experiments:
     enabled: true
     apply_audio_smoothing: false
     use_workspace_invariant_features: true  # Enable workspace-invariant features for better generalization
-    use_impulse_features: true  # NEW: Enable transfer function / impulse response features
-    use_data_augmentation: true  # NEW: Enable data augmentation for training data
+    use_impulse_features: false  # NEW: Enable transfer function / impulse response features
+    use_data_augmentation: false  # NEW: Enable data augmentation for training data
     augmentation_factor: 2  # How many augmented copies per original sample
+    enhanced_augmentation: false  # DISABLED: Enhanced augmentation hurt performance (-2.9%)
     motion_artifact_removal:
       enabled: false
 
@@ -88,6 +96,10 @@ experiments:
 
   discrimination_analysis:
     enabled: true
+    feature_selection:
+      enabled: false  # DISABLED: Feature selection hurt performance (-1.0%) - all 80 features needed
+      top_k_features: 50  # Number of top features to select (out of 80 total)
+      method: "ensemble"  # Method: "ensemble" (RF+GB+XGB average ranks)
 
   saliency_analysis:
     enabled: false
@@ -106,6 +118,6 @@ experiments:
 
 # Output Configuration
 output:
-  base_dir: "handcrafted_features_v7_mega_ensemble_fixed"  # Fixed mega-ensemble (removed conditionals)
+  base_dir: "workspace_1_2_train_workspace_3_validate_pattern_A"  # Train: W1&2 all surfaces, Validate: W3 cutout only
 
 # Analysis Experiments (Standard Pipeline)

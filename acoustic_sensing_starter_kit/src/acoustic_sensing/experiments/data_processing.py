@@ -116,9 +116,10 @@ class AudioAugmenter:
     generalize better across different workspaces and recording conditions.
     """
 
-    def __init__(self, sr: int = 48000, random_state: int = 42):
+    def __init__(self, sr: int = 48000, random_state: int = 42, enhanced: bool = False):
         self.sr = sr
         self.rng = np.random.RandomState(random_state)
+        self.enhanced = enhanced  # Use stronger augmentation techniques
 
     def augment(self, audio: np.ndarray, augment_type: str = "all") -> np.ndarray:
         """
@@ -126,7 +127,7 @@ class AudioAugmenter:
 
         Args:
             audio: Input audio signal
-            augment_type: Type of augmentation ('noise', 'time_shift', 'pitch', 'gain', 'all')
+            augment_type: Type of augmentation ('noise', 'time_shift', 'pitch', 'gain', 'time_stretch', 'all')
 
         Returns:
             Augmented audio signal
@@ -140,10 +141,12 @@ class AudioAugmenter:
                 augmented = self._add_noise(augmented)
             if self.rng.random() < 0.5:
                 augmented = self._time_shift(augmented)
-            if self.rng.random() < 0.3:
+            if self.rng.random() < 0.4:  # Increased probability for pitch
                 augmented = self._pitch_shift(augmented)
             if self.rng.random() < 0.5:
                 augmented = self._gain_variation(augmented)
+            if self.enhanced and self.rng.random() < 0.4:  # NEW: Time stretch
+                augmented = self._time_stretch(augmented)
             return augmented
         elif augment_type == "noise":
             return self._add_noise(audio)
@@ -153,6 +156,8 @@ class AudioAugmenter:
             return self._pitch_shift(audio)
         elif augment_type == "gain":
             return self._gain_variation(audio)
+        elif augment_type == "time_stretch":
+            return self._time_stretch(audio)
         else:
             return audio
 
@@ -177,12 +182,38 @@ class AudioAugmenter:
 
     def _pitch_shift(self, audio: np.ndarray) -> np.ndarray:
         """Slightly shift pitch (simulates different materials/tensions)."""
-        # Shift by up to ±2 semitones
-        n_steps = self.rng.uniform(-2, 2)
+        # Enhanced: Shift by up to ±3 semitones for more diversity
+        n_steps = self.rng.uniform(
+            -3 if self.enhanced else -2, 3 if self.enhanced else 2
+        )
 
         try:
             shifted = librosa.effects.pitch_shift(audio, sr=self.sr, n_steps=n_steps)
             return shifted.astype(np.float32)
+        except Exception:
+            return audio
+
+    def _time_stretch(self, audio: np.ndarray) -> np.ndarray:
+        """
+        Time stretch audio without changing pitch.
+        Simulates different contact speeds/durations.
+        """
+        # Stretch rate between 0.85x and 1.15x (more aggressive if enhanced)
+        if self.enhanced:
+            rate = self.rng.uniform(0.85, 1.15)
+        else:
+            rate = self.rng.uniform(0.9, 1.1)
+
+        try:
+            stretched = librosa.effects.time_stretch(audio, rate=rate)
+            # Ensure same length by padding or trimming
+            if len(stretched) > len(audio):
+                stretched = stretched[: len(audio)]
+            elif len(stretched) < len(audio):
+                stretched = np.pad(
+                    stretched, (0, len(audio) - len(stretched)), mode="constant"
+                )
+            return stretched.astype(np.float32)
         except Exception:
             return audio
 
@@ -447,14 +478,21 @@ class DataProcessingExperiment(BaseExperiment):
                     augmentation_factor = self.config.get(
                         "augmentation_factor", 2  # How many augmented copies per sample
                     )
+                    enhanced_augmentation = self.config.get(
+                        "enhanced_augmentation",
+                        False,  # Use stronger augmentation (pitch ±3, time stretch)
+                    )
                     # Only augment training data, not validation
                     is_validation_batch = batch_name in validation_datasets_config
 
                     if use_augmentation and not is_validation_batch:
+                        aug_mode = "enhanced" if enhanced_augmentation else "standard"
                         self.logger.info(
-                            f"✓ Data augmentation ENABLED (factor={augmentation_factor}x for training)"
+                            f"✓ Data augmentation ENABLED (mode={aug_mode}, factor={augmentation_factor}x for training)"
                         )
-                        augmenter = AudioAugmenter(sr=48000)
+                        augmenter = AudioAugmenter(
+                            sr=48000, enhanced=enhanced_augmentation
+                        )
                     else:
                         if use_augmentation and is_validation_batch:
                             self.logger.info(

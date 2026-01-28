@@ -1,0 +1,61 @@
+base_data_dir: data
+datasets:
+- balanced_collected_data_runs_2026_01_15_workspace_2_squares_cutout_undersample
+- balanced_collected_data_runs_2026_01_15_workspace_2_pure_no_contact_undersample
+- balanced_collected_data_runs_2026_01_15_workspace_2_pure_contact_undersample
+- balanced_collected_data_runs_2026_01_15_workspace_1_squares_cutout_undersample
+- balanced_collected_data_runs_2026_01_15_workspace_1_pure_no_contact_undersample
+- balanced_collected_data_runs_2026_01_15_workspace_1_pure_contact_undersample
+domain_adaptation:
+  enabled: false
+  holdout_train_split: 0.3
+experiments:
+  data_processing:
+    apply_audio_smoothing: false
+    augmentation_factor: 2
+    enabled: true
+    enhanced_augmentation: false
+    motion_artifact_removal:
+      enabled: false
+    use_data_augmentation: false
+    use_impulse_features: false
+    use_workspace_invariant_features: true
+  dimensionality_reduction:
+    enabled: true
+  discrimination_analysis:
+    enabled: true
+    feature_selection:
+      enabled: false
+      method: ensemble
+      top_k_features: 50
+  feature_ablation:
+    enabled: false
+  frequency_band_ablation:
+    enabled: false
+  impulse_response:
+    enabled: false
+  saliency_analysis:
+    enabled: false
+  surface_reconstruction:
+    enabled: false
+feature_extraction:
+  mode: both
+  modes:
+  - spectrogram
+  normalization:
+    enabled: false
+    method: zscore
+  spectrogram:
+    fmax: 20000
+    fmin: 50
+    hop_length: 512
+    n_chroma: 12
+    n_fft: 1024
+    n_mels: 128
+    n_mfcc: 13
+    time_bins: 256
+    use_log_scale: true
+output:
+  base_dir: workspace_1_2_train_workspace_3_validate_pattern_A
+validation_datasets:
+- balanced_collected_data_runs_2025_12_15_v2_2_workspace3_squares_cutout_undersample

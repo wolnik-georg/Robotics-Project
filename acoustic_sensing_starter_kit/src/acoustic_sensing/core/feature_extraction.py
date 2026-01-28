@@ -1662,6 +1662,8 @@ class GeometricFeatureExtractor:
         n_mels: int = 128,
         fmin: int = 0,
         fmax: Optional[int] = None,
+        time_bins: Optional[int] = None,
+        use_log_scale: bool = True,
         normalize: bool = True,
     ) -> np.ndarray:
         """
@@ -1674,14 +1676,16 @@ class GeometricFeatureExtractor:
             n_mels: Number of mel bands
             fmin: Minimum frequency
             fmax: Maximum frequency
+            time_bins: Target number of time bins for consistent shape (optional)
+            use_log_scale: Apply log scaling (dB scale) for better ML performance
             normalize: Whether to normalize by maximum value
 
         Returns:
-            Mel spectrogram of shape (n_mels, time_frames)
+            Mel spectrogram of shape (n_mels, time_frames) or (n_mels, time_bins) if specified
         """
         if not HAS_GPU_SUPPORT:
             return self.extract_spectrogram(
-                audio, n_fft, hop_length, n_mels, fmin, fmax, normalize
+                audio, n_fft, hop_length, n_mels, fmin, fmax, time_bins, use_log_scale
             )
 
         # Ensure audio is floating-point
@@ -1704,8 +1708,11 @@ class GeometricFeatureExtractor:
         # Extract mel spectrogram
         mel_spec = mel_transform(audio_tensor.unsqueeze(0))  # Add batch dimension
 
-        # Convert to decibels (log scale)
-        mel_spec_db = torchaudio.transforms.AmplitudeToDB()(mel_spec)
+        # Convert to decibels (log scale) if requested
+        if use_log_scale:
+            mel_spec_db = torchaudio.transforms.AmplitudeToDB()(mel_spec)
+        else:
+            mel_spec_db = mel_spec
 
         # Normalize if requested
         if normalize:
@@ -1713,8 +1720,20 @@ class GeometricFeatureExtractor:
                 torch.std(mel_spec_db) + 1e-8
             )
 
-        # Remove batch dimension and convert back to numpy
-        return mel_spec_db.squeeze(0).cpu().numpy()
+        # Get numpy array
+        result = mel_spec_db.squeeze(0).cpu().numpy()
+
+        # Resize to fixed time bins if specified
+        if time_bins is not None and result.shape[1] != time_bins:
+            from scipy.interpolate import interp1d
+
+            current_time_bins = result.shape[1]
+            f = interp1d(
+                np.linspace(0, 1, current_time_bins), result, kind="linear", axis=1
+            )
+            result = f(np.linspace(0, 1, time_bins))
+
+        return result
 
 
 def extract_features(

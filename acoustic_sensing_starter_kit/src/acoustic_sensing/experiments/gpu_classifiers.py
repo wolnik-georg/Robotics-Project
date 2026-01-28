@@ -116,6 +116,17 @@ class GPUMLPClassifier(BaseEstimator, ClassifierMixin):
         self.model = None
         self.classes_ = None
 
+    def __sklearn_tags__(self):
+        """Return sklearn tags for this estimator (required for sklearn 1.6+)."""
+        tags = super().__sklearn_tags__()
+        tags.estimator_type = "classifier"
+        return tags
+
+    @property
+    def _estimator_type(self):
+        """Return estimator type for sklearn compatibility."""
+        return "classifier"
+
     def fit(
         self,
         X: np.ndarray,

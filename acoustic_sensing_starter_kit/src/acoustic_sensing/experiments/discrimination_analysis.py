@@ -24,6 +24,13 @@ from sklearn.discriminant_analysis import (
 from sklearn.naive_bayes import GaussianNB
 from sklearn.neural_network import MLPClassifier
 import xgboost as xgb
+
+try:
+    import lightgbm as lgb
+
+    LIGHTGBM_AVAILABLE = True
+except ImportError:
+    LIGHTGBM_AVAILABLE = False
 from sklearn.base import BaseEstimator, ClassifierMixin
 
 # GPU-accelerated classifiers and normalization wrappers
@@ -50,6 +57,11 @@ class XGBoostWrapper(BaseEstimator, ClassifierMixin):
         self.label_encoder = LabelEncoder()
         self.model = None
 
+    @property
+    def _estimator_type(self):
+        """Declare this as a classifier for sklearn compatibility."""
+        return "classifier"
+
     def fit(self, X, y):
         # Encode string labels to numeric
         y_encoded = self.label_encoder.fit_transform(y)
@@ -59,6 +71,55 @@ class XGBoostWrapper(BaseEstimator, ClassifierMixin):
             eval_metric=self.eval_metric,
         )
         self.model.fit(X, y_encoded)
+        return self
+
+    def predict(self, X):
+        # Predict numeric labels and convert back to original labels
+        y_pred_encoded = self.model.predict(X)
+        return self.label_encoder.inverse_transform(y_pred_encoded)
+
+    def predict_proba(self, X):
+        return self.model.predict_proba(X)
+
+
+class LightGBMWrapper(BaseEstimator, ClassifierMixin):
+    """LightGBM wrapper that handles string labels."""
+
+    def __init__(
+        self,
+        n_estimators=100,
+        learning_rate=0.1,
+        max_depth=-1,
+        num_leaves=31,
+        random_state=42,
+        verbose=-1,
+    ):
+        self.n_estimators = n_estimators
+        self.learning_rate = learning_rate
+        self.max_depth = max_depth
+        self.num_leaves = num_leaves
+        self.random_state = random_state
+        self.verbose = verbose
+        self.label_encoder = LabelEncoder()
+        self.model = None
+
+    def fit(self, X, y):
+        # Encode string labels to numeric
+        y_encoded = self.label_encoder.fit_transform(y)
+        if LIGHTGBM_AVAILABLE:
+            self.model = lgb.LGBMClassifier(
+                n_estimators=self.n_estimators,
+                learning_rate=self.learning_rate,
+                max_depth=self.max_depth,
+                num_leaves=self.num_leaves,
+                random_state=self.random_state,
+                verbose=self.verbose,
+            )
+            self.model.fit(X, y_encoded)
+        else:
+            raise ImportError(
+                "LightGBM is not installed. Install with: pip install lightgbm"
+            )
         return self
 
     def predict(self, X):
@@ -364,6 +425,25 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
             self.logger.info(f"  Training datasets: {training_datasets}")
             self.logger.info(f"  Validation datasets: {validation_datasets}")
 
+            # Domain Adaptation: Mix hold-out data into training (optional)
+            domain_adaptation_config = self.config.get("domain_adaptation", {})
+            use_domain_adaptation = domain_adaptation_config.get("enabled", False)
+            holdout_train_split = domain_adaptation_config.get(
+                "holdout_train_split", 0.3
+            )
+
+            if use_domain_adaptation and validation_datasets:
+                self.logger.info("=" * 80)
+                self.logger.info("🔄 DOMAIN ADAPTATION ENABLED")
+                self.logger.info("=" * 80)
+                self.logger.info(
+                    f"Strategy: Mix {holdout_train_split*100:.0f}% of hold-out data into training"
+                )
+                self.logger.info(
+                    f"Purpose: Test if models memorized surface patterns vs learned general contact"
+                )
+                self.logger.info("=" * 80)
+
             # Combine training datasets
             X_train_list = []
             y_train_list = []
@@ -387,6 +467,39 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
 
             X_val_combined = np.vstack(X_val_list) if X_val_list else np.array([])
             y_val_combined = np.concatenate(y_val_list) if y_val_list else np.array([])
+
+            # Apply domain adaptation split if enabled
+            if use_domain_adaptation and len(X_val_combined) > 0:
+                from sklearn.model_selection import train_test_split
+
+                # Split validation data: some for training, some for validation
+                X_val_train, X_val_val, y_val_train, y_val_val = train_test_split(
+                    X_val_combined,
+                    y_val_combined,
+                    train_size=holdout_train_split,
+                    random_state=42,
+                    stratify=y_val_combined,  # Maintain class balance
+                )
+
+                # Add hold-out training portion to main training data
+                X_train_combined = np.vstack([X_train_combined, X_val_train])
+                y_train_combined = np.concatenate([y_train_combined, y_val_train])
+
+                # Update validation to be only the held-out portion
+                X_val_combined = X_val_val
+                y_val_combined = y_val_val
+
+                self.logger.info(f"🔄 Domain Adaptation Applied:")
+                self.logger.info(
+                    f"  Added {len(X_val_train)} hold-out samples to training"
+                )
+                self.logger.info(
+                    f"  Kept {len(X_val_val)} hold-out samples for validation"
+                )
+                self.logger.info(
+                    f"  New training total: {len(X_train_combined)} samples"
+                )
+                self.logger.info("=" * 80)
 
             self.logger.info(
                 f"✓ Combined training data: {len(X_train_combined)} samples"
@@ -513,6 +626,11 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
             "batch_performance_results": {"combined_datasets": combined_results},
             "cross_batch_results": {},  # No cross-batch analysis when combining
             "best_batch_info": best_batch_info,
+            "best_classifier": {
+                "name": best_clf_name,
+                "mean_accuracy": best_accuracy,
+                "validation_accuracy": best_accuracy,  # For orch compatibility
+            },
             "total_batches": 1,  # One combined dataset
         }
 
@@ -861,6 +979,56 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
         self.logger.info(f"Tuning set: {len(X_tuning)} samples")
         self.logger.info(f"Test set: {len(X_test)} samples")
 
+        # FEATURE SELECTION (if enabled)
+        feature_selection_config = self.config.get("feature_selection", {})
+        use_feature_selection = feature_selection_config.get("enabled", False)
+
+        if use_feature_selection:
+            top_k = feature_selection_config.get("top_k_features", 50)
+            selection_method = feature_selection_config.get("method", "ensemble")
+
+            self.logger.info("=" * 80)
+            self.logger.info(f"🔍 FEATURE SELECTION ENABLED")
+            self.logger.info(f"  Method: {selection_method}")
+            self.logger.info(f"  Selecting top {top_k} of {X_train.shape[1]} features")
+            self.logger.info("=" * 80)
+
+            # Analyze feature importance and select best features
+            selected_indices, avg_ranks, feature_analysis = (
+                self._analyze_feature_importance(
+                    X_train,
+                    y_train,
+                    X_tuning,
+                    y_tuning,
+                    top_k=top_k,
+                    method=selection_method,
+                )
+            )
+
+            # Apply feature selection to all datasets
+            X_train = X_train[:, selected_indices]
+            X_tuning = X_tuning[:, selected_indices]
+            X_test = X_test[:, selected_indices]
+
+            self.logger.info(
+                f"✅ Feature selection complete: {X_train.shape[1]} features selected"
+            )
+            self.logger.info(f"   Performance impact:")
+            self.logger.info(
+                f"   - All features:      {feature_analysis.get('all_features_score', 0.0):.4f}"
+            )
+            self.logger.info(
+                f"   - Selected features: {feature_analysis.get('selected_features_score', 0.0):.4f}"
+            )
+            self.logger.info(
+                f"   - Difference:        {feature_analysis.get('score_diff', 0.0):+.4f}"
+            )
+            self.logger.info("=" * 80)
+        else:
+            self.logger.info(
+                f"Feature selection DISABLED - using all {X_train.shape[1]} features"
+            )
+
         # Scale features
         scaler = StandardScaler()
         X_train_scaled = scaler.fit_transform(X_train)
@@ -1127,14 +1295,168 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
 
         return search.best_estimator_, search
 
+    def _analyze_feature_importance(
+        self,
+        X_train: np.ndarray,
+        y_train: np.ndarray,
+        X_val: np.ndarray,
+        y_val: np.ndarray,
+        feature_names: List[str] = None,
+        top_k: int = 50,
+    ) -> tuple:
+        """
+        Analyze feature importance using ensemble methods and select top features.
+
+        Args:
+            X_train: Training features
+            y_train: Training labels
+            X_val: Validation features
+            y_val: Validation labels
+            feature_names: Optional list of feature names
+            top_k: Number of top features to select
+
+        Returns:
+            tuple: (selected_feature_indices, importance_scores, feature_analysis_dict)
+        """
+        self.logger.info(
+            f"\n🔍 Analyzing feature importance (selecting top {top_k} features)..."
+        )
+
+        if feature_names is None:
+            feature_names = [f"feature_{i}" for i in range(X_train.shape[1])]
+
+        # Use multiple methods to get robust feature importance
+        importance_scores = {}
+
+        # 1. Random Forest importance
+        self.logger.info("  Computing Random Forest importance...")
+        rf = RandomForestClassifier(n_estimators=200, random_state=42, n_jobs=-1)
+        rf.fit(X_train, y_train)
+        importance_scores["random_forest"] = rf.feature_importances_
+
+        # 2. Gradient Boosting importance
+        self.logger.info("  Computing Gradient Boosting importance...")
+        gb = GradientBoostingClassifier(n_estimators=200, random_state=42)
+        gb.fit(X_train, y_train)
+        importance_scores["gradient_boosting"] = gb.feature_importances_
+
+        # 3. XGBoost importance
+        self.logger.info("  Computing XGBoost importance...")
+        xgb_model = XGBoostWrapper(n_estimators=200, random_state=42)
+        xgb_model.fit(X_train, y_train)
+        importance_scores["xgboost"] = xgb_model.model.feature_importances_
+
+        # Aggregate importance scores (average rank across methods)
+        self.logger.info("  Aggregating importance scores...")
+        ranks = np.zeros((len(feature_names), len(importance_scores)))
+
+        for i, (method, scores) in enumerate(importance_scores.items()):
+            # Convert to ranks (higher importance = lower rank number)
+            ranks[:, i] = len(scores) - np.argsort(np.argsort(scores))
+
+        # Average ranks across methods (lower = more important)
+        avg_ranks = np.mean(ranks, axis=1)
+
+        # Get top-k features
+        selected_indices = np.argsort(avg_ranks)[:top_k]
+
+        # Create analysis dictionary
+        feature_analysis = {
+            "total_features": len(feature_names),
+            "selected_features": top_k,
+            "selected_indices": selected_indices.tolist(),
+            "selected_names": [feature_names[i] for i in selected_indices],
+            "importance_by_method": {
+                method: scores.tolist() for method, scores in importance_scores.items()
+            },
+            "average_ranks": avg_ranks.tolist(),
+            "top_features_details": [
+                {
+                    "rank": int(i + 1),
+                    "index": int(idx),
+                    "name": feature_names[idx],
+                    "avg_rank": float(avg_ranks[idx]),
+                    "rf_importance": float(importance_scores["random_forest"][idx]),
+                    "gb_importance": float(importance_scores["gradient_boosting"][idx]),
+                    "xgb_importance": float(importance_scores["xgboost"][idx]),
+                }
+                for i, idx in enumerate(selected_indices)
+            ],
+        }
+
+        # Test performance with selected features
+        self.logger.info(f"\n  Evaluating feature selection impact...")
+        self.logger.info(f"  Original features: {X_train.shape[1]}")
+        self.logger.info(f"  Selected features: {top_k}")
+
+        # Train models with all features
+        rf_all = RandomForestClassifier(n_estimators=100, random_state=42)
+        rf_all.fit(X_train, y_train)
+        score_all = rf_all.score(X_val, y_val)
+
+        # Train models with selected features
+        X_train_selected = X_train[:, selected_indices]
+        X_val_selected = X_val[:, selected_indices]
+        rf_selected = RandomForestClassifier(n_estimators=100, random_state=42)
+        rf_selected.fit(X_train_selected, y_train)
+        score_selected = rf_selected.score(X_val_selected, y_val)
+
+        feature_analysis["performance_comparison"] = {
+            "all_features_val_acc": float(score_all),
+            "selected_features_val_acc": float(score_selected),
+            "improvement": float(score_selected - score_all),
+        }
+
+        self.logger.info(f"  All features validation accuracy: {score_all:.4f}")
+        self.logger.info(
+            f"  Selected features validation accuracy: {score_selected:.4f}"
+        )
+        self.logger.info(f"  Improvement: {score_selected - score_all:+.4f}")
+
+        # Save feature importance plot
+        self._plot_feature_importance(
+            selected_indices[:20],  # Top 20 for visualization
+            feature_names,
+            importance_scores,
+        )
+
+        return selected_indices, avg_ranks, feature_analysis
+
+    def _plot_feature_importance(
+        self,
+        top_indices: np.ndarray,
+        feature_names: List[str],
+        importance_scores: Dict[str, np.ndarray],
+    ):
+        """Plot feature importance for top features."""
+        fig, axes = plt.subplots(1, 3, figsize=(18, 6))
+
+        methods = ["random_forest", "gradient_boosting", "xgboost"]
+        titles = ["Random Forest", "Gradient Boosting", "XGBoost"]
+
+        for ax, method, title in zip(axes, methods, titles):
+            scores = importance_scores[method][top_indices]
+            names = [feature_names[i] for i in top_indices]
+
+            ax.barh(range(len(scores)), scores)
+            ax.set_yticks(range(len(scores)))
+            ax.set_yticklabels(names, fontsize=8)
+            ax.set_xlabel("Importance Score")
+            ax.set_title(f"{title}\nTop {len(scores)} Features")
+            ax.invert_yaxis()
+
+        plt.tight_layout()
+        self.save_plot(fig, "feature_importance_analysis.png")
+        plt.close()
+
     def _get_classifiers(self) -> dict:
         """Define classifiers to evaluate."""
         classifiers = {
-            # "Random Forest": RandomForestClassifier(n_estimators=100, random_state=42),
-            # "SVM (RBF)": SVC(kernel="rbf", random_state=42),
-            # "SVM (Linear)": SVC(kernel="linear", random_state=42),
-            # "K-NN": KNeighborsClassifier(n_neighbors=5),
-            # "Logistic Regression": LogisticRegression(random_state=42, max_iter=1000),
+            "Random Forest": RandomForestClassifier(n_estimators=100, random_state=42),
+            "SVM (RBF)": SVC(kernel="rbf", random_state=42),
+            "SVM (Linear)": SVC(kernel="linear", random_state=42),
+            "K-NN": KNeighborsClassifier(n_neighbors=5),
+            "Logistic Regression": LogisticRegression(random_state=42, max_iter=1000),
             # "Gradient Boosting": GradientBoostingClassifier(random_state=42),
             # "Extra Trees": ExtraTreesClassifier(n_estimators=100, random_state=42),
             # "AdaBoost": AdaBoostClassifier(n_estimators=100, random_state=42),
@@ -1648,21 +1970,21 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
             #     verbose=False,
             # )
 
-            # # GPU MLP (Medium-HighReg) - Higher regularization for generalization
-            # classifiers["GPU-MLP (Medium-HighReg)"] = GPUMLPClassifier(
-            #     hidden_layer_sizes=(128, 64, 32),
-            #     dropout=0.4,  # Higher dropout
-            #     learning_rate=0.001,
-            #     weight_decay=0.02,  # Higher L2
-            #     batch_size=64,
-            #     max_epochs=500,
-            #     early_stopping=True,
-            #     patience=30,
-            #     validation_fraction=0.15,
-            #     use_batch_norm=True,
-            #     random_state=42,
-            #     verbose=False,
-            # )
+            # GPU MLP (Medium-HighReg) - Higher regularization for generalization
+            classifiers["GPU-MLP (Medium-HighReg)"] = GPUMLPClassifier(
+                hidden_layer_sizes=(128, 64, 32),
+                dropout=0.4,  # Higher dropout
+                learning_rate=0.001,
+                weight_decay=0.02,  # Higher L2
+                batch_size=64,
+                max_epochs=500,
+                early_stopping=True,
+                patience=30,
+                validation_fraction=0.15,
+                use_batch_norm=True,
+                random_state=42,
+                verbose=False,
+            )
 
             # # GPU MLP (Large) - Larger network for complex patterns
             # classifiers["GPU-MLP (Large)"] = GPUMLPClassifier(
@@ -1883,19 +2205,28 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
                 random_state=42,
             )
 
-        #     # Second best from tuning (3-layer GELU)
-        #     classifiers["GPU-MLP (Tuned-GELU)"] = GPUMLPClassifier(
-        #         hidden_layer_sizes=(96, 160, 192),
-        #         dropout=0.11,
-        #         learning_rate=0.003,
-        #         weight_decay=0.0072,
-        #         batch_size=64,
-        #         max_epochs=500,
-        #         early_stopping=True,
-        #         patience=25,
-        #         use_batch_norm=False,
-        #         random_state=42,
-        #     )
+        # ========================================================================
+        # TREE-BASED GRADIENT BOOSTING MODELS
+        # ========================================================================
+        # Tree-based models often capture different patterns than neural networks
+        # Good for non-linear feature interactions and robust to feature scaling
+
+        # XGBoost - Extreme Gradient Boosting
+        classifiers["XGBoost"] = XGBoostWrapper(
+            n_estimators=200,
+            random_state=42,
+        )
+
+        # LightGBM - Fast gradient boosting (if available)
+        if LIGHTGBM_AVAILABLE:
+            classifiers["LightGBM"] = LightGBMWrapper(
+                n_estimators=200,
+                learning_rate=0.1,
+                max_depth=-1,  # No depth limit
+                num_leaves=31,
+                random_state=42,
+                verbose=-1,  # Suppress output
+            )
 
         # ========================================================================
         # ENSEMBLE OF TOP GENERALIZING MODELS

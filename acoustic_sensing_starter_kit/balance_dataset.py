@@ -23,10 +23,10 @@ import random
 # USER SETTINGS
 # ==================
 DATA_DIR = os.path.join(
-    "data", "collected_data_runs_2025_12_15_v2_2_workspace3_squares_cutout", "data"
+    "data", "collected_data_runs_hold_out_dataset", "data"
 )  # Input data folder (relative path)
-OUTPUT_DIR_UNDERSAMPLE = "balanced_collected_data_runs_2025_12_15_v2_2_workspace3_squares_cutout_undersample"  # Output folder for undersampled balanced data
-OUTPUT_DIR_OVERSAMPLE = "balanced_collected_data_runs_2025_12_15_v2_2_workspace3_squares_cutout_oversample"  # Output folder for oversampled balanced data
+OUTPUT_DIR_UNDERSAMPLE = "balanced_collected_data_runs_hold_out_dataset_undersample"  # Output folder for undersampled balanced data
+OUTPUT_DIR_OVERSAMPLE = "balanced_collected_data_runs_hold_out_dataset_oversample"  # Output folder for oversampled balanced data
 SR = 48000
 RANDOM_SEED = 42
 CLASSES = ["contact", "no_contact"]
