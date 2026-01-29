@@ -1,11 +1,8 @@
 base_data_dir: data
 datasets:
 - balanced_collected_data_runs_2026_01_15_workspace_2_squares_cutout_undersample
-- balanced_collected_data_runs_2026_01_15_workspace_2_pure_no_contact_undersample
-- balanced_collected_data_runs_2026_01_15_workspace_2_pure_contact_undersample
 - balanced_collected_data_runs_2026_01_15_workspace_1_squares_cutout_undersample
-- balanced_collected_data_runs_2026_01_15_workspace_1_pure_no_contact_undersample
-- balanced_collected_data_runs_2026_01_15_workspace_1_pure_contact_undersample
+- balanced_collected_data_runs_2025_12_15_v2_2_workspace3_squares_cutout_undersample
 domain_adaptation:
   enabled: false
   holdout_train_split: 0.3
@@ -47,15 +44,15 @@ feature_extraction:
     method: zscore
   spectrogram:
     fmax: 20000
-    fmin: 50
-    hop_length: 512
+    fmin: 100
+    hop_length: 128
     n_chroma: 12
-    n_fft: 1024
-    n_mels: 128
+    n_fft: 512
+    n_mels: 80
     n_mfcc: 13
-    time_bins: 256
+    time_bins: 128
     use_log_scale: true
 output:
-  base_dir: workspace_1_2_train_workspace_3_validate_pattern_A
+  base_dir: cnn_v3
 validation_datasets:
-- balanced_collected_data_runs_2025_12_15_v2_2_workspace3_squares_cutout_undersample
+- balanced_collected_data_runs_hold_out_dataset_undersample

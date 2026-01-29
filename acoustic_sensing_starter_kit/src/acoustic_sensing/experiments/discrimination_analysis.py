@@ -39,6 +39,10 @@ try:
         GPUMLPClassifier,
         NormalizedClassifierWrapper,
         RelativeFeatureClassifier,
+        SpectrogramCNNClassifier,
+        SpectrogramCNN_MLPClassifier,
+        SpectrogramCNN_AdvancedClassifier,
+        SpectrogramResNetClassifier,
         get_device,
     )
 
@@ -1452,11 +1456,11 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
     def _get_classifiers(self) -> dict:
         """Define classifiers to evaluate."""
         classifiers = {
-            "Random Forest": RandomForestClassifier(n_estimators=100, random_state=42),
-            "SVM (RBF)": SVC(kernel="rbf", random_state=42),
-            "SVM (Linear)": SVC(kernel="linear", random_state=42),
-            "K-NN": KNeighborsClassifier(n_neighbors=5),
-            "Logistic Regression": LogisticRegression(random_state=42, max_iter=1000),
+            # "Random Forest": RandomForestClassifier(n_estimators=100, random_state=42),
+            # "SVM (RBF)": SVC(kernel="rbf", random_state=42),
+            # "SVM (Linear)": SVC(kernel="linear", random_state=42),
+            # "K-NN": KNeighborsClassifier(n_neighbors=5),
+            # "Logistic Regression": LogisticRegression(random_state=42, max_iter=1000),
             # "Gradient Boosting": GradientBoostingClassifier(random_state=42),
             # "Extra Trees": ExtraTreesClassifier(n_estimators=100, random_state=42),
             # "AdaBoost": AdaBoostClassifier(n_estimators=100, random_state=42),
@@ -1512,75 +1516,75 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
             #     verbose=False,
             # ),
             # Optimized variants around Medium (which performed best)
-            "MLP (HighReg)": MLPWrapper(
-                hidden_layer_sizes=(128, 64, 32),
-                activation="relu",
-                solver="adam",
-                alpha=0.1,  # Much higher regularization to prevent overfitting
-                batch_size=32,
-                learning_rate="adaptive",
-                learning_rate_init=0.001,
-                max_iter=1000,
-                early_stopping=True,
-                validation_fraction=0.2,  # More validation data for early stopping
-                n_iter_no_change=30,
-                random_state=42,
-                verbose=False,
-            ),
-            "MLP (VeryHighReg)": MLPWrapper(
-                hidden_layer_sizes=(64, 32),  # Smaller network
-                activation="relu",
-                solver="adam",
-                alpha=0.5,  # Very high regularization
-                batch_size=64,  # Larger batch size for stability
-                learning_rate="adaptive",
-                learning_rate_init=0.0005,  # Lower learning rate
-                max_iter=1000,
-                early_stopping=True,
-                validation_fraction=0.2,
-                n_iter_no_change=40,  # More patience
-                random_state=42,
-                verbose=False,
-            ),
-            # NEW: PCA-based variants to reduce overfitting through dimensionality reduction
-            "PCA+MLP (HighReg)": PCAClassifierWrapper(
-                base_classifier=MLPWrapper(
-                    hidden_layer_sizes=(128, 64, 32),
-                    activation="relu",
-                    solver="adam",
-                    alpha=0.1,
-                    batch_size=32,
-                    learning_rate="adaptive",
-                    learning_rate_init=0.001,
-                    max_iter=1000,
-                    early_stopping=True,
-                    validation_fraction=0.2,
-                    n_iter_no_change=30,
-                    random_state=42,
-                    verbose=False,
-                ),
-                n_components=0.95,  # Keep 95% variance (~109 components based on analysis)
-                pca_whiten=False,
-            ),
-            "PCA+MLP (VeryHighReg)": PCAClassifierWrapper(
-                base_classifier=MLPWrapper(
-                    hidden_layer_sizes=(64, 32),
-                    activation="relu",
-                    solver="adam",
-                    alpha=0.5,
-                    batch_size=64,
-                    learning_rate="adaptive",
-                    learning_rate_init=0.0005,
-                    max_iter=1000,
-                    early_stopping=True,
-                    validation_fraction=0.2,
-                    n_iter_no_change=40,
-                    random_state=42,
-                    verbose=False,
-                ),
-                n_components=0.95,
-                pca_whiten=False,
-            ),
+            # "MLP (HighReg)": MLPWrapper(
+            #     hidden_layer_sizes=(128, 64, 32),
+            #     activation="relu",
+            #     solver="adam",
+            #     alpha=0.1,  # Much higher regularization to prevent overfitting
+            #     batch_size=32,
+            #     learning_rate="adaptive",
+            #     learning_rate_init=0.001,
+            #     max_iter=1000,
+            #     early_stopping=True,
+            #     validation_fraction=0.2,  # More validation data for early stopping
+            #     n_iter_no_change=30,
+            #     random_state=42,
+            #     verbose=False,
+            # ),
+            # "MLP (VeryHighReg)": MLPWrapper(
+            #     hidden_layer_sizes=(64, 32),  # Smaller network
+            #     activation="relu",
+            #     solver="adam",
+            #     alpha=0.5,  # Very high regularization
+            #     batch_size=64,  # Larger batch size for stability
+            #     learning_rate="adaptive",
+            #     learning_rate_init=0.0005,  # Lower learning rate
+            #     max_iter=1000,
+            #     early_stopping=True,
+            #     validation_fraction=0.2,
+            #     n_iter_no_change=40,  # More patience
+            #     random_state=42,
+            #     verbose=False,
+            # ),
+            # # NEW: PCA-based variants to reduce overfitting through dimensionality reduction
+            # "PCA+MLP (HighReg)": PCAClassifierWrapper(
+            #     base_classifier=MLPWrapper(
+            #         hidden_layer_sizes=(128, 64, 32),
+            #         activation="relu",
+            #         solver="adam",
+            #         alpha=0.1,
+            #         batch_size=32,
+            #         learning_rate="adaptive",
+            #         learning_rate_init=0.001,
+            #         max_iter=1000,
+            #         early_stopping=True,
+            #         validation_fraction=0.2,
+            #         n_iter_no_change=30,
+            #         random_state=42,
+            #         verbose=False,
+            #     ),
+            #     n_components=0.95,  # Keep 95% variance (~109 components based on analysis)
+            #     pca_whiten=False,
+            # ),
+            # "PCA+MLP (VeryHighReg)": PCAClassifierWrapper(
+            #     base_classifier=MLPWrapper(
+            #         hidden_layer_sizes=(64, 32),
+            #         activation="relu",
+            #         solver="adam",
+            #         alpha=0.5,
+            #         batch_size=64,
+            #         learning_rate="adaptive",
+            #         learning_rate_init=0.0005,
+            #         max_iter=1000,
+            #         early_stopping=True,
+            #         validation_fraction=0.2,
+            #         n_iter_no_change=40,
+            #         random_state=42,
+            #         verbose=False,
+            #     ),
+            #     n_components=0.95,
+            #     pca_whiten=False,
+            # ),
             # # NEW: Tree-based models that often generalize better than neural networks
             # "Random Forest (Tuned)": RandomForestClassifier(
             #     n_estimators=200,  # More trees for better generalization
@@ -1632,8 +1636,8 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
             #     ),
         }
 
-        if self.config.get("include_lda", True):
-            classifiers["Linear Discriminant Analysis"] = LinearDiscriminantAnalysis()
+        # if self.config.get("include_lda", True):
+        #     classifiers["Linear Discriminant Analysis"] = LinearDiscriminantAnalysis()
 
         # Add ensemble classifier combining Random Forest and SVM
         rf_clf = RandomForestClassifier(n_estimators=100, random_state=42)
@@ -1971,20 +1975,20 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
             # )
 
             # GPU MLP (Medium-HighReg) - Higher regularization for generalization
-            classifiers["GPU-MLP (Medium-HighReg)"] = GPUMLPClassifier(
-                hidden_layer_sizes=(128, 64, 32),
-                dropout=0.4,  # Higher dropout
-                learning_rate=0.001,
-                weight_decay=0.02,  # Higher L2
-                batch_size=64,
-                max_epochs=500,
-                early_stopping=True,
-                patience=30,
-                validation_fraction=0.15,
-                use_batch_norm=True,
-                random_state=42,
-                verbose=False,
-            )
+            # classifiers["GPU-MLP (Medium-HighReg)"] = GPUMLPClassifier(
+            #     hidden_layer_sizes=(128, 64, 32),
+            #     dropout=0.4,  # Higher dropout
+            #     learning_rate=0.001,
+            #     weight_decay=0.02,  # Higher L2
+            #     batch_size=64,
+            #     max_epochs=500,
+            #     early_stopping=True,
+            #     patience=30,
+            #     validation_fraction=0.15,
+            #     use_batch_norm=True,
+            #     random_state=42,
+            #     verbose=False,
+            # )
 
             # # GPU MLP (Large) - Larger network for complex patterns
             # classifiers["GPU-MLP (Large)"] = GPUMLPClassifier(
@@ -2178,32 +2182,104 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
 
         if GPU_AVAILABLE:
             # GPU-accelerated optimized MLP
-            classifiers["GPU-MLP (Tuned)"] = GPUMLPClassifier(
-                hidden_layer_sizes=(256, 192, 160),
-                dropout=0.162,
-                learning_rate=0.000131,
-                weight_decay=0.000294,
-                batch_size=32,
-                max_epochs=500,
+            # classifiers["GPU-MLP (Tuned)"] = GPUMLPClassifier(
+            #     hidden_layer_sizes=(256, 192, 160),
+            #     dropout=0.162,
+            #     learning_rate=0.000131,
+            #     weight_decay=0.000294,
+            #     batch_size=32,
+            #     max_epochs=500,
+            #     early_stopping=True,
+            #     patience=25,
+            #     use_batch_norm=False,
+            #     random_state=42,
+            # )
+
+            # # Variant with slightly higher regularization
+            # classifiers["GPU-MLP (Tuned-HighReg)"] = GPUMLPClassifier(
+            #     hidden_layer_sizes=(256, 192, 160),
+            #     dropout=0.25,
+            #     learning_rate=0.000131,
+            #     weight_decay=0.001,
+            #     batch_size=32,
+            #     max_epochs=500,
+            #     early_stopping=True,
+            #     patience=30,
+            #     use_batch_norm=False,
+            #     random_state=42,
+            # )
+
+            # ========================================================================
+            # CNN CLASSIFIERS FOR SPECTROGRAM DATA
+            # ========================================================================
+            # These classifiers expect 2D spectrogram input (n_mels × time_bins)
+            # They work with flattened spectrograms and automatically reshape them
+
+            # SIMPLIFIED CNN: Standard Conv2D for small dataset generalization
+            # WHY SIMPLIFIED: Depthwise separable + attention was TOO COMPLEX for 968 samples
+            # New approach: Fewer parameters, more regularization, can actually learn
+            classifiers["CNN-Spectrogram"] = SpectrogramCNNClassifier(
+                input_shape=(80, 128),  # Match spectrogram size
+                dropout=0.5,  # INCREASED: Strong dropout in simple architecture
+                learning_rate=0.001,  # INCREASED: Can learn faster with simpler model
+                weight_decay=0.01,  # INCREASED: Need strong L2 with small dataset
+                batch_size=16,
+                max_epochs=200,  # REDUCED: Simpler model converges faster
                 early_stopping=True,
-                patience=25,
-                use_batch_norm=False,
+                patience=30,  # REDUCED: Expect faster convergence
                 random_state=42,
+                verbose=True,
             )
 
-            # Variant with slightly higher regularization
-            classifiers["GPU-MLP (Tuned-HighReg)"] = GPUMLPClassifier(
-                hidden_layer_sizes=(256, 192, 160),
-                dropout=0.25,
-                learning_rate=0.000131,
-                weight_decay=0.001,
-                batch_size=32,
-                max_epochs=500,
+            # ADVANCED CNN: Depthwise Separable + Attention (previously achieved 65% training)
+            # This was removed but user wants it back to compare
+            # MORE COMPLEX: Needs larger datasets (3K+ samples) to shine
+            # Use case: When simple CNN plateaus and you have enough data
+            classifiers["CNN-Advanced-Spectrogram"] = SpectrogramCNN_AdvancedClassifier(
+                input_shape=(80, 128),
+                dropout=0.4,  # Moderate dropout (complex architecture provides regularization)
+                learning_rate=0.0003,  # Moderate LR for complex model
+                weight_decay=0.005,  # Light L2 (attention mechanism helps prevent overfitting)
+                batch_size=16,
+                max_epochs=200,
                 early_stopping=True,
-                patience=30,
-                use_batch_norm=False,
+                patience=40,  # More patience for complex architecture
                 random_state=42,
+                verbose=True,
             )
+
+            # CNN + MLP Hybrid: RESTORED to v1 settings that achieved 93.6% train accuracy
+            # Original settings from successful run - keeping capacity for learning
+            classifiers["CNN-MLP-Spectrogram"] = SpectrogramCNN_MLPClassifier(
+                input_shape=(80, 128),
+                cnn_channels=[32, 64, 128],
+                mlp_hidden_dims=[96, 48],  # RESTORED: Original capacity (not [64,32])
+                dropout=0.6,  # RESTORED: Original dropout (not 0.7)
+                learning_rate=0.00003,  # RESTORED: Original LR (not 0.00002)
+                weight_decay=0.02,  # RESTORED: Original L2 (not 0.03)
+                batch_size=8,
+                max_epochs=400,  # RESTORED: Original max epochs (not 200)
+                early_stopping=True,
+                patience=50,  # RESTORED: Original patience (not 30)
+                random_state=42,
+                verbose=True,
+            )
+
+            # RESIDUAL CNN (ResNet-style): DISABLED - Performed poorly (50% random guessing)
+            # Issue: Too deep for small dataset, massive validation loss spikes
+            # Skip connections didn't help - model couldn't learn at all
+            # classifiers["CNN-ResNet-Spectrogram"] = SpectrogramResNetClassifier(
+            #     input_shape=(80, 128),
+            #     dropout=0.5,
+            #     learning_rate=0.0005,
+            #     weight_decay=0.01,
+            #     batch_size=16,
+            #     max_epochs=250,
+            #     early_stopping=True,
+            #     patience=40,
+            #     random_state=42,
+            #     verbose=True,
+            # )
 
         # ========================================================================
         # TREE-BASED GRADIENT BOOSTING MODELS
@@ -2211,22 +2287,22 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
         # Tree-based models often capture different patterns than neural networks
         # Good for non-linear feature interactions and robust to feature scaling
 
-        # XGBoost - Extreme Gradient Boosting
-        classifiers["XGBoost"] = XGBoostWrapper(
-            n_estimators=200,
-            random_state=42,
-        )
+        # # XGBoost - Extreme Gradient Boosting
+        # classifiers["XGBoost"] = XGBoostWrapper(
+        #     n_estimators=200,
+        #     random_state=42,
+        # )
 
-        # LightGBM - Fast gradient boosting (if available)
-        if LIGHTGBM_AVAILABLE:
-            classifiers["LightGBM"] = LightGBMWrapper(
-                n_estimators=200,
-                learning_rate=0.1,
-                max_depth=-1,  # No depth limit
-                num_leaves=31,
-                random_state=42,
-                verbose=-1,  # Suppress output
-            )
+        # # LightGBM - Fast gradient boosting (if available)
+        # if LIGHTGBM_AVAILABLE:
+        #     classifiers["LightGBM"] = LightGBMWrapper(
+        #         n_estimators=200,
+        #         learning_rate=0.1,
+        #         max_depth=-1,  # No depth limit
+        #         num_leaves=31,
+        #         random_state=42,
+        #         verbose=-1,  # Suppress output
+        #     )
 
         # ========================================================================
         # ENSEMBLE OF TOP GENERALIZING MODELS
@@ -2235,159 +2311,159 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
         # Expanded to 5 models for better generalization through diversity
 
         # Soft voting ensemble of top sklearn MLPs
-        classifiers["Ensemble (Top5-MLP)"] = VotingClassifier(
-            estimators=[
-                # Model 1: High regularization, medium depth
-                (
-                    "mlp_highreg",
-                    MLPWrapper(
-                        hidden_layer_sizes=(128, 64, 32),
-                        activation="relu",
-                        solver="adam",
-                        alpha=0.02,  # High regularization
-                        batch_size=32,
-                        learning_rate="adaptive",
-                        learning_rate_init=0.001,
-                        max_iter=800,
-                        early_stopping=True,
-                        validation_fraction=0.15,
-                        n_iter_no_change=25,
-                        random_state=42,
-                    ),
-                ),
-                # Model 2: Deeper architecture, moderate regularization
-                (
-                    "mlp_deep",
-                    MLPWrapper(
-                        hidden_layer_sizes=(256, 128, 64, 32),
-                        activation="relu",
-                        solver="adam",
-                        alpha=0.005,
-                        batch_size=32,
-                        learning_rate="adaptive",
-                        learning_rate_init=0.001,
-                        max_iter=1000,
-                        early_stopping=True,
-                        validation_fraction=0.15,
-                        n_iter_no_change=30,
-                        random_state=43,
-                    ),
-                ),
-                # Model 3: Wide shallow architecture (different inductive bias)
-                (
-                    "mlp_wide_shallow",
-                    MLPWrapper(
-                        hidden_layer_sizes=(256, 128),
-                        activation="relu",
-                        solver="adam",
-                        alpha=0.015,  # Moderate-high regularization
-                        batch_size=64,
-                        learning_rate="adaptive",
-                        learning_rate_init=0.0005,  # Lower LR for stability
-                        max_iter=600,
-                        early_stopping=True,
-                        validation_fraction=0.15,
-                        n_iter_no_change=25,
-                        random_state=44,
-                    ),
-                ),
-                # Model 4: Very high regularization (underfits less to training data)
-                (
-                    "mlp_veryhighreg",
-                    MLPWrapper(
-                        hidden_layer_sizes=(96, 48, 24),
-                        activation="relu",
-                        solver="adam",
-                        alpha=0.05,  # Very high regularization for generalization
-                        batch_size=32,
-                        learning_rate="adaptive",
-                        learning_rate_init=0.001,
-                        max_iter=500,
-                        early_stopping=True,
-                        validation_fraction=0.15,
-                        n_iter_no_change=20,
-                        random_state=45,
-                    ),
-                ),
-                # Model 5: Tanh activation (different non-linearity for diversity)
-                (
-                    "mlp_tanh",
-                    MLPWrapper(
-                        hidden_layer_sizes=(128, 64, 32),
-                        activation="tanh",  # Different activation function
-                        solver="adam",
-                        alpha=0.01,
-                        batch_size=32,
-                        learning_rate="adaptive",
-                        learning_rate_init=0.001,
-                        max_iter=700,
-                        early_stopping=True,
-                        validation_fraction=0.15,
-                        n_iter_no_change=25,
-                        random_state=46,
-                    ),
-                ),
-            ],
-            voting="soft",
-        )
+        # classifiers["Ensemble (Top5-MLP)"] = VotingClassifier(
+        #     estimators=[
+        #         # Model 1: High regularization, medium depth
+        #         (
+        #             "mlp_highreg",
+        #             MLPWrapper(
+        #                 hidden_layer_sizes=(128, 64, 32),
+        #                 activation="relu",
+        #                 solver="adam",
+        #                 alpha=0.02,  # High regularization
+        #                 batch_size=32,
+        #                 learning_rate="adaptive",
+        #                 learning_rate_init=0.001,
+        #                 max_iter=800,
+        #                 early_stopping=True,
+        #                 validation_fraction=0.15,
+        #                 n_iter_no_change=25,
+        #                 random_state=42,
+        #             ),
+        #         ),
+        #         # Model 2: Deeper architecture, moderate regularization
+        #         (
+        #             "mlp_deep",
+        #             MLPWrapper(
+        #                 hidden_layer_sizes=(256, 128, 64, 32),
+        #                 activation="relu",
+        #                 solver="adam",
+        #                 alpha=0.005,
+        #                 batch_size=32,
+        #                 learning_rate="adaptive",
+        #                 learning_rate_init=0.001,
+        #                 max_iter=1000,
+        #                 early_stopping=True,
+        #                 validation_fraction=0.15,
+        #                 n_iter_no_change=30,
+        #                 random_state=43,
+        #             ),
+        #         ),
+        #         # Model 3: Wide shallow architecture (different inductive bias)
+        #         (
+        #             "mlp_wide_shallow",
+        #             MLPWrapper(
+        #                 hidden_layer_sizes=(256, 128),
+        #                 activation="relu",
+        #                 solver="adam",
+        #                 alpha=0.015,  # Moderate-high regularization
+        #                 batch_size=64,
+        #                 learning_rate="adaptive",
+        #                 learning_rate_init=0.0005,  # Lower LR for stability
+        #                 max_iter=600,
+        #                 early_stopping=True,
+        #                 validation_fraction=0.15,
+        #                 n_iter_no_change=25,
+        #                 random_state=44,
+        #             ),
+        #         ),
+        #         # Model 4: Very high regularization (underfits less to training data)
+        #         (
+        #             "mlp_veryhighreg",
+        #             MLPWrapper(
+        #                 hidden_layer_sizes=(96, 48, 24),
+        #                 activation="relu",
+        #                 solver="adam",
+        #                 alpha=0.05,  # Very high regularization for generalization
+        #                 batch_size=32,
+        #                 learning_rate="adaptive",
+        #                 learning_rate_init=0.001,
+        #                 max_iter=500,
+        #                 early_stopping=True,
+        #                 validation_fraction=0.15,
+        #                 n_iter_no_change=20,
+        #                 random_state=45,
+        #             ),
+        #         ),
+        #         # Model 5: Tanh activation (different non-linearity for diversity)
+        #         (
+        #             "mlp_tanh",
+        #             MLPWrapper(
+        #                 hidden_layer_sizes=(128, 64, 32),
+        #                 activation="tanh",  # Different activation function
+        #                 solver="adam",
+        #                 alpha=0.01,
+        #                 batch_size=32,
+        #                 learning_rate="adaptive",
+        #                 learning_rate_init=0.001,
+        #                 max_iter=700,
+        #                 early_stopping=True,
+        #                 validation_fraction=0.15,
+        #                 n_iter_no_change=25,
+        #                 random_state=46,
+        #             ),
+        #         ),
+        #     ],
+        #     voting="soft",
+        # )
 
-        # Original Top3 ensemble (best performer in v3 experiments)
-        classifiers["Ensemble (Top3-MLP)"] = VotingClassifier(
-            estimators=[
-                (
-                    "mlp_med_highreg",
-                    MLPWrapper(
-                        hidden_layer_sizes=(128, 64, 32),
-                        activation="relu",
-                        solver="adam",
-                        alpha=0.02,
-                        batch_size=32,
-                        learning_rate="adaptive",
-                        learning_rate_init=0.001,
-                        max_iter=800,
-                        early_stopping=True,
-                        validation_fraction=0.15,
-                        n_iter_no_change=25,
-                        random_state=42,
-                    ),
-                ),
-                (
-                    "mlp_large",
-                    MLPWrapper(
-                        hidden_layer_sizes=(256, 128, 64, 32),
-                        activation="relu",
-                        solver="adam",
-                        alpha=0.005,
-                        batch_size=32,
-                        learning_rate="adaptive",
-                        learning_rate_init=0.001,
-                        max_iter=1000,
-                        early_stopping=True,
-                        validation_fraction=0.15,
-                        n_iter_no_change=30,
-                        random_state=43,
-                    ),
-                ),
-                (
-                    "mlp_medium",
-                    MLPWrapper(
-                        hidden_layer_sizes=(128, 64, 32),
-                        activation="relu",
-                        solver="adam",
-                        alpha=0.01,
-                        batch_size=32,
-                        learning_rate="adaptive",
-                        learning_rate_init=0.001,
-                        max_iter=500,
-                        early_stopping=True,
-                        validation_fraction=0.15,
-                        n_iter_no_change=20,
-                        random_state=44,
-                    ),
-                ),
-            ],
-            voting="soft",
-        )
+        # # Original Top3 ensemble (best performer in v3 experiments)
+        # classifiers["Ensemble (Top3-MLP)"] = VotingClassifier(
+        #     estimators=[
+        #         (
+        #             "mlp_med_highreg",
+        #             MLPWrapper(
+        #                 hidden_layer_sizes=(128, 64, 32),
+        #                 activation="relu",
+        #                 solver="adam",
+        #                 alpha=0.02,
+        #                 batch_size=32,
+        #                 learning_rate="adaptive",
+        #                 learning_rate_init=0.001,
+        #                 max_iter=800,
+        #                 early_stopping=True,
+        #                 validation_fraction=0.15,
+        #                 n_iter_no_change=25,
+        #                 random_state=42,
+        #             ),
+        #         ),
+        #         (
+        #             "mlp_large",
+        #             MLPWrapper(
+        #                 hidden_layer_sizes=(256, 128, 64, 32),
+        #                 activation="relu",
+        #                 solver="adam",
+        #                 alpha=0.005,
+        #                 batch_size=32,
+        #                 learning_rate="adaptive",
+        #                 learning_rate_init=0.001,
+        #                 max_iter=1000,
+        #                 early_stopping=True,
+        #                 validation_fraction=0.15,
+        #                 n_iter_no_change=30,
+        #                 random_state=43,
+        #             ),
+        #         ),
+        #         (
+        #             "mlp_medium",
+        #             MLPWrapper(
+        #                 hidden_layer_sizes=(128, 64, 32),
+        #                 activation="relu",
+        #                 solver="adam",
+        #                 alpha=0.01,
+        #                 batch_size=32,
+        #                 learning_rate="adaptive",
+        #                 learning_rate_init=0.001,
+        #                 max_iter=500,
+        #                 early_stopping=True,
+        #                 validation_fraction=0.15,
+        #                 n_iter_no_change=20,
+        #                 random_state=44,
+        #             ),
+        #         ),
+        #     ],
+        #     voting="soft",
+        # )
 
         # ========================================================================
         # MEGA-ENSEMBLE: Diverse architectures for better generalization
@@ -2397,150 +2473,151 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
         # - Tree-based models (capture non-linear patterns)
         # Note: GPUMLPClassifier automatically falls back to CPU if GPU unavailable
 
-        if GPU_AVAILABLE:
-            classifiers["MegaEnsemble-Diverse"] = VotingClassifier(
-                estimators=[
-                    # Best individual model: GPU-MLP with high regularization
-                    (
-                        "gpu_mlp_highreg_best",
-                        GPUMLPClassifier(
-                            hidden_layer_sizes=(128, 64),
-                            dropout=0.1,
-                            learning_rate=0.001,
-                            weight_decay=0.01,
-                            batch_size=32,
-                            max_epochs=800,
-                            early_stopping=True,
-                            patience=25,
-                            use_batch_norm=False,
-                            random_state=42,
-                        ),
-                    ),
-                    # GPU-MLP with different architecture
-                    (
-                        "gpu_mlp_tuned",
-                        GPUMLPClassifier(
-                            hidden_layer_sizes=(128, 96, 64),
-                            dropout=0.15,
-                            learning_rate=0.001,
-                            weight_decay=0.01,
-                            batch_size=32,
-                            max_epochs=500,
-                            early_stopping=True,
-                            patience=25,
-                            use_batch_norm=False,
-                            random_state=42,
-                        ),
-                    ),
-                    # Gradient Boosting for tree-based perspective
-                    (
-                        "gradient_boost",
-                        GradientBoostingClassifier(
-                            n_estimators=150,
-                            max_depth=5,
-                            learning_rate=0.1,
-                            subsample=0.8,
-                            min_samples_split=10,
-                            random_state=42,
-                        ),
-                    ),
-                    # XGBoost for different boosting approach
-                    (
-                        "xgboost",
-                        XGBoostWrapper(
-                            n_estimators=200,
-                            random_state=42,
-                        ),
-                    ),
-                    # Large GPU-MLP with lower regularization
-                    (
-                        "gpu_mlp_large_lowreg",
-                        GPUMLPClassifier(
-                            hidden_layer_sizes=(256, 128, 64),
-                            dropout=0.05,
-                            learning_rate=0.001,
-                            weight_decay=0.001,
-                            batch_size=32,
-                            max_epochs=1000,
-                            early_stopping=True,
-                            patience=30,
-                            use_batch_norm=False,
-                            random_state=43,
-                        ),
-                    ),
-                    # Robust GPU-MLP (different feature preprocessing)
-                    (
-                        "gpu_mlp_robust",
-                        NormalizedClassifierWrapper(
-                            base_classifier=GPUMLPClassifier(
-                                hidden_layer_sizes=(128, 64),
-                                dropout=0.1,
-                                learning_rate=0.001,
-                                weight_decay=0.005,
-                                batch_size=32,
-                                max_epochs=500,
-                                early_stopping=True,
-                                patience=20,
-                                use_batch_norm=False,
-                                random_state=44,
-                            ),
-                            normalization="robust",
-                        ),
-                    ),
-                ],
-                voting="soft",
-            )
+        # if GPU_AVAILABLE:
+        #     classifiers["MegaEnsemble-Diverse"] = VotingClassifier(
+        #         estimators=[
+        #             # Best individual model: GPU-MLP with high regularization
+        #             (
+        #                 "gpu_mlp_highreg_best",
+        #                 GPUMLPClassifier(
+        #                     hidden_layer_sizes=(128, 64),
+        #                     dropout=0.1,
+        #                     learning_rate=0.001,
+        #                     weight_decay=0.01,
+        #                     batch_size=32,
+        #                     max_epochs=800,
+        #                     early_stopping=True,
+        #                     patience=25,
+        #                     use_batch_norm=False,
+        #                     random_state=42,
+        #                 ),
+        #             ),
+        #             # GPU-MLP with different architecture
+        #             (
+        #                 "gpu_mlp_tuned",
+        #                 GPUMLPClassifier(
+        #                     hidden_layer_sizes=(128, 96, 64),
+        #                     dropout=0.15,
+        #                     learning_rate=0.001,
+        #                     weight_decay=0.01,
+        #                     batch_size=32,
+        #                     max_epochs=500,
+        #                     early_stopping=True,
+        #                     patience=25,
+        #                     use_batch_norm=False,
+        #                     random_state=42,
+        #                 ),
+        #             ),
+        #             # Gradient Boosting for tree-based perspective
+        #             (
+        #                 "gradient_boost",
+        #                 GradientBoostingClassifier(
+        #                     n_estimators=150,
+        #                     max_depth=5,
+        #                     learning_rate=0.1,
+        #                     subsample=0.8,
+        #                     min_samples_split=10,
+        #                     random_state=42,
+        #                 ),
+        #             ),
+        #             # XGBoost for different boosting approach
+        #             (
+        #                 "xgboost",
+        #                 XGBoostWrapper(
+        #                     n_estimators=200,
+        #                     random_state=42,
+        #                 ),
+        #             ),
+        #             # Large GPU-MLP with lower regularization
+        #             (
+        #                 "gpu_mlp_large_lowreg",
+        #                 GPUMLPClassifier(
+        #                     hidden_layer_sizes=(256, 128, 64),
+        #                     dropout=0.05,
+        #                     learning_rate=0.001,
+        #                     weight_decay=0.001,
+        #                     batch_size=32,
+        #                     max_epochs=1000,
+        #                     early_stopping=True,
+        #                     patience=30,
+        #                     validation_fraction=0.15,
+        #                     use_batch_norm=False,
+        #                     random_state=43,
+        #                 ),
+        #             ),
+        #             # Robust GPU-MLP (different feature preprocessing)
+        #             (
+        #                 "gpu_mlp_robust",
+        #                 NormalizedClassifierWrapper(
+        #                     base_classifier=GPUMLPClassifier(
+        #                         hidden_layer_sizes=(128, 64),
+        #                         dropout=0.1,
+        #                         learning_rate=0.001,
+        #                         weight_decay=0.005,
+        #                         batch_size=32,
+        #                         max_epochs=500,
+        #                         early_stopping=True,
+        #                         patience=20,
+        #                         use_batch_norm=False,
+        #                         random_state=44,
+        #                     ),
+        #                     normalization="robust",
+        #                 ),
+        #             ),
+        #         ],
+        #         voting="soft",
+        #     )
 
-            # Compact mega-ensemble with just the top 3 diverse models
-            classifiers["MegaEnsemble-Top3"] = VotingClassifier(
-                estimators=[
-                    # Best GPU-MLP (high regularization)
-                    (
-                        "gpu_mlp_best",
-                        GPUMLPClassifier(
-                            hidden_layer_sizes=(128, 64),
-                            dropout=0.1,
-                            learning_rate=0.001,
-                            weight_decay=0.01,
-                            batch_size=32,
-                            max_epochs=800,
-                            early_stopping=True,
-                            patience=25,
-                            use_batch_norm=False,
-                            random_state=42,
-                        ),
-                    ),
-                    # GPU-MLP tuned architecture
-                    (
-                        "gpu_mlp_tuned_best",
-                        GPUMLPClassifier(
-                            hidden_layer_sizes=(128, 96, 64),
-                            dropout=0.15,
-                            learning_rate=0.001,
-                            weight_decay=0.01,
-                            batch_size=32,
-                            max_epochs=500,
-                            early_stopping=True,
-                            patience=25,
-                            use_batch_norm=False,
-                            random_state=43,
-                        ),
-                    ),
-                    # Best tree model for diversity
-                    (
-                        "gradient_boost_best",
-                        GradientBoostingClassifier(
-                            n_estimators=150,
-                            max_depth=5,
-                            learning_rate=0.1,
-                            subsample=0.8,
-                            min_samples_split=10,
-                            random_state=42,
-                        ),
-                    ),
-                ],
-                voting="soft",
-            )
+        #     # Compact mega-ensemble with just the top 3 diverse models
+        #     classifiers["MegaEnsemble-Top3"] = VotingClassifier(
+        #         estimators=[
+        #             # Best GPU-MLP (high regularization)
+        #             (
+        #                 "gpu_mlp_best",
+        #                 GPUMLPClassifier(
+        #                     hidden_layer_sizes=(128, 64),
+        #                     dropout=0.1,
+        #                     learning_rate=0.001,
+        #                     weight_decay=0.01,
+        #                     batch_size=32,
+        #                     max_epochs=800,
+        #                     early_stopping=True,
+        #                     patience=25,
+        #                     use_batch_norm=False,
+        #                     random_state=42,
+        #                 ),
+        #             ),
+        #             # GPU-MLP tuned architecture
+        #             (
+        #                 "gpu_mlp_tuned_best",
+        #                 GPUMLPClassifier(
+        #                     hidden_layer_sizes=(128, 96, 64),
+        #                     dropout=0.15,
+        #                     learning_rate=0.001,
+        #                     weight_decay=0.01,
+        #                     batch_size=32,
+        #                     max_epochs=500,
+        #                     early_stopping=True,
+        #                     patience=25,
+        #                     use_batch_norm=False,
+        #                     random_state=43,
+        #                 ),
+        #             ),
+        #             # Best tree model for diversity
+        #             (
+        #                 "gradient_boost_best",
+        #                 GradientBoostingClassifier(
+        #                     n_estimators=150,
+        #                     max_depth=5,
+        #                     learning_rate=0.1,
+        #                     subsample=0.8,
+        #                     min_samples_split=10,
+        #                     random_state=42,
+        #                 ),
+        #             ),
+        #         ],
+        #         voting="soft",
+        #     )
 
         return classifiers
 
@@ -3571,7 +3648,6 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
                         "std_accuracy": res["std_accuracy"],
                     }
                     for name, res in cv_results.items()
-                    if "error" not in res
                 },
                 "num_classifiers_tested": len(cv_results),
             }

@@ -6,22 +6,29 @@ base_data_dir: "data"
 
 # Datasets to process (will be combined for training/testing)
 datasets:
-  # TRAINING: Workspaces 1 & 2 (all surfaces - cutout + pure contact + pure no-contact)
+  # TRAINING: Workspaces 1, 2 & 3 (all surfaces - cutout + pure contact + pure no-contact)
+  
+  # Workspace 2
   - "balanced_collected_data_runs_2026_01_15_workspace_2_squares_cutout_undersample"
-  - "balanced_collected_data_runs_2026_01_15_workspace_2_pure_no_contact_undersample"
-  - "balanced_collected_data_runs_2026_01_15_workspace_2_pure_contact_undersample"
+  # - "balanced_collected_data_runs_2026_01_15_workspace_2_pure_no_contact_undersample"
+  # - "balanced_collected_data_runs_2026_01_15_workspace_2_pure_contact_undersample"
 
+  # Workspace 1
   - "balanced_collected_data_runs_2026_01_15_workspace_1_squares_cutout_undersample"
-  - "balanced_collected_data_runs_2026_01_15_workspace_1_pure_no_contact_undersample"
-  - "balanced_collected_data_runs_2026_01_15_workspace_1_pure_contact_undersample"
+  # - "balanced_collected_data_runs_2026_01_15_workspace_1_pure_no_contact_undersample"
+  # - "balanced_collected_data_runs_2026_01_15_workspace_1_pure_contact_undersample"
+  
+  # Workspace 3 (now included in training)
+  - "balanced_collected_data_runs_2025_12_15_v2_2_workspace3_squares_cutout_undersample"
+  # - "balanced_collected_data_runs_2026_01_14_workspace_3_pure_contact_undersample"
+  # - "balanced_collected_data_runs_2026_01_14_workspace_3_pure_no_contact_undersample"
+  # - "balanced_collected_data_runs_2025_12_17_v2_workspace_3_squares_cutout_undersample"
   
 # Optional: Specify datasets to use for validation (holdout)
 # Leave empty [] to combine all datasets for train/test split
 validation_datasets: [
-  # VALIDATION: Workspace 3 (cutout surfaces only - Pattern A)
-  "balanced_collected_data_runs_2025_12_15_v2_2_workspace3_squares_cutout_undersample",
-  # Or use the newer workspace 3 cutout if available:
-  # "balanced_collected_data_runs_2025_12_17_v2_workspace_3_squares_cutout_undersample"
+  # VALIDATION: Hold-out dataset (Pattern B - completely separate surface patterns)
+  "balanced_collected_data_runs_hold_out_dataset_undersample",
 ]
 
 # Domain Adaptation Configuration
@@ -51,19 +58,19 @@ feature_extraction:
   mode: "spectrogram"  # Options: "features" | "spectrogram" | "mfcc" | "magnitude_spectrum" | "power_spectrum" | "chroma" | "both"
   
   # Spectrogram extraction parameters (used for spectrogram, mfcc, magnitude_spectrum, power_spectrum, chroma, both modes)
-  # Optimized for 48kHz audio with contact detection
+  # Optimized for CONTACT DETECTION: High-freq transients, short duration events
   spectrogram:
-    n_fft: 1024          # REDUCED: FFT window size → freq resolution = 48000/1024 = 46.9 Hz/bin
-    hop_length: 512      # REDUCED: Hop between windows → 50% overlap (balance between time/freq resolution)
-    n_mels: 64           # Mel bins for spectrograms
-    time_bins: 64        # FIXED time bins (instead of dynamic)
-    n_mfcc: 13           # MFCC coefficients
-    n_chroma: 12         # Chroma bins
-    n_mels: 128          # Number of mel frequency bins (doubled for better resolution)
-    fmin: 50             # Minimum frequency (Hz) - skip low-freq noise
-    fmax: 20000          # Maximum frequency (Hz) - use FULL spectrum up to Nyquist-2kHz
-    time_bins: 256       # Number of time bins (doubled for better temporal detail)
-    use_log_scale: true  # Use dB scale (recommended for ML)
+    n_fft: 512           # REDUCED: Shorter window for better time resolution (10.6ms @ 48kHz)
+                         # Contact events are SHORT - need fine temporal detail
+    hop_length: 128      # REDUCED: 75% overlap for smooth transitions (2.7ms hop)
+                         # Catches fast transients that longer hops would miss
+    n_mels: 80           # INCREASED: More frequency bands to capture contact harmonics
+                         # Contact has rich frequency content across spectrum
+    time_bins: 128       # INCREASED: More time detail to see impact onset
+                         # Result: 80×128 = 10,240 features (2.5× larger BUT better for transients)
+    fmin: 100            # INCREASED: Skip very low freq (robot motor noise)
+    fmax: 20000          # Keep high freq where contact transients live
+    use_log_scale: true  # dB scale emphasizes transients
     
     # MFCC-specific parameters
     n_mfcc: 13           # Number of MFCC coefficients
@@ -118,6 +125,6 @@ experiments:
 
 # Output Configuration
 output:
-  base_dir: "workspace_1_2_train_workspace_3_validate_pattern_A"  # Train: W1&2 all surfaces, Validate: W3 cutout only
+  base_dir: "cnn_v4"  # Train: W1&2&3 all surfaces, Validate: Hold-out dataset (Pattern B)
 
 # Analysis Experiments (Standard Pipeline)
