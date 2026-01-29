@@ -23,13 +23,15 @@ import random
 # USER SETTINGS
 # ==================
 DATA_DIR = os.path.join(
-    "data", "collected_data_runs_hold_out_dataset", "data"
+    "data",
+    "collected_data_runs_2026_01_27_hold_out_dataset_relabeled",
+    "data",
 )  # Input data folder (relative path)
-OUTPUT_DIR_UNDERSAMPLE = "balanced_collected_data_runs_hold_out_dataset_undersample"  # Output folder for undersampled balanced data
-OUTPUT_DIR_OVERSAMPLE = "balanced_collected_data_runs_hold_out_dataset_oversample"  # Output folder for oversampled balanced data
+OUTPUT_DIR_UNDERSAMPLE = "balanced_collected_data_runs_2026_01_27_hold_out_dataset_relabeled_undersample"  # Output folder for undersampled balanced data
+OUTPUT_DIR_OVERSAMPLE = "balanced_collected_data_runs_2026_01_27_hold_out_dataset_relabeled_oversample"  # Output folder for oversampled balanced data
 SR = 48000
 RANDOM_SEED = 42
-CLASSES = ["contact", "no_contact"]
+CLASSES = ["contact", "no_contact", "edge"]
 BALANCE_METHOD = "both"  # "undersample", "oversample", or "both"
 # ==================
 
@@ -72,7 +74,7 @@ def load_data(data_dir):
 
 
 def group_labels(labels):
-    """Group raw labels into 2 classes: contact and no_contact."""
+    """Group raw labels into 3 classes: contact, no_contact, and edge."""
     grouped = []
     for label in labels:
         # Remove common prefixes
@@ -82,6 +84,8 @@ def group_labels(labels):
             grouped.append("contact")
         elif clean_label.startswith("no_surface") or clean_label == "no_contact":
             grouped.append("no_contact")
+        elif clean_label.startswith("edge") or clean_label == "edge":
+            grouped.append("edge")
         else:
             # Default: treat unknown labels as no_contact or skip
             print(f"Warning: Unknown label '{clean_label}' - treating as no_contact")
@@ -97,10 +101,12 @@ def balance_data(labels, file_paths, method="undersample"):
     # Get indices for each class
     contact_indices = np.where(y == "contact")[0]
     no_contact_indices = np.where(y == "no_contact")[0]
+    edge_indices = np.where(y == "edge")[0]
 
     counts = {
         "contact": len(contact_indices),
         "no_contact": len(no_contact_indices),
+        "edge": len(edge_indices),
     }
 
     # Filter out classes with 0 samples
@@ -118,10 +124,12 @@ def balance_data(labels, file_paths, method="undersample"):
         print(f"Returning all samples without balancing.")
         if class_name == "contact":
             return list(contact_indices)
+        elif class_name == "edge":
+            return list(edge_indices)
         else:
             return list(no_contact_indices)
 
-    # Both classes present - proceed with balancing
+    # Multiple classes present - proceed with balancing
     if method == "undersample":
         # Undersample to minimum count
         min_count = min(available_classes.values())
@@ -138,9 +146,14 @@ def balance_data(labels, file_paths, method="undersample"):
             if counts["no_contact"] > 0
             else []
         )
+        sampled_edge_indices = (
+            random.sample(list(edge_indices), min_count) if counts["edge"] > 0 else []
+        )
 
-        balanced_indices = list(sampled_contact_indices) + list(
-            sampled_no_contact_indices
+        balanced_indices = (
+            list(sampled_contact_indices)
+            + list(sampled_no_contact_indices)
+            + list(sampled_edge_indices)
         )
 
     elif method == "oversample":
@@ -164,8 +177,17 @@ def balance_data(labels, file_paths, method="undersample"):
         else:
             sampled_no_contact_indices = []
 
-        balanced_indices = list(sampled_contact_indices) + list(
-            sampled_no_contact_indices
+        if counts["edge"] > 0:
+            sampled_edge_indices = list(edge_indices) + random.choices(
+                list(edge_indices), k=max_count - len(edge_indices)
+            )
+        else:
+            sampled_edge_indices = []
+
+        balanced_indices = (
+            list(sampled_contact_indices)
+            + list(sampled_no_contact_indices)
+            + list(sampled_edge_indices)
         )
 
     random.shuffle(balanced_indices)

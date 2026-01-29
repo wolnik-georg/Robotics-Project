@@ -9,26 +9,30 @@ datasets:
   # TRAINING: Workspaces 1, 2 & 3 (all surfaces - cutout + pure contact + pure no-contact)
   
   # Workspace 2
-  - "balanced_collected_data_runs_2026_01_15_workspace_2_squares_cutout_undersample"
+  # - "balanced_collected_data_runs_2026_01_15_workspace_2_squares_cutout_undersample"
+  - "balanced_collected_data_runs_2026_01_15_workspace_2_squares_cutout_relabeled_undersample"
   # - "balanced_collected_data_runs_2026_01_15_workspace_2_pure_no_contact_undersample"
   # - "balanced_collected_data_runs_2026_01_15_workspace_2_pure_contact_undersample"
 
   # Workspace 1
-  - "balanced_collected_data_runs_2026_01_15_workspace_1_squares_cutout_undersample"
+  # - "balanced_collected_data_runs_2026_01_15_workspace_1_squares_cutout_undersample"
+  - "balanced_collected_data_runs_2026_01_15_workspace_1_squares_cutout_relabeled_undersample"
   # - "balanced_collected_data_runs_2026_01_15_workspace_1_pure_no_contact_undersample"
   # - "balanced_collected_data_runs_2026_01_15_workspace_1_pure_contact_undersample"
   
   # Workspace 3 (now included in training)
-  - "balanced_collected_data_runs_2025_12_15_v2_2_workspace3_squares_cutout_undersample"
+  # - "balanced_collected_data_runs_2025_12_15_v2_2_workspace3_squares_cutout_undersample"
+  - "balanced_collected_data_runs_2025_12_15_v2_2_workspace3_squares_cutout_relabeled_undersample"
   # - "balanced_collected_data_runs_2026_01_14_workspace_3_pure_contact_undersample"
   # - "balanced_collected_data_runs_2026_01_14_workspace_3_pure_no_contact_undersample"
   # - "balanced_collected_data_runs_2025_12_17_v2_workspace_3_squares_cutout_undersample"
+  - "balanced_collected_data_runs_2025_12_17_v2_workspace_3_squares_cutout_relabeled_undersample"
   
 # Optional: Specify datasets to use for validation (holdout)
 # Leave empty [] to combine all datasets for train/test split
 validation_datasets: [
   # VALIDATION: Hold-out dataset (Pattern B - completely separate surface patterns)
-  "balanced_collected_data_runs_hold_out_dataset_undersample",
+  "balanced_collected_data_runs_2026_01_27_hold_out_dataset_relabeled_undersample",
 ]
 
 # Domain Adaptation Configuration
