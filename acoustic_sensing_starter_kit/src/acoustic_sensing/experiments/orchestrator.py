@@ -261,6 +261,12 @@ class ExperimentOrchestrator:
                 "feature_extraction": self.config.get(
                     "feature_extraction", {}
                 ),  # Add feature extraction config (features/spectrogram/both)
+                "class_filtering": self.config.get(
+                    "class_filtering", {}
+                ),  # Add class filtering config (filter edge samples)
+                "domain_adaptation": self.config.get(
+                    "domain_adaptation", {}
+                ),  # Add domain adaptation config (mix hold-out into training)
             }
             # Add data_processing specific config
             data_processing_config = self.config.get("experiments", {}).get(

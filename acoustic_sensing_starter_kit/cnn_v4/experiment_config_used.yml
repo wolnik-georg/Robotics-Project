@@ -1,8 +1,15 @@
 base_data_dir: data
+class_filtering:
+  classes_to_exclude_train:
+  - edge
+  classes_to_exclude_validation:
+  - edge
+  enabled: true
 datasets:
-- balanced_collected_data_runs_2026_01_15_workspace_2_squares_cutout_undersample
-- balanced_collected_data_runs_2026_01_15_workspace_1_squares_cutout_undersample
-- balanced_collected_data_runs_2025_12_15_v2_2_workspace3_squares_cutout_undersample
+- balanced_collected_data_runs_2026_01_15_workspace_2_squares_cutout_relabeled_undersample
+- balanced_collected_data_runs_2026_01_15_workspace_1_squares_cutout_relabeled_undersample
+- balanced_collected_data_runs_2025_12_15_v2_2_workspace3_squares_cutout_relabeled_undersample
+- balanced_collected_data_runs_2025_12_17_v2_workspace_3_squares_cutout_relabeled_undersample
 domain_adaptation:
   enabled: false
   holdout_train_split: 0.3
@@ -55,4 +62,4 @@ feature_extraction:
 output:
   base_dir: cnn_v4
 validation_datasets:
-- balanced_collected_data_runs_hold_out_dataset_undersample
+- balanced_collected_data_runs_2026_01_27_hold_out_dataset_relabeled_undersample

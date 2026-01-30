@@ -982,6 +982,61 @@ class DataProcessingExperiment(BaseExperiment):
                         # Update actual_classes to reflect grouped labels
                         actual_classes = sorted(list(set(labels)))
 
+                        # ================================================================
+                        # APPLY CLASS FILTERING AT DATA LOADING STAGE
+                        # ================================================================
+                        # Filter out specified classes IMMEDIATELY after loading
+                        # This ensures filtered classes never enter the pipeline
+                        class_filtering_config = self.config.get("class_filtering", {})
+
+                        if class_filtering_config.get("enabled", False):
+                            classes_to_exclude = class_filtering_config.get(
+                                "classes_to_exclude_train", []
+                            )
+                            if classes_to_exclude:
+                                self.logger.info("=" * 80)
+                                self.logger.info(
+                                    f"🔍 CLASS FILTERING AT DATA LOAD: {mode_key}"
+                                )
+                                self.logger.info(
+                                    f"  Excluding classes: {classes_to_exclude}"
+                                )
+                                self.logger.info(f"  BEFORE filtering:")
+                                self.logger.info(f"    Total samples: {len(X_feat)}")
+                                self.logger.info(
+                                    f"    Classes present: {actual_classes}"
+                                )
+                                self.logger.info(
+                                    f"    Class distribution: {dict(zip(*np.unique(labels, return_counts=True)))}"
+                                )
+
+                                # Keep only samples NOT in excluded classes
+                                mask = ~np.isin(labels, classes_to_exclude)
+                                X_feat = X_feat[mask]
+                                labels = labels[mask]
+
+                                # Update metadata if needed
+                                if isinstance(metadata, list):
+                                    metadata = [
+                                        m for i, m in enumerate(metadata) if mask[i]
+                                    ]
+
+                                # Update actual_classes after filtering
+                                actual_classes = sorted(list(set(labels)))
+
+                                self.logger.info(f"  AFTER filtering:")
+                                self.logger.info(f"    Total samples: {len(X_feat)}")
+                                self.logger.info(
+                                    f"    Classes present: {actual_classes}"
+                                )
+                                self.logger.info(
+                                    f"    Class distribution: {dict(zip(*np.unique(labels, return_counts=True)))}"
+                                )
+                                self.logger.info(
+                                    f"  ✅ Filtered out {mask.sum() - len(X_feat)} samples"
+                                )
+                                self.logger.info("=" * 80)
+
                         # Store results for this batch and mode
                         batch_results[mode_key] = {
                             "features": X_feat,
@@ -998,6 +1053,9 @@ class DataProcessingExperiment(BaseExperiment):
 
                         self.logger.info(
                             f"✓ Stored results for {mode_key}: {len(X_feat)} samples, {len(X_feat[0]) if len(X_feat) > 0 else 0} features"
+                        )
+                        self.logger.info(
+                            f"  Final classes in batch_results: {actual_classes}"
                         )
 
                     # Skip the rest of the processing since we've handled it in the loop

@@ -289,6 +289,97 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
         """Depends on data processing."""
         return ["data_processing"]
 
+    def apply_confidence_filtering(
+        self,
+        y_true,
+        y_pred,
+        probabilities,
+        threshold=0.7,
+        mode="reject",
+        default_class=None,
+    ):
+        """
+        Filter predictions based on confidence threshold.
+
+        Args:
+            y_true: True labels (numpy array)
+            y_pred: Predicted labels (numpy array)
+            probabilities: Prediction probabilities from predict_proba (shape: [n_samples, n_classes])
+            threshold: Minimum confidence to accept (0.0-1.0)
+            mode: "reject" (exclude low-confidence) or "default" (assign default class)
+            default_class: Default class to use if mode="default"
+
+        Returns:
+            Tuple of (filtered_y_true, filtered_y_pred, confidence_stats)
+        """
+        import numpy as np
+
+        # Get maximum probability for each prediction (confidence)
+        confidences = np.max(probabilities, axis=1)
+
+        # Identify high-confidence predictions
+        high_confidence_mask = confidences >= threshold
+
+        # Statistics
+        total_samples = len(y_pred)
+        high_conf_count = np.sum(high_confidence_mask)
+        low_conf_count = total_samples - high_conf_count
+
+        stats = {
+            "total_samples": total_samples,
+            "high_confidence": high_conf_count,
+            "low_confidence": low_conf_count,
+            "high_confidence_pct": (
+                100 * high_conf_count / total_samples if total_samples > 0 else 0
+            ),
+            "low_confidence_pct": (
+                100 * low_conf_count / total_samples if total_samples > 0 else 0
+            ),
+            "mean_confidence": np.mean(confidences),
+            "median_confidence": np.median(confidences),
+            "min_confidence": np.min(confidences),
+            "max_confidence": np.max(confidences),
+        }
+
+        # Apply filtering based on mode
+        if mode == "reject":
+            # Reject low-confidence predictions (exclude from evaluation)
+            filtered_y_true = y_true[high_confidence_mask]
+            filtered_y_pred = y_pred[high_confidence_mask]
+
+            self.logger.info(f"  📊 Confidence Filtering (threshold={threshold}):")
+            self.logger.info(
+                f"    Kept: {high_conf_count}/{total_samples} ({stats['high_confidence_pct']:.1f}%)"
+            )
+            self.logger.info(
+                f"    Rejected: {low_conf_count}/{total_samples} ({stats['low_confidence_pct']:.1f}%)"
+            )
+            self.logger.info(f"    Mean confidence: {stats['mean_confidence']:.3f}")
+            self.logger.info(f"    Median confidence: {stats['median_confidence']:.3f}")
+
+        elif mode == "default":
+            # Assign default class to low-confidence predictions
+            filtered_y_true = y_true.copy()
+            filtered_y_pred = y_pred.copy()
+            filtered_y_pred[~high_confidence_mask] = default_class
+
+            self.logger.info(f"  📊 Confidence Filtering (threshold={threshold}):")
+            self.logger.info(
+                f"    High confidence: {high_conf_count}/{total_samples} ({stats['high_confidence_pct']:.1f}%)"
+            )
+            self.logger.info(
+                f"    Defaulted to '{default_class}': {low_conf_count}/{total_samples} ({stats['low_confidence_pct']:.1f}%)"
+            )
+            self.logger.info(f"    Mean confidence: {stats['mean_confidence']:.3f}")
+            self.logger.info(f"    Median confidence: {stats['median_confidence']:.3f}")
+
+        else:
+            # No filtering
+            filtered_y_true = y_true
+            filtered_y_pred = y_pred
+
+        return filtered_y_true, filtered_y_pred, stats
+
     def run(self, shared_data: Dict[str, Any]) -> Dict[str, Any]:
         """
         Perform material discrimination analysis with multiple classifiers.
@@ -455,11 +546,29 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
                 if dataset_name in batch_results:
                     X_train_list.append(batch_results[dataset_name]["features"])
                     y_train_list.append(batch_results[dataset_name]["labels"])
+                    self.logger.info(f"📊 DEBUG - Training dataset '{dataset_name}':")
+                    self.logger.info(
+                        f"    Classes: {batch_results[dataset_name]['classes']}"
+                    )
+                    self.logger.info(
+                        f"    Distribution: {batch_results[dataset_name]['class_distribution']}"
+                    )
 
             X_train_combined = np.vstack(X_train_list) if X_train_list else np.array([])
             y_train_combined = (
                 np.concatenate(y_train_list) if y_train_list else np.array([])
             )
+
+            self.logger.info("=" * 80)
+            self.logger.info("📊 DEBUG - COMBINED TRAINING DATA:")
+            self.logger.info(f"    Total samples: {len(X_train_combined)}")
+            self.logger.info(
+                f"    Unique classes: {sorted(list(set(y_train_combined)))}"
+            )
+            self.logger.info(
+                f"    Class distribution: {dict(zip(*np.unique(y_train_combined, return_counts=True)))}"
+            )
+            self.logger.info("=" * 80)
 
             # Combine validation datasets
             X_val_list = []
@@ -468,9 +577,25 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
                 if dataset_name in batch_results:
                     X_val_list.append(batch_results[dataset_name]["features"])
                     y_val_list.append(batch_results[dataset_name]["labels"])
+                    self.logger.info(f"📊 DEBUG - Validation dataset '{dataset_name}':")
+                    self.logger.info(
+                        f"    Classes: {batch_results[dataset_name]['classes']}"
+                    )
+                    self.logger.info(
+                        f"    Distribution: {batch_results[dataset_name]['class_distribution']}"
+                    )
 
             X_val_combined = np.vstack(X_val_list) if X_val_list else np.array([])
             y_val_combined = np.concatenate(y_val_list) if y_val_list else np.array([])
+
+            self.logger.info("=" * 80)
+            self.logger.info("📊 DEBUG - COMBINED VALIDATION DATA:")
+            self.logger.info(f"    Total samples: {len(X_val_combined)}")
+            self.logger.info(f"    Unique classes: {sorted(list(set(y_val_combined)))}")
+            self.logger.info(
+                f"    Class distribution: {dict(zip(*np.unique(y_val_combined, return_counts=True)))}"
+            )
+            self.logger.info("=" * 80)
 
             # Apply domain adaptation split if enabled
             if use_domain_adaptation and len(X_val_combined) > 0:
@@ -503,6 +628,69 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
                 self.logger.info(
                     f"  New training total: {len(X_train_combined)} samples"
                 )
+                self.logger.info("=" * 80)
+
+            # Apply class filtering if enabled
+            class_filtering_config = self.config.get("class_filtering", {})
+            if class_filtering_config.get("enabled", False):
+                self.logger.info("=" * 80)
+                self.logger.info("🎯 CLASS FILTERING ENABLED")
+                self.logger.info("=" * 80)
+
+                # Filter training data
+                classes_to_exclude_train = class_filtering_config.get(
+                    "classes_to_exclude_train", []
+                )
+                if classes_to_exclude_train:
+                    self.logger.info(
+                        f"Filtering training data to exclude: {classes_to_exclude_train}"
+                    )
+                    self.logger.info(
+                        f"  Before filtering: {len(X_train_combined)} samples"
+                    )
+                    self.logger.info(
+                        f"  Class distribution before: {dict(zip(*np.unique(y_train_combined, return_counts=True)))}"
+                    )
+
+                    # Keep only samples NOT in excluded classes
+                    train_mask = ~np.isin(y_train_combined, classes_to_exclude_train)
+                    X_train_combined = X_train_combined[train_mask]
+                    y_train_combined = y_train_combined[train_mask]
+
+                    self.logger.info(
+                        f"  After filtering: {len(X_train_combined)} samples"
+                    )
+                    self.logger.info(
+                        f"  Class distribution after: {dict(zip(*np.unique(y_train_combined, return_counts=True)))}"
+                    )
+
+                # Filter validation data
+                classes_to_exclude_validation = class_filtering_config.get(
+                    "classes_to_exclude_validation", []
+                )
+                if classes_to_exclude_validation:
+                    self.logger.info(
+                        f"Filtering validation data to exclude: {classes_to_exclude_validation}"
+                    )
+                    self.logger.info(
+                        f"  Before filtering: {len(X_val_combined)} samples"
+                    )
+                    self.logger.info(
+                        f"  Class distribution before: {dict(zip(*np.unique(y_val_combined, return_counts=True)))}"
+                    )
+
+                    # Keep only samples NOT in excluded classes
+                    val_mask = ~np.isin(y_val_combined, classes_to_exclude_validation)
+                    X_val_combined = X_val_combined[val_mask]
+                    y_val_combined = y_val_combined[val_mask]
+
+                    self.logger.info(
+                        f"  After filtering: {len(X_val_combined)} samples"
+                    )
+                    self.logger.info(
+                        f"  Class distribution after: {dict(zip(*np.unique(y_val_combined, return_counts=True)))}"
+                    )
+
                 self.logger.info("=" * 80)
 
             self.logger.info(
@@ -550,6 +738,35 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
             self.logger.info(
                 f"✓ Class distribution: {dict(zip(*np.unique(y_combined, return_counts=True)))}"
             )
+
+            # Apply class filtering if enabled (for standard mode)
+            class_filtering_config = self.config.get("class_filtering", {})
+            if class_filtering_config.get("enabled", False):
+                classes_to_exclude = class_filtering_config.get(
+                    "classes_to_exclude_train", []
+                )
+                if classes_to_exclude:
+                    self.logger.info("=" * 80)
+                    self.logger.info("🎯 CLASS FILTERING ENABLED (Standard Mode)")
+                    self.logger.info("=" * 80)
+                    self.logger.info(
+                        f"Filtering combined data to exclude: {classes_to_exclude}"
+                    )
+                    self.logger.info(f"  Before filtering: {len(X_combined)} samples")
+                    self.logger.info(
+                        f"  Class distribution before: {dict(zip(*np.unique(y_combined, return_counts=True)))}"
+                    )
+
+                    # Keep only samples NOT in excluded classes
+                    combined_mask = ~np.isin(y_combined, classes_to_exclude)
+                    X_combined = X_combined[combined_mask]
+                    y_combined = y_combined[combined_mask]
+
+                    self.logger.info(f"  After filtering: {len(X_combined)} samples")
+                    self.logger.info(
+                        f"  Class distribution after: {dict(zip(*np.unique(y_combined, return_counts=True)))}"
+                    )
+                    self.logger.info("=" * 80)
 
         # Define classifiers to test
         classifiers = self._get_classifiers()
@@ -818,6 +1035,19 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
         self.logger.info("Running Discrimination Analysis with Validation Set")
         self.logger.info("=" * 80)
 
+        # DEBUG: Log data before split
+        self.logger.info("📊 DEBUG - DATA BEFORE TRAIN/TEST SPLIT:")
+        self.logger.info(f"    Training data: {len(X_train)} samples")
+        self.logger.info(f"    Training classes: {sorted(list(set(y_train)))}")
+        self.logger.info(
+            f"    Training distribution: {dict(zip(*np.unique(y_train, return_counts=True)))}"
+        )
+        self.logger.info(f"    Validation data: {len(X_val)} samples")
+        self.logger.info(f"    Validation classes: {sorted(list(set(y_val)))}")
+        self.logger.info(
+            f"    Validation distribution: {dict(zip(*np.unique(y_val, return_counts=True)))}"
+        )
+
         # Split training data into train/test
         X_train_split, X_test_split, y_train_split, y_test_split = train_test_split(
             X_train, y_train, test_size=0.2, random_state=42, stratify=y_train
@@ -826,6 +1056,18 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
         self.logger.info(f"Training set: {len(X_train_split)} samples")
         self.logger.info(f"Test set: {len(X_test_split)} samples")
         self.logger.info(f"Validation set: {len(X_val)} samples")
+
+        # DEBUG: Log data after split
+        self.logger.info("📊 DEBUG - DATA AFTER TRAIN/TEST SPLIT:")
+        self.logger.info(f"    Train split classes: {sorted(list(set(y_train_split)))}")
+        self.logger.info(
+            f"    Train split distribution: {dict(zip(*np.unique(y_train_split, return_counts=True)))}"
+        )
+        self.logger.info(f"    Test split classes: {sorted(list(set(y_test_split)))}")
+        self.logger.info(
+            f"    Test split distribution: {dict(zip(*np.unique(y_test_split, return_counts=True)))}"
+        )
+        self.logger.info("=" * 80)
 
         # Scale features
         scaler = StandardScaler()
@@ -838,6 +1080,7 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
 
         # Train and evaluate each classifier
         results_dict = {}
+        trained_classifiers = {}  # Store trained classifier objects for saving
         for clf_name, clf in classifiers.items():
             self.logger.info(f"\nTraining: {clf_name}")
 
@@ -845,20 +1088,97 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
                 # Train
                 clf.fit(X_train_scaled, y_train_split)
 
+                # Store the trained classifier
+                trained_classifiers[clf_name] = clf
+
+                # Get confidence filtering config
+                conf_config = self.config.get("confidence_filtering", {})
+                conf_enabled = conf_config.get("enabled", False)
+                conf_threshold = conf_config.get("threshold", 0.7)
+                conf_mode = conf_config.get("mode", "reject")
+                conf_default_class = conf_config.get("default_class", "no_contact")
+
                 # Predict on train set (for overfitting analysis)
                 y_train_pred = clf.predict(X_train_scaled)
-                train_accuracy = accuracy_score(y_train_split, y_train_pred)
-                train_f1 = f1_score(y_train_split, y_train_pred, average="weighted")
+                y_train_proba = clf.predict_proba(X_train_scaled)
+
+                if conf_enabled:
+                    self.logger.info(
+                        f"  🔍 Applying confidence filtering to TRAIN set:"
+                    )
+                    y_train_filtered, y_train_pred_filtered, train_conf_stats = (
+                        self.apply_confidence_filtering(
+                            y_train_split,
+                            y_train_pred,
+                            y_train_proba,
+                            threshold=conf_threshold,
+                            mode=conf_mode,
+                            default_class=conf_default_class,
+                        )
+                    )
+                else:
+                    y_train_filtered = y_train_split
+                    y_train_pred_filtered = y_train_pred
+                    train_conf_stats = None
+
+                train_accuracy = accuracy_score(y_train_filtered, y_train_pred_filtered)
+                train_f1 = f1_score(
+                    y_train_filtered, y_train_pred_filtered, average="weighted"
+                )
 
                 # Predict on test set
                 y_test_pred = clf.predict(X_test_scaled)
-                test_accuracy = accuracy_score(y_test_split, y_test_pred)
-                test_f1 = f1_score(y_test_split, y_test_pred, average="weighted")
+                y_test_proba = clf.predict_proba(X_test_scaled)
+
+                if conf_enabled:
+                    self.logger.info(f"  🔍 Applying confidence filtering to TEST set:")
+                    y_test_filtered, y_test_pred_filtered, test_conf_stats = (
+                        self.apply_confidence_filtering(
+                            y_test_split,
+                            y_test_pred,
+                            y_test_proba,
+                            threshold=conf_threshold,
+                            mode=conf_mode,
+                            default_class=conf_default_class,
+                        )
+                    )
+                else:
+                    y_test_filtered = y_test_split
+                    y_test_pred_filtered = y_test_pred
+                    test_conf_stats = None
+
+                test_accuracy = accuracy_score(y_test_filtered, y_test_pred_filtered)
+                test_f1 = f1_score(
+                    y_test_filtered, y_test_pred_filtered, average="weighted"
+                )
 
                 # Predict on validation set
                 y_val_pred = clf.predict(X_val_scaled)
-                val_accuracy = accuracy_score(y_val, y_val_pred)
-                val_f1 = f1_score(y_val, y_val_pred, average="weighted")
+                y_val_proba = clf.predict_proba(X_val_scaled)
+
+                if conf_enabled:
+                    self.logger.info(
+                        f"  🔍 Applying confidence filtering to VALIDATION set:"
+                    )
+                    y_val_filtered, y_val_pred_filtered, val_conf_stats = (
+                        self.apply_confidence_filtering(
+                            y_val,
+                            y_val_pred,
+                            y_val_proba,
+                            threshold=conf_threshold,
+                            mode=conf_mode,
+                            default_class=conf_default_class,
+                        )
+                    )
+                else:
+                    y_val_filtered = y_val
+                    y_val_pred_filtered = y_val_pred
+                    val_conf_stats = None
+
+                val_accuracy = accuracy_score(y_val_filtered, y_val_pred_filtered)
+                val_f1 = f1_score(
+                    y_val_filtered, y_val_pred_filtered, average="weighted"
+                )
 
                 self.logger.info(
                     f"  Train Accuracy: {train_accuracy:.4f} | F1: {train_f1:.4f}"
@@ -879,6 +1199,9 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
                     "validation_f1": val_f1,
                     "test_predictions": y_test_pred,
                     "validation_predictions": y_val_pred,
+                    "train_confidence_stats": train_conf_stats,
+                    "test_confidence_stats": test_conf_stats,
+                    "validation_confidence_stats": val_conf_stats,
                 }
             except Exception as e:
                 self.logger.warning(f"  ⚠ Failed to train {clf_name}: {e}")
@@ -929,6 +1252,16 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
             X_val,
             y_val,
             scaler,
+        )
+
+        # Save top 3 trained models for reconstruction
+        self._save_top_models(
+            trained_classifiers=trained_classifiers,
+            results_dict=results_dict,
+            scaler=scaler,
+            classes=sorted(list(set(y_train_split))),
+            metric_key="validation_accuracy",
+            top_n=3,
         )
 
         return results
@@ -1173,6 +1506,22 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
             X_test,
             y_test,
             scaler,
+        )
+
+        # Save top 3 trained models for reconstruction
+        # Extract trained classifiers from results_dict
+        trained_classifiers = {
+            clf_name: res["best_estimator"]
+            for clf_name, res in results_dict.items()
+            if "best_estimator" in res
+        }
+        self._save_top_models(
+            trained_classifiers=trained_classifiers,
+            results_dict=results_dict,
+            scaler=scaler,
+            classes=sorted(list(set(y_train))),
+            metric_key="tuning_accuracy",  # Use tuning accuracy for 3-way split
+            top_n=3,
         )
 
         return results
@@ -1456,10 +1805,10 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
     def _get_classifiers(self) -> dict:
         """Define classifiers to evaluate."""
         classifiers = {
-            # "Random Forest": RandomForestClassifier(n_estimators=100, random_state=42),
+            "Random Forest": RandomForestClassifier(n_estimators=100, random_state=42),
             # "SVM (RBF)": SVC(kernel="rbf", random_state=42),
             # "SVM (Linear)": SVC(kernel="linear", random_state=42),
-            # "K-NN": KNeighborsClassifier(n_neighbors=5),
+            "K-NN": KNeighborsClassifier(n_neighbors=5),
             # "Logistic Regression": LogisticRegression(random_state=42, max_iter=1000),
             # "Gradient Boosting": GradientBoostingClassifier(random_state=42),
             # "Extra Trees": ExtraTreesClassifier(n_estimators=100, random_state=42),
@@ -1485,21 +1834,21 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
             #     random_state=42,
             #     verbose=False,
             # ),
-            # "MLP (Medium)": MLPWrapper(
-            #     hidden_layer_sizes=(128, 64, 32),
-            #     activation="relu",
-            #     solver="adam",
-            #     alpha=0.01,  # L2 regularization
-            #     batch_size=32,
-            #     learning_rate="adaptive",
-            #     learning_rate_init=0.001,
-            #     max_iter=500,
-            #     early_stopping=True,
-            #     validation_fraction=0.15,
-            #     n_iter_no_change=20,
-            #     random_state=42,
-            #     verbose=False,
-            # ),
+            "MLP (Medium)": MLPWrapper(
+                hidden_layer_sizes=(128, 64, 32),
+                activation="relu",
+                solver="adam",
+                alpha=0.01,  # L2 regularization
+                batch_size=32,
+                learning_rate="adaptive",
+                learning_rate_init=0.001,
+                max_iter=500,
+                early_stopping=True,
+                validation_fraction=0.15,
+                n_iter_no_change=20,
+                random_state=42,
+                verbose=False,
+            ),
             # "MLP (Large)": MLPWrapper(
             #     hidden_layer_sizes=(256, 128, 64, 32),
             #     activation="relu",
@@ -1975,20 +2324,20 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
             # )
 
             # GPU MLP (Medium-HighReg) - Higher regularization for generalization
-            # classifiers["GPU-MLP (Medium-HighReg)"] = GPUMLPClassifier(
-            #     hidden_layer_sizes=(128, 64, 32),
-            #     dropout=0.4,  # Higher dropout
-            #     learning_rate=0.001,
-            #     weight_decay=0.02,  # Higher L2
-            #     batch_size=64,
-            #     max_epochs=500,
-            #     early_stopping=True,
-            #     patience=30,
-            #     validation_fraction=0.15,
-            #     use_batch_norm=True,
-            #     random_state=42,
-            #     verbose=False,
-            # )
+            classifiers["GPU-MLP (Medium-HighReg)"] = GPUMLPClassifier(
+                hidden_layer_sizes=(128, 64, 32),
+                dropout=0.4,  # Higher dropout
+                learning_rate=0.001,
+                weight_decay=0.02,  # Higher L2
+                batch_size=64,
+                max_epochs=500,
+                early_stopping=True,
+                patience=30,
+                validation_fraction=0.15,
+                use_batch_norm=True,
+                random_state=42,
+                verbose=False,
+            )
 
             # # GPU MLP (Large) - Larger network for complex patterns
             # classifiers["GPU-MLP (Large)"] = GPUMLPClassifier(
@@ -2408,62 +2757,62 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
         # )
 
         # # Original Top3 ensemble (best performer in v3 experiments)
-        # classifiers["Ensemble (Top3-MLP)"] = VotingClassifier(
-        #     estimators=[
-        #         (
-        #             "mlp_med_highreg",
-        #             MLPWrapper(
-        #                 hidden_layer_sizes=(128, 64, 32),
-        #                 activation="relu",
-        #                 solver="adam",
-        #                 alpha=0.02,
-        #                 batch_size=32,
-        #                 learning_rate="adaptive",
-        #                 learning_rate_init=0.001,
-        #                 max_iter=800,
-        #                 early_stopping=True,
-        #                 validation_fraction=0.15,
-        #                 n_iter_no_change=25,
-        #                 random_state=42,
-        #             ),
-        #         ),
-        #         (
-        #             "mlp_large",
-        #             MLPWrapper(
-        #                 hidden_layer_sizes=(256, 128, 64, 32),
-        #                 activation="relu",
-        #                 solver="adam",
-        #                 alpha=0.005,
-        #                 batch_size=32,
-        #                 learning_rate="adaptive",
-        #                 learning_rate_init=0.001,
-        #                 max_iter=1000,
-        #                 early_stopping=True,
-        #                 validation_fraction=0.15,
-        #                 n_iter_no_change=30,
-        #                 random_state=43,
-        #             ),
-        #         ),
-        #         (
-        #             "mlp_medium",
-        #             MLPWrapper(
-        #                 hidden_layer_sizes=(128, 64, 32),
-        #                 activation="relu",
-        #                 solver="adam",
-        #                 alpha=0.01,
-        #                 batch_size=32,
-        #                 learning_rate="adaptive",
-        #                 learning_rate_init=0.001,
-        #                 max_iter=500,
-        #                 early_stopping=True,
-        #                 validation_fraction=0.15,
-        #                 n_iter_no_change=20,
-        #                 random_state=44,
-        #             ),
-        #         ),
-        #     ],
-        #     voting="soft",
-        # )
+        classifiers["Ensemble (Top3-MLP)"] = VotingClassifier(
+            estimators=[
+                (
+                    "mlp_med_highreg",
+                    MLPWrapper(
+                        hidden_layer_sizes=(128, 64, 32),
+                        activation="relu",
+                        solver="adam",
+                        alpha=0.02,
+                        batch_size=32,
+                        learning_rate="adaptive",
+                        learning_rate_init=0.001,
+                        max_iter=800,
+                        early_stopping=True,
+                        validation_fraction=0.15,
+                        n_iter_no_change=25,
+                        random_state=42,
+                    ),
+                ),
+                (
+                    "mlp_large",
+                    MLPWrapper(
+                        hidden_layer_sizes=(256, 128, 64, 32),
+                        activation="relu",
+                        solver="adam",
+                        alpha=0.005,
+                        batch_size=32,
+                        learning_rate="adaptive",
+                        learning_rate_init=0.001,
+                        max_iter=1000,
+                        early_stopping=True,
+                        validation_fraction=0.15,
+                        n_iter_no_change=30,
+                        random_state=43,
+                    ),
+                ),
+                (
+                    "mlp_medium",
+                    MLPWrapper(
+                        hidden_layer_sizes=(128, 64, 32),
+                        activation="relu",
+                        solver="adam",
+                        alpha=0.01,
+                        batch_size=32,
+                        learning_rate="adaptive",
+                        learning_rate_init=0.001,
+                        max_iter=500,
+                        early_stopping=True,
+                        validation_fraction=0.15,
+                        n_iter_no_change=20,
+                        random_state=44,
+                    ),
+                ),
+            ],
+            voting="soft",
+        )
 
         # ========================================================================
         # MEGA-ENSEMBLE: Diverse architectures for better generalization
@@ -2620,6 +2969,113 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
         #     )
 
         return classifiers
+
+    def _save_top_models(
+        self,
+        trained_classifiers: dict,
+        results_dict: dict,
+        scaler,
+        classes: list,
+        metric_key: str = "validation_accuracy",
+        top_n: int = 3,
+    ):
+        """
+        Save top N performing trained models for use in reconstruction.
+
+        Args:
+            trained_classifiers: Dict of classifier_name -> trained classifier object
+            results_dict: Dict of classifier_name -> performance metrics
+            scaler: The fitted StandardScaler used for training
+            classes: List of class labels
+            metric_key: Which metric to use for ranking (e.g., "validation_accuracy")
+            top_n: Number of top models to save (default 3)
+        """
+        import pickle
+
+        # Create models output directory
+        models_dir = os.path.join(self.experiment_output_dir, "trained_models")
+        os.makedirs(models_dir, exist_ok=True)
+
+        # Filter to only classifiers that were successfully trained
+        valid_classifiers = {
+            name: results_dict[name]
+            for name in trained_classifiers.keys()
+            if name in results_dict and metric_key in results_dict[name]
+        }
+
+        if not valid_classifiers:
+            self.logger.warning("No valid classifiers to save")
+            return
+
+        # Sort by metric (descending) and take top N
+        sorted_classifiers = sorted(
+            valid_classifiers.items(), key=lambda x: x[1][metric_key], reverse=True
+        )
+
+        # Take top N (or all if less than N)
+        top_classifiers = sorted_classifiers[: min(top_n, len(sorted_classifiers))]
+
+        self.logger.info(
+            f"\n💾 Saving top {len(top_classifiers)} models for reconstruction..."
+        )
+
+        saved_models_info = []
+
+        for rank, (clf_name, metrics) in enumerate(top_classifiers, 1):
+            clf = trained_classifiers[clf_name]
+            accuracy = metrics[metric_key]
+
+            # Create model data bundle
+            model_data = {
+                "model": clf,
+                "scaler": scaler,
+                "classes": classes,
+                "classifier_name": clf_name,
+                "rank": rank,
+                "metrics": {
+                    k: float(v) if isinstance(v, (int, float, np.floating)) else v
+                    for k, v in metrics.items()
+                    if not k.endswith("_predictions") and not k.endswith("_stats")
+                },
+            }
+
+            # Save model file
+            safe_name = clf_name.replace(" ", "_").replace("/", "_").lower()
+            model_filename = f"model_rank{rank}_{safe_name}.pkl"
+            model_path = os.path.join(models_dir, model_filename)
+
+            with open(model_path, "wb") as f:
+                pickle.dump(model_data, f)
+
+            saved_models_info.append(
+                {
+                    "rank": rank,
+                    "classifier": clf_name,
+                    "accuracy": float(accuracy),
+                    "filename": model_filename,
+                }
+            )
+
+            self.logger.info(
+                f"  #{rank}: {clf_name} ({metric_key}: {accuracy:.4f}) → {model_filename}"
+            )
+
+        # Save summary of saved models
+        summary = {
+            "top_n": top_n,
+            "metric_used": metric_key,
+            "models_saved": len(saved_models_info),
+            "models": saved_models_info,
+        }
+
+        summary_path = os.path.join(models_dir, "saved_models_summary.json")
+        import json
+
+        with open(summary_path, "w") as f:
+            json.dump(summary, f, indent=2)
+
+        self.logger.info(f"  📋 Summary saved to: {summary_path}")
+        self.logger.info(f"✅ Models saved to: {models_dir}/")
 
     def _save_validation_results(
         self,
@@ -2926,20 +3382,73 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
         from sklearn.metrics import confusion_matrix
         import seaborn as sns
 
+        # DEBUG: Log label information
+        self.logger.info("=" * 80)
+        self.logger.info(f"📊 DEBUG - CONFUSION MATRIX DATA for {clf_name}:")
+        self.logger.info(f"    Test set:")
+        self.logger.info(f"      Unique classes in y_test: {sorted(list(set(y_test)))}")
+        self.logger.info(
+            f"      Distribution: {dict(zip(*np.unique(y_test, return_counts=True)))}"
+        )
+        self.logger.info(f"    Validation set:")
+        self.logger.info(f"      Unique classes in y_val: {sorted(list(set(y_val)))}")
+        self.logger.info(
+            f"      Distribution: {dict(zip(*np.unique(y_val, return_counts=True)))}"
+        )
+        self.logger.info("=" * 80)
+
         fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+
+        # Get unique labels from actual data (should only be 2 classes if filtering worked)
+        test_labels = sorted(list(set(y_test)))
+        val_labels = sorted(list(set(y_val)))
+
+        # DEBUG: Verify we only have 2 classes
+        if len(test_labels) != 2:
+            self.logger.warning(
+                f"⚠️  WARNING: Expected 2 classes in test set, got {len(test_labels)}: {test_labels}"
+            )
+        if len(val_labels) != 2:
+            self.logger.warning(
+                f"⚠️  WARNING: Expected 2 classes in validation set, got {len(val_labels)}: {val_labels}"
+            )
 
         # Test confusion matrix
         y_test_pred = clf_results["test_predictions"]
-        cm_test = confusion_matrix(y_test, y_test_pred)
-        sns.heatmap(cm_test, annot=True, fmt="d", cmap="Blues", ax=axes[0])
+        cm_test = confusion_matrix(y_test, y_test_pred, labels=test_labels)
+
+        self.logger.info(f"📊 Test confusion matrix shape: {cm_test.shape}")
+        self.logger.info(f"    Labels used: {test_labels}")
+
+        sns.heatmap(
+            cm_test,
+            annot=True,
+            fmt="d",
+            cmap="Blues",
+            ax=axes[0],
+            xticklabels=test_labels,
+            yticklabels=test_labels,
+        )
         axes[0].set_title(f"{clf_name} - Test Set")
         axes[0].set_ylabel("True Label")
         axes[0].set_xlabel("Predicted Label")
 
         # Validation confusion matrix
         y_val_pred = clf_results["validation_predictions"]
-        cm_val = confusion_matrix(y_val, y_val_pred)
-        sns.heatmap(cm_val, annot=True, fmt="d", cmap="Greens", ax=axes[1])
+        cm_val = confusion_matrix(y_val, y_val_pred, labels=val_labels)
+
+        self.logger.info(f"📊 Validation confusion matrix shape: {cm_val.shape}")
+        self.logger.info(f"    Labels used: {val_labels}")
+
+        sns.heatmap(
+            cm_val,
+            annot=True,
+            fmt="d",
+            cmap="Greens",
+            ax=axes[1],
+            xticklabels=val_labels,
+            yticklabels=val_labels,
+        )
         axes[1].set_title(f"{clf_name} - Validation Set")
         axes[1].set_ylabel("True Label")
         axes[1].set_xlabel("Predicted Label")
@@ -2950,6 +3459,7 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
         plt.close()
 
         self.logger.info(f"Confusion matrices saved to: {plot_path}")
+        self.logger.info("=" * 80)
 
     def _save_batch_discrimination_results(self, batch_results: dict, batch_name: str):
         import json
@@ -3162,6 +3672,15 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
         from sklearn.model_selection import StratifiedKFold
         import seaborn as sns
 
+        # DEBUG: Log batch data
+        self.logger.info("=" * 80)
+        self.logger.info(f"📊 DEBUG - BATCH CONFUSION MATRIX DATA for '{batch_name}':")
+        self.logger.info(f"    Unique classes in y: {sorted(list(set(y)))}")
+        self.logger.info(
+            f"    Distribution: {dict(zip(*np.unique(y, return_counts=True)))}"
+        )
+        self.logger.info("=" * 80)
+
         cv_results = batch_results["cv_results"]
 
         # Filter successful classifiers and get top 3
@@ -3197,6 +3716,10 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
             n_splits=3, shuffle=True, random_state=42
         )  # Use fewer folds
 
+        # Get unique labels from data
+        unique_labels = sorted(list(set(y)))
+        self.logger.info(f"📊 Creating confusion matrices with labels: {unique_labels}")
+
         for i, clf_name in enumerate(top_classifiers):
             try:
                 clf = classifiers[clf_name]
@@ -3219,14 +3742,13 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
                 y_true_all = np.array(y_true_all)
                 y_pred_all = np.array(y_pred_all)
 
-                # Create confusion matrix
-                cm = confusion_matrix(y_true_all, y_pred_all, labels=np.unique(y))
+                # Create confusion matrix with explicit labels
+                cm = confusion_matrix(y_true_all, y_pred_all, labels=unique_labels)
 
                 # Normalize confusion matrix
                 cm_norm = cm.astype("float") / cm.sum(axis=1)[:, np.newaxis]
 
                 # Clean up labels by removing "finger" prefix for better readability
-                unique_labels = np.unique(y)
                 cleaned_labels = [
                     label.replace("finger_", "").replace("finger", "")
                     for label in unique_labels

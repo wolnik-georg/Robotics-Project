@@ -5,9 +5,16 @@ Standalone Script to Balance Collected Data by Undersampling Majority Class
 
 This script:
 1. Loads all WAV files from the collected data directory
-2. Groups labels into 2 classes (contact, no_contact)
-3. Balances classes using undersampling or oversampling
-4. Saves balanced WAV files to a new folder structure
+2. Groups labels into classes (contact, no_contact, edge)
+3. OPTIONALLY: Filters out specified classes (e.g., edge) to create cleaner datasets
+4. Balances classes using undersampling or oversampling
+5. Saves balanced WAV files to a new folder structure
+
+NEW FEATURE: Class Filtering
+-----------------------------
+Set FILTER_CLASSES = True and CLASSES_TO_EXCLUDE = ["edge"] to automatically
+remove edge samples BEFORE balancing. This creates clean binary datasets
+(contact vs no_contact) without needing pipeline-level filtering.
 
 Usage: python balance_dataset.py
 """
@@ -33,6 +40,25 @@ SR = 48000
 RANDOM_SEED = 42
 CLASSES = ["contact", "no_contact", "edge"]
 BALANCE_METHOD = "both"  # "undersample", "oversample", or "both"
+
+# CLASS FILTERING (applied before balancing)
+FILTER_CLASSES = True  # Set to True to exclude specific classes before balancing
+CLASSES_TO_EXCLUDE = [
+    "edge"
+]  # Classes to filter out (e.g., ["edge"] to create binary contact/no_contact datasets)
+
+# EXAMPLES:
+# Binary classification (contact vs no_contact only):
+#   FILTER_CLASSES = True
+#   CLASSES_TO_EXCLUDE = ["edge"]
+#
+# Full 3-class classification (contact, no_contact, edge):
+#   FILTER_CLASSES = False
+#   CLASSES_TO_EXCLUDE = []
+#
+# Custom filtering (e.g., only edge vs no_contact):
+#   FILTER_CLASSES = True
+#   CLASSES_TO_EXCLUDE = ["contact"]
 # ==================
 
 
@@ -91,6 +117,54 @@ def group_labels(labels):
             print(f"Warning: Unknown label '{clean_label}' - treating as no_contact")
             grouped.append("no_contact")
     return grouped
+
+
+def filter_classes(labels, file_paths, classes_to_exclude):
+    """
+    Filter out samples belonging to specified classes.
+
+    Args:
+        labels: List of class labels
+        file_paths: List of file paths corresponding to labels
+        classes_to_exclude: List of class names to filter out (e.g., ["edge"])
+
+    Returns:
+        Tuple of (filtered_labels, filtered_file_paths)
+    """
+    if not classes_to_exclude:
+        return labels, file_paths
+
+    labels_array = np.array(labels)
+    file_paths_array = np.array(file_paths)
+
+    # Create mask for samples NOT in excluded classes
+    mask = ~np.isin(labels_array, classes_to_exclude)
+
+    filtered_labels = labels_array[mask].tolist()
+    filtered_file_paths = file_paths_array[mask].tolist()
+
+    # Report filtering
+    original_count = len(labels)
+    filtered_count = len(filtered_labels)
+    removed_count = original_count - filtered_count
+
+    print(f"\n🔍 CLASS FILTERING:")
+    print(f"  Classes to exclude: {classes_to_exclude}")
+    print(f"  Original samples: {original_count}")
+    print(f"  Filtered samples: {filtered_count}")
+    print(f"  Removed samples: {removed_count}")
+
+    if removed_count > 0:
+        removed_by_class = {}
+        for cls in classes_to_exclude:
+            count = np.sum(labels_array == cls)
+            if count > 0:
+                removed_by_class[cls] = count
+        print(f"  Breakdown of removed samples:")
+        for cls, count in removed_by_class.items():
+            print(f"    - {cls}: {count}")
+
+    return filtered_labels, filtered_file_paths
 
 
 def balance_data(labels, file_paths, method="undersample"):
@@ -233,9 +307,21 @@ def main():
     for cls, count in sorted(original_counts.items()):
         print(f"  {cls}: {count}")
 
+    # Apply class filtering if enabled
+    if FILTER_CLASSES and CLASSES_TO_EXCLUDE:
+        grouped_labels, file_paths = filter_classes(
+            grouped_labels, file_paths, CLASSES_TO_EXCLUDE
+        )
+
+        # Show distribution after filtering
+        filtered_counts = Counter(grouped_labels)
+        print("\nClass distribution after filtering:")
+        for cls, count in sorted(filtered_counts.items()):
+            print(f"  {cls}: {count}")
+
     # Check if we have any data
     if len(grouped_labels) == 0:
-        print("Error: No data found!")
+        print("Error: No data found after filtering!")
         return
 
     # Check number of unique classes

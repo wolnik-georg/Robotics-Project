@@ -9,31 +9,45 @@ datasets:
   # TRAINING: Workspaces 1, 2 & 3 (all surfaces - cutout + pure contact + pure no-contact)
   
   # Workspace 2
-  # - "balanced_collected_data_runs_2026_01_15_workspace_2_squares_cutout_undersample"
   - "balanced_collected_data_runs_2026_01_15_workspace_2_squares_cutout_relabeled_undersample"
-  # - "balanced_collected_data_runs_2026_01_15_workspace_2_pure_no_contact_undersample"
-  # - "balanced_collected_data_runs_2026_01_15_workspace_2_pure_contact_undersample"
+  - "balanced_collected_data_runs_2026_01_15_workspace_2_pure_no_contact_undersample"
+  - "balanced_collected_data_runs_2026_01_15_workspace_2_pure_contact_relabeled_undersample"
 
   # Workspace 1
-  # - "balanced_collected_data_runs_2026_01_15_workspace_1_squares_cutout_undersample"
-  - "balanced_collected_data_runs_2026_01_15_workspace_1_squares_cutout_relabeled_undersample"
+  # - "balanced_collected_data_runs_2026_01_15_workspace_1_squares_cutout_relabeled_undersample"
   # - "balanced_collected_data_runs_2026_01_15_workspace_1_pure_no_contact_undersample"
-  # - "balanced_collected_data_runs_2026_01_15_workspace_1_pure_contact_undersample"
+  # - "balanced_collected_data_runs_2026_01_15_workspace_1_pure_contact_relabeled_undersample"
   
   # Workspace 3 (now included in training)
-  # - "balanced_collected_data_runs_2025_12_15_v2_2_workspace3_squares_cutout_undersample"
   - "balanced_collected_data_runs_2025_12_15_v2_2_workspace3_squares_cutout_relabeled_undersample"
-  # - "balanced_collected_data_runs_2026_01_14_workspace_3_pure_contact_undersample"
-  # - "balanced_collected_data_runs_2026_01_14_workspace_3_pure_no_contact_undersample"
-  # - "balanced_collected_data_runs_2025_12_17_v2_workspace_3_squares_cutout_undersample"
+  - "balanced_collected_data_runs_2026_01_14_workspace_3_pure_contact_relabeled_undersample"
+  - "balanced_collected_data_runs_2026_01_14_workspace_3_pure_no_contact_undersample"
   - "balanced_collected_data_runs_2025_12_17_v2_workspace_3_squares_cutout_relabeled_undersample"
   
 # Optional: Specify datasets to use for validation (holdout)
 # Leave empty [] to combine all datasets for train/test split
 validation_datasets: [
   # VALIDATION: Hold-out dataset (Pattern B - completely separate surface patterns)
-  "balanced_collected_data_runs_2026_01_27_hold_out_dataset_relabeled_undersample",
+  # "balanced_collected_data_runs_2026_01_27_hold_out_dataset_relabeled_undersample"
+  "balanced_collected_data_runs_2026_01_15_workspace_1_squares_cutout_relabeled_undersample",
+  "balanced_collected_data_runs_2026_01_15_workspace_1_pure_no_contact_undersample",
+  "balanced_collected_data_runs_2026_01_15_workspace_1_pure_contact_relabeled_undersample"
 ]
+
+# Class Filtering Configuration
+# Filter out specific classes from training and/or validation
+# Use case: Edge contacts are acoustically complex and may confuse models
+# Hypothesis: Excluding edge improves contact vs no_contact performance
+class_filtering:
+  enabled: true  # Enable class filtering
+  classes_to_exclude_train: ["edge"]  # Exclude from training (test clean binary classification)
+  classes_to_exclude_validation: ["edge"]  # Exclude from validation (cleanest test)
+  # Alternative: classes_to_exclude_validation: []  # Include edge in validation (test generalization to edge)
+  
+  # Options:
+  # 1. Exclude edge from both train & validation: Clean binary problem (contact vs no_contact)
+  # 2. Exclude edge from train, include in validation: Test if model generalizes to edge cases
+  # 3. Include edge in both: Full 3-class problem (more data needed)
 
 # Domain Adaptation Configuration
 # Test hypothesis: Does adding hold-out data to training improve generalization?
@@ -50,8 +64,8 @@ domain_adaptation:
 # Now supports multiple modes for comparison
 feature_extraction:
   modes:  # NEW: List of modes to test sequentially
-    # - "features"           # Hand-crafted features (65 dimensions)
-    - "spectrogram"        # Mel spectrograms (128×256 = 32,768 dimensions)
+    - "features"           # Hand-crafted features (65 dimensions)
+    # - "spectrogram"        # Mel spectrograms (128×256 = 32,768 dimensions)
     # - "mfcc"              # MFCC features (13 × time_frames)
     # - "magnitude_spectrum" # Raw magnitude spectrum
     # - "power_spectrum"     # Power spectrum
@@ -59,7 +73,7 @@ feature_extraction:
     # - "both"               # Hand-crafted + full spectrograms
   
   # Default mode (for backward compatibility - will be overridden by modes list)
-  mode: "spectrogram"  # Options: "features" | "spectrogram" | "mfcc" | "magnitude_spectrum" | "power_spectrum" | "chroma" | "both"
+  mode: "features"  # Options: "features" | "spectrogram" | "mfcc" | "magnitude_spectrum" | "power_spectrum" | "chroma" | "both"
   
   # Spectrogram extraction parameters (used for spectrogram, mfcc, magnitude_spectrum, power_spectrum, chroma, both modes)
   # Optimized for CONTACT DETECTION: High-freq transients, short duration events
@@ -95,8 +109,8 @@ experiments:
     enabled: true
     apply_audio_smoothing: false
     use_workspace_invariant_features: true  # Enable workspace-invariant features for better generalization
-    use_impulse_features: false  # NEW: Enable transfer function / impulse response features
-    use_data_augmentation: false  # NEW: Enable data augmentation for training data
+    use_impulse_features: true  # NEW: Enable transfer function / impulse response features
+    use_data_augmentation: true  # NEW: Enable data augmentation for training data
     augmentation_factor: 2  # How many augmented copies per original sample
     enhanced_augmentation: false  # DISABLED: Enhanced augmentation hurt performance (-2.9%)
     motion_artifact_removal:
@@ -111,6 +125,18 @@ experiments:
       enabled: false  # DISABLED: Feature selection hurt performance (-1.0%) - all 80 features needed
       top_k_features: 50  # Number of top features to select (out of 80 total)
       method: "ensemble"  # Method: "ensemble" (RF+GB+XGB average ranks)
+    
+    # Confidence-Based Prediction Filtering
+    # Filter out predictions with low confidence to reduce false positives
+    confidence_filtering:
+      enabled: true  # Set to true to enable confidence thresholding
+      threshold: 0.9  # Minimum confidence (0.0-1.0) to accept prediction
+      # If confidence < threshold:
+      #   mode: "reject" → Mark as "uncertain" (excluded from metrics)
+      #   mode: "default" → Use default class (e.g., "no_contact" as safe default)
+      mode: "reject"  # Options: "reject" (exclude) or "default" (assign default class)
+      default_class: "no_contact"  # Default class for low-confidence predictions (if mode="default")
+      # Use case: In robotics, uncertain predictions → safer to assume no_contact than false contact
 
   saliency_analysis:
     enabled: false
@@ -129,6 +155,6 @@ experiments:
 
 # Output Configuration
 output:
-  base_dir: "cnn_v4"  # Train: W1&2&3 all surfaces, Validate: Hold-out dataset (Pattern B)
+  base_dir: "training_for_reconstruction_v1"  # Train: W1&2&3 all surfaces, Validate: Hold-out dataset (Pattern B)
 
 # Analysis Experiments (Standard Pipeline)
