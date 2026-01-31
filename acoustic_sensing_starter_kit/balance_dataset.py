@@ -1,28 +1,36 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Standalone Script to Balance Collected Data by Undersampling Majority Class
+Standalone Script to Balance Collected Data by Undersampling
 
 This script:
 1. Loads all WAV files from the collected data directory
-2. Groups labels into classes (contact, no_contact, edge)
-3. OPTIONALLY: Filters out specified classes (e.g., edge) to create cleaner datasets
-4. Balances classes using undersampling or oversampling
-5. Saves balanced WAV files to a new folder structure
+2. Reads the sweep.csv to get position information for each audio file
+3. Groups labels into classes (contact, no_contact, edge)
+4. OPTIONALLY: Filters out specified classes (e.g., edge) to create cleaner datasets
+5. Balances classes using undersampling
+6. Saves balanced WAV files AND a new sweep.csv with position info to the output folder
 
-NEW FEATURE: Class Filtering
------------------------------
-Set FILTER_CLASSES = True and CLASSES_TO_EXCLUDE = ["edge"] to automatically
-remove edge samples BEFORE balancing. This creates clean binary datasets
-(contact vs no_contact) without needing pipeline-level filtering.
+NEW FEATURE: Sweep CSV Preservation
+-----------------------------------
+The balanced dataset now includes a sweep.csv that maps each balanced audio file
+to its original position (normalized_x, normalized_y). This enables:
+- Surface reconstruction directly from balanced datasets
+- Consistent feature extraction between training and reconstruction
+- No need for complex file matching or hash-based lookups
 
-Usage: python balance_dataset.py
+Usage:
+    python balance_dataset.py                                    # Use default settings
+    python balance_dataset.py --input <path> --output <path>     # Specify paths
+    python balance_dataset.py --input data/my_dataset --exclude-edge  # Filter edges
 """
 
 import numpy as np
+import pandas as pd
 import librosa
 import os
 import shutil
+import argparse
 from collections import Counter
 import random
 
@@ -32,14 +40,11 @@ import random
 DATA_DIR = os.path.join(
     "data",
     "collected_data_runs_2026_01_27_hold_out_dataset_relabeled",
-    "data",
-)  # Input data folder (relative path)
-OUTPUT_DIR_UNDERSAMPLE = "balanced_collected_data_runs_2026_01_27_hold_out_dataset_relabeled_undersample"  # Output folder for undersampled balanced data
-OUTPUT_DIR_OVERSAMPLE = "balanced_collected_data_runs_2026_01_27_hold_out_dataset_relabeled_oversample"  # Output folder for oversampled balanced data
+)  # Input data folder (relative path) - parent folder containing data/ and sweep.csv
+OUTPUT_DIR = "balanced_collected_data_runs_2026_01_27_hold_out_dataset_relabeled"  # Output folder for balanced data
 SR = 48000
 RANDOM_SEED = 42
 CLASSES = ["contact", "no_contact", "edge"]
-BALANCE_METHOD = "both"  # "undersample", "oversample", or "both"
 
 # CLASS FILTERING (applied before balancing)
 FILTER_CLASSES = True  # Set to True to exclude specific classes before balancing
@@ -62,90 +67,95 @@ CLASSES_TO_EXCLUDE = [
 # ==================
 
 
-def load_data(data_dir):
-    """Load WAV files and extract labels from filenames."""
-    sounds = []
-    labels = []
-    file_paths = []
-
-    # Get all WAV files directly in the data_dir
-    wav_files = []
-    for root, dirs, files in os.walk(data_dir):
-        for file in files:
-            if file.endswith(".wav"):
-                wav_files.append(os.path.join(root, file))
-
-    for audio_path in wav_files:
-        try:
-            sound = librosa.load(audio_path, sr=SR)[0]
-            sounds.append(sound)
-
-            # Extract label from filename (e.g., "1_contact.wav" -> "contact")
-            filename = os.path.basename(audio_path)
-            # Assuming format: number_class.wav, e.g., "1_contact.wav"
-            parts = filename.replace(".wav", "").split("_")
-            if len(parts) >= 2:
-                label = "_".join(
-                    parts[1:]
-                )  # Take everything after the first underscore
-            else:
-                label = "unknown"
-
-            labels.append(label)
-            file_paths.append(audio_path)
-        except Exception as e:
-            print(f"Error loading {audio_path}: {e}")
-
-    return sounds, labels, file_paths
-
-
-def group_labels(labels):
-    """Group raw labels into 3 classes: contact, no_contact, and edge."""
-    grouped = []
-    for label in labels:
-        # Remove common prefixes
-        clean_label = label.replace("finger_", "").replace("finger", "")
-
-        if clean_label.startswith("surface") or clean_label == "contact":
-            grouped.append("contact")
-        elif clean_label.startswith("no_surface") or clean_label == "no_contact":
-            grouped.append("no_contact")
-        elif clean_label.startswith("edge") or clean_label == "edge":
-            grouped.append("edge")
-        else:
-            # Default: treat unknown labels as no_contact or skip
-            print(f"Warning: Unknown label '{clean_label}' - treating as no_contact")
-            grouped.append("no_contact")
-    return grouped
-
-
-def filter_classes(labels, file_paths, classes_to_exclude):
+def load_data_with_positions(data_dir):
     """
-    Filter out samples belonging to specified classes.
+    Load WAV files and position info from sweep.csv.
 
     Args:
-        labels: List of class labels
-        file_paths: List of file paths corresponding to labels
+        data_dir: Path to dataset folder (containing data/ subfolder and sweep.csv)
+
+    Returns:
+        Tuple of (file_paths, sweep_df) where sweep_df contains all position info
+    """
+    # Load sweep.csv
+    sweep_path = os.path.join(data_dir, "sweep.csv")
+    if not os.path.exists(sweep_path):
+        raise FileNotFoundError(f"sweep.csv not found at {sweep_path}")
+
+    sweep_df = pd.read_csv(sweep_path)
+    print(f"Loaded sweep.csv with {len(sweep_df)} entries")
+
+    # Extract just the filename from acoustic_filename (e.g., "./data/1_contact.wav" -> "1_contact.wav")
+    sweep_df["filename"] = sweep_df["acoustic_filename"].apply(
+        lambda x: os.path.basename(x) if pd.notna(x) else None
+    )
+
+    # Get file paths that actually exist
+    data_subdir = os.path.join(data_dir, "data")
+    file_paths = []
+
+    for _, row in sweep_df.iterrows():
+        if pd.isna(row["filename"]):
+            continue
+        audio_path = os.path.join(data_subdir, row["filename"])
+        if os.path.exists(audio_path):
+            file_paths.append(audio_path)
+        else:
+            print(f"Warning: File not found: {audio_path}")
+
+    print(f"Found {len(file_paths)} audio files")
+    return file_paths, sweep_df
+
+
+def get_labels_from_sweep(sweep_df):
+    """
+    Get labels from sweep dataframe using relabeled_label column.
+
+    Returns list of labels aligned with sweep_df rows.
+    """
+    # Use relabeled_label if available, otherwise original_label
+    if "relabeled_label" in sweep_df.columns:
+        labels = sweep_df["relabeled_label"].tolist()
+    elif "original_label" in sweep_df.columns:
+        labels = sweep_df["original_label"].tolist()
+    else:
+        # Fallback: extract from filename
+        labels = []
+        for filename in sweep_df["filename"]:
+            parts = filename.replace(".wav", "").split("_")
+            if len(parts) >= 2:
+                labels.append("_".join(parts[1:]))
+            else:
+                labels.append("unknown")
+    return labels
+
+
+def filter_classes_df(sweep_df, classes_to_exclude):
+    """
+    Filter out samples belonging to specified classes from sweep dataframe.
+
+    Args:
+        sweep_df: DataFrame with sweep data including labels
         classes_to_exclude: List of class names to filter out (e.g., ["edge"])
 
     Returns:
-        Tuple of (filtered_labels, filtered_file_paths)
+        Filtered DataFrame
     """
     if not classes_to_exclude:
-        return labels, file_paths
+        return sweep_df
 
-    labels_array = np.array(labels)
-    file_paths_array = np.array(file_paths)
+    # Get label column
+    label_col = (
+        "relabeled_label" if "relabeled_label" in sweep_df.columns else "original_label"
+    )
 
-    # Create mask for samples NOT in excluded classes
-    mask = ~np.isin(labels_array, classes_to_exclude)
+    original_count = len(sweep_df)
 
-    filtered_labels = labels_array[mask].tolist()
-    filtered_file_paths = file_paths_array[mask].tolist()
+    # Filter out excluded classes
+    mask = ~sweep_df[label_col].isin(classes_to_exclude)
+    filtered_df = sweep_df[mask].copy()
 
-    # Report filtering
-    original_count = len(labels)
-    filtered_count = len(filtered_labels)
+    filtered_count = len(filtered_df)
     removed_count = original_count - filtered_count
 
     print(f"\n🔍 CLASS FILTERING:")
@@ -155,204 +165,211 @@ def filter_classes(labels, file_paths, classes_to_exclude):
     print(f"  Removed samples: {removed_count}")
 
     if removed_count > 0:
-        removed_by_class = {}
-        for cls in classes_to_exclude:
-            count = np.sum(labels_array == cls)
-            if count > 0:
-                removed_by_class[cls] = count
         print(f"  Breakdown of removed samples:")
-        for cls, count in removed_by_class.items():
-            print(f"    - {cls}: {count}")
+        for cls in classes_to_exclude:
+            count = (sweep_df[label_col] == cls).sum()
+            if count > 0:
+                print(f"    - {cls}: {count}")
 
-    return filtered_labels, filtered_file_paths
+    return filtered_df
 
 
-def balance_data(labels, file_paths, method="undersample"):
-    """Balance data using undersampling or oversampling."""
-    y = np.array(labels)
-    file_paths = np.array(file_paths)
+def balance_data_undersample(sweep_df):
+    """
+    Balance data by undersampling to the minority class.
 
-    # Get indices for each class
-    contact_indices = np.where(y == "contact")[0]
-    no_contact_indices = np.where(y == "no_contact")[0]
-    edge_indices = np.where(y == "edge")[0]
+    Args:
+        sweep_df: DataFrame with sweep data including labels
 
-    counts = {
-        "contact": len(contact_indices),
-        "no_contact": len(no_contact_indices),
-        "edge": len(edge_indices),
-    }
+    Returns:
+        DataFrame with balanced samples (undersampled)
+    """
+    # Get label column
+    label_col = (
+        "relabeled_label" if "relabeled_label" in sweep_df.columns else "original_label"
+    )
 
-    # Filter out classes with 0 samples
-    available_classes = {k: v for k, v in counts.items() if v > 0}
+    # Get class counts
+    class_counts = sweep_df[label_col].value_counts()
+    print(f"\nClass distribution before balancing:")
+    for cls, count in class_counts.items():
+        print(f"  {cls}: {count}")
 
-    if len(available_classes) == 0:
-        raise ValueError("No valid samples found in any class!")
+    # Find minimum count
+    min_count = class_counts.min()
+    print(f"\nUndersampling to {min_count} samples per class.")
 
-    if len(available_classes) == 1:
-        # Only one class present - return all samples
-        class_name = list(available_classes.keys())[0]
-        print(
-            f"Warning: Only '{class_name}' class found with {available_classes[class_name]} samples."
-        )
-        print(f"Returning all samples without balancing.")
-        if class_name == "contact":
-            return list(contact_indices)
-        elif class_name == "edge":
-            return list(edge_indices)
+    # Sample each class
+    random.seed(RANDOM_SEED)
+    balanced_dfs = []
+
+    for cls in class_counts.index:
+        class_df = sweep_df[sweep_df[label_col] == cls]
+        if len(class_df) > min_count:
+            # Undersample
+            sampled_df = class_df.sample(n=min_count, random_state=RANDOM_SEED)
         else:
-            return list(no_contact_indices)
+            sampled_df = class_df
+        balanced_dfs.append(sampled_df)
 
-    # Multiple classes present - proceed with balancing
-    if method == "undersample":
-        # Undersample to minimum count
-        min_count = min(available_classes.values())
-        print(f"Undersampling to {min_count} samples per class.")
+    balanced_df = pd.concat(balanced_dfs, ignore_index=True)
 
-        random.seed(RANDOM_SEED)
-        sampled_contact_indices = (
-            random.sample(list(contact_indices), min_count)
-            if counts["contact"] > 0
-            else []
-        )
-        sampled_no_contact_indices = (
-            random.sample(list(no_contact_indices), min_count)
-            if counts["no_contact"] > 0
-            else []
-        )
-        sampled_edge_indices = (
-            random.sample(list(edge_indices), min_count) if counts["edge"] > 0 else []
-        )
+    # Shuffle
+    balanced_df = balanced_df.sample(frac=1, random_state=RANDOM_SEED).reset_index(
+        drop=True
+    )
 
-        balanced_indices = (
-            list(sampled_contact_indices)
-            + list(sampled_no_contact_indices)
-            + list(sampled_edge_indices)
-        )
+    print(f"\nClass distribution after balancing:")
+    for cls, count in balanced_df[label_col].value_counts().items():
+        print(f"  {cls}: {count}")
 
-    elif method == "oversample":
-        # Oversample to maximum count by duplicating
-        max_count = max(available_classes.values())
-        print(f"Oversampling to {max_count} samples per class by duplication.")
+    return balanced_df
 
-        random.seed(RANDOM_SEED)
 
-        if counts["contact"] > 0:
-            sampled_contact_indices = list(contact_indices) + random.choices(
-                list(contact_indices), k=max_count - len(contact_indices)
-            )
+def save_balanced_data_with_sweep(balanced_df, data_dir, output_dir):
+    """
+    Save balanced WAV files and a new sweep.csv to output folder.
+
+    Args:
+        balanced_df: DataFrame with balanced sweep data
+        data_dir: Source data directory (parent folder with data/ subfolder)
+        output_dir: Output directory for balanced dataset
+    """
+    # Create output directories
+    output_data_dir = os.path.join(output_dir, "data")
+    if os.path.exists(output_dir):
+        shutil.rmtree(output_dir)
+    os.makedirs(output_data_dir, exist_ok=True)
+
+    # Get label column for naming
+    label_col = (
+        "relabeled_label"
+        if "relabeled_label" in balanced_df.columns
+        else "original_label"
+    )
+
+    # Prepare new sweep data
+    new_sweep_rows = []
+
+    # Copy files and build new sweep CSV
+    for idx, (_, row) in enumerate(balanced_df.iterrows()):
+        # Source file
+        src_filename = row["filename"]
+        src_path = os.path.join(data_dir, "data", src_filename)
+
+        # New filename with sequential counter
+        label = row[label_col]
+        new_filename = f"{idx}_{label}.wav"
+        dst_path = os.path.join(output_data_dir, new_filename)
+
+        # Copy file
+        if os.path.exists(src_path):
+            shutil.copy2(src_path, dst_path)
         else:
-            sampled_contact_indices = []
+            print(f"Warning: Source file not found: {src_path}")
+            continue
 
-        if counts["no_contact"] > 0:
-            sampled_no_contact_indices = list(no_contact_indices) + random.choices(
-                list(no_contact_indices), k=max_count - len(no_contact_indices)
-            )
-        else:
-            sampled_no_contact_indices = []
+        # Create new sweep row
+        new_row = row.copy()
+        new_row["acoustic_filename"] = f"./data/{new_filename}"
+        new_row["filename"] = new_filename
+        new_sweep_rows.append(new_row)
 
-        if counts["edge"] > 0:
-            sampled_edge_indices = list(edge_indices) + random.choices(
-                list(edge_indices), k=max_count - len(edge_indices)
-            )
-        else:
-            sampled_edge_indices = []
+    # Save new sweep.csv
+    new_sweep_df = pd.DataFrame(new_sweep_rows)
+    sweep_output_path = os.path.join(output_dir, "sweep.csv")
+    new_sweep_df.to_csv(sweep_output_path, index=False)
 
-        balanced_indices = (
-            list(sampled_contact_indices)
-            + list(sampled_no_contact_indices)
-            + list(sampled_edge_indices)
-        )
-
-    random.shuffle(balanced_indices)
-    return balanced_indices
-
-
-def save_balanced_data(file_paths, balanced_indices, grouped_labels, output_dir):
-    """Save balanced WAV files to a single data subfolder."""
-    data_dir = os.path.join(output_dir, "data")
-    if os.path.exists(data_dir):
-        shutil.rmtree(data_dir)
-    os.makedirs(data_dir, exist_ok=True)
-
-    # Use sequential counter for unique filenames
-    counter = 0
-
-    for idx in balanced_indices:
-        src_path = file_paths[idx]
-        grouped_label = grouped_labels[idx]
-
-        # Create filename with sequential counter and grouped label
-        new_filename = f"{counter}_{grouped_label}.wav"
-
-        dst_path = os.path.join(data_dir, new_filename)
-        shutil.copy2(src_path, dst_path)
-
-        counter += 1
-
-    print(f"Balanced data saved to {data_dir}")
+    print(f"\n✅ Balanced dataset saved to: {output_dir}")
+    print(f"   - {len(new_sweep_rows)} audio files in {output_data_dir}")
+    print(f"   - sweep.csv with position info at {sweep_output_path}")
 
 
 def main():
-    print("Balancing Collected Data")
-    print("=" * 40)
+    parser = argparse.ArgumentParser(
+        description="Balance collected dataset by undersampling with position preservation"
+    )
+    parser.add_argument(
+        "--input",
+        "-i",
+        type=str,
+        default=DATA_DIR,
+        help="Input dataset folder (containing data/ and sweep.csv)",
+    )
+    parser.add_argument(
+        "--output",
+        "-o",
+        type=str,
+        default=None,
+        help="Output folder for balanced dataset (default: balanced_<input_name>)",
+    )
+    parser.add_argument(
+        "--exclude-edge",
+        action="store_true",
+        default=FILTER_CLASSES,
+        help="Exclude edge class before balancing",
+    )
+    parser.add_argument(
+        "--seed", type=int, default=RANDOM_SEED, help="Random seed for reproducibility"
+    )
 
-    # Load and group data
-    sounds, raw_labels, file_paths = load_data(DATA_DIR)
-    grouped_labels = group_labels(raw_labels)
+    args = parser.parse_args()
+
+    # Set paths
+    data_dir = args.input
+    if args.output:
+        output_dir = args.output
+    else:
+        # Auto-generate output name
+        input_name = os.path.basename(data_dir.rstrip("/"))
+        output_dir = f"balanced_{input_name}"
+
+    # Update random seed
+    random.seed(args.seed)
+
+    print("=" * 60)
+    print("Balancing Collected Data (with Position Preservation)")
+    print("=" * 60)
+
+    # Load data with positions from sweep.csv
+    print(f"\n📁 Loading data from: {data_dir}")
+    file_paths, sweep_df = load_data_with_positions(data_dir)
+
+    # Get label column
+    label_col = (
+        "relabeled_label" if "relabeled_label" in sweep_df.columns else "original_label"
+    )
 
     # Show original distribution
-    original_counts = Counter(grouped_labels)
-    print("Original class distribution:")
-    for cls, count in sorted(original_counts.items()):
+    print("\n📊 Original class distribution:")
+    for cls, count in sweep_df[label_col].value_counts().items():
         print(f"  {cls}: {count}")
 
     # Apply class filtering if enabled
-    if FILTER_CLASSES and CLASSES_TO_EXCLUDE:
-        grouped_labels, file_paths = filter_classes(
-            grouped_labels, file_paths, CLASSES_TO_EXCLUDE
-        )
-
-        # Show distribution after filtering
-        filtered_counts = Counter(grouped_labels)
-        print("\nClass distribution after filtering:")
-        for cls, count in sorted(filtered_counts.items()):
-            print(f"  {cls}: {count}")
+    if args.exclude_edge:
+        sweep_df = filter_classes_df(sweep_df, ["edge"])
 
     # Check if we have any data
-    if len(grouped_labels) == 0:
-        print("Error: No data found after filtering!")
+    if len(sweep_df) == 0:
+        print("❌ Error: No data found after filtering!")
         return
 
     # Check number of unique classes
-    unique_classes = set(grouped_labels)
-    print(f"\nFound {len(unique_classes)} unique class(es): {sorted(unique_classes)}")
+    unique_classes = sweep_df[label_col].unique()
+    print(
+        f"\n🏷️  Found {len(unique_classes)} unique class(es): {sorted(unique_classes)}"
+    )
 
-    methods = []
-    if BALANCE_METHOD in ["undersample", "both"]:
-        methods.append(("undersample", OUTPUT_DIR_UNDERSAMPLE))
-    if BALANCE_METHOD in ["oversample", "both"]:
-        methods.append(("oversample", OUTPUT_DIR_OVERSAMPLE))
+    # Balance using undersampling
+    print("\n⚖️  Balancing dataset (undersampling)...")
+    balanced_df = balance_data_undersample(sweep_df)
 
-    for method, output_dir in methods:
-        print(f"\n--- Balancing with {method} ---")
+    # Save balanced data with sweep.csv
+    print("\n💾 Saving balanced dataset...")
+    save_balanced_data_with_sweep(balanced_df, data_dir, output_dir)
 
-        # Balance
-        balanced_indices = balance_data(grouped_labels, file_paths, method)
-        balanced_labels = [grouped_labels[i] for i in balanced_indices]
-
-        # Show balanced distribution
-        balanced_counts = Counter(balanced_labels)
-        print(f"\n{method.capitalize()} balanced class distribution:")
-        for cls, count in sorted(balanced_counts.items()):
-            print(f"  {cls}: {count}")
-
-        # Save
-        save_balanced_data(file_paths, balanced_indices, grouped_labels, output_dir)
-
-        print(
-            f"{method.capitalize()} balanced dataset created with {len(balanced_indices)} samples in {output_dir}"
-        )
+    print(f"\n🎉 Done! Balanced dataset created at: {output_dir}")
+    print("   This dataset includes sweep.csv with position info for reconstruction.")
 
 
 if __name__ == "__main__":

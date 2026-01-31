@@ -8,12 +8,14 @@ from .impulse_response import ImpulseResponseExperiment
 from .frequency_band_ablation import FrequencyBandAblationExperiment
 from .multi_dataset_training import MultiDatasetTrainingExperiment
 from .surface_reconstruction import SurfaceReconstructionExperiment
+from .surface_reconstruction_simple import run_reconstruction_on_validation_datasets
 
 from typing import Dict, Any, List, Type
 import yaml
 import logging
 from pathlib import Path
 import os
+import pickle
 
 
 class ExperimentOrchestrator:
@@ -119,6 +121,11 @@ class ExperimentOrchestrator:
                         f"Critical experiment {experiment_name} failed. Stopping execution."
                     )
                     break
+
+        # Run surface reconstruction if enabled in config
+        reconstruction_results = self._run_reconstruction_if_enabled(results)
+        if reconstruction_results:
+            results["reconstruction"] = reconstruction_results
 
         # Generate overall summary
         summary = self._generate_execution_summary(results)
@@ -472,6 +479,114 @@ class ExperimentOrchestrator:
 
         self.logger.info(f"Results saved to {self.output_dir}")
         self.logger.info(f"Summary available at: {summary_path}")
+
+    def _run_reconstruction_if_enabled(
+        self, experiment_results: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """
+        Run surface reconstruction on validation datasets if enabled in config.
+
+        Args:
+            experiment_results: Results from completed experiments
+
+        Returns:
+            Reconstruction results or empty dict if disabled/failed
+        """
+        # Check if reconstruction is enabled
+        reconstruction_config = self.config.get("reconstruction", {})
+        if not reconstruction_config.get("enabled", False):
+            return {}
+
+        self.logger.info("\n" + "=" * 50)
+        self.logger.info("🔄 SURFACE RECONSTRUCTION")
+        self.logger.info("=" * 50)
+
+        # Find the trained model
+        model_path = None
+
+        # Look in discrimination_analysis results first
+        if "discrimination_analysis" in experiment_results:
+            disc_output_dir = os.path.join(self.output_dir, "discriminationanalysis")
+            potential_paths = [
+                os.path.join(
+                    disc_output_dir, "trained_models", "model_rank1_random_forest.pkl"
+                ),
+                os.path.join(disc_output_dir, "trained_models", "model_rank1_*.pkl"),
+                os.path.join(disc_output_dir, "best_discrimination_model.pkl"),
+            ]
+            for path in potential_paths:
+                if "*" in path:
+                    import glob
+
+                    matches = glob.glob(path)
+                    if matches:
+                        model_path = matches[0]
+                        break
+                elif os.path.exists(path):
+                    model_path = path
+                    break
+
+        if model_path is None:
+            self.logger.warning("No trained model found for reconstruction. Skipping.")
+            return {}
+
+        self.logger.info(f"Using model: {model_path}")
+
+        # Get validation datasets from config
+        validation_datasets = self.config.get("validation_datasets", [])
+        if not validation_datasets:
+            self.logger.warning(
+                "No validation datasets configured. Skipping reconstruction."
+            )
+            return {}
+
+        self.logger.info(f"Validation datasets: {validation_datasets}")
+
+        # Get base data directory
+        base_data_dir = self.config.get("base_data_dir", "data")
+
+        # Get output directory
+        reconstruction_output = os.path.join(
+            self.output_dir,
+            reconstruction_config.get("output_dir", "reconstruction_results"),
+        )
+
+        # Get feature extractor from data processing if available
+        feature_extractor = None
+        if "data_processing" in self.shared_data:
+            feature_extractor = self.shared_data["data_processing"].get(
+                "feature_extractor"
+            )
+
+        try:
+            results = run_reconstruction_on_validation_datasets(
+                model_path=model_path,
+                validation_datasets=validation_datasets,
+                base_data_dir=base_data_dir,
+                output_dir=reconstruction_output,
+                feature_extractor=feature_extractor,
+                sr=48000,
+            )
+
+            # Log summary
+            successful = [k for k, v in results.items() if "error" not in v]
+            if successful:
+                accuracies = [results[k]["accuracy"] for k in successful]
+                self.logger.info(
+                    f"✓ Reconstruction completed: {len(successful)} datasets"
+                )
+                self.logger.info(
+                    f"  Mean accuracy: {sum(accuracies)/len(accuracies):.1%}"
+                )
+
+            return results
+
+        except Exception as e:
+            self.logger.error(f"Reconstruction failed: {e}")
+            import traceback
+
+            traceback.print_exc()
+            return {"error": str(e)}
 
     def get_experiment_result(self, experiment_name: str) -> Any:
         """Get results from a specific experiment."""

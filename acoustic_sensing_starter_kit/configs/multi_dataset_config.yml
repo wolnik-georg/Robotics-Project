@@ -1,48 +1,50 @@
 # Standard Pipeline with Multiple Datasets
 # This runs the complete analysis pipeline on multiple combined datasets
+# 
+# NEW: All balanced datasets now include sweep.csv with position info for reconstruction
 
 # Base data directory
 base_data_dir: "data"
 
 # Datasets to process (will be combined for training/testing)
+# Using new balanced datasets with sweep.csv position info
 datasets:
-  # TRAINING: Workspaces 1, 2 & 3 (all surfaces - cutout + pure contact + pure no-contact)
+  # TRAINING: Workspaces 2 & 3 (all surfaces - cutout + pure contact + pure no-contact)
   
   # Workspace 2
-  - "balanced_collected_data_runs_2026_01_15_workspace_2_squares_cutout_relabeled_undersample"
-  - "balanced_collected_data_runs_2026_01_15_workspace_2_pure_no_contact_undersample"
-  - "balanced_collected_data_runs_2026_01_15_workspace_2_pure_contact_relabeled_undersample"
-
-  # Workspace 1
-  # - "balanced_collected_data_runs_2026_01_15_workspace_1_squares_cutout_relabeled_undersample"
-  # - "balanced_collected_data_runs_2026_01_15_workspace_1_pure_no_contact_undersample"
-  # - "balanced_collected_data_runs_2026_01_15_workspace_1_pure_contact_relabeled_undersample"
+  - "balanced_workspace_2_squares_cutout"
+  - "balanced_workspace_2_pure_no_contact"
+  - "balanced_workspace_2_pure_contact"
   
-  # Workspace 3 (now included in training)
-  - "balanced_collected_data_runs_2025_12_15_v2_2_workspace3_squares_cutout_relabeled_undersample"
-  - "balanced_collected_data_runs_2026_01_14_workspace_3_pure_contact_relabeled_undersample"
-  - "balanced_collected_data_runs_2026_01_14_workspace_3_pure_no_contact_undersample"
-  - "balanced_collected_data_runs_2025_12_17_v2_workspace_3_squares_cutout_relabeled_undersample"
+  # Workspace 3
+  - "balanced_workspace_3_squares_cutout_v1"
+  - "balanced_workspace_3_squares_cutout_v2"
+  - "balanced_workspace_3_pure_contact"
+  - "balanced_workspace_3_pure_no_contact"
   
 # Optional: Specify datasets to use for validation (holdout)
 # Leave empty [] to combine all datasets for train/test split
+# These datasets have sweep.csv with position info for reconstruction
 validation_datasets: [
-  # VALIDATION: Hold-out dataset (Pattern B - completely separate surface patterns)
-  # "balanced_collected_data_runs_2026_01_27_hold_out_dataset_relabeled_undersample"
-  "balanced_collected_data_runs_2026_01_15_workspace_1_squares_cutout_relabeled_undersample",
-  "balanced_collected_data_runs_2026_01_15_workspace_1_pure_no_contact_undersample",
-  "balanced_collected_data_runs_2026_01_15_workspace_1_pure_contact_relabeled_undersample"
+  # VALIDATION: Workspace 1 (completely separate from training workspaces)
+  "balanced_workspace_1_squares_cutout",
+  "balanced_workspace_1_pure_no_contact",
+  "balanced_workspace_1_pure_contact"
 ]
 
+# Reconstruction Configuration
+# After training, run surface reconstruction on validation datasets
+reconstruction:
+  enabled: true
+  output_dir: "reconstruction_results"
+  # Each validation dataset will be reconstructed separately using its sweep.csv
+
 # Class Filtering Configuration
-# Filter out specific classes from training and/or validation
-# Use case: Edge contacts are acoustically complex and may confuse models
-# Hypothesis: Excluding edge improves contact vs no_contact performance
+# NOTE: Already applied during balancing (--exclude-edge), but kept for pipeline compatibility
 class_filtering:
-  enabled: true  # Enable class filtering
-  classes_to_exclude_train: ["edge"]  # Exclude from training (test clean binary classification)
-  classes_to_exclude_validation: ["edge"]  # Exclude from validation (cleanest test)
-  # Alternative: classes_to_exclude_validation: []  # Include edge in validation (test generalization to edge)
+  enabled: false  # Already filtered during balance_dataset.py
+  classes_to_exclude_train: ["edge"]
+  classes_to_exclude_validation: ["edge"]
   
   # Options:
   # 1. Exclude edge from both train & validation: Clean binary problem (contact vs no_contact)

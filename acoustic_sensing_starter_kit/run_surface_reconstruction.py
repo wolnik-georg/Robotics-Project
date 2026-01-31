@@ -206,20 +206,38 @@ class SurfaceReconstructor:
         class_counts = sweep_df[label_column].value_counts()
         logger.info(f"  Class distribution: {dict(class_counts)}")
 
-        # Filter out excluded classes (e.g., "edge" if training was binary)
+        # Check for original_label column to identify originally-excluded classes
+        # This is important when edges were relabeled (e.g., edge -> contact)
+        has_original_label = "original_label" in sweep_df.columns
+        if has_original_label:
+            original_class_counts = sweep_df["original_label"].value_counts()
+            logger.info(f"  Original label distribution: {dict(original_class_counts)}")
+
+        # Identify excluded classes (for visualization) but DON'T filter them out yet
+        # We'll include them in visualization but exclude from accuracy calculation
+        # Check BOTH label_column and original_label for excluded classes
         if exclude_classes:
             exclude_set = set(exclude_classes)
-            before_count = len(sweep_df)
-            sweep_df = sweep_df[~sweep_df[label_column].isin(exclude_set)]
-            filtered_count = before_count - len(sweep_df)
+            # First check the label column
+            excluded_by_label = sweep_df[label_column].isin(exclude_set)
+            # Also check original_label if it exists (for relabeled edges)
+            if has_original_label:
+                excluded_by_original = sweep_df["original_label"].isin(exclude_set)
+                excluded_in_sweep = excluded_by_label | excluded_by_original
+            else:
+                excluded_in_sweep = excluded_by_label
+            excluded_count = excluded_in_sweep.sum()
             logger.info(
-                f"  ⚠ Excluded classes {exclude_classes}: removed {filtered_count} samples"
+                f"  ℹ️  Classes {exclude_classes} will be shown but excluded from accuracy ({excluded_count} samples)"
             )
-            logger.info(f"    Remaining: {len(sweep_df)} samples")
+            # Store the exclusion info in the dataframe for later use
+            sweep_df["_excluded"] = excluded_in_sweep
+        else:
+            sweep_df["_excluded"] = False
 
-        # Extract features from audio files
-        features, labels, coords = self._extract_features(
-            sweep_df, dataset_path, label_column
+        # Extract features from ALL audio files (including excluded classes)
+        features, labels, coords, excluded_mask, original_labels = (
+            self._extract_features(sweep_df, dataset_path, label_column)
         )
 
         logger.info(f"  ✓ Extracted features for {len(features)} samples")
@@ -228,33 +246,57 @@ class SurfaceReconstructor:
         # Scale features using the trained scaler
         features_scaled = self.scaler.transform(features)
 
-        # Make predictions
+        # Make predictions for ALL samples
         predictions = self.model.predict(features_scaled)
         probabilities = self.model.predict_proba(features_scaled)
 
         # Get confidence scores
         confidences = np.max(probabilities, axis=1)
 
-        # Calculate raw accuracy (no filtering)
-        raw_accuracy = accuracy_score(labels, predictions)
-        logger.info(f"  🎯 Raw Reconstruction Accuracy: {raw_accuracy:.2%}")
-        logger.info(f"     Mean confidence: {np.mean(confidences):.2%}")
-        logger.info(f"     Median confidence: {np.median(confidences):.2%}")
+        # Use the excluded_mask from feature extraction (based on original_label)
+        included_mask = ~excluded_mask
 
-        # Apply confidence filtering if specified
+        # For excluded samples, set prediction to their original label for visualization
+        # (e.g., edge samples show as "edge" not what the model predicted)
+        predictions_for_viz = predictions.copy()
+        if np.any(excluded_mask):
+            predictions_for_viz[excluded_mask] = original_labels[excluded_mask]
+            logger.info(f"  ℹ️  Excluded from accuracy: {np.sum(excluded_mask)} samples")
+        # Calculate raw accuracy (only on NON-excluded samples)
+        if np.sum(included_mask) > 0:
+            raw_accuracy = accuracy_score(
+                labels[included_mask], predictions[included_mask]
+            )
+            logger.info(
+                f"  🎯 Raw Reconstruction Accuracy: {raw_accuracy:.2%} (on {np.sum(included_mask)} samples)"
+            )
+        else:
+            raw_accuracy = 0.0
+            logger.warning("  ⚠ No samples left after exclusion!")
+        logger.info(f"     Mean confidence: {np.mean(confidences[included_mask]):.2%}")
+        logger.info(
+            f"     Median confidence: {np.median(confidences[included_mask]):.2%}"
+        )
+
+        # Apply confidence filtering if specified (only on included samples)
         filtered_accuracy = None
         confidence_stats = None
-        if confidence_threshold is not None:
-            high_conf_mask = confidences >= confidence_threshold
+        if confidence_threshold is not None and np.sum(included_mask) > 0:
+            # Only consider included samples for confidence filtering
+            high_conf_mask = (confidences >= confidence_threshold) & included_mask
             high_conf_count = np.sum(high_conf_mask)
-            low_conf_count = len(predictions) - high_conf_count
+            low_conf_count = np.sum(included_mask) - high_conf_count
 
             confidence_stats = {
                 "threshold": confidence_threshold,
                 "mode": confidence_mode,
                 "high_confidence_count": int(high_conf_count),
                 "low_confidence_count": int(low_conf_count),
-                "high_confidence_pct": float(100 * high_conf_count / len(predictions)),
+                "high_confidence_pct": (
+                    float(100 * high_conf_count / np.sum(included_mask))
+                    if np.sum(included_mask) > 0
+                    else 0
+                ),
             }
 
             if confidence_mode == "reject":
@@ -267,7 +309,7 @@ class SurfaceReconstructor:
                         f"\n  📊 Confidence Filtering (threshold={confidence_threshold}, mode=reject):"
                     )
                     logger.info(
-                        f"     Kept: {high_conf_count}/{len(predictions)} ({confidence_stats['high_confidence_pct']:.1f}%)"
+                        f"     Kept: {high_conf_count}/{np.sum(included_mask)} ({confidence_stats['high_confidence_pct']:.1f}%)"
                     )
                     logger.info(f"     🎯 Filtered Accuracy: {filtered_accuracy:.2%}")
                 else:
@@ -275,40 +317,62 @@ class SurfaceReconstructor:
                         f"  ⚠ No predictions above threshold {confidence_threshold}"
                     )
             elif confidence_mode == "default":
-                # Assign default class to low-confidence predictions
+                # Assign default class to low-confidence predictions (only for included)
                 adjusted_predictions = predictions.copy()
-                adjusted_predictions[~high_conf_mask] = default_class
-                filtered_accuracy = accuracy_score(labels, adjusted_predictions)
+                low_conf_included = (
+                    ~(confidences >= confidence_threshold)
+                ) & included_mask
+                adjusted_predictions[low_conf_included] = default_class
+                filtered_accuracy = accuracy_score(
+                    labels[included_mask], adjusted_predictions[included_mask]
+                )
                 logger.info(
                     f"\n  📊 Confidence Filtering (threshold={confidence_threshold}, mode=default):"
                 )
                 logger.info(
-                    f"     Defaulted to '{default_class}': {low_conf_count}/{len(predictions)}"
+                    f"     Defaulted to '{default_class}': {low_conf_count}/{np.sum(included_mask)}"
                 )
                 logger.info(f"     🎯 Adjusted Accuracy: {filtered_accuracy:.2%}")
                 # Use adjusted predictions for visualization
-                predictions = adjusted_predictions
+                predictions_for_viz = adjusted_predictions.copy()
+                predictions_for_viz[excluded_mask] = original_labels[excluded_mask]
 
         # Use filtered accuracy if available, otherwise raw
         accuracy = filtered_accuracy if filtered_accuracy is not None else raw_accuracy
 
-        # Generate visualizations
+        # For visualization, use original_labels for ground truth of excluded samples
+        # This shows "edge" on the plot instead of the relabeled class
+        true_labels_for_viz = labels.copy()
+        if np.any(excluded_mask):
+            true_labels_for_viz[excluded_mask] = original_labels[excluded_mask]
+
+        # Generate visualizations (use predictions_for_viz which keeps excluded classes as-is)
         logger.info("\n🎨 Generating surface reconstruction visualizations...")
         self._create_all_visualizations(
-            dataset_name, coords, labels, predictions, probabilities, accuracy
+            dataset_name,
+            coords,
+            true_labels_for_viz,
+            predictions_for_viz,
+            probabilities,
+            accuracy,
+            excluded_mask=excluded_mask,
         )
 
         # Build results dictionary
         results = {
             "dataset": dataset_name,
             "num_samples": len(features),
+            "num_included": int(np.sum(included_mask)),
+            "num_excluded": int(np.sum(excluded_mask)),
             "model_used": self.classifier_name,
             "raw_accuracy": float(raw_accuracy),
             "accuracy": float(accuracy),
             "confidence_filtering": confidence_stats,
             "coordinates": coords.tolist(),
             "true_labels": labels.tolist(),
-            "predictions": predictions.tolist(),
+            "original_labels": original_labels.tolist(),
+            "predictions": predictions_for_viz.tolist(),
+            "excluded_classes": exclude_classes or [],
         }
 
         # Save results
@@ -370,13 +434,22 @@ class SurfaceReconstructor:
 
     def _extract_features(
         self, sweep_df: pd.DataFrame, dataset_path: Path, label_column: str
-    ) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
-        """Extract features from sweep audio files."""
+    ) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+        """Extract features from sweep audio files.
+
+        Returns:
+            Tuple of (features, labels, coords, excluded_mask)
+        """
         features_list = []
         labels_list = []
         coords_list = []
+        excluded_list = []
+        original_labels_list = []
 
         logger.info("  🎵 Extracting features from audio files...")
+
+        has_original_label = "original_label" in sweep_df.columns
+        has_excluded = "_excluded" in sweep_df.columns
 
         for idx, row in sweep_df.iterrows():
             audio_filename = row["acoustic_filename"]
@@ -411,6 +484,10 @@ class SurfaceReconstructor:
                 features_list.append(feature_vector)
                 labels_list.append(row[label_column])
                 coords_list.append((row["normalized_x"], row["normalized_y"]))
+                excluded_list.append(row["_excluded"] if has_excluded else False)
+                original_labels_list.append(
+                    row["original_label"] if has_original_label else row[label_column]
+                )
 
             except Exception as e:
                 logger.warning(f"    ⚠ Failed to process {audio_path}: {e}")
@@ -424,6 +501,8 @@ class SurfaceReconstructor:
             np.array(features_list),
             np.array(labels_list),
             np.array(coords_list),
+            np.array(excluded_list, dtype=bool),
+            np.array(original_labels_list),
         )
 
     def _create_all_visualizations(
@@ -434,13 +513,24 @@ class SurfaceReconstructor:
         predictions: np.ndarray,
         probabilities: np.ndarray,
         accuracy: float,
+        excluded_mask: Optional[np.ndarray] = None,
     ):
-        """Generate all surface reconstruction visualizations."""
+        """Generate all surface reconstruction visualizations.
+
+        Args:
+            excluded_mask: Boolean array indicating which samples are from excluded
+                          classes (e.g., edge). These will be shown with special
+                          styling but not counted in accuracy.
+        """
         output_subdir = self.output_dir / dataset_name
         output_subdir.mkdir(parents=True, exist_ok=True)
 
         # Get unique classes from actual data
         all_classes = sorted(set(true_labels) | set(predictions))
+
+        # If no excluded_mask provided, nothing is excluded
+        if excluded_mask is None:
+            excluded_mask = np.zeros(len(true_labels), dtype=bool)
 
         # 1. Ground truth grid
         self._create_grid_heatmap(
@@ -449,6 +539,7 @@ class SurfaceReconstructor:
             all_classes,
             "Ground Truth Surface",
             output_subdir / "01_ground_truth_grid.png",
+            excluded_mask=excluded_mask,
         )
 
         # 2. Predicted grid
@@ -458,6 +549,7 @@ class SurfaceReconstructor:
             all_classes,
             f"Predicted Surface ({self.classifier_name})",
             output_subdir / "02_predicted_grid.png",
+            excluded_mask=excluded_mask,
         )
 
         # 3. Side-by-side comparison
@@ -468,6 +560,7 @@ class SurfaceReconstructor:
             all_classes,
             accuracy,
             output_subdir / "03_comparison.png",
+            excluded_mask=excluded_mask,
         )
 
         # 4. Error map
@@ -477,6 +570,7 @@ class SurfaceReconstructor:
             predictions,
             all_classes,
             output_subdir / "04_error_map.png",
+            excluded_mask=excluded_mask,
         )
 
         # 5. Confidence map
@@ -486,6 +580,7 @@ class SurfaceReconstructor:
             probabilities,
             all_classes,
             output_subdir / "05_confidence_map.png",
+            excluded_mask=excluded_mask,
         )
 
         # 6. Presentation summary
@@ -498,6 +593,7 @@ class SurfaceReconstructor:
             accuracy,
             dataset_name,
             output_subdir / "06_presentation_summary.png",
+            excluded_mask=excluded_mask,
         )
 
         logger.info(f"  ✓ Saved 6 visualizations to: {output_subdir}")
@@ -547,22 +643,29 @@ class SurfaceReconstructor:
         classes: List[str],
         title: str,
         save_path: Path,
+        excluded_mask: Optional[np.ndarray] = None,
     ):
-        """Create a grid-based heatmap with filled cells."""
+        """Create a grid-based heatmap with filled cells.
+
+        Args:
+            excluded_mask: Boolean array marking excluded samples (e.g., edge class).
+                          These will be shown with a hatched pattern.
+        """
         fig, ax = plt.subplots(figsize=(10, 10))
 
         # Calculate cell size using robust method
         dx, dy = self._calculate_cell_size(coords)
 
-        # Create color mapping
-        color_list = [self.class_colors.get(c, "gray") for c in classes]
-        cmap = ListedColormap(color_list)
+        if excluded_mask is None:
+            excluded_mask = np.zeros(len(labels), dtype=bool)
 
         # Plot each point as a filled rectangle
         for i, (coord, label) in enumerate(zip(coords, labels)):
             x, y = coord
-            if label in classes:
-                color = self.class_colors.get(label, "gray")
+            is_excluded = excluded_mask[i]
+
+            if label in self.class_colors:
+                color = self.class_colors[label]
             else:
                 color = "gray"
 
@@ -571,25 +674,37 @@ class SurfaceReconstructor:
                 dx,
                 dy,
                 facecolor=color,
-                edgecolor="white",
-                linewidth=0.5,
+                edgecolor="white" if not is_excluded else "black",
+                linewidth=0.5 if not is_excluded else 1.0,
+                hatch="//" if is_excluded else None,  # Hatching for excluded
+                alpha=0.7 if is_excluded else 1.0,
             )
             ax.add_patch(rect)
 
-        # Set limits with padding
-        x_min, x_max = coords[:, 0].min(), coords[:, 0].max()
-        y_min, y_max = coords[:, 1].min(), coords[:, 1].max()
-        ax.set_xlim(x_min - dx, x_max + dx)
-        ax.set_ylim(y_min - dy, y_max + dy)
+        # Set limits to FULL surface (0 to 1) with small padding
+        ax.set_xlim(-0.02, 1.02)
+        ax.set_ylim(-0.02, 1.02)
 
-        # Create legend
+        # Create legend (include excluded class info if present)
         legend_patches = [
             mpatches.Patch(
                 color=self.class_colors.get(c, "gray"),
                 label=c.replace("_", " ").title(),
             )
             for c in classes
+            if c not in ["edge"]  # Regular classes
         ]
+        # Add edge legend if present
+        if "edge" in classes:
+            legend_patches.append(
+                mpatches.Patch(
+                    facecolor=self.class_colors.get("edge", "#f4a582"),
+                    edgecolor="black",
+                    hatch="//",
+                    label="Edge (excluded)",
+                    alpha=0.7,
+                )
+            )
         ax.legend(handles=legend_patches, loc="upper right", fontsize=11)
 
         ax.set_xlabel("Normalized X Position", fontsize=12)
@@ -610,6 +725,7 @@ class SurfaceReconstructor:
         classes: List[str],
         accuracy: float,
         save_path: Path,
+        excluded_mask: Optional[np.ndarray] = None,
     ):
         """Create side-by-side comparison of ground truth vs predictions."""
         fig, axes = plt.subplots(1, 2, figsize=(18, 8))
@@ -617,27 +733,32 @@ class SurfaceReconstructor:
         # Calculate cell size using robust method
         dx, dy = self._calculate_cell_size(coords)
 
+        if excluded_mask is None:
+            excluded_mask = np.zeros(len(true_labels), dtype=bool)
+
         for ax, labels, title in [
             (axes[0], true_labels, "Ground Truth"),
             (axes[1], predictions, f"Predicted (Accuracy: {accuracy:.1%})"),
         ]:
-            for coord, label in zip(coords, labels):
+            for i, (coord, label) in enumerate(zip(coords, labels)):
                 x, y = coord
+                is_excluded = excluded_mask[i]
                 color = self.class_colors.get(label, "gray")
                 rect = Rectangle(
                     (x - dx / 2, y - dy / 2),
                     dx,
                     dy,
                     facecolor=color,
-                    edgecolor="white",
-                    linewidth=0.3,
+                    edgecolor="white" if not is_excluded else "black",
+                    linewidth=0.3 if not is_excluded else 0.8,
+                    hatch="//" if is_excluded else None,
+                    alpha=0.7 if is_excluded else 1.0,
                 )
                 ax.add_patch(rect)
 
-            x_min, x_max = coords[:, 0].min(), coords[:, 0].max()
-            y_min, y_max = coords[:, 1].min(), coords[:, 1].max()
-            ax.set_xlim(x_min - dx, x_max + dx)
-            ax.set_ylim(y_min - dy, y_max + dy)
+            # Set limits to FULL surface (0 to 1)
+            ax.set_xlim(-0.02, 1.02)
+            ax.set_ylim(-0.02, 1.02)
             ax.set_xlabel("Normalized X", fontsize=11)
             ax.set_ylabel("Normalized Y", fontsize=11)
             ax.set_title(title, fontsize=13, fontweight="bold")
@@ -651,11 +772,22 @@ class SurfaceReconstructor:
                 label=c.replace("_", " ").title(),
             )
             for c in classes
+            if c != "edge"
         ]
+        if "edge" in classes:
+            legend_patches.append(
+                mpatches.Patch(
+                    facecolor=self.class_colors.get("edge", "#f4a582"),
+                    edgecolor="black",
+                    hatch="//",
+                    label="Edge (excluded)",
+                    alpha=0.7,
+                )
+            )
         fig.legend(
             handles=legend_patches,
             loc="upper center",
-            ncol=len(classes),
+            ncol=len(legend_patches),
             fontsize=11,
             bbox_to_anchor=(0.5, 1.02),
         )
@@ -671,19 +803,41 @@ class SurfaceReconstructor:
         predictions: np.ndarray,
         classes: List[str],
         save_path: Path,
+        excluded_mask: Optional[np.ndarray] = None,
     ):
         """Create error map highlighting misclassifications."""
         fig, ax = plt.subplots(figsize=(10, 10))
 
-        errors = true_labels != predictions
-        correct = ~errors
+        if excluded_mask is None:
+            excluded_mask = np.zeros(len(true_labels), dtype=bool)
+
+        # Only count errors on non-excluded samples
+        included_mask = ~excluded_mask
+        errors = (true_labels != predictions) & included_mask
+        correct = (true_labels == predictions) & included_mask
 
         # Calculate cell size using robust method
         dx, dy = self._calculate_cell_size(coords)
 
+        # Plot excluded samples first (background)
+        for i in np.where(excluded_mask)[0]:
+            x, y = coords[i]
+            color = self.class_colors.get(true_labels[i], "gray")
+            rect = Rectangle(
+                (x - dx / 2, y - dy / 2),
+                dx,
+                dy,
+                facecolor=color,
+                edgecolor="black",
+                linewidth=0.5,
+                hatch="//",
+                alpha=0.4,
+            )
+            ax.add_patch(rect)
+
         # Plot correct predictions (muted colors)
-        for coord, label in zip(coords[correct], predictions[correct]):
-            x, y = coord
+        for i in np.where(correct)[0]:
+            x, y = coords[i]
             rect = Rectangle(
                 (x - dx / 2, y - dy / 2),
                 dx,
@@ -696,9 +850,9 @@ class SurfaceReconstructor:
             ax.add_patch(rect)
 
         # Plot errors (bright red with edge showing true class)
-        for coord, true_label in zip(coords[errors], true_labels[errors]):
-            x, y = coord
-            true_color = self.class_colors.get(true_label, "blue")
+        for i in np.where(errors)[0]:
+            x, y = coords[i]
+            true_color = self.class_colors.get(true_labels[i], "blue")
             rect = Rectangle(
                 (x - dx / 2, y - dy / 2),
                 dx,
@@ -709,14 +863,16 @@ class SurfaceReconstructor:
             )
             ax.add_patch(rect)
 
-        x_min, x_max = coords[:, 0].min(), coords[:, 0].max()
-        y_min, y_max = coords[:, 1].min(), coords[:, 1].max()
-        ax.set_xlim(x_min - dx, x_max + dx)
-        ax.set_ylim(y_min - dy, y_max + dy)
+        # Set limits to FULL surface (0 to 1)
+        ax.set_xlim(-0.02, 1.02)
+        ax.set_ylim(-0.02, 1.02)
 
-        error_rate = errors.sum() / len(errors)
+        # Error rate on included samples only
+        num_included = np.sum(included_mask)
+        error_count = np.sum(errors)
+        error_rate = error_count / num_included if num_included > 0 else 0
         ax.set_title(
-            f"Error Map: {errors.sum()} Misclassifications ({error_rate:.1%})",
+            f"Error Map: {error_count} Misclassifications ({error_rate:.1%})",
             fontsize=13,
             fontweight="bold",
         )
@@ -730,6 +886,16 @@ class SurfaceReconstructor:
             mpatches.Patch(color="lightgray", label="Correct", alpha=0.5),
             mpatches.Patch(color="#d73027", label="Error"),
         ]
+        if np.any(excluded_mask):
+            legend_patches.append(
+                mpatches.Patch(
+                    facecolor="gray",
+                    edgecolor="black",
+                    hatch="//",
+                    label="Excluded",
+                    alpha=0.4,
+                )
+            )
         ax.legend(handles=legend_patches, loc="upper right", fontsize=11)
 
         plt.tight_layout()
@@ -743,9 +909,13 @@ class SurfaceReconstructor:
         probabilities: np.ndarray,
         classes: List[str],
         save_path: Path,
+        excluded_mask: Optional[np.ndarray] = None,
     ):
         """Create confidence map showing prediction certainty."""
         fig, ax = plt.subplots(figsize=(10, 10))
+
+        if excluded_mask is None:
+            excluded_mask = np.zeros(len(true_labels), dtype=bool)
 
         # Get max probability (confidence) for each sample
         max_probs = np.max(probabilities, axis=1)
@@ -754,35 +924,52 @@ class SurfaceReconstructor:
         dx, dy = self._calculate_cell_size(coords)
 
         # Plot cells with confidence-based coloring
-        for coord, confidence in zip(coords, max_probs):
+        for i, (coord, confidence) in enumerate(zip(coords, max_probs)):
             x, y = coord
-            # Use confidence as alpha (0.3 to 1.0)
-            alpha = 0.3 + 0.7 * confidence
-            # Color based on confidence level
-            if confidence > 0.8:
-                color = "#2166ac"  # High confidence - blue
-            elif confidence > 0.6:
-                color = "#92c5de"  # Medium confidence - light blue
-            else:
-                color = "#f4a582"  # Low confidence - orange
+            is_excluded = excluded_mask[i]
 
-            rect = Rectangle(
-                (x - dx / 2, y - dy / 2),
-                dx,
-                dy,
-                facecolor=color,
-                edgecolor="white",
-                linewidth=0.3,
-                alpha=alpha,
-            )
+            if is_excluded:
+                # Excluded samples shown with hatching
+                color = self.class_colors.get(true_labels[i], "gray")
+                rect = Rectangle(
+                    (x - dx / 2, y - dy / 2),
+                    dx,
+                    dy,
+                    facecolor=color,
+                    edgecolor="black",
+                    linewidth=0.5,
+                    hatch="//",
+                    alpha=0.4,
+                )
+            else:
+                # Use confidence as alpha (0.3 to 1.0)
+                alpha = 0.3 + 0.7 * confidence
+                # Color based on confidence level
+                if confidence > 0.8:
+                    color = "#2166ac"  # High confidence - blue
+                elif confidence > 0.6:
+                    color = "#92c5de"  # Medium confidence - light blue
+                else:
+                    color = "#f4a582"  # Low confidence - orange
+
+                rect = Rectangle(
+                    (x - dx / 2, y - dy / 2),
+                    dx,
+                    dy,
+                    facecolor=color,
+                    edgecolor="white",
+                    linewidth=0.3,
+                    alpha=alpha,
+                )
             ax.add_patch(rect)
 
-        x_min, x_max = coords[:, 0].min(), coords[:, 0].max()
-        y_min, y_max = coords[:, 1].min(), coords[:, 1].max()
-        ax.set_xlim(x_min - dx, x_max + dx)
-        ax.set_ylim(y_min - dy, y_max + dy)
+        # Set limits to FULL surface (0 to 1)
+        ax.set_xlim(-0.02, 1.02)
+        ax.set_ylim(-0.02, 1.02)
 
-        mean_conf = np.mean(max_probs)
+        # Mean confidence on included samples only
+        included_mask = ~excluded_mask
+        mean_conf = np.mean(max_probs[included_mask]) if np.any(included_mask) else 0
         ax.set_title(
             f"Prediction Confidence (Mean: {mean_conf:.1%})",
             fontsize=13,
@@ -799,6 +986,16 @@ class SurfaceReconstructor:
             mpatches.Patch(color="#92c5de", label="Medium (60-80%)"),
             mpatches.Patch(color="#f4a582", label="Low (<60%)"),
         ]
+        if np.any(excluded_mask):
+            legend_patches.append(
+                mpatches.Patch(
+                    facecolor="gray",
+                    edgecolor="black",
+                    hatch="//",
+                    label="Excluded",
+                    alpha=0.4,
+                )
+            )
         ax.legend(handles=legend_patches, loc="upper right", fontsize=11)
 
         plt.tight_layout()
@@ -815,19 +1012,22 @@ class SurfaceReconstructor:
         accuracy: float,
         dataset_name: str,
         save_path: Path,
+        excluded_mask: Optional[np.ndarray] = None,
     ):
         """Create a presentation-ready summary figure (2x2 grid)."""
         fig, axes = plt.subplots(2, 2, figsize=(16, 16))
 
+        if excluded_mask is None:
+            excluded_mask = np.zeros(len(true_labels), dtype=bool)
+        included_mask = ~excluded_mask
+
         # Calculate cell size using robust method
         dx, dy = self._calculate_cell_size(coords)
 
-        x_min, x_max = coords[:, 0].min(), coords[:, 0].max()
-        y_min, y_max = coords[:, 1].min(), coords[:, 1].max()
-
         def setup_ax(ax, title):
-            ax.set_xlim(x_min - dx, x_max + dx)
-            ax.set_ylim(y_min - dy, y_max + dy)
+            # Set limits to FULL surface (0 to 1)
+            ax.set_xlim(-0.02, 1.02)
+            ax.set_ylim(-0.02, 1.02)
             ax.set_title(title, fontsize=13, fontweight="bold")
             ax.set_xlabel("Normalized X", fontsize=10)
             ax.set_ylabel("Normalized Y", fontsize=10)
@@ -836,65 +1036,88 @@ class SurfaceReconstructor:
 
         # 1. Ground truth (top-left)
         ax = axes[0, 0]
-        for coord, label in zip(coords, true_labels):
+        for i, (coord, label) in enumerate(zip(coords, true_labels)):
             x, y = coord
+            is_excluded = excluded_mask[i]
             color = self.class_colors.get(label, "gray")
             rect = Rectangle(
                 (x - dx / 2, y - dy / 2),
                 dx,
                 dy,
                 facecolor=color,
-                edgecolor="white",
-                linewidth=0.3,
+                edgecolor="white" if not is_excluded else "black",
+                linewidth=0.3 if not is_excluded else 0.8,
+                hatch="//" if is_excluded else None,
+                alpha=0.7 if is_excluded else 1.0,
             )
             ax.add_patch(rect)
         setup_ax(ax, "Ground Truth")
 
         # 2. Predictions (top-right)
         ax = axes[0, 1]
-        for coord, label in zip(coords, predictions):
+        for i, (coord, label) in enumerate(zip(coords, predictions)):
             x, y = coord
+            is_excluded = excluded_mask[i]
             color = self.class_colors.get(label, "gray")
             rect = Rectangle(
                 (x - dx / 2, y - dy / 2),
                 dx,
                 dy,
                 facecolor=color,
-                edgecolor="white",
-                linewidth=0.3,
+                edgecolor="white" if not is_excluded else "black",
+                linewidth=0.3 if not is_excluded else 0.8,
+                hatch="//" if is_excluded else None,
+                alpha=0.7 if is_excluded else 1.0,
             )
             ax.add_patch(rect)
         setup_ax(ax, f"Predicted ({self.classifier_name})")
 
-        # 3. Error map (bottom-left)
+        # 3. Error map (bottom-left) - only count errors on included samples
         ax = axes[1, 0]
-        errors = true_labels != predictions
-        for coord, is_error, true_label in zip(coords, errors, true_labels):
+        errors = (true_labels != predictions) & included_mask
+        num_included = np.sum(included_mask)
+        for i, (coord, true_label) in enumerate(zip(coords, true_labels)):
             x, y = coord
-            if is_error:
+            is_excluded = excluded_mask[i]
+            is_error = errors[i]
+
+            if is_excluded:
+                color = self.class_colors.get(true_label, "gray")
+                alpha = 0.4
+                hatch = "//"
+            elif is_error:
                 color = "#d73027"
                 alpha = 1.0
+                hatch = None
             else:
                 color = "lightgray"
                 alpha = 0.5
+                hatch = None
             rect = Rectangle(
                 (x - dx / 2, y - dy / 2),
                 dx,
                 dy,
                 facecolor=color,
-                edgecolor="white",
+                edgecolor="white" if not is_excluded else "black",
                 linewidth=0.3,
                 alpha=alpha,
+                hatch=hatch,
             )
             ax.add_patch(rect)
+        error_rate = errors.sum() / num_included if num_included > 0 else 0
         setup_ax(
             ax,
-            f"Errors: {errors.sum()}/{len(errors)} ({errors.sum()/len(errors)*100:.1f}%)",
+            f"Errors: {errors.sum()}/{num_included} ({error_rate*100:.1f}%)",
         )
 
-        # 4. Confusion matrix (bottom-right)
+        # 4. Confusion matrix (bottom-right) - only on included samples
         ax = axes[1, 1]
-        cm = confusion_matrix(true_labels, predictions, labels=classes)
+        # Filter to only included samples for confusion matrix
+        included_true = true_labels[included_mask]
+        included_pred = predictions[included_mask]
+        # Get classes that are actually present (exclude edge from confusion matrix)
+        cm_classes = [c for c in classes if c != "edge"]
+        cm = confusion_matrix(included_true, included_pred, labels=cm_classes)
 
         # Normalize for display
         cm_normalized = cm.astype("float") / cm.sum(axis=1)[:, np.newaxis]
@@ -903,8 +1126,8 @@ class SurfaceReconstructor:
         im = ax.imshow(cm_normalized, cmap="Blues", vmin=0, vmax=1)
 
         # Add text annotations
-        for i in range(len(classes)):
-            for j in range(len(classes)):
+        for i in range(len(cm_classes)):
+            for j in range(len(cm_classes)):
                 text_color = "white" if cm_normalized[i, j] > 0.5 else "black"
                 ax.text(
                     j,
@@ -916,12 +1139,12 @@ class SurfaceReconstructor:
                     fontsize=10,
                 )
 
-        ax.set_xticks(range(len(classes)))
-        ax.set_yticks(range(len(classes)))
+        ax.set_xticks(range(len(cm_classes)))
+        ax.set_yticks(range(len(cm_classes)))
         ax.set_xticklabels(
-            [c.replace("_", " ").title() for c in classes], rotation=45, ha="right"
+            [c.replace("_", " ").title() for c in cm_classes], rotation=45, ha="right"
         )
-        ax.set_yticklabels([c.replace("_", " ").title() for c in classes])
+        ax.set_yticklabels([c.replace("_", " ").title() for c in cm_classes])
         ax.set_xlabel("Predicted", fontsize=11)
         ax.set_ylabel("True", fontsize=11)
         ax.set_title("Confusion Matrix", fontsize=13, fontweight="bold")
@@ -939,18 +1162,29 @@ class SurfaceReconstructor:
             y=1.02,
         )
 
-        # Legend for class colors
+        # Legend for class colors (include edge with hatching if present)
         legend_patches = [
             mpatches.Patch(
                 color=self.class_colors.get(c, "gray"),
                 label=c.replace("_", " ").title(),
             )
             for c in classes
+            if c != "edge"
         ]
+        if "edge" in classes:
+            legend_patches.append(
+                mpatches.Patch(
+                    facecolor=self.class_colors.get("edge", "#f4a582"),
+                    edgecolor="black",
+                    hatch="//",
+                    label="Edge (excluded)",
+                    alpha=0.7,
+                )
+            )
         fig.legend(
             handles=legend_patches,
             loc="upper center",
-            ncol=len(classes),
+            ncol=len(legend_patches),
             fontsize=11,
             bbox_to_anchor=(0.5, 0.99),
         )
