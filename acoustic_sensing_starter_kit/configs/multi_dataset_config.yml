@@ -12,30 +12,36 @@ datasets:
   # TRAINING: Workspaces 2 & 3 (all surfaces - cutout + pure contact + pure no-contact)
   
   # Workspace 2
-  - "balanced_workspace_2_squares_cutout"
-  - "balanced_workspace_2_pure_no_contact"
-  - "balanced_workspace_2_pure_contact"
+  # - "balanced_workspace_2_squares_cutout"
+  # - "balanced_workspace_2_pure_no_contact"
+  # - "balanced_workspace_2_pure_contact"
   
   # Workspace 3
   - "balanced_workspace_3_squares_cutout_v1"
   - "balanced_workspace_3_squares_cutout_v2"
   - "balanced_workspace_3_pure_contact"
   - "balanced_workspace_3_pure_no_contact"
+
+  # Workspace 1
+  - "balanced_workspace_1_squares_cutout"
+  - "balanced_workspace_1_pure_no_contact"
+  - "balanced_workspace_1_pure_contact"
   
 # Optional: Specify datasets to use for validation (holdout)
 # Leave empty [] to combine all datasets for train/test split
 # These datasets have sweep.csv with position info for reconstruction
 validation_datasets: [
-  # VALIDATION: Workspace 1 (completely separate from training workspaces)
-  "balanced_workspace_1_squares_cutout",
-  "balanced_workspace_1_pure_no_contact",
-  "balanced_workspace_1_pure_contact"
+  # VALIDATION: Holdout dataset (new object in new workspace - completely unseen)
+  # "balanced_holdout_undersample"
+  "balanced_workspace_2_squares_cutout",
+  "balanced_workspace_2_pure_no_contact",
+  "balanced_workspace_2_pure_contact"
 ]
 
 # Reconstruction Configuration
 # After training, run surface reconstruction on validation datasets
 reconstruction:
-  enabled: true
+  enabled: false
   output_dir: "reconstruction_results"
   # Each validation dataset will be reconstructed separately using its sweep.csv
 
@@ -66,8 +72,8 @@ domain_adaptation:
 # Now supports multiple modes for comparison
 feature_extraction:
   modes:  # NEW: List of modes to test sequentially
-    - "features"           # Hand-crafted features (65 dimensions)
     # - "spectrogram"        # Mel spectrograms (128×256 = 32,768 dimensions)
+    - "features"           # Hand-crafted features (65 dimensions)
     # - "mfcc"              # MFCC features (13 × time_frames)
     # - "magnitude_spectrum" # Raw magnitude spectrum
     # - "power_spectrum"     # Power spectrum
@@ -132,7 +138,7 @@ experiments:
     # Filter out predictions with low confidence to reduce false positives
     confidence_filtering:
       enabled: true  # Set to true to enable confidence thresholding
-      threshold: 0.9  # Minimum confidence (0.0-1.0) to accept prediction
+      threshold: 0.8  # Minimum confidence (0.0-1.0) to accept prediction
       # If confidence < threshold:
       #   mode: "reject" → Mark as "uncertain" (excluded from metrics)
       #   mode: "default" → Use default class (e.g., "no_contact" as safe default)
@@ -157,6 +163,6 @@ experiments:
 
 # Output Configuration
 output:
-  base_dir: "training_for_reconstruction_v1"  # Train: W1&2&3 all surfaces, Validate: Hold-out dataset (Pattern B)
+  base_dir: "rerun_reconstruction_poc_workspace2"  # Train: W1&W2&W3 all surfaces, Validate: Holdout dataset
 
 # Analysis Experiments (Standard Pipeline)

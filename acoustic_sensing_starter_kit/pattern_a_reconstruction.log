@@ -1,0 +1,262 @@
+nohup: ignoring input
+INFO: Confidence filtering enabled: threshold=0.9, mode=reject
+INFO: Loading model from: training_for_reconstruction_v1/discriminationanalysis/trained_models/model_rank1_random_forest.pkl
+INFO: Model expects 80 features
+INFO: Model loaded: RandomForestClassifier
+INFO: Classes: [np.str_('contact'), np.str_('no_contact')]
+INFO: Reconstructing: balanced_workspace_2_squares_cutout
+INFO: Loaded 360 samples from sweep.csv
+INFO: Processed 100/360 samples...
+INFO: Processed 200/360 samples...
+INFO: Processed 300/360 samples...
+INFO: Raw accuracy (all 360 samples): 91.67%
+INFO: High-confidence accuracy (≥90%): 100.00% (89/360 samples = 24.7%)
+INFO: Inferred 1062 edge positions from grid gaps (grid: 64×64 = 4096 total)
+INFO: Saved visualizations to: pattern_a_consistent_reconstruction/TEST_WS2_squares_cutout
+INFO:   Contact/No-contact: 64 positions
+INFO:   Inferred edges: 1062 positions
+INFO:   Total coverage: 1126 positions
+INFO: Confidence filtering enabled: threshold=0.9, mode=reject
+INFO: Loading model from: training_for_reconstruction_v1/discriminationanalysis/trained_models/model_rank1_random_forest.pkl
+INFO: Model expects 80 features
+INFO: Model loaded: RandomForestClassifier
+INFO: Classes: [np.str_('contact'), np.str_('no_contact')]
+INFO: Reconstructing: balanced_workspace_2_pure_contact
+INFO: Loaded 590 samples from sweep.csv
+INFO: Processed 100/590 samples...
+INFO: Processed 200/590 samples...
+INFO: Processed 300/590 samples...
+INFO: Processed 400/590 samples...
+INFO: Processed 500/590 samples...
+INFO: Raw accuracy (all 590 samples): 100.00%
+INFO: High-confidence accuracy (≥90%): 100.00% (581/590 samples = 98.5%)
+INFO: No edge positions inferred (all grid points covered by data)
+INFO: Saved visualizations to: pattern_a_consistent_reconstruction/TEST_WS2_pure_contact
+INFO:   Contact/No-contact: 118 positions
+INFO:   Inferred edges: 0 positions
+INFO:   Total coverage: 118 positions
+INFO: Confidence filtering enabled: threshold=0.9, mode=reject
+INFO: Loading model from: training_for_reconstruction_v1/discriminationanalysis/trained_models/model_rank1_random_forest.pkl
+INFO: Model expects 80 features
+INFO: Model loaded: RandomForestClassifier
+INFO: Classes: [np.str_('contact'), np.str_('no_contact')]
+INFO: Reconstructing: balanced_workspace_2_pure_no_contact
+INFO: Loaded 1100 samples from sweep.csv
+INFO: Processed 100/1100 samples...
+INFO: Processed 200/1100 samples...
+INFO: Processed 300/1100 samples...
+INFO: Processed 400/1100 samples...
+INFO: Processed 500/1100 samples...
+INFO: Processed 600/1100 samples...
+INFO: Processed 700/1100 samples...
+INFO: Processed 800/1100 samples...
+INFO: Processed 900/1100 samples...
+INFO: Processed 1000/1100 samples...
+INFO: Processed 1100/1100 samples...
+INFO: Raw accuracy (all 1100 samples): 99.91%
+INFO: High-confidence accuracy (≥90%): 100.00% (1067/1100 samples = 97.0%)
+INFO: Inferred 246 edge positions from grid gaps (grid: 220×220 = 48400 total)
+INFO: Saved visualizations to: pattern_a_consistent_reconstruction/TEST_WS2_pure_no_contact
+INFO:   Contact/No-contact: 220 positions
+INFO:   Inferred edges: 246 positions
+INFO:   Total coverage: 466 positions
+INFO: Confidence filtering enabled: threshold=0.9, mode=reject
+INFO: Loading model from: training_for_reconstruction_v1/discriminationanalysis/trained_models/model_rank1_random_forest.pkl
+INFO: Model expects 80 features
+INFO: Model loaded: RandomForestClassifier
+INFO: Classes: [np.str_('contact'), np.str_('no_contact')]
+INFO: Reconstructing: balanced_workspace_3_squares_cutout_v1
+INFO: Loaded 560 samples from sweep.csv
+INFO: Processed 100/560 samples...
+INFO: Processed 200/560 samples...
+INFO: Processed 300/560 samples...
+INFO: Processed 400/560 samples...
+INFO: Processed 500/560 samples...
+INFO: Raw accuracy (all 560 samples): 85.89%
+INFO: High-confidence accuracy (≥90%): 100.00% (142/560 samples = 25.4%)
+INFO: Inferred 2689 edge positions from grid gaps (grid: 99×99 = 9801 total)
+INFO: Saved visualizations to: pattern_a_consistent_reconstruction/TEST_WS3_squares_cutout
+INFO:   Contact/No-contact: 99 positions
+INFO:   Inferred edges: 2689 positions
+INFO:   Total coverage: 2788 positions
+INFO: Confidence filtering enabled: threshold=0.9, mode=reject
+INFO: Loading model from: training_for_reconstruction_v1/discriminationanalysis/trained_models/model_rank1_random_forest.pkl
+INFO: Model expects 80 features
+INFO: Model loaded: RandomForestClassifier
+INFO: Classes: [np.str_('contact'), np.str_('no_contact')]
+INFO: Reconstructing: balanced_workspace_3_pure_contact
+INFO: Loaded 852 samples from sweep.csv
+INFO: Processed 100/852 samples...
+INFO: Processed 200/852 samples...
+INFO: Processed 300/852 samples...
+INFO: Processed 400/852 samples...
+INFO: Processed 500/852 samples...
+INFO: Processed 600/852 samples...
+INFO: Processed 700/852 samples...
+INFO: Processed 800/852 samples...
+INFO: Raw accuracy (all 852 samples): 99.06%
+INFO: High-confidence accuracy (≥90%): 100.00% (657/852 samples = 77.1%)
+INFO: No edge positions inferred (all grid points covered by data)
+INFO: Saved visualizations to: pattern_a_consistent_reconstruction/TEST_WS3_pure_contact
+INFO:   Contact/No-contact: 228 positions
+INFO:   Inferred edges: 0 positions
+INFO:   Total coverage: 228 positions
+INFO: Confidence filtering enabled: threshold=0.9, mode=reject
+INFO: Loading model from: training_for_reconstruction_v1/discriminationanalysis/trained_models/model_rank1_random_forest.pkl
+INFO: Model expects 80 features
+INFO: Model loaded: RandomForestClassifier
+INFO: Classes: [np.str_('contact'), np.str_('no_contact')]
+INFO: Reconstructing: balanced_workspace_3_pure_no_contact
+INFO: Loaded 825 samples from sweep.csv
+INFO: Processed 100/825 samples...
+INFO: Processed 200/825 samples...
+INFO: Processed 300/825 samples...
+INFO: Processed 400/825 samples...
+INFO: Processed 500/825 samples...
+INFO: Processed 600/825 samples...
+INFO: Processed 700/825 samples...
+INFO: Processed 800/825 samples...
+INFO: Raw accuracy (all 825 samples): 99.76%
+INFO: High-confidence accuracy (≥90%): 100.00% (660/825 samples = 80.0%)
+INFO: No edge positions inferred (all grid points covered by data)
+INFO: Saved visualizations to: pattern_a_consistent_reconstruction/TEST_WS3_pure_no_contact
+INFO:   Contact/No-contact: 165 positions
+INFO:   Inferred edges: 0 positions
+INFO:   Total coverage: 165 positions
+INFO: Confidence filtering enabled: threshold=0.9, mode=reject
+INFO: Loading model from: training_for_reconstruction_v1/discriminationanalysis/trained_models/model_rank1_random_forest.pkl
+INFO: Model expects 80 features
+INFO: Model loaded: RandomForestClassifier
+INFO: Classes: [np.str_('contact'), np.str_('no_contact')]
+INFO: Reconstructing: balanced_workspace_1_squares_cutout_oversample
+INFO: Loaded 850 samples from sweep.csv
+INFO: Processed 100/850 samples...
+INFO: Processed 200/850 samples...
+INFO: Processed 300/850 samples...
+INFO: Processed 400/850 samples...
+INFO: Processed 500/850 samples...
+INFO: Processed 600/850 samples...
+INFO: Processed 700/850 samples...
+INFO: Processed 800/850 samples...
+INFO: Raw accuracy (all 850 samples): 60.71%
+INFO: High-confidence accuracy (≥90%): 73.11% (119/850 samples = 14.0%)
+INFO: Inferred 613 edge positions from grid gaps (grid: 52×52 = 2704 total)
+INFO: Saved visualizations to: pattern_a_consistent_reconstruction/VAL_WS1_squares_cutout
+INFO:   Contact/No-contact: 52 positions
+INFO:   Inferred edges: 613 positions
+INFO:   Total coverage: 665 positions
+INFO: Confidence filtering enabled: threshold=0.9, mode=reject
+INFO: Loading model from: training_for_reconstruction_v1/discriminationanalysis/trained_models/model_rank1_random_forest.pkl
+INFO: Model expects 80 features
+INFO: Model loaded: RandomForestClassifier
+INFO: Classes: [np.str_('contact'), np.str_('no_contact')]
+INFO: Reconstructing: balanced_workspace_1_pure_contact_oversample
+INFO: Loaded 575 samples from sweep.csv
+INFO: Processed 100/575 samples...
+INFO: Processed 200/575 samples...
+INFO: Processed 300/575 samples...
+INFO: Processed 400/575 samples...
+INFO: Processed 500/575 samples...
+INFO: Raw accuracy (all 575 samples): 70.78%
+INFO: High-confidence accuracy (≥90%): 56.44% (101/575 samples = 17.6%)
+INFO: No edge positions inferred (all grid points covered by data)
+INFO: Saved visualizations to: pattern_a_consistent_reconstruction/VAL_WS1_pure_contact
+INFO:   Contact/No-contact: 115 positions
+INFO:   Inferred edges: 0 positions
+INFO:   Total coverage: 115 positions
+INFO: Confidence filtering enabled: threshold=0.9, mode=reject
+INFO: Loading model from: training_for_reconstruction_v1/discriminationanalysis/trained_models/model_rank1_random_forest.pkl
+INFO: Model expects 80 features
+INFO: Model loaded: RandomForestClassifier
+INFO: Classes: [np.str_('contact'), np.str_('no_contact')]
+INFO: Reconstructing: balanced_workspace_1_pure_no_contact_oversample
+INFO: Loaded 1585 samples from sweep.csv
+INFO: Processed 100/1585 samples...
+INFO: Processed 200/1585 samples...
+INFO: Processed 300/1585 samples...
+INFO: Processed 400/1585 samples...
+INFO: Processed 500/1585 samples...
+INFO: Processed 600/1585 samples...
+INFO: Processed 700/1585 samples...
+INFO: Processed 800/1585 samples...
+INFO: Processed 900/1585 samples...
+INFO: Processed 1000/1585 samples...
+INFO: Processed 1100/1585 samples...
+INFO: Processed 1200/1585 samples...
+INFO: Processed 1300/1585 samples...
+INFO: Processed 1400/1585 samples...
+INFO: Processed 1500/1585 samples...
+INFO: Raw accuracy (all 1585 samples): 64.98%
+INFO: High-confidence accuracy (≥90%): 80.69% (347/1585 samples = 21.9%)
+INFO: No edge positions inferred (all grid points covered by data)
+INFO: Saved visualizations to: pattern_a_consistent_reconstruction/VAL_WS1_pure_no_contact
+INFO:   Contact/No-contact: 317 positions
+INFO:   Inferred edges: 0 positions
+INFO:   Total coverage: 317 positions
+GPU acceleration available: True
+================================================================================
+PATTERN A RECONSTRUCTION - CONSISTENT CONFIDENCE FILTERING
+  Confidence: enabled=True, threshold=0.9, mode=reject
+================================================================================
+
+📊 TEST DATASETS (WS2 + WS3):
+
+  TEST_WS2_squares_cutout:
+    Overall: 91.7% (360 samples)
+    High-conf (≥90%): 100.0% (89/360 = 24.7%)
+
+  TEST_WS2_pure_contact:
+    Overall: 100.0% (590 samples)
+    High-conf (≥90%): 100.0% (581/590 = 98.5%)
+
+  TEST_WS2_pure_no_contact:
+    Overall: 99.9% (1100 samples)
+    High-conf (≥90%): 100.0% (1067/1100 = 97.0%)
+
+  TEST_WS3_squares_cutout:
+    Overall: 85.9% (560 samples)
+    High-conf (≥90%): 100.0% (142/560 = 25.4%)
+
+  TEST_WS3_pure_contact:
+    Overall: 99.1% (852 samples)
+    High-conf (≥90%): 100.0% (657/852 = 77.1%)
+
+  TEST_WS3_pure_no_contact:
+    Overall: 99.8% (825 samples)
+    High-conf (≥90%): 100.0% (660/825 = 80.0%)
+
+
+📊 VALIDATION DATASETS (WS1):
+
+  VAL_WS1_squares_cutout:
+    Overall: 60.7% (850 samples)
+    High-conf (≥90%): 73.1% (119/850 = 14.0%)
+
+  VAL_WS1_pure_contact:
+    Overall: 70.8% (575 samples)
+    High-conf (≥90%): 56.4% (101/575 = 17.6%)
+
+  VAL_WS1_pure_no_contact:
+    Overall: 65.0% (1585 samples)
+    High-conf (≥90%): 80.7% (347/1585 = 21.9%)
+
+================================================================================
+📋 PATTERN A SUMMARY (CONSISTENT WITH TRAINING)
+================================================================================
+
+TEST (WS2+WS3):
+  Overall accuracy (all samples):  96.0%
+  High-conf accuracy (≥90% conf):  100.0%
+  High-conf coverage:              67.1%
+
+VALIDATION (WS1):
+  Overall accuracy (all samples):  65.5%
+  High-conf accuracy (≥90% conf):  70.1%
+  High-conf coverage:              17.8%
+
+GENERALIZATION GAP (using high-conf accuracy for consistency):
+  TEST high-conf:       100.0%
+  VALIDATION high-conf: 70.1%
+  Gap:                  29.9%
+
+✅ Output saved to: pattern_a_consistent_reconstruction/

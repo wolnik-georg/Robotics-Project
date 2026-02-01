@@ -226,6 +226,72 @@ def balance_data_undersample(sweep_df):
     return balanced_df
 
 
+def balance_data_oversample(sweep_df):
+    """
+    Balance data by oversampling to the majority class.
+
+    This preserves ALL original samples and duplicates minority class samples
+    to match the majority class count. Good for reconstruction because we keep
+    all position data.
+
+    Args:
+        sweep_df: DataFrame with sweep data including labels
+
+    Returns:
+        DataFrame with balanced samples (oversampled)
+    """
+    # Get label column
+    label_col = (
+        "relabeled_label" if "relabeled_label" in sweep_df.columns else "original_label"
+    )
+
+    # Get class counts
+    class_counts = sweep_df[label_col].value_counts()
+    print(f"\nClass distribution before balancing:")
+    for cls, count in class_counts.items():
+        print(f"  {cls}: {count}")
+
+    # Find maximum count
+    max_count = class_counts.max()
+    print(f"\nOversampling to {max_count} samples per class.")
+
+    # Sample each class
+    random.seed(RANDOM_SEED)
+    balanced_dfs = []
+
+    for cls in class_counts.index:
+        class_df = sweep_df[sweep_df[label_col] == cls]
+        current_count = len(class_df)
+
+        if current_count < max_count:
+            # Need to oversample - duplicate samples
+            n_to_add = max_count - current_count
+            # Sample with replacement to get extra samples
+            extra_samples = class_df.sample(
+                n=n_to_add, replace=True, random_state=RANDOM_SEED
+            )
+            sampled_df = pd.concat([class_df, extra_samples], ignore_index=True)
+            print(f"  {cls}: {current_count} → {max_count} (+{n_to_add} duplicates)")
+        else:
+            sampled_df = class_df
+            print(f"  {cls}: {current_count} (no change)")
+
+        balanced_dfs.append(sampled_df)
+
+    balanced_df = pd.concat(balanced_dfs, ignore_index=True)
+
+    # Shuffle
+    balanced_df = balanced_df.sample(frac=1, random_state=RANDOM_SEED).reset_index(
+        drop=True
+    )
+
+    print(f"\nClass distribution after balancing:")
+    for cls, count in balanced_df[label_col].value_counts().items():
+        print(f"  {cls}: {count}")
+
+    return balanced_df
+
+
 def save_balanced_data_with_sweep(balanced_df, data_dir, output_dir):
     """
     Save balanced WAV files and a new sweep.csv to output folder.
@@ -287,7 +353,7 @@ def save_balanced_data_with_sweep(balanced_df, data_dir, output_dir):
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Balance collected dataset by undersampling with position preservation"
+        description="Balance collected dataset by undersampling or oversampling with position preservation"
     )
     parser.add_argument(
         "--input",
@@ -302,6 +368,14 @@ def main():
         type=str,
         default=None,
         help="Output folder for balanced dataset (default: balanced_<input_name>)",
+    )
+    parser.add_argument(
+        "--method",
+        "-m",
+        type=str,
+        choices=["undersample", "oversample"],
+        default="undersample",
+        help="Balancing method: undersample (reduce to min class) or oversample (expand to max class)",
     )
     parser.add_argument(
         "--exclude-edge",
@@ -320,15 +394,15 @@ def main():
     if args.output:
         output_dir = args.output
     else:
-        # Auto-generate output name
+        # Auto-generate output name with method suffix
         input_name = os.path.basename(data_dir.rstrip("/"))
-        output_dir = f"balanced_{input_name}"
+        output_dir = f"balanced_{input_name}_{args.method}"
 
     # Update random seed
     random.seed(args.seed)
 
     print("=" * 60)
-    print("Balancing Collected Data (with Position Preservation)")
+    print(f"Balancing Collected Data ({args.method.upper()})")
     print("=" * 60)
 
     # Load data with positions from sweep.csv
@@ -360,9 +434,12 @@ def main():
         f"\n🏷️  Found {len(unique_classes)} unique class(es): {sorted(unique_classes)}"
     )
 
-    # Balance using undersampling
-    print("\n⚖️  Balancing dataset (undersampling)...")
-    balanced_df = balance_data_undersample(sweep_df)
+    # Balance using selected method
+    print(f"\n⚖️  Balancing dataset ({args.method})...")
+    if args.method == "oversample":
+        balanced_df = balance_data_oversample(sweep_df)
+    else:
+        balanced_df = balance_data_undersample(sweep_df)
 
     # Save balanced data with sweep.csv
     print("\n💾 Saving balanced dataset...")
