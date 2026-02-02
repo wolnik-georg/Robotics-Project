@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2026.1.30)  1 FEB 2026 21:28
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2026.1.30)  2 FEB 2026 15:22
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -801,7 +801,7 @@ Overfull \hbox (8.24168pt too wide) in paragraph at lines 50--50
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-Overfull \vbox (5.03206pt too high) detected at line 117
+Overfull \vbox (7.16122pt too high) detected at line 116
  []
 
 
@@ -815,21 +815,21 @@ Overfull \hbox (8.24168pt too wide) has occurred while \output is active
 <media//big_setup.jpeg, id=115, 1606.0pt x 1204.5pt>
 File: media//big_setup.jpeg Graphic file (type jpg)
 <use media//big_setup.jpeg>
-Package pdftex.def Info: media//big_setup.jpeg  used on input line 170.
+Package pdftex.def Info: media//big_setup.jpeg  used on input line 169.
 (pdftex.def)             Requested size: 121.376pt x 91.032pt.
 <media//mounting_setup.jpeg, id=116, 1204.5pt x 1606.0pt>
 File: media//mounting_setup.jpeg Graphic file (type jpg)
 <use media//mounting_setup.jpeg>
-Package pdftex.def Info: media//mounting_setup.jpeg  used on input line 170.
+Package pdftex.def Info: media//mounting_setup.jpeg  used on input line 169.
 (pdftex.def)             Requested size: 68.2786pt x 91.03813pt.
 <media//close_setup.jpeg, id=117, 1204.5pt x 1606.0pt>
 File: media//close_setup.jpeg Graphic file (type jpg)
 <use media//close_setup.jpeg>
-Package pdftex.def Info: media//close_setup.jpeg  used on input line 170.
+Package pdftex.def Info: media//close_setup.jpeg  used on input line 169.
 (pdftex.def)             Requested size: 68.2786pt x 91.03813pt.
-LaTeX Font Info:    Trying to load font information for U+fontawesomefree0 on input line 170.
+LaTeX Font Info:    Trying to load font information for U+fontawesomefree0 on input line 169.
  (/usr/share/texlive/texmf-dist/tex/latex/fontawesome5/ufontawesomefree0.fd)
-Overfull \vbox (0.17633pt too high) detected at line 170
+Overfull \vbox (0.17633pt too high) detected at line 169
  []
 
 
@@ -840,35 +840,36 @@ Overfull \hbox (8.24168pt too wide) has occurred while \output is active
 [3
 
  <./media//big_setup.jpeg> <./media//mounting_setup.jpeg> <./media//close_setup.jpeg>]
-<media//objects.jpeg, id=147, 1204.5pt x 1606.0pt>
-File: media//objects.jpeg Graphic file (type jpg)
-<use media//objects.jpeg>
-Package pdftex.def Info: media//objects.jpeg  used on input line 225.
-(pdftex.def)             Requested size: 1204.49707pt x 1605.99611pt.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 225.
+LaTeX Font Info:    Trying to load font information for U+fontawesomefree1 on input line 237.
+ (/usr/share/texlive/texmf-dist/tex/latex/fontawesome5/ufontawesomefree1.fd)
+LaTeX Font Info:    Trying to load font information for U+msa on input line 237.
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 225.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 237.
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Trying to load font information for OT1+mathkerncmss on input line 225.
+LaTeX Font Info:    Trying to load font information for OT1+mathkerncmss on input line 237.
  (/usr/share/texlive/texmf-dist/tex/latex/sansmathaccent/ot1mathkerncmss.fd
 File: ot1mathkerncmss.fd 2020/01/31 Fontinst v1.933 font definitions for OT1/mathkerncmss.
 )
+Overfull \vbox (0.5033pt too high) detected at line 237
+ []
+
+
 Overfull \hbox (8.24168pt too wide) has occurred while \output is active
  [][]  \OT1/cmss/m/n/6 ([])  
  []
 
 [4
 
- <./media//objects.jpeg>]
-LaTeX Font Info:    Trying to load font information for U+fontawesomefree2 on input line 285.
- (/usr/share/texlive/texmf-dist/tex/latex/fontawesome5/ufontawesomefree2.fd)
-Overfull \vbox (53.16597pt too high) detected at line 285
- []
-
+]
+<media//objects.jpeg, id=216, 1204.5pt x 1606.0pt>
+File: media//objects.jpeg Graphic file (type jpg)
+<use media//objects.jpeg>
+Package pdftex.def Info: media//objects.jpeg  used on input line 292.
+(pdftex.def)             Requested size: 1204.49707pt x 1605.99611pt.
 
 Overfull \hbox (8.24168pt too wide) has occurred while \output is active
  [][]  \OT1/cmss/m/n/6 ([])  
@@ -876,8 +877,10 @@ Overfull \hbox (8.24168pt too wide) has occurred while \output is active
 
 [5
 
-]
-Overfull \vbox (0.56767pt too high) detected at line 350
+ <./media//objects.jpeg>]
+LaTeX Font Info:    Trying to load font information for U+fontawesomefree2 on input line 340.
+ (/usr/share/texlive/texmf-dist/tex/latex/fontawesome5/ufontawesomefree2.fd)
+Overfull \vbox (61.07552pt too high) detected at line 340
  []
 
 
@@ -888,15 +891,9 @@ Overfull \hbox (8.24168pt too wide) has occurred while \output is active
 [6
 
 ]
-LaTeX Font Info:    Trying to load font information for TS1+cmss on input line 392.
- (/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmss.fd
-File: ts1cmss.fd 2019/12/16 v2.5j Standard LaTeX font definitions
-)
-<../presentation_figures/proof_of_concept//poc_main_result_train_test_only.png, id=331, 562.2606pt x 416.5161pt>
-File: ../presentation_figures/proof_of_concept//poc_main_result_train_test_only.png Graphic file (type png)
-<use ../presentation_figures/proof_of_concept//poc_main_result_train_test_only.png>
-Package pdftex.def Info: ../presentation_figures/proof_of_concept//poc_main_result_train_test_only.png  used on input line 392.
-(pdftex.def)             Requested size: 213.57545pt x 158.2142pt.
+Overfull \vbox (0.56767pt too high) detected at line 405
+ []
+
 
 Overfull \hbox (8.24168pt too wide) has occurred while \output is active
  [][]  \OT1/cmss/m/n/6 ([])  
@@ -904,12 +901,16 @@ Overfull \hbox (8.24168pt too wide) has occurred while \output is active
 
 [7
 
- <../presentation_figures/proof_of_concept//poc_main_result_train_test_only.png>]
-<media//balanced_workspace_2_squares_cutout_comparison.png, id=364, 897.1116pt x 427.3566pt>
-File: media//balanced_workspace_2_squares_cutout_comparison.png Graphic file (type png)
-<use media//balanced_workspace_2_squares_cutout_comparison.png>
-Package pdftex.def Info: media//balanced_workspace_2_squares_cutout_comparison.png  used on input line 433.
-(pdftex.def)             Requested size: 260.00513pt x 123.8585pt.
+]
+LaTeX Font Info:    Trying to load font information for TS1+cmss on input line 447.
+ (/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmss.fd
+File: ts1cmss.fd 2019/12/16 v2.5j Standard LaTeX font definitions
+)
+<../presentation_figures/proof_of_concept//poc_main_result_train_test_only.png, id=389, 562.2606pt x 416.5161pt>
+File: ../presentation_figures/proof_of_concept//poc_main_result_train_test_only.png Graphic file (type png)
+<use ../presentation_figures/proof_of_concept//poc_main_result_train_test_only.png>
+Package pdftex.def Info: ../presentation_figures/proof_of_concept//poc_main_result_train_test_only.png  used on input line 447.
+(pdftex.def)             Requested size: 213.57545pt x 158.2142pt.
 
 Overfull \hbox (8.24168pt too wide) has occurred while \output is active
  [][]  \OT1/cmss/m/n/6 ([])  
@@ -917,17 +918,35 @@ Overfull \hbox (8.24168pt too wide) has occurred while \output is active
 
 [8
 
- <./media//balanced_workspace_2_squares_cutout_comparison.png>]
+ <../presentation_figures/proof_of_concept//poc_main_result_train_test_only.png>]
+<media//image1.jpeg, id=421, 1606.0pt x 1524.69624pt>
+File: media//image1.jpeg Graphic file (type jpg)
+<use media//image1.jpeg>
+Package pdftex.def Info: media//image1.jpeg  used on input line 475.
+(pdftex.def)             Requested size: 151.66487pt x 143.98685pt.
+<media//balanced_workspace_2_squares_cutout_comparison.png, id=422, 897.1116pt x 427.3566pt>
+File: media//balanced_workspace_2_squares_cutout_comparison.png Graphic file (type png)
+<use media//balanced_workspace_2_squares_cutout_comparison.png>
+Package pdftex.def Info: media//balanced_workspace_2_squares_cutout_comparison.png  used on input line 475.
+(pdftex.def)             Requested size: 273.00948pt x 130.05338pt.
+
 Overfull \hbox (8.24168pt too wide) has occurred while \output is active
  [][]  \OT1/cmss/m/n/6 ([])  
  []
 
 [9
 
-]
-Overfull \vbox (1.18121pt too high) detected at line 546
- []
-
+ <./media//image1.jpeg> <./media//balanced_workspace_2_squares_cutout_comparison.png>]
+<media//image2.jpeg, id=452, 1606.0pt x 1606.0pt>
+File: media//image2.jpeg Graphic file (type jpg)
+<use media//image2.jpeg>
+Package pdftex.def Info: media//image2.jpeg  used on input line 501.
+(pdftex.def)             Requested size: 151.66487pt x 151.66487pt.
+<media//balanced_workspace_2_pure_contact_comparison.png, id=453, 897.1116pt x 427.3566pt>
+File: media//balanced_workspace_2_pure_contact_comparison.png Graphic file (type png)
+<use media//balanced_workspace_2_pure_contact_comparison.png>
+Package pdftex.def Info: media//balanced_workspace_2_pure_contact_comparison.png  used on input line 501.
+(pdftex.def)             Requested size: 273.00948pt x 130.05338pt.
 
 Overfull \hbox (8.24168pt too wide) has occurred while \output is active
  [][]  \OT1/cmss/m/n/6 ([])  
@@ -935,32 +954,28 @@ Overfull \hbox (8.24168pt too wide) has occurred while \output is active
 
 [10
 
-]
+ <./media//image2.jpeg> <./media//balanced_workspace_2_pure_contact_comparison.png>]
+<media//balanced_workspace_2_pure_no_contact_comparison.png, id=482, 897.1116pt x 427.3566pt>
+File: media//balanced_workspace_2_pure_no_contact_comparison.png Graphic file (type png)
+<use media//balanced_workspace_2_pure_no_contact_comparison.png>
+Package pdftex.def Info: media//balanced_workspace_2_pure_no_contact_comparison.png  used on input line 518.
+(pdftex.def)             Requested size: 332.13142pt x 158.21727pt.
+
 Overfull \hbox (8.24168pt too wide) has occurred while \output is active
  [][]  \OT1/cmss/m/n/6 ([])  
  []
 
 [11
 
-]
-<../ml_analysis_figures//figure7_entanglement_concept.png, id=582, 798.5835pt x 570.933pt>
-File: ../ml_analysis_figures//figure7_entanglement_concept.png Graphic file (type png)
-<use ../ml_analysis_figures//figure7_entanglement_concept.png>
-Package pdftex.def Info: ../ml_analysis_figures//figure7_entanglement_concept.png  used on input line 665.
-(pdftex.def)             Requested size: 238.33398pt x 170.39262pt.
-
-Overfull \vbox (80.77763pt too high) detected at line 665
- []
-
-
+ <./media//balanced_workspace_2_pure_no_contact_comparison.png>]
 Overfull \hbox (8.24168pt too wide) has occurred while \output is active
  [][]  \OT1/cmss/m/n/6 ([])  
  []
 
 [12
 
- <../ml_analysis_figures//figure7_entanglement_concept.png>]
-Overfull \vbox (9.11673pt too high) detected at line 721
+]
+Overfull \vbox (1.18121pt too high) detected at line 631
  []
 
 
@@ -978,11 +993,20 @@ Overfull \hbox (8.24168pt too wide) has occurred while \output is active
 [14
 
 ]
-<../results_v11/discriminationanalysis/validation_results/classifier_performance.png, id=752, 1149.093pt x 569.7285pt>
-File: ../results_v11/discriminationanalysis/validation_results/classifier_performance.png Graphic file (type png)
-<use ../results_v11/discriminationanalysis/validation_results/classifier_performance.png>
-Package pdftex.def Info: ../results_v11/discriminationanalysis/validation_results/classifier_performance.png  used on input line 778.
-(pdftex.def)             Requested size: 238.33592pt x 118.16864pt.
+<media//image3.jpeg, id=675, 1606.0pt x 1601.985pt>
+File: media//image3.jpeg Graphic file (type jpg)
+<use media//image3.jpeg>
+Package pdftex.def Info: media//image3.jpeg  used on input line 740.
+(pdftex.def)             Requested size: 134.19241pt x 133.85693pt.
+<media//balanced_holdout_oversample_comparison.png, id=676, 897.1116pt x 427.3566pt>
+File: media//balanced_holdout_oversample_comparison.png Graphic file (type png)
+<use media//balanced_holdout_oversample_comparison.png>
+Package pdftex.def Info: media//balanced_holdout_oversample_comparison.png  used on input line 740.
+(pdftex.def)             Requested size: 273.00948pt x 130.05338pt.
+
+Overfull \vbox (33.17603pt too high) detected at line 740
+ []
+
 
 Overfull \hbox (8.24168pt too wide) has occurred while \output is active
  [][]  \OT1/cmss/m/n/6 ([])  
@@ -990,8 +1014,14 @@ Overfull \hbox (8.24168pt too wide) has occurred while \output is active
 
 [15
 
- <../results_v11/discriminationanalysis/validation_results/classifier_performance.png>]
-Overfull \vbox (49.03882pt too high) detected at line 843
+ <./media//image3.jpeg> <./media//balanced_holdout_oversample_comparison.png>]
+<../ml_analysis_figures//figure7_entanglement_concept.png, id=706, 798.5835pt x 570.933pt>
+File: ../ml_analysis_figures//figure7_entanglement_concept.png Graphic file (type png)
+<use ../ml_analysis_figures//figure7_entanglement_concept.png>
+Package pdftex.def Info: ../ml_analysis_figures//figure7_entanglement_concept.png  used on input line 792.
+(pdftex.def)             Requested size: 238.33398pt x 170.39262pt.
+
+Overfull \vbox (80.77763pt too high) detected at line 792
  []
 
 
@@ -1001,7 +1031,11 @@ Overfull \hbox (8.24168pt too wide) has occurred while \output is active
 
 [16
 
-]
+ <../ml_analysis_figures//figure7_entanglement_concept.png>]
+Overfull \vbox (9.11673pt too high) detected at line 848
+ []
+
+
 Overfull \hbox (8.24168pt too wide) has occurred while \output is active
  [][]  \OT1/cmss/m/n/6 ([])  
  []
@@ -1009,15 +1043,6 @@ Overfull \hbox (8.24168pt too wide) has occurred while \output is active
 [17
 
 ]
-File: ../ml_analysis_figures//figure7_entanglement_concept.png Graphic file (type png)
-<use ../ml_analysis_figures//figure7_entanglement_concept.png>
-Package pdftex.def Info: ../ml_analysis_figures//figure7_entanglement_concept.png  used on input line 948.
-(pdftex.def)             Requested size: 204.27583pt x 146.04335pt.
-
-Overfull \vbox (46.89584pt too high) detected at line 948
- []
-
-
 Overfull \hbox (8.24168pt too wide) has occurred while \output is active
  [][]  \OT1/cmss/m/n/6 ([])  
  []
@@ -1025,13 +1050,20 @@ Overfull \hbox (8.24168pt too wide) has occurred while \output is active
 [18
 
 ]
-<../ml_analysis_figures//handcrafted_vs_spectrogram_comparison.png, id=1028, 952.2777pt x 739.8039pt>
-File: ../ml_analysis_figures//handcrafted_vs_spectrogram_comparison.png Graphic file (type png)
-<use ../ml_analysis_figures//handcrafted_vs_spectrogram_comparison.png>
-Package pdftex.def Info: ../ml_analysis_figures//handcrafted_vs_spectrogram_comparison.png  used on input line 996.
-(pdftex.def)             Requested size: 238.34053pt x 185.1537pt.
+<../results_v11/discriminationanalysis/validation_results/classifier_performance.png, id=875, 1149.093pt x 569.7285pt>
+File: ../results_v11/discriminationanalysis/validation_results/classifier_performance.png Graphic file (type png)
+<use ../results_v11/discriminationanalysis/validation_results/classifier_performance.png>
+Package pdftex.def Info: ../results_v11/discriminationanalysis/validation_results/classifier_performance.png  used on input line 905.
+(pdftex.def)             Requested size: 238.33592pt x 118.16864pt.
 
-Overfull \vbox (74.16196pt too high) detected at line 996
+Overfull \hbox (8.24168pt too wide) has occurred while \output is active
+ [][]  \OT1/cmss/m/n/6 ([])  
+ []
+
+[19
+
+ <../results_v11/discriminationanalysis/validation_results/classifier_performance.png>]
+Overfull \vbox (49.03882pt too high) detected at line 970
  []
 
 
@@ -1039,7 +1071,47 @@ Overfull \hbox (8.24168pt too wide) has occurred while \output is active
  [][]  \OT1/cmss/m/n/6 ([])  
  []
 
-[19
+[20
+
+]
+Overfull \hbox (8.24168pt too wide) has occurred while \output is active
+ [][]  \OT1/cmss/m/n/6 ([])  
+ []
+
+[21
+
+]
+File: ../ml_analysis_figures//figure7_entanglement_concept.png Graphic file (type png)
+<use ../ml_analysis_figures//figure7_entanglement_concept.png>
+Package pdftex.def Info: ../ml_analysis_figures//figure7_entanglement_concept.png  used on input line 1075.
+(pdftex.def)             Requested size: 204.27583pt x 146.04335pt.
+
+Overfull \vbox (46.89584pt too high) detected at line 1075
+ []
+
+
+Overfull \hbox (8.24168pt too wide) has occurred while \output is active
+ [][]  \OT1/cmss/m/n/6 ([])  
+ []
+
+[22
+
+]
+<../ml_analysis_figures//handcrafted_vs_spectrogram_comparison.png, id=1152, 952.2777pt x 739.8039pt>
+File: ../ml_analysis_figures//handcrafted_vs_spectrogram_comparison.png Graphic file (type png)
+<use ../ml_analysis_figures//handcrafted_vs_spectrogram_comparison.png>
+Package pdftex.def Info: ../ml_analysis_figures//handcrafted_vs_spectrogram_comparison.png  used on input line 1123.
+(pdftex.def)             Requested size: 238.34053pt x 185.1537pt.
+
+Overfull \vbox (74.16196pt too high) detected at line 1123
+ []
+
+
+Overfull \hbox (8.24168pt too wide) has occurred while \output is active
+ [][]  \OT1/cmss/m/n/6 ([])  
+ []
+
+[23
 
  <../ml_analysis_figures//handcrafted_vs_spectrogram_comparison.png>]
 \tf@nav=\write6
@@ -1056,18 +1128,18 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 29811 strings out of 480247
- 619815 string characters out of 5896151
- 846543 words of memory out of 5000000
- 47125 multiletter control sequences out of 15000+600000
- 491291 words of font info for 105 fonts, out of 8000000 for 9000
+ 29885 strings out of 480247
+ 622328 string characters out of 5896151
+ 845543 words of memory out of 5000000
+ 47181 multiletter control sequences out of 15000+600000
+ 488605 words of font info for 95 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  128i,15n,122p,463b,1286s stack positions out of 5000i,500n,10000p,200000b,80000s
- </home/georg/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/tcsx0900.600pk> </home/georg/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/tcsx1000.600pk> </home/georg/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/tcss0900.600pk> </home/georg/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/tcsx0800.600pk>{/usr/share/texlive/texmf-dist/fonts/enc/dvips/fontawesome5/fa5free2.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/fontawesome5/fa5free0.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/fontawesome5/FontAwesome5Free-Solid.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb>
-Output written on main.pdf (19 pages, 2786054 bytes).
+ </home/georg/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/tcsx0900.600pk> </home/georg/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/tcsx1000.600pk> </home/georg/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/tcss0900.600pk> </home/georg/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/tcsx0800.600pk>{/usr/share/texlive/texmf-dist/fonts/enc/dvips/fontawesome5/fa5free2.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/fontawesome5/fa5free1.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/fontawesome5/fa5free0.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/fontawesome5/FontAwesome5Free-Solid.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb>
+Output written on main.pdf (23 pages, 3678382 bytes).
 PDF statistics:
- 1174 PDF objects out of 1200 (max. 8388607)
- 831 compressed objects within 9 object streams
- 39 named destinations out of 1000 (max. 500000)
- 1678 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1305 PDF objects out of 1440 (max. 8388607)
+ 944 compressed objects within 10 object streams
+ 47 named destinations out of 1000 (max. 500000)
+ 1714 words of extra memory for PDF output out of 10000 (max. 10000000)
 

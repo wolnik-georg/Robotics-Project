@@ -79,33 +79,32 @@
 % SLIDE 2: MOTIVATION (Problem-Solution-Goal)
 \begin{frame}{Motivation}
     \begin{columns}[T]
-        % Left column: The Problem
+        % Left column: The Problem + Why It Matters
         \begin{column}{0.48\textwidth}
-            \begin{block}{\color{highlightblue}The Problem}
+            \begin{block}{The Problem}
                 \textbf{Vision isn't always available}
                 \begin{itemize}\setlength{\itemsep}{0pt}
                     \item Robot arm/gripper occludes camera view
-                    \item Low-light, dusty, or underwater environments
+                    \item Low-light, dusty, or special use cases
                     \item Need for contact-based perception
                 \end{itemize}
             \end{block}
             
-            \begin{block}{\color{highlightblue}Why Acoustic Sensing?}
+            \begin{block}{Why Does This Matter?}
                 \begin{itemize}\setlength{\itemsep}{0pt}
-                    \item \textbf{Cheap:} Simple contact microphone
-                    \item \textbf{Non-invasive:} No complex sensor arrays
-                    \item \textbf{Complementary:} Works with vision \& tactile
+                    \item \textbf{Unexplored modality:} Acoustic sensing is underutilized in robotics
+                    \item \textbf{Cheap \& simple:} Just a contact microphone
+                    \item \textbf{Rich information:} Sound encodes material, geometry, contact dynamics
                 \end{itemize}
             \end{block}
         \end{column}
         
         % Right column: Project Goal
         \begin{column}{0.48\textwidth}
-            \begin{block}{\color{highlightblue}Project Goal}
+            \begin{block}{Project Goal}
                 \begin{center}
                     \textit{Can we reconstruct surface geometry from acoustic signals?}
                 \end{center}
-                \vspace{-0.2cm}
                 \begin{itemize}\setlength{\itemsep}{0pt}
                     \item Detect contact events during robot motion
                     \item Classify surface shapes acoustically
@@ -159,13 +158,81 @@
                 \footnotesize\textbf{\color{highlightblue}Why Robot-Mounted Data Collection?}
                 \begin{itemize}\setlength{\itemsep}{1pt}\setlength{\parskip}{0pt}
                     \item[\faCheck] \textbf{Controlled variables:} Consistent angle, pressure, and sweep velocity
-                    \item[\faCheck] \textbf{Repeatability:} Systematic sweeps for reliable ground truth labels
-                    \item[\faCheck] \textbf{Scalability:} Automated collection of large datasets
+                    \item[\faCheck] \textbf{Repeatability:} Systematic and reliable sweeps
+                    \item[\faCheck] \textbf{Scalability:} Automated collection of datasets
                     \item[\faCheck] \textbf{Real-world relevance:} Directly applicable to robotic manipulation tasks
                 \end{itemize}
             };
         \end{tikzpicture}
     \end{center}
+    
+\end{frame}
+
+% SLIDE 3b: THE HIDDEN CHALLENGE - Robot Arm Affects Signal
+\begin{frame}{The Hidden Challenge: Robot Arm Affects the Signal}
+    
+    \begin{columns}[T]
+        \begin{column}{0.58\textwidth}
+            \begin{alertblock}{\centering \faExclamationTriangle{} The Problem}
+                \centering
+                \large
+                \textbf{The robot arm is part of the acoustic system}
+                
+                \footnotesize
+                Sound waves travel through:\\
+                Surface $\rightarrow$ Probe $\rightarrow$ \textbf{Robot Arm} $\rightarrow$ Microphone
+            \end{alertblock}
+ 
+            
+            \begin{block}{What This Means}
+                \footnotesize
+                \begin{itemize}\setlength{\itemsep}{0pt}
+                    \item \textbf{Different arm positions} = Different acoustic responses
+                    \item Joint angles change wave propagation paths
+                    \item Same contact event sounds \textbf{different} at different positions
+                \end{itemize}
+            \end{block}
+        
+            
+            \begin{block}{The Key Insight}
+                \centering
+                \footnotesize
+                \textbf{Signal = Contact Information $\otimes$ Arm Configuration}\\[0.0cm]
+                The signal contains \textbf{both} --- they are entangled!\\[0.1cm]
+                {\scriptsize (Also observed in VibeCheck [Zoller et al., 2024])}
+            \end{block}
+        \end{column}
+        
+        \begin{column}{0.42\textwidth}
+            \begin{center}
+                \textbf{\color{highlightblue}Why Multiple Workspaces?}
+                
+                
+                \begin{tikzpicture}[scale=0.8, transform shape]
+                    % Workspace 1
+                    \node[fill=highlightblue!20, rounded corners, minimum width=4cm, minimum height=0.8cm] at (0,3) {\textbf{WS1: Position A}};
+                    \node[font=\scriptsize, text=gray] at (0,2.4) {Arm config $\theta_1$};
+                    
+                    % Workspace 2
+                    \node[fill=highlightblue!20, rounded corners, minimum width=4cm, minimum height=0.8cm] at (0,1.5) {\textbf{WS2: Position B}};
+                    \node[font=\scriptsize, text=gray] at (0,0.9) {Arm config $\theta_2$};
+                    
+                    % Workspace 3
+                    \node[fill=highlightblue!20, rounded corners, minimum width=4cm, minimum height=0.8cm] at (0,0) {\textbf{WS3: Position C}};
+                    \node[font=\scriptsize, text=gray] at (0,-0.6) {Arm config $\theta_3$};
+                \end{tikzpicture}
+
+                
+                \begin{tikzpicture}
+                    \node[fill=orange!15, rounded corners, inner sep=8pt, text width=4.5cm, align=center] {
+                        \footnotesize
+                        \textbf{Question:}\\
+                        Will a classifier trained at one position work at another?
+                    };
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+    \end{columns}
     
 \end{frame}
 
@@ -241,32 +308,20 @@
     \end{center}
     
     \begin{columns}[T]
-        \begin{column}{0.32\textwidth}
+        \begin{column}{0.4\textwidth}
             \begin{block}{\centering Task}
                 \centering
-                \vspace{0.2cm}
                 Binary classification\\[0.2cm]
                 \textbf{Contact vs.\ No-Contact}
                 \vspace{0.2cm}
             \end{block}
         \end{column}
         
-        \begin{column}{0.32\textwidth}
-            \begin{block}{\centering Approach}
-                \centering
-                \vspace{0.2cm}
-                Hand-crafted features\\[0.2cm]
-                \textbf{80-dim acoustic features}
-                \vspace{0.2cm}
-            \end{block}
-        \end{column}
-        
-        \begin{column}{0.32\textwidth}
+        \begin{column}{0.4\textwidth}
             \begin{block}{\centering Target}
                 \centering
-                \vspace{0.2cm}
                 Geometric reconstruction\\[0.2cm]
-                \textbf{on known data}
+                \textbf{on data from the same distribution}
                 \vspace{0.2cm}
             \end{block}
         \end{column}
@@ -339,7 +394,7 @@
             \begin{alertblock}{Why Hand-Crafted?}
                 \small
                 \begin{itemize}\setlength{\itemsep}{0pt}
-                    \item Hand-crafted: \textcolor{successgreen}{\textbf{73\%}}
+                    \item Hand-crafted: \textcolor{successgreen}{\textbf{70\%}}
                     \item Spectrograms: \textcolor{failurered}{\textbf{59\%}}
                     \item 80 vs 10,240 dims
                 \end{itemize}
@@ -350,7 +405,7 @@
 \end{frame}
 
 % SLIDE 7: MAIN RESULT - Classification Accuracy on Known Data
-\begin{frame}{Result: \textcolor{successgreen}{Excellent Classification on Known Data}}
+\begin{frame}{Result: \textcolor{successgreen}{Excellent Classification on data from same distribution}}
     
     \begin{columns}[T]
         \begin{column}{0.30\textwidth}
@@ -396,37 +451,67 @@
 \begin{frame}{Reconstruction: Excellent Performance on Test Data}
     
     \begin{columns}[T]
-        \begin{column}{0.60\textwidth}
-            \begin{figure}
-                \centering
-                \includegraphics[width=\textwidth, height=0.8\textheight, keepaspectratio]{balanced_workspace_2_squares_cutout_comparison.png}
-            \end{figure}
-        \end{column}
-        
-        \begin{column}{0.38\textwidth}
-            \begin{block}{What You See}
-                \footnotesize
-                \begin{itemize}\setlength{\itemsep}{2pt}
-                    \item \textbf{Left:} Ground truth surface
-                    \item \textbf{Right:} Model reconstruction
-                    \item \textcolor{successgreen}{Green} = Contact detected
-                    \item \textcolor{failurered}{Red} = No contact
-                \end{itemize}
-            \end{block}
-            
-            \vspace{0.3cm}
-            
-            \begin{alertblock}{TEST Accuracy}
-                \centering
-                \Large
-                \textbf{$\sim$99\%}
+        \begin{column}{0.35\textwidth}
+            \begin{center}
+                \textbf{\color{highlightblue}Object View}
                 
                 \vspace{0.2cm}
                 
-                \footnotesize
-                Model performs excellently on known surfaces\\
-                (same distribution as training)
-            \end{alertblock}
+                \includegraphics[width=\textwidth, height=0.70\textheight, keepaspectratio]{image1.jpeg}
+            \end{center}
+        \end{column}
+        
+        \begin{column}{0.63\textwidth}
+            \begin{center}
+                \textbf{\color{highlightblue}Ground Truth vs Prediction}
+                
+                \vspace{0.2cm}
+                
+                \includegraphics[width=\textwidth, height=0.70\textheight, keepaspectratio]{balanced_workspace_2_squares_cutout_comparison.png}
+            \end{center}
+        \end{column}
+    \end{columns}
+    
+\end{frame}
+
+% SLIDE 8b: RECONSTRUCTION EXAMPLE - Full Contact
+\begin{frame}{Reconstruction: Full Contact Surface}
+    \begin{columns}[T]
+                \begin{column}{0.35\textwidth}
+            \begin{center}
+                \textbf{\color{highlightblue}Object View}
+                
+                \vspace{0.2cm}
+                
+                \includegraphics[width=\textwidth, height=0.65\textheight, keepaspectratio]{image2.jpeg}
+            \end{center}
+        \end{column}
+        
+        \begin{column}{0.63\textwidth}
+            \begin{center}
+                \textbf{\color{highlightblue}Ground Truth vs Prediction}
+                
+                \vspace{0.2cm}
+                
+                \includegraphics[width=\textwidth, height=0.65\textheight, keepaspectratio]{balanced_workspace_2_pure_contact_comparison.png}
+            \end{center}
+        \end{column}
+    \end{columns}
+    
+\end{frame}
+
+% SLIDE 8c: RECONSTRUCTION EXAMPLE - No Contact
+\begin{frame}{Reconstruction: No-Contact Surface}
+    
+    \begin{columns}[T]
+        \begin{column}{0.9\textwidth}
+            \begin{center}
+                \textbf{\color{highlightblue}Ground Truth vs Prediction}
+                
+                \vspace{0.2cm}
+                
+                \includegraphics[width=\textwidth, height=0.65\textheight, keepaspectratio]{balanced_workspace_2_pure_no_contact_comparison.png}
+            \end{center}
         \end{column}
     \end{columns}
     
@@ -442,7 +527,7 @@
     \begin{block}{\centering \textcolor{successgreen}{\faCheckCircle} Proof of Concept Achieved!}
         \centering
         \large
-        \textbf{Acoustic contact classification works on known data}\\[0.2cm]
+        \textbf{Acoustic contact classification works on data from the same distribution}\\[0.2cm]
         \footnotesize
         $\sim$100\% test accuracy with excellent reconstruction
     \end{block}
@@ -524,7 +609,7 @@
                     Training (WS1+WS3) & \textcolor{successgreen}{\textbf{100\%}} \\
                     Test (WS1+WS3, 20\%) & \textcolor{successgreen}{\textbf{$\sim$100\%}} \\
                     \midrule
-                    \textbf{Validation (WS2)} & \textcolor{orange}{\textbf{65-75\%}} \\
+                    \textbf{Validation (WS2)} & \textcolor{orange}{\textbf{65-70\%}} \\
                 \end{tabular}
             \end{block}
             
@@ -532,7 +617,7 @@
             
             \begin{alertblock}{\centering Configuration Entanglement}
                 \centering
-                {\Large \textcolor{orange}{\textbf{65-75\%}}}\\[0.1cm]
+                {\Large \textcolor{orange}{\textbf{65-70\%}}}\\[0.1cm]
                 \footnotesize
                 Better than random (50\%), but significant drop\\[0.2cm]
                 \textbf{Signal = Contact $\otimes$ Configuration}
@@ -612,6 +697,48 @@
     
 \end{frame}
 
+% SLIDE 12b: VISUAL SUMMARY - Reconstruction Comparison
+\begin{frame}{Reconstruction on new object + workspace fails}
+    
+    \begin{columns}[T]
+        \begin{column}{0.35\textwidth}
+            \vspace{0.9cm}
+            \begin{center}
+                \includegraphics[width=\textwidth, height=0.55\textheight, keepaspectratio]{image3.jpeg}
+            \end{center}
+        \end{column}
+        
+        \begin{column}{0.63\textwidth}
+            \begin{center}
+                \textbf{\color{failurered}New Object + WS}
+                
+                \vspace{0.1cm}
+                
+                {\scriptsize Train: A-C $\rightarrow$ Test: D on WS4}
+                
+                \vspace{0.2cm}
+                
+                \includegraphics[width=\textwidth, height=0.55\textheight, keepaspectratio]{balanced_holdout_oversample_comparison.png}
+                
+                \vspace{0.1cm}
+                
+                {\Large \textcolor{failurered}{\textbf{50\%}}}
+            \end{center}
+        \end{column}
+    \end{columns}
+    
+    \vspace{0.3cm}
+    
+    \begin{center}
+        \begin{tikzpicture}
+            \node[fill=highlightblue!10, rounded corners, inner sep=10pt] {
+                \footnotesize \textbf{Key Insight:} Performance degrades as we move away from training distribution
+            };
+        \end{tikzpicture}
+    \end{center}
+    
+\end{frame}
+
 
 % SLIDE 12: ENTANGLEMENT PROBLEM EXPLANATION
 \begin{frame}{Understanding the Failure: The Entanglement Problem}
@@ -677,7 +804,7 @@
         \large
         \textbf{``Acoustic-based geometric reconstruction IS POSSIBLE''}\\
         \footnotesize
-        (on known data: $\sim$100\% test accuracy, excellent reconstruction)
+        (on data from the same distribution: $\sim$100\% test accuracy, excellent reconstruction)
     \end{block}
     
     \begin{columns}[T]
@@ -688,7 +815,7 @@
                     \item \textbf{$\sim$99\%} test accuracy\\
                     {\scriptsize (known surfaces \& configurations)}
                     \item Excellent surface reconstruction
-                    \item Hand-crafted features outperform\\spectrograms (73\% vs 59\%)
+                    \item Hand-crafted features outperform\\spectrograms (70\% vs 59\%)
                     \item 128× fewer features, better results
                 \end{itemize}
             \end{block}
@@ -699,7 +826,7 @@
                 \footnotesize
                 \begin{itemize}\setlength{\itemsep}{0pt}
                     \item \textbf{Configuration entanglement:}\\
-                    65-75\% on unseen workspace\\
+                    65-70\% on unseen workspace\\
                     {\scriptsize Signal = Contact $\otimes$ Configuration}
                     \item \textbf{Object entanglement:}\\
                     50\% on unseen object (random)\\
