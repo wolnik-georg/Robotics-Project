@@ -79,37 +79,44 @@
 % SLIDE 2: MOTIVATION (Problem-Solution-Goal)
 \begin{frame}{Motivation}
     \begin{columns}[T]
-        % Left column: The Problem + Why It Matters
+        % Left column: The Core Idea
         \begin{column}{0.48\textwidth}
-            \begin{block}{The Problem}
-                \textbf{Vision isn't always available}
+            \begin{block}{The Core Idea}
+                \textbf{Every sensor creates representations}
                 \begin{itemize}\setlength{\itemsep}{0pt}
-                    \item Robot arm/gripper occludes camera view
-                    \item Low-light, dusty, or special use cases
-                    \item Need for contact-based perception
+                    \item Cameras $\rightarrow$ Images of the environment
+                    \item LiDAR $\rightarrow$ 3D point clouds
+                    \item Force sensors $\rightarrow$ Contact force maps
+                \end{itemize}
+            
+                
+                \textbf{\color{highlightblue}Why not acoustic sensors?}\\[0.1cm]
+                {\small If a robot finger has a microphone, it should also create a representation of what it touches!}
+            \end{block}
+            
+            \begin{alertblock}{The Vision}
+                \centering
+                \textbf{Reconstruct what the finger touches}\\[0.1cm]
+                {\small Not replacing cameras --- but sensing what cameras \textbf{cannot} see}
+            \end{alertblock}
+        \end{column}
+        
+        % Right column: Why Geometry + Goal
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Why Start With Geometry?}
+                \begin{itemize}\setlength{\itemsep}{0pt}
+                    \item Geometric shapes are \textbf{building blocks}
+                    \item Screws, buttons, edges, holes...
+                    \item Complex objects = combinations of primitives
+                    \item \textbf{If we can reconstruct geometry,}\\we can reconstruct anything
                 \end{itemize}
             \end{block}
             
-            \begin{block}{Why Does This Matter?}
-                \begin{itemize}\setlength{\itemsep}{0pt}
-                    \item \textbf{Unexplored modality:} Acoustic sensing is underutilized in robotics
-                    \item \textbf{Cheap \& simple:} Just a contact microphone
-                    \item \textbf{Rich information:} Sound encodes material, geometry, contact dynamics
-                \end{itemize}
-            \end{block}
-        \end{column}
-        
-        % Right column: Project Goal
-        \begin{column}{0.48\textwidth}
             \begin{block}{Project Goal}
                 \begin{center}
-                    \textit{Can we reconstruct surface geometry from acoustic signals?}
+                    \textit{Can acoustic sensing create visual representations of touched surfaces?}
                 \end{center}
-                \begin{itemize}\setlength{\itemsep}{0pt}
-                    \item Detect contact events during robot motion
-                    \item Classify surface shapes acoustically
-                    \item Evaluate generalization capabilities
-                \end{itemize}
+                {\small Binary contact classification $\rightarrow$ Surface reconstruction}
             \end{block}
         \end{column}
     \end{columns}
@@ -155,12 +162,11 @@
     \begin{center}
         \begin{tikzpicture}
             \node[fill=highlightblue!10, rounded corners, inner sep=6pt, text width=0.9\textwidth] {
-                \footnotesize\textbf{\color{highlightblue}Why Robot-Mounted Data Collection?}
+                \footnotesize\textbf{\color{highlightblue}Why Use a Robot? --- It's Part of the System!}
                 \begin{itemize}\setlength{\itemsep}{1pt}\setlength{\parskip}{0pt}
-                    \item[\faCheck] \textbf{Controlled variables:} Consistent angle, pressure, and sweep velocity
-                    \item[\faCheck] \textbf{Repeatability:} Systematic and reliable sweeps
-                    \item[\faCheck] \textbf{Scalability:} Automated collection of datasets
-                    \item[\faCheck] \textbf{Real-world relevance:} Directly applicable to robotic manipulation tasks
+                    \item[\faCheck] \textbf{Mechanically coupled:} Sound travels through arm joints and links to the microphone
+                    \item[\faCheck] \textbf{Real-world relevance:} In actual deployment, the sensor \textit{will} be on a robot
+                    \item[\faCheck] \textbf{Controlled experiments:} Systematic, repeatable data collection across configurations
                 \end{itemize}
             };
         \end{tikzpicture}
@@ -405,7 +411,7 @@
 \end{frame}
 
 % SLIDE 7: MAIN RESULT - Classification Accuracy on Known Data
-\begin{frame}{Result: \textcolor{successgreen}{Excellent Classification on data from same distribution}}
+\begin{frame}{Result: \textcolor{successgreen}{Excellent Classification on Data From Same Distribution}}
     
     \begin{columns}[T]
         \begin{column}{0.30\textwidth}
@@ -698,7 +704,7 @@
 \end{frame}
 
 % SLIDE 12b: VISUAL SUMMARY - Reconstruction Comparison
-\begin{frame}{Reconstruction on new object + workspace fails}
+\begin{frame}{Reconstruction on New Object + Workspace Fails}
     
     \begin{columns}[T]
         \begin{column}{0.35\textwidth}
@@ -1006,7 +1012,7 @@
                     \item \textbf{Train:} WS1, WS3 (Objects A,B,C)
                     \item \textbf{Validate:} WS2 (Objects A,B,C)
                     \item Tests \textbf{configuration generalization}
-                    \item Result: \textcolor{orange}{\textbf{65-75\%}} (partial)
+                    \item Result: \textcolor{orange}{\textbf{65-70\%}} (partial)
                 \end{itemize}
             \end{block}
             
@@ -1064,7 +1070,7 @@
                 \footnotesize
                 \begin{itemize}\setlength{\itemsep}{1pt}
                     \item Not failures --- \textbf{discoveries}
-                    \item Configuration: 65-75\% (partial)
+                    \item Configuration: 65-70\% (partial)
                     \item Object: 50\% (random chance)
                     \item Both need more diverse training data
                 \end{itemize}
