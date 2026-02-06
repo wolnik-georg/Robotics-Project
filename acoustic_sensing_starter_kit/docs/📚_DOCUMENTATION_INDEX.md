@@ -69,6 +69,15 @@
 
 ## 🎯 START HERE
 
+### For Final Report Preparation
+👉 **[FINAL_REPORT_PREPARATION_GUIDE.md](./FINAL_REPORT_PREPARATION_GUIDE.md)** ⭐ NEW
+- Complete document inventory and status
+- Suggested report structure (no separate Related Work chapter)
+- Missing documents checklist (3 critical, 2 recommended)
+- Chapter-by-chapter content mapping
+- Estimated 60-80 pages final report (~80% ready)
+- **Use this to prepare your final project report**
+
 ### For 15-Minute Presentation
 
 **Step 1: Detailed Structure**
@@ -650,7 +659,139 @@ All documents have been:
 
 ---
 
-## 📞 Document Maintenance
+## � SUGGESTED FINAL REPORT STRUCTURE
+
+Based on your documentation, here's a suggested **project report structure** (not thesis - no separate literature review):
+
+### **Chapter 1: Introduction**
+- **1.1 Motivation** ← From presentation slides (sensors create representations)
+- **1.2 Problem Statement** ← Acoustic contact detection for geometric reconstruction
+- **1.3 Research Questions** ← Two-goal structure: (1) Proof of concept, (2) Generalization limits
+- **1.4 Project Scope & Contributions** ← What you achieved (76% accuracy, position generalization works)
+
+**Note:** Brief context-setting only. Related work (e.g., VibeCheck [Zoller et al.]) cited inline where relevant, not in separate chapter.
+
+---
+
+### **Chapter 2: Methodology**
+- **2.1 Hardware Setup & Experimental Design** ← `DATA_COLLECTION_PROTOCOL.md` + **NEW: HARDWARE_SETUP.md**
+  - Franka Panda robot, microphone, end effector
+  - Test objects (A/B/C/D) and workspaces (WS1-4)
+  - Design rationale
+  
+- **2.2 Data Collection Protocol** ← `DATA_COLLECTION_PROTOCOL.md`
+  - Raster sweep pattern (1cm spacing, 10 points/line)
+  - Recording protocol (5 recordings/position, 200ms settling)
+  - Ground truth labeling
+  
+- **2.3 Feature Engineering** ← `HANDCRAFTED_VS_SPECTROGRAM_COMPARISON.md` + related docs
+  - 80 hand-crafted acoustic features (MFCCs, spectral, temporal, impulse)
+  - Why hand-crafted (75%) beats spectrograms (51%)
+  - Normalization strategy
+  
+- **2.4 Machine Learning Pipeline** ← `PIPELINE_GUIDE.md` + Main Research Doc
+  - Random Forest classifier choice
+  - Training/validation/test split
+  - Confidence filtering implementation
+  
+- **2.5 Evaluation Strategy** ← `DATA_SPLIT_STRATEGY_ANALYSIS.md`
+  - Pattern A: Position generalization (WS1 validation)
+  - Pattern B: Object generalization (WS4 holdout)
+  - Surface type experimental design
+
+---
+
+### **Chapter 3: Results**
+- **3.1 Proof of Concept: Contact Detection** ← Main Research Doc + Figure 1
+  - **76.2% accuracy** proves acoustic geometric reconstruction works
+  - Real-time capable (<1ms inference)
+  
+- **3.2 Position Generalization (Pattern A)** ← Main Research Doc Section 3.1 + Pattern A visualizations
+  - **70.1% validation accuracy** on unseen workspace
+  - Same objects, different positions → Generalizes! ✅
+  - **Cite: VibeCheck [Zoller et al.]** - robot configuration entanglement observed
+  
+- **3.3 Object Generalization (Pattern B)** ← Main Research Doc Section 3.2 + Pattern B visualizations
+  - **50.6% holdout accuracy** on new object (random chance)
+  - Does NOT generalize across objects ❌
+  
+- **3.4 Surface Type Effects** ← `DATA_SPLIT_STRATEGY_ANALYSIS.md` + Figure 10
+  - Cutout surfaces improve position generalization by **+15.6%**
+  - No effect on object generalization
+  
+- **3.5 Model Calibration** ← `CONFIDENCE_FILTERING_ANALYSIS.md` + Figure 8
+  - Position model: Well calibrated
+  - Object model: Overconfident (safety concern)
+  
+- **3.6 Surface Reconstruction** ← `SURFACE_RECONSTRUCTION_PIPELINE.md` + visualizations
+  - 2D spatial maps of predictions
+  - Visual proof of reconstruction capability
+
+---
+
+### **Chapter 4: Physics-Based Interpretation**
+- **4.1 Why Position Generalization Works** ← `PHYSICS_FIRST_PRINCIPLES_INTERPRETATION.md`
+  - Eigenfrequency theory: f_n = (1/2π)√(k_n/m_n)
+  - Same object → same frequencies, amplitude changes preserved
+  
+- **4.2 Why Object Generalization Fails** ← `PHYSICS_FIRST_PRINCIPLES_INTERPRETATION.md`
+  - Different objects → different eigenfrequency spectra
+  - Material properties (ρ, E, G) dominate signature
+  
+- **4.3 The Entanglement Problem** ← Main Research Doc Section 9
+  - Signal = Contact ⊗ Object Properties
+  - Coupled oscillator physics
+  - **Cite: VibeCheck [Zoller et al.]** - same phenomenon in robotic systems
+
+---
+
+### **Chapter 5: Discussion**
+- **5.1 Practical Implications** ← Main Research Doc Section 4.0
+  - ✅ **Works:** Position-invariant contact detection
+  - ❌ **Doesn't work:** Object-invariant detection
+  - Use cases: Quality control, object-specific tasks
+  
+- **5.2 Limitations** ← `SCIENTIFIC_VERIFICATION_AND_DISCUSSION.md`
+  - Requires training data per object
+  - Robot configuration entanglement
+  - Confidence filtering limitations
+  
+- **5.3 Comparison to Alternatives**
+  - Acoustic vs vision vs force sensing
+  - Trade-offs and advantages
+
+---
+
+### **Chapter 6: Conclusions & Future Work**
+- **6.1 Summary**
+  - **Goal 1 ACHIEVED:** Proof of concept (76%)
+  - **Goal 2 EXPLORED:** Position ✅ (70%), Object ❌ (50%)
+  
+- **6.2 Contributions**
+  - First acoustic geometric reconstruction with robot-mounted sensors
+  - Surface type discovery (+15.6%)
+  - Physics-based entanglement theory
+  
+- **6.3 Future Directions** ← **NEW: FUTURE_WORK_ROADMAP.md** (to create)
+  - Test physics predictions
+  - Object-agnostic learning approaches
+  - Multi-modal fusion
+  - Real-world task integration
+
+---
+
+### **Appendices**
+- **Appendix A: Statistical Validation** ← Verification documents
+- **Appendix B: Implementation Details** ← Implementation summaries
+- **Appendix C: Complete Figure Reference** ← All 73+ figures
+
+### **References**
+- Zoller et al., "VibeCheck" - Robot configuration entanglement
+- Additional citations as needed
+
+---
+
+## �📞 Document Maintenance
 
 **If you need to update findings:**
 1. Update main document first: `RESEARCH_FINDINGS_ACOUSTIC_CONTACT_DETECTION.md`
@@ -666,4 +807,4 @@ All documents have been:
 
 ---
 
-**Ready to present? Start here:** 👉 [RESEARCH_FINDINGS_ACOUSTIC_CONTACT_DETECTION.md](./RESEARCH_FINDINGS_ACOUSTIC_CONTACT_DETECTION.md)
+**Ready to write the final report? Start here:** 👉 [RESEARCH_FINDINGS_ACOUSTIC_CONTACT_DETECTION.md](./RESEARCH_FINDINGS_ACOUSTIC_CONTACT_DETECTION.md)

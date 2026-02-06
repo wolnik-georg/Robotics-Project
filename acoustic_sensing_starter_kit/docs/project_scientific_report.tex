@@ -1,0 +1,108 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%2345678901234567890123456789012345678901234567890123456789012345678901234567890
+%        1         2         3         4         5         6         7         8
+
+%\documentclass[letterpaper, 10 pt, conference]{ieeeconf}  % Comment this lineout
+                                                          % if you need a4paper
+\documentclass[a4paper, 10pt, conference]{ieeeconf}      % Use this line for a4
+                                                          % paper
+
+\IEEEoverridecommandlockouts                              % This command is only
+                                                          % needed if you want to
+                                                          % use the \thanks command
+\overrideIEEEmargins
+% See the \addtolength command later in the file to balance the column lengths
+% on the last page of the document
+
+% The following packages can be found on http:\\www.ctan.org
+\usepackage{mathptmx} % assumes new font selection scheme installed
+\usepackage{times}    % assumes new font selection scheme installed
+\usepackage{amsmath}  % assumes amsmath package installed
+\usepackage{amssymb}  % assumes amsmath package installed
+\usepackage{amstext}
+\usepackage{graphicx}
+\usepackage{multicol}
+\usepackage[bookmarks=true]{hyperref}
+\usepackage[usenames]{color}
+\usepackage{xspace}
+\usepackage{balance}
+\usepackage[lofdepth,lotdepth]{subfig}
+
+\newcommand{\specialcell}[2][c]{%
+  \begin{tabular}[#1]{@{}c@{}}#2\end{tabular}}
+
+\makeatletter
+\let\NAT@parse\undefined
+\makeatother
+
+\usepackage[numbers]{natbib}
+  
+\title{\LARGE \bf
+Robotics Project: How We Grade and What You Need to Deliver
+}
+
+\author{Your Name \and Another Name}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+\pagestyle{empty}
+
+% This document should fit onto 2-3 pages.
+
+\begin{abstract} 
+This document explains the deliverables we expect from you if you take part in the Robotics Project. It also is the template for your scientific report.
+\end{abstract}
+%===============================================================================
+\section{Deliverables}
+%===============================================================================
+
+Your grade for the robotics project will be composed of four equal parts: 20\% written report, 15\% final presentation, 15\% for implementation and quality of technical documentation, 50\% overall project progress during semester.
+
+\subsection{Final Report}
+Please make sure you hand in your report on time---we do not accept late submissions! The deadline is on the ISIS course page. The report should be written like a conference paper, use this document as a template. The length should be 3-6 pages. 
+
+As a guideline your report should contain the following sections:
+\begin{itemize}\item Introduction (explain the big idea of your work - writing the 8 lines helps a lot to write this section!)
+
+\item Related Work (cite the papers that your work bases on and explain how they relate to your work)
+\item Technical section (explain your method on a high level, use diagrams, equation and pseudocode to get the general idea about your work.  Try not to get lost in implementation details.)
+\item Experimental results (describe the experiments and the major results. Focus on the experiments that best show the capabilities of our method. You probably should not include every little experiment you did throughout the project)
+\item Conclusion (wrap up the paper and repeat the main points)
+\end{itemize}
+
+ You might want to cite some papers in your report, please use bibtex~\cite{greenwade93}.
+ 
+% Here is some example code if want to include a figure
+%\begin{figure}[t]
+%  \centering
+%  \includegraphics[width=.48\textwidth]{my_figure}
+%  \caption{\small Some figure describing something.}
+%  \label{fig: figure}
+%\end{figure}
+% How to reference: Figure \ref{fig: figure} shows blabla.
+
+\subsection{Technical Documentation}
+You should properly distribute and document your work. This documentation should allow another user to run and understand your work and to replicate the results. 
+
+For code, you should upload your work to a git repository and share it with us. You can use the TUB's Gitlab service~\footnote{\url{https://git.tu-berlin.de/}} or GitHub. You need to document how to run your code (and hardware) along with the code. We prefer markdown (.md) format in your git repository, although for some projects a different format might be more suitable.
+
+For contributions other than code, e.g. hardware, you can use Gitlab's integrated wiki or other appropriate formats to document those as well.
+
+To grade your documentation, we will check if we can use your code to understand your work and to replicate your results.
+
+\subsection{Final Presentation}
+In your final presentation you should  explain in 20 minutes what your project was about and present your major results. Your target audience should be researchers not familiar with your project (and usually there will be other lab members in the audience that do not know what you did the last months), so you can repeat a lot of things you presented through the semester. In your presentation try not to just explain everything you did, but rather focus on the story as laid out by your 8 lines and show only those results that best support your story.
+
+\subsection{Overall Progress}
+In this category we grade your effort throughout the semester. For good grades in this part it is helpful to communicate efficiently with your advisor and to come up with own ideas to your topic.
+
+%===============================================================================
+\bibliographystyle{IEEEtranN}
+\footnotesize
+\bibliography{project_scientific_report}
+
+%===============================================================================
+
+\end{document}

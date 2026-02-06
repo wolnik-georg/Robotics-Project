@@ -1,0 +1,82 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyperFirstAtBeginDocument{\AtBeginDocument}
+\HyperFirstAtBeginDocument{\ifx\hyper@anchor\@undefined
+\global\let\oldcontentsline\contentsline
+\gdef\contentsline#1#2#3#4{\oldcontentsline{#1}{#2}{#3}}
+\global\let\oldnewlabel\newlabel
+\gdef\newlabel#1#2{\newlabelxx{#1}#2}
+\gdef\newlabelxx#1#2#3#4#5#6{\oldnewlabel{#1}{{#2}{#3}}}
+\AtEndDocument{\ifx\hyper@anchor\@undefined
+\let\contentsline\oldcontentsline
+\let\newlabel\oldnewlabel
+\fi}
+\fi}
+\global\let\hyper@last\relax 
+\gdef\HyperFirstAtBeginDocument#1{#1}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\citation{wall2019morphological,wall2022passive,zoeller2020active}
+\citation{zhang2025vibecheck}
+\@writefile{toc}{\contentsline {section}{\numberline {I}INTRODUCTION}{1}{section.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {I-A}Research Questions}{1}{subsection.1.1}\protected@file@percent }
+\citation{wall2019morphological}
+\citation{wall2022passive}
+\citation{zoeller2020active}
+\citation{zhang2025vibecheck}
+\citation{wall2019morphological}
+\@writefile{toc}{\contentsline {subsection}{\numberline {I-B}Contributions}{2}{subsection.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {II}RELATED WORK}{2}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {II-A}Acoustic Sensing for Soft Robotics}{2}{subsection.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {II-B}Robot Configuration Entanglement}{2}{subsection.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {II-C}Our Contribution}{2}{subsection.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {III}METHOD}{2}{section.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {III-A}Experimental Setup}{2}{subsection.3.1}\protected@file@percent }
+\citation{piczak2015environmental}
+\citation{pedregosa2011scikit}
+\citation{pedregosa2011scikit}
+\@writefile{lot}{\contentsline {table}{\numberline {I}{\ignorespaces Test Objects and Workspace Configuration\relax }}{3}{table.caption.1}\protected@file@percent }
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{tab:objects}{{I}{3}{Test Objects and Workspace Configuration\relax }{table.caption.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {III-B}Feature Engineering}{3}{subsection.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {III-C}Classification Pipeline}{3}{subsection.3.3}\protected@file@percent }
+\citation{pedregosa2011scikit}
+\citation{mcfee2015librosa}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Hand-crafted acoustic feature architecture. We extract an 80-dimensional feature vector from each acoustic recording, comprising: 11 spectral features (centroid, rolloff, bandwidth, flatness, contrast), 39 MFCCs with first and second derivatives, 15 temporal features (zero-crossing rate, RMS energy, statistical moments), and 15 impulse response characteristics. This compact representation achieves 75\% validation accuracy compared to 51\% for 10,240-dimensional mel-spectrograms.\relax }}{4}{figure.caption.2}\protected@file@percent }
+\newlabel{fig:features}{{1}{4}{Hand-crafted acoustic feature architecture. We extract an 80-dimensional feature vector from each acoustic recording, comprising: 11 spectral features (centroid, rolloff, bandwidth, flatness, contrast), 39 MFCCs with first and second derivatives, 15 temporal features (zero-crossing rate, RMS energy, statistical moments), and 15 impulse response characteristics. This compact representation achieves 75\% validation accuracy compared to 51\% for 10,240-dimensional mel-spectrograms.\relax }{figure.caption.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {III-D}Evaluation Strategy}{4}{subsection.3.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {IV}EXPERIMENTAL RESULTS}{4}{section.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {IV-A}Proof of Concept: Acoustic Geometric Reconstruction}{4}{subsection.4.1}\protected@file@percent }
+\citation{zhang2025vibecheck}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Experimental evaluation strategy. \textbf  {V4 (Position Generalization)}: Tests position-invariance by training on Workspaces 2+3 and validating on Workspace 1, using the same three objects (A,B,C) across all positions. \textbf  {V6 (Object Generalization)}: Tests object-agnostic detection by training on objects A,B,C across Workspaces 1+2+3, then validating on novel object D in Workspace 4. V4 isolates position changes; V6 compounds position and object changes to provide the strictest generalization test.\relax }}{5}{figure.caption.3}\protected@file@percent }
+\newlabel{fig:experimental_setup}{{2}{5}{Experimental evaluation strategy. \textbf {V4 (Position Generalization)}: Tests position-invariance by training on Workspaces 2+3 and validating on Workspace 1, using the same three objects (A,B,C) across all positions. \textbf {V6 (Object Generalization)}: Tests object-agnostic detection by training on objects A,B,C across Workspaces 1+2+3, then validating on novel object D in Workspace 4. V4 isolates position changes; V6 compounds position and object changes to provide the strictest generalization test.\relax }{figure.caption.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {II}{\ignorespaces Position Generalization Results (Experiment V4)\relax }}{5}{table.caption.5}\protected@file@percent }
+\newlabel{tab:v4_results}{{II}{5}{Position Generalization Results (Experiment V4)\relax }{table.caption.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {IV-B}Position Generalization: Success with Known Objects}{5}{subsection.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {IV-C}Object Generalization: Fundamental Limitations Revealed}{5}{subsection.4.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Acoustic-based geometric reconstruction (Experiment V4, Workspace 1 validation). \textbf  {Left}: Ground truth contact patterns for objects A (cutout), B (empty), and C (full contact). \textbf  {Right}: Model predictions from acoustic features alone, achieving 76.2\% accuracy. Color indicates contact state (red) vs no-contact (blue). This demonstrates that acoustic sensing enables spatial surface mapping, not just binary contact detection---the first such demonstration for rigid manipulators.\relax }}{6}{figure.caption.4}\protected@file@percent }
+\newlabel{fig:reconstruction}{{3}{6}{Acoustic-based geometric reconstruction (Experiment V4, Workspace 1 validation). \textbf {Left}: Ground truth contact patterns for objects A (cutout), B (empty), and C (full contact). \textbf {Right}: Model predictions from acoustic features alone, achieving 76.2\% accuracy. Color indicates contact state (red) vs no-contact (blue). This demonstrates that acoustic sensing enables spatial surface mapping, not just binary contact detection---the first such demonstration for rigid manipulators.\relax }{figure.caption.4}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {III}{\ignorespaces Object Generalization Results (Experiment V6)\relax }}{6}{table.caption.6}\protected@file@percent }
+\newlabel{tab:v6_results}{{III}{6}{Object Generalization Results (Experiment V6)\relax }{table.caption.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {IV-D}Surface Geometry Effects on Generalization}{6}{subsection.4.4}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Generalization performance comparison. \textbf  {V4 (Position Generalization)}: Training on WS2+3, validating on WS1 with same objects A,B,C achieves 76.2\% accuracy (SUCCESS, Z=16.28, p$<$0.001). \textbf  {V6 (Object Generalization)}: Training on WS1+2+3 with objects A,B,C, validating on WS4 with novel object D achieves 50.5\% accuracy (FAILURE, random chance). Both experiments achieve near-perfect in-distribution performance (99.9\% test), but only position generalization succeeds.\relax }}{7}{figure.caption.7}\protected@file@percent }
+\newlabel{fig:main_results}{{4}{7}{Generalization performance comparison. \textbf {V4 (Position Generalization)}: Training on WS2+3, validating on WS1 with same objects A,B,C achieves 76.2\% accuracy (SUCCESS, Z=16.28, p$<$0.001). \textbf {V6 (Object Generalization)}: Training on WS1+2+3 with objects A,B,C, validating on WS4 with novel object D achieves 50.5\% accuracy (FAILURE, random chance). Both experiments achieve near-perfect in-distribution performance (99.9\% test), but only position generalization succeeds.\relax }{figure.caption.7}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Confidence calibration analysis reveals safety-critical overconfidence. \textbf  {V4 (Position Generalization)}: Mean confidence 75.8\% is close to the 76.2\% accuracy (left). \textbf  {V6 (Object Generalization)}: Mean confidence 92.2\% dramatically exceeds 50.5\% accuracy, with 57.2\% of predictions exceeding 95\% confidence despite random-chance performance (right). This inverse relationship (higher confidence, lower accuracy) indicates the model cannot recognize novel objects as out-of-distribution, presenting deployment safety risks.\relax }}{7}{figure.caption.8}\protected@file@percent }
+\newlabel{fig:confidence}{{5}{7}{Confidence calibration analysis reveals safety-critical overconfidence. \textbf {V4 (Position Generalization)}: Mean confidence 75.8\% is close to the 76.2\% accuracy (left). \textbf {V6 (Object Generalization)}: Mean confidence 92.2\% dramatically exceeds 50.5\% accuracy, with 57.2\% of predictions exceeding 95\% confidence despite random-chance performance (right). This inverse relationship (higher confidence, lower accuracy) indicates the model cannot recognize novel objects as out-of-distribution, presenting deployment safety risks.\relax }{figure.caption.8}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Asymmetric effect of surface geometric complexity on generalization. Including cutout surfaces (Object A) in training improves \textbf  {position generalization} by +15.6 percentage points (60.6\%$\to $76.2\%, p$<$0.001, blue bars) but has \textbf  {zero effect on object generalization} (50.5\%$\to $50.3\%, p$>$0.5, red bars). This asymmetry reveals different learning mechanisms: geometric complexity forces position-invariant feature learning (beneficial for V4), but cannot overcome instance-level object memorization when training on only 2--3 objects (ineffective for V6).\relax }}{8}{figure.caption.9}\protected@file@percent }
+\newlabel{fig:surface_geometry}{{6}{8}{Asymmetric effect of surface geometric complexity on generalization. Including cutout surfaces (Object A) in training improves \textbf {position generalization} by +15.6 percentage points (60.6\%$\to $76.2\%, p$<$0.001, blue bars) but has \textbf {zero effect on object generalization} (50.5\%$\to $50.3\%, p$>$0.5, red bars). This asymmetry reveals different learning mechanisms: geometric complexity forces position-invariant feature learning (beneficial for V4), but cannot overcome instance-level object memorization when training on only 2--3 objects (ineffective for V6).\relax }{figure.caption.9}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {IV-E}Physics-Based Interpretation}{8}{subsection.4.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {V}CONCLUSION}{8}{section.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {V-A}Summary of Findings}{8}{subsection.5.1}\protected@file@percent }
+\bibstyle{IEEEtranN}
+\bibdata{project_scientific_report}
+\bibcite{wall2019morphological}{{1}{2019}{{Wall}}{{}}}
+\bibcite{wall2022passive}{{2}{2022}{{Wall et~al.}}{{Wall, Z\"{o}ller, and Brock}}}
+\bibcite{zoeller2020active}{{3}{2020}{{Z\"{o}ller et~al.}}{{Z\"{o}ller, Wall, and Brock}}}
+\bibcite{zhang2025vibecheck}{{4}{2025}{{Zhang et~al.}}{{Zhang, Kim, Tang, Liang, He, et~al.}}}
+\bibcite{piczak2015environmental}{{5}{2015}{{Piczak}}{{}}}
+\bibcite{pedregosa2011scikit}{{6}{2011}{{Pedregosa et~al.}}{{Pedregosa, Varoquaux, Gramfort, Michel, Thirion, Grisel, Blondel, Prettenhofer, Weiss, Dubourg, et~al.}}}
+\bibcite{mcfee2015librosa}{{7}{2015}{{McFee et~al.}}{{McFee, Raffel, Liang, Ellis, McVicar, Battenberg, and Nieto}}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {V-B}Contributions and Implications}{9}{subsection.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {V-C}Future Directions}{9}{subsection.5.3}\protected@file@percent }
+\gdef \@abspage@last{9}
