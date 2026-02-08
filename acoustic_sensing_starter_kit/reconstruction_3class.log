@@ -1,0 +1,184 @@
+nohup: ignoring input
+2026-02-07 22:09:08,157 - INFO - 📦 Loading trained model from: test_pipeline_3class_v1/discriminationanalysis/trained_models/model_rank1_random_forest.pkl
+2026-02-07 22:09:08,229 - INFO -   ✓ Model: Random Forest
+2026-02-07 22:09:08,229 - INFO -   ✓ Classes: [np.str_('contact'), np.str_('edge'), np.str_('no_contact')]
+2026-02-07 22:09:08,229 - INFO -   ✓ Training Val Accuracy: 84.88%
+2026-02-07 22:09:08,323 - INFO -   ✓ Feature config: workspace_invariant=True, impulse=True
+2026-02-07 22:09:08,323 - INFO - 
+📂 Processing dataset: balanced_workspace_2_3class_squares_cutout
+2026-02-07 22:09:08,325 - INFO -   ✓ Loaded 540 sweep points
+2026-02-07 22:09:08,325 - INFO -   Columns: point_index, timestamp, x_target, y_target, z_target, x, y, z, normalized_x, normalized_y, original_label, relabeled_label, acoustic_filename, filename
+2026-02-07 22:09:08,326 - INFO -   Using label column: relabeled_label
+2026-02-07 22:09:08,326 - INFO -   Class distribution: {'contact': np.int64(180), 'edge': np.int64(180), 'no_contact': np.int64(180)}
+2026-02-07 22:09:08,326 - INFO -   Original label distribution: {'contact': np.int64(180), 'edge': np.int64(180), 'no_contact': np.int64(180)}
+2026-02-07 22:09:08,327 - INFO -   🎵 Extracting features from audio files...
+2026-02-07 22:09:10,538 - INFO -     Processed 50/540 samples...
+2026-02-07 22:09:11,885 - INFO -     Processed 100/540 samples...
+2026-02-07 22:09:13,190 - INFO -     Processed 150/540 samples...
+2026-02-07 22:09:14,689 - INFO -     Processed 200/540 samples...
+2026-02-07 22:09:16,432 - INFO -     Processed 250/540 samples...
+2026-02-07 22:09:18,516 - INFO -     Processed 300/540 samples...
+2026-02-07 22:09:20,325 - INFO -     Processed 350/540 samples...
+2026-02-07 22:09:22,138 - INFO -     Processed 400/540 samples...
+2026-02-07 22:09:24,023 - INFO -     Processed 450/540 samples...
+2026-02-07 22:09:25,872 - INFO -     Processed 500/540 samples...
+2026-02-07 22:09:27,599 - INFO -   ✓ Extracted features for 540 samples
+2026-02-07 22:09:27,599 - INFO -     Feature dimension: 80
+2026-02-07 22:09:27,617 - INFO -   🎯 Raw Reconstruction Accuracy: 30.93% (on 540 samples)
+2026-02-07 22:09:27,617 - INFO -      Mean confidence: 42.70%
+2026-02-07 22:09:27,618 - INFO -      Median confidence: 40.00%
+2026-02-07 22:09:27,618 - INFO - 
+🎨 Generating surface reconstruction visualizations...
+2026-02-07 22:09:31,510 - INFO -   ✓ Saved 6 visualizations to: pattern_a_3class_reconstruction/squares_cutout/balanced_workspace_2_3class_squares_cutout
+2026-02-07 22:09:31,512 - INFO -   💾 Saved results to: pattern_a_3class_reconstruction/squares_cutout/balanced_workspace_2_3class_squares_cutout_results.json
+2026-02-07 22:09:31,512 - INFO - 
+============================================================
+2026-02-07 22:09:31,512 - INFO - ✅ Surface Reconstruction Complete!
+2026-02-07 22:09:31,512 - INFO -    Dataset: balanced_workspace_2_3class_squares_cutout
+2026-02-07 22:09:31,512 - INFO -    Samples: 540
+2026-02-07 22:09:31,512 - INFO -    Accuracy: 30.93%
+2026-02-07 22:09:31,512 - INFO - ============================================================
+GPU acceleration available: True
+2026-02-07 22:09:33,906 - INFO - 📦 Loading trained model from: test_pipeline_3class_v1/discriminationanalysis/trained_models/model_rank1_random_forest.pkl
+2026-02-07 22:09:33,978 - INFO -   ✓ Model: Random Forest
+2026-02-07 22:09:33,978 - INFO -   ✓ Classes: [np.str_('contact'), np.str_('edge'), np.str_('no_contact')]
+2026-02-07 22:09:33,978 - INFO -   ✓ Training Val Accuracy: 84.88%
+2026-02-07 22:09:34,071 - INFO -   ✓ Feature config: workspace_invariant=True, impulse=True
+2026-02-07 22:09:34,071 - INFO - 
+📂 Processing dataset: balanced_workspace_2_3class_pure_no_contact
+2026-02-07 22:09:34,083 - INFO -   ✓ Loaded 1100 sweep points
+2026-02-07 22:09:34,083 - INFO -   Columns: point_index, timestamp, x_target, y_target, z_target, x, y, z, normalized_x, normalized_y, original_label, relabeled_label, acoustic_filename, filename
+2026-02-07 22:09:34,083 - INFO -   Using label column: relabeled_label
+2026-02-07 22:09:34,084 - INFO -   Class distribution: {'no_contact': np.int64(1100)}
+2026-02-07 22:09:34,084 - INFO -   Original label distribution: {'no_contact': np.int64(1100)}
+2026-02-07 22:09:34,085 - INFO -   🎵 Extracting features from audio files...
+2026-02-07 22:09:35,832 - INFO -     Processed 50/1100 samples...
+2026-02-07 22:09:37,454 - INFO -     Processed 100/1100 samples...
+2026-02-07 22:09:39,503 - INFO -     Processed 150/1100 samples...
+2026-02-07 22:09:41,556 - INFO -     Processed 200/1100 samples...
+2026-02-07 22:09:44,113 - INFO -     Processed 250/1100 samples...
+2026-02-07 22:09:46,244 - INFO -     Processed 300/1100 samples...
+2026-02-07 22:09:47,797 - INFO -     Processed 350/1100 samples...
+2026-02-07 22:09:49,347 - INFO -     Processed 400/1100 samples...
+2026-02-07 22:09:50,919 - INFO -     Processed 450/1100 samples...
+2026-02-07 22:09:52,548 - INFO -     Processed 500/1100 samples...
+2026-02-07 22:09:54,406 - INFO -     Processed 550/1100 samples...
+2026-02-07 22:09:56,015 - INFO -     Processed 600/1100 samples...
+2026-02-07 22:09:57,620 - INFO -     Processed 650/1100 samples...
+2026-02-07 22:09:59,166 - INFO -     Processed 700/1100 samples...
+2026-02-07 22:10:00,818 - INFO -     Processed 750/1100 samples...
+2026-02-07 22:10:02,449 - INFO -     Processed 800/1100 samples...
+2026-02-07 22:10:04,175 - INFO -     Processed 850/1100 samples...
+2026-02-07 22:10:05,866 - INFO -     Processed 900/1100 samples...
+2026-02-07 22:10:07,497 - INFO -     Processed 950/1100 samples...
+2026-02-07 22:10:09,059 - INFO -     Processed 1000/1100 samples...
+2026-02-07 22:10:10,629 - INFO -     Processed 1050/1100 samples...
+2026-02-07 22:10:12,179 - INFO -     Processed 1100/1100 samples...
+2026-02-07 22:10:12,181 - INFO -   ✓ Extracted features for 1100 samples
+2026-02-07 22:10:12,181 - INFO -     Feature dimension: 80
+2026-02-07 22:10:12,210 - INFO -   🎯 Raw Reconstruction Accuracy: 49.27% (on 1100 samples)
+2026-02-07 22:10:12,210 - INFO -      Mean confidence: 64.57%
+2026-02-07 22:10:12,210 - INFO -      Median confidence: 60.00%
+2026-02-07 22:10:12,211 - INFO - 
+🎨 Generating surface reconstruction visualizations...
+/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/run_surface_reconstruction.py:1123: RuntimeWarning: invalid value encountered in divide
+  cm_normalized = cm.astype("float") / cm.sum(axis=1)[:, np.newaxis]
+2026-02-07 22:10:18,291 - INFO -   ✓ Saved 6 visualizations to: pattern_a_3class_reconstruction/pure_no_contact/balanced_workspace_2_3class_pure_no_contact
+2026-02-07 22:10:18,297 - INFO -   💾 Saved results to: pattern_a_3class_reconstruction/pure_no_contact/balanced_workspace_2_3class_pure_no_contact_results.json
+2026-02-07 22:10:18,297 - INFO - 
+============================================================
+2026-02-07 22:10:18,297 - INFO - ✅ Surface Reconstruction Complete!
+2026-02-07 22:10:18,297 - INFO -    Dataset: balanced_workspace_2_3class_pure_no_contact
+2026-02-07 22:10:18,297 - INFO -    Samples: 1100
+2026-02-07 22:10:18,297 - INFO -    Accuracy: 49.27%
+2026-02-07 22:10:18,297 - INFO - ============================================================
+GPU acceleration available: True
+2026-02-07 22:10:21,101 - INFO - 📦 Loading trained model from: test_pipeline_3class_v1/discriminationanalysis/trained_models/model_rank1_random_forest.pkl
+2026-02-07 22:10:21,184 - INFO -   ✓ Model: Random Forest
+2026-02-07 22:10:21,184 - INFO -   ✓ Classes: [np.str_('contact'), np.str_('edge'), np.str_('no_contact')]
+2026-02-07 22:10:21,184 - INFO -   ✓ Training Val Accuracy: 84.88%
+2026-02-07 22:10:21,292 - INFO -   ✓ Feature config: workspace_invariant=True, impulse=True
+2026-02-07 22:10:21,293 - INFO - 
+📂 Processing dataset: balanced_workspace_2_3class_pure_contact
+2026-02-07 22:10:21,304 - INFO -   ✓ Loaded 590 sweep points
+2026-02-07 22:10:21,304 - INFO -   Columns: point_index, timestamp, x_target, y_target, z_target, x, y, z, normalized_x, normalized_y, original_label, relabeled_label, acoustic_filename, filename
+2026-02-07 22:10:21,305 - INFO -   Using label column: relabeled_label
+2026-02-07 22:10:21,305 - INFO -   Class distribution: {'edge': np.int64(295), 'contact': np.int64(295)}
+2026-02-07 22:10:21,306 - INFO -   Original label distribution: {'edge': np.int64(295), 'contact': np.int64(295)}
+2026-02-07 22:10:21,306 - INFO -   🎵 Extracting features from audio files...
+2026-02-07 22:10:24,474 - INFO -     Processed 50/590 samples...
+2026-02-07 22:10:27,253 - INFO -     Processed 100/590 samples...
+2026-02-07 22:10:29,981 - INFO -     Processed 150/590 samples...
+2026-02-07 22:10:31,989 - INFO -     Processed 200/590 samples...
+2026-02-07 22:10:34,285 - INFO -     Processed 250/590 samples...
+2026-02-07 22:10:36,412 - INFO -     Processed 300/590 samples...
+2026-02-07 22:10:38,232 - INFO -     Processed 350/590 samples...
+2026-02-07 22:10:40,440 - INFO -     Processed 400/590 samples...
+2026-02-07 22:10:42,862 - INFO -     Processed 450/590 samples...
+2026-02-07 22:10:44,720 - INFO -     Processed 500/590 samples...
+2026-02-07 22:10:46,284 - INFO -     Processed 550/590 samples...
+2026-02-07 22:10:47,552 - INFO -   ✓ Extracted features for 590 samples
+2026-02-07 22:10:47,552 - INFO -     Feature dimension: 80
+2026-02-07 22:10:47,574 - INFO -   🎯 Raw Reconstruction Accuracy: 32.54% (on 590 samples)
+2026-02-07 22:10:47,574 - INFO -      Mean confidence: 60.31%
+2026-02-07 22:10:47,574 - INFO -      Median confidence: 57.00%
+2026-02-07 22:10:47,575 - INFO - 
+🎨 Generating surface reconstruction visualizations...
+/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/run_surface_reconstruction.py:1123: RuntimeWarning: invalid value encountered in divide
+  cm_normalized = cm.astype("float") / cm.sum(axis=1)[:, np.newaxis]
+2026-02-07 22:10:51,437 - INFO -   ✓ Saved 6 visualizations to: pattern_a_3class_reconstruction/pure_contact/balanced_workspace_2_3class_pure_contact
+2026-02-07 22:10:51,439 - INFO -   💾 Saved results to: pattern_a_3class_reconstruction/pure_contact/balanced_workspace_2_3class_pure_contact_results.json
+2026-02-07 22:10:51,439 - INFO - 
+============================================================
+2026-02-07 22:10:51,439 - INFO - ✅ Surface Reconstruction Complete!
+2026-02-07 22:10:51,439 - INFO -    Dataset: balanced_workspace_2_3class_pure_contact
+2026-02-07 22:10:51,439 - INFO -    Samples: 590
+2026-02-07 22:10:51,439 - INFO -    Accuracy: 32.54%
+2026-02-07 22:10:51,439 - INFO - ============================================================
+GPU acceleration available: True
+================================================================================
+3-CLASS RECONSTRUCTION GENERATION (ROTATION 1: WS2 VALIDATION)
+================================================================================
+✓ Found model: test_pipeline_3class_v1/discriminationanalysis/trained_models/model_rank1_random_forest.pkl
+✓ Output directory: pattern_a_3class_reconstruction
+
+Processing 3 validation datasets...
+
+================================================================================
+Running reconstruction: balanced_workspace_2_3class_squares_cutout
+================================================================================
+
+✓ Completed reconstruction for balanced_workspace_2_3class_squares_cutout
+
+================================================================================
+Running reconstruction: balanced_workspace_2_3class_pure_no_contact
+================================================================================
+
+✓ Completed reconstruction for balanced_workspace_2_3class_pure_no_contact
+
+================================================================================
+Running reconstruction: balanced_workspace_2_3class_pure_contact
+================================================================================
+
+✓ Completed reconstruction for balanced_workspace_2_3class_pure_contact
+
+================================================================================
+RECONSTRUCTION SUMMARY
+================================================================================
+Completed: 3/3 datasets
+
+================================================================================
+Creating combined 3-class reconstruction figure...
+================================================================================
+
+WARNING: Combined figure not found. You may need to create it manually.
+
+================================================================================
+✓ 3-CLASS RECONSTRUCTION COMPLETE
+================================================================================
+
+Output directory: pattern_a_3class_reconstruction
+
+Next step: Update final_report.tex to use:
+  \includegraphics{../pattern_a_3class_reconstruction/pattern_a_visual_comparison.png}
+

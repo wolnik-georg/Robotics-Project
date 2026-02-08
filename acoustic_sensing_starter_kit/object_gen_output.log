@@ -1,0 +1,8 @@
+GPU acceleration available: True
+📂 Output directory: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/modular_analysis_results
+📂 Output directory: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/modular_analysis_results
+🚀 Initializing Experiment Orchestrator...
+📋 Config: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/configs/object_generalization_holdout_ws4.yml
+✅ Validating configuration...
+❌ Configuration validation failed:
+   🔸 ERROR: Missing required section: output

@@ -1,28 +1,44 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Standalone Script to Balance Collected Data by Undersampling
+Standalone Script to Balance Collected Data by Undersampling/Oversampling
 
 This script:
 1. Loads all WAV files from the collected data directory
 2. Reads the sweep.csv to get position information for each audio file
 3. Groups labels into classes (contact, no_contact, edge)
-4. OPTIONALLY: Filters out specified classes (e.g., edge) to create cleaner datasets
-5. Balances classes using undersampling
-6. Saves balanced WAV files AND a new sweep.csv with position info to the output folder
+4. OPTIONALLY: Filters out specified classes for binary classification
+5. Balances classes using undersampling or oversampling
+6. Saves balanced WAV files AND a new sweep.csv with position info
 
-NEW FEATURE: Sweep CSV Preservation
------------------------------------
-The balanced dataset now includes a sweep.csv that maps each balanced audio file
+CLASS FILTERING OPTIONS:
+------------------------
+Binary Classification (contact vs no_contact):
+    python balance_dataset.py --input data/my_dataset --exclude-classes edge
+
+3-Class Classification (contact, no_contact, edge):
+    python balance_dataset.py --input data/my_dataset --include-all-classes
+
+Default behavior is now 3-class mode (includes edge). Use --exclude-classes for binary mode.
+
+SWEEP CSV PRESERVATION:
+-----------------------
+The balanced dataset includes a sweep.csv that maps each balanced audio file
 to its original position (normalized_x, normalized_y). This enables:
 - Surface reconstruction directly from balanced datasets
 - Consistent feature extraction between training and reconstruction
 - No need for complex file matching or hash-based lookups
 
-Usage:
-    python balance_dataset.py                                    # Use default settings
-    python balance_dataset.py --input <path> --output <path>     # Specify paths
-    python balance_dataset.py --input data/my_dataset --exclude-edge  # Filter edges
+USAGE EXAMPLES:
+---------------
+    # 3-class mode (default - includes all classes)
+    python balance_dataset.py --input data/workspace_1 --output balanced_3class
+
+    # Binary mode (exclude edge samples)
+    python balance_dataset.py --input data/workspace_1 --exclude-classes edge
+
+    # Oversample instead of undersample
+    python balance_dataset.py --input data/workspace_1 --method oversample
 """
 
 import numpy as np
@@ -47,10 +63,10 @@ RANDOM_SEED = 42
 CLASSES = ["contact", "no_contact", "edge"]
 
 # CLASS FILTERING (applied before balancing)
-FILTER_CLASSES = True  # Set to True to exclude specific classes before balancing
-CLASSES_TO_EXCLUDE = [
-    "edge"
-]  # Classes to filter out (e.g., ["edge"] to create binary contact/no_contact datasets)
+FILTER_CLASSES = False  # Set to True to exclude specific classes before balancing
+CLASSES_TO_EXCLUDE = (
+    []
+)  # Classes to filter out - empty list means include all (3-class mode)
 
 # EXAMPLES:
 # Binary classification (contact vs no_contact only):
@@ -378,10 +394,18 @@ def main():
         help="Balancing method: undersample (reduce to min class) or oversample (expand to max class)",
     )
     parser.add_argument(
-        "--exclude-edge",
+        "--exclude-classes",
+        "-e",
+        type=str,
+        nargs="+",
+        default=[],
+        help="Classes to exclude before balancing (e.g., --exclude-classes edge). Default: include all classes (3-class mode)",
+    )
+    parser.add_argument(
+        "--include-all-classes",
         action="store_true",
-        default=FILTER_CLASSES,
-        help="Exclude edge class before balancing",
+        default=True,
+        help="Include all classes (contact, no_contact, edge). This is the default behavior",
     )
     parser.add_argument(
         "--seed", type=int, default=RANDOM_SEED, help="Random seed for reproducibility"
@@ -419,9 +443,19 @@ def main():
     for cls, count in sweep_df[label_col].value_counts().items():
         print(f"  {cls}: {count}")
 
-    # Apply class filtering if enabled
-    if args.exclude_edge:
-        sweep_df = filter_classes_df(sweep_df, ["edge"])
+    # Apply class filtering based on arguments
+    classes_to_exclude = []
+    if not args.include_all_classes and args.exclude_classes:
+        classes_to_exclude = args.exclude_classes
+    elif args.exclude_classes:
+        # If explicit exclusion is specified, override include_all_classes
+        classes_to_exclude = args.exclude_classes
+
+    if classes_to_exclude:
+        print(f"\n🔍 Filtering mode: Excluding classes {classes_to_exclude}")
+        sweep_df = filter_classes_df(sweep_df, classes_to_exclude)
+    else:
+        print(f"\n✅ 3-Class mode: Including all classes (contact, no_contact, edge)")
 
     # Check if we have any data
     if len(sweep_df) == 0:

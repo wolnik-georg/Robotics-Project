@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/generate_comprehensive_reconstructions.py", line 26, in <module>
+    raise FileNotFoundError(f"Rotation 1 directory not found: {ROTATION1_DIR}")
+FileNotFoundError: Rotation 1 directory not found: /home/georg/Desktop/Robotics-Project/test_pipeline_3class_v1

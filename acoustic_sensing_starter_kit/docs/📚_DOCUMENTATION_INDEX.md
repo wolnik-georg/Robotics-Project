@@ -10,21 +10,33 @@
 ## 🎯 Project Goals & Key Results
 
 ### Goal 1: PROOF OF CONCEPT ✅ ACHIEVED
-> **"Geometric reconstruction using acoustic tactile sensing IS POSSIBLE"**
+> **"3-class acoustic contact detection IS POSSIBLE"**
 
 | Metric | Result | Significance |
 |--------|--------|--------------|
-| Contact Detection Accuracy | **76.2%** | Well above random chance (50%) |
-| Surface Reconstruction | **Works!** | Visual proof in pattern_a_summary/ |
+| 3-Class Detection Accuracy | **77%** | Well above random chance (33.3%) |
+| Normalized Performance | **2.3× over random** | Proves concept viability |
+| Surface Reconstruction | **Works with edge detection!** | Visual proof in reconstruction figures |
 | Real-time Capable | **<1ms** | Practical for robotics |
 
-### Goal 2: GENERALIZATION RESEARCH 🔬 EXPLORED
-> **"How far can this approach generalize?"**
+### Goal 2: WORKSPACE GENERALIZATION 🔬 EXPLORED
+> **"Strong workspace dependence revealed"**
 
-| Type | Result | Status |
+| Test | Result | Status |
 |------|--------|--------|
-| Position Generalization | **70%** | ✅ Promising - indicates scalability |
-| Object Generalization | **50%** | 🔬 Challenge identified - future work |
+| Cross-Validation | **77%** | ✅ Consistent across rotations |
+| Best Workspace (WS2) | **85%** | ✅ Excellent generalization |
+| Moderate Workspace (WS1) | **60%** | ⚠️ Usable but workspace-dependent |
+| Worst Workspace (WS3) | **35%** | ❌ Catastrophic - workspace-specific |
+| **Average Validation** | **60% (1.80× over random)** | ⚠️ **Workspace-specific training needed** |
+
+### Goal 3: 3-CLASS VS BINARY ✅ VALIDATED
+> **"3-class outperforms binary when normalized"**
+
+| Approach | Validation | Random Baseline | Normalized |
+|----------|-----------|-----------------|------------|
+| Binary (exclude edge) | 57.6% | 50% | 1.15× |
+| **3-Class (include edge)** | **60%** | **33.3%** | **1.80× (56% better!)** |
 
 ---
 
@@ -571,16 +583,24 @@ All visualizations use **consistent confidence filtering** (threshold=0.9, mode=
 ### Goal 1: Proof of Concept ✅ ACHIEVED
 | Metric | Value | Significance |
 |--------|-------|--------------|
-| Classification Accuracy | **76.2%** | Above random chance, proves concept |
-| Position Generalization | **70-76%** | Works across different positions |
-| Cutout Surface Improvement | **+15.6%** | Geometric complexity helps |
+| 3-Class CV Accuracy | **77.0%** | Above random chance (33.3%), proves concept |
+| Normalized Performance | **2.3× over random** | Strong evidence of viability |
+| Individual Rotations | **76.9%, 75.1%, 79.2%** | Consistent across experiments |
 | Inference Time | **<1ms** | Real-time capable |
 
-### Goal 2: Generalization Research 🔬
+### Goal 2: Workspace Generalization 🔬 WORKSPACE-DEPENDENT
 | Test | Result | Interpretation |
 |------|--------|----------------|
-| Position Generalization | **70.1%** | ✅ Promising, worth pursuing |
-| Object Generalization | **50.5%** | ❌ Random chance - future work |
+| Best Workspace (WS2) | **84.9%** | ✅ Excellent - exceeds CV average |
+| Moderate Workspace (WS1) | **60.4%** | ⚠️ Usable - 15% drop from CV |
+| Worst Workspace (WS3) | **34.9%** | ❌ Random chance - catastrophic failure |
+| **Average Validation** | **60.0% (1.80× over random)** | **Workspace-specific training needed** |
+
+### Goal 3: 3-Class Superiority ✅ VALIDATED
+| Approach | Val Acc | Random | Normalized | Advantage |
+|----------|---------|--------|------------|-----------|
+| Binary (exclude edge) | 57.6% | 50% | 1.15× | — |
+| **3-Class (include edge)** | **60.0%** | **33.3%** | **1.80×** | **+56%** |
 
 ---
 

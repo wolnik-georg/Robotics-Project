@@ -1,0 +1,129 @@
+
+================================================================================
+COMPREHENSIVE 3-CLASS SURFACE RECONSTRUCTION
+================================================================================
+
+================================================================================
+PART 1: VALIDATION DATA (Same Distribution)
+Training: WS1+WS3 | Validation: WS2 | Objects: A, B, C
+Expected: High accuracy (~85%)
+================================================================================
+
+================================================================================
+Running reconstruction: Validation - Object A (Cutout)
+Model: model_rank1_random_forest.pkl
+Dataset: balanced_workspace_2_3class_squares_cutout
+Output: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/comprehensive_3class_reconstruction/validation/balanced_workspace_2_3class_squares_cutout
+================================================================================
+
+✗ Failed: Validation - Object A (Cutout)
+Error: 2026-02-07 22:33:39,345 - INFO - 📦 Loading trained model from: /home/georg/Desktop/Robotics-Project/test_pipeline_3class_v1/discriminationanalysis/trained_models/model_rank1_random_forest.pkl
+Traceback (most recent call last):
+  File "/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/run_surface_reconstruction.py", line 1324, in <module>
+    main()
+  File "/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/run_surface_reconstruction.py", line 1293, in main
+    reconstructor = SurfaceReconstructor(
+                    ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/run_surface_reconstruction.py", line 89, in __init__
+    self._load_model()
+  File "/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/run_surface_reconstruction.py", line 113, in _load_model
+    with open(self.model_path, "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/georg/Desktop/Robotics-Project/test_pipeline_3class_v1/discriminationanalysis/trained_models/model_rank1_random_forest.pkl'
+
+
+================================================================================
+Running reconstruction: Validation - Object B (Empty)
+Model: model_rank1_random_forest.pkl
+Dataset: balanced_workspace_2_3class_pure_no_contact
+Output: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/comprehensive_3class_reconstruction/validation/balanced_workspace_2_3class_pure_no_contact
+================================================================================
+
+✗ Failed: Validation - Object B (Empty)
+Error: 2026-02-07 22:33:41,523 - INFO - 📦 Loading trained model from: /home/georg/Desktop/Robotics-Project/test_pipeline_3class_v1/discriminationanalysis/trained_models/model_rank1_random_forest.pkl
+Traceback (most recent call last):
+  File "/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/run_surface_reconstruction.py", line 1324, in <module>
+    main()
+  File "/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/run_surface_reconstruction.py", line 1293, in main
+    reconstructor = SurfaceReconstructor(
+                    ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/run_surface_reconstruction.py", line 89, in __init__
+    self._load_model()
+  File "/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/run_surface_reconstruction.py", line 113, in _load_model
+    with open(self.model_path, "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/georg/Desktop/Robotics-Project/test_pipeline_3class_v1/discriminationanalysis/trained_models/model_rank1_random_forest.pkl'
+
+
+================================================================================
+Running reconstruction: Validation - Object C (Full Contact)
+Model: model_rank1_random_forest.pkl
+Dataset: balanced_workspace_2_3class_pure_contact
+Output: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/comprehensive_3class_reconstruction/validation/balanced_workspace_2_3class_pure_contact
+================================================================================
+
+✗ Failed: Validation - Object C (Full Contact)
+Error: 2026-02-07 22:33:43,692 - INFO - 📦 Loading trained model from: /home/georg/Desktop/Robotics-Project/test_pipeline_3class_v1/discriminationanalysis/trained_models/model_rank1_random_forest.pkl
+Traceback (most recent call last):
+  File "/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/run_surface_reconstruction.py", line 1324, in <module>
+    main()
+  File "/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/run_surface_reconstruction.py", line 1293, in main
+    reconstructor = SurfaceReconstructor(
+                    ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/run_surface_reconstruction.py", line 89, in __init__
+    self._load_model()
+  File "/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/run_surface_reconstruction.py", line 113, in _load_model
+    with open(self.model_path, "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/georg/Desktop/Robotics-Project/test_pipeline_3class_v1/discriminationanalysis/trained_models/model_rank1_random_forest.pkl'
+
+
+================================================================================
+PART 2: HOLDOUT DATA (Novel Object)
+Training: WS1+WS2+WS3 Objects A,B,C | Validation: WS4 Object D
+Expected: Random chance (~33% for 3-class)
+================================================================================
+
+================================================================================
+Running reconstruction: Holdout - Object D (Novel Geometry)
+Model: model_rank1_random_forest.pkl
+Dataset: balanced_holdout_3class
+Output: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/comprehensive_3class_reconstruction/holdout/balanced_holdout_3class
+================================================================================
+
+✗ Failed: Holdout - Object D (Novel Geometry)
+Error: 2026-02-07 22:33:45,859 - INFO - 📦 Loading trained model from: /home/georg/Desktop/Robotics-Project/object_generalization_ws4_holdout_3class/discriminationanalysis/trained_models/model_rank1_random_forest.pkl
+Traceback (most recent call last):
+  File "/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/run_surface_reconstruction.py", line 1324, in <module>
+    main()
+  File "/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/run_surface_reconstruction.py", line 1293, in main
+    reconstructor = SurfaceReconstructor(
+                    ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/run_surface_reconstruction.py", line 89, in __init__
+    self._load_model()
+  File "/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/run_surface_reconstruction.py", line 113, in _load_model
+    with open(self.model_path, "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/georg/Desktop/Robotics-Project/object_generalization_ws4_holdout_3class/discriminationanalysis/trained_models/model_rank1_random_forest.pkl'
+
+
+================================================================================
+RECONSTRUCTION SUMMARY
+================================================================================
+
+Validation Data (Same Distribution):
+  ✗ FAILED: Object A (Cutout)
+  ✗ FAILED: Object B (Empty)
+  ✗ FAILED: Object C (Full Contact)
+
+Holdout Data (Novel Object):
+  ✗ FAILED: Object D (Novel)
+
+All reconstructions saved to: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/comprehensive_3class_reconstruction
+
+Next steps:
+1. Create combined validation figure (3 objects side-by-side)
+2. Create holdout figure (showing failure on novel object)
+3. Update final_report.tex with both figures
+
+Results saved to: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/comprehensive_3class_reconstruction/reconstruction_results.json

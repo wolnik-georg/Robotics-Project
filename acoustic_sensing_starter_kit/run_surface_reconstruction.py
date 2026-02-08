@@ -98,11 +98,11 @@ class SurfaceReconstructor:
             f"  ✓ Feature config: workspace_invariant={use_workspace_invariant}, impulse={use_impulse_features}"
         )
 
-        # Color scheme (colorblind-friendly)
+        # Color scheme (more distinct, colorblind-friendly)
         self.class_colors = {
-            "contact": "#2166ac",  # Blue
-            "edge": "#f4a582",  # Orange/Salmon
-            "no_contact": "#4dac26",  # Green
+            "contact": "#1b7837",  # Dark Green (was blue)
+            "edge": "#ff7f00",  # Bright Orange (more distinct)
+            "no_contact": "#d73027",  # Red (was green)
         }
         self.class_to_num = {"contact": 0, "edge": 1, "no_contact": 2}
 
@@ -698,10 +698,10 @@ class SurfaceReconstructor:
         if "edge" in classes:
             legend_patches.append(
                 mpatches.Patch(
-                    facecolor=self.class_colors.get("edge", "#f4a582"),
+                    facecolor=self.class_colors.get("edge", "#ff7f00"),
                     edgecolor="black",
                     hatch="//",
-                    label="Edge (excluded)",
+                    label="Edge",
                     alpha=0.7,
                 )
             )
@@ -777,10 +777,10 @@ class SurfaceReconstructor:
         if "edge" in classes:
             legend_patches.append(
                 mpatches.Patch(
-                    facecolor=self.class_colors.get("edge", "#f4a582"),
+                    facecolor=self.class_colors.get("edge", "#ff7f00"),
                     edgecolor="black",
                     hatch="//",
-                    label="Edge (excluded)",
+                    label="Edge",
                     alpha=0.7,
                 )
             )
@@ -1174,10 +1174,10 @@ class SurfaceReconstructor:
         if "edge" in classes:
             legend_patches.append(
                 mpatches.Patch(
-                    facecolor=self.class_colors.get("edge", "#f4a582"),
+                    facecolor=self.class_colors.get("edge", "#ff7f00"),
                     edgecolor="black",
                     hatch="//",
-                    label="Edge (excluded)",
+                    label="Edge",
                     alpha=0.7,
                 )
             )

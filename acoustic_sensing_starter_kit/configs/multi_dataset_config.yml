@@ -7,35 +7,29 @@
 base_data_dir: "data"
 
 # Datasets to process (will be combined for training/testing)
-# Using new balanced datasets with sweep.csv position info
+# Using NEW 3-CLASS balanced datasets (contact, no_contact, edge)
 datasets:
-  # TRAINING: Workspaces 2 & 3 (all surfaces - cutout + pure contact + pure no-contact)
+  # TRAINING: Workspaces 3 & 1 (all surfaces - cutout + pure contact + pure no-contact)
   
-  # Workspace 2
-  # - "balanced_workspace_2_squares_cutout"
-  # - "balanced_workspace_2_pure_no_contact"
-  # - "balanced_workspace_2_pure_contact"
-  
-  # Workspace 3
-  - "balanced_workspace_3_squares_cutout_v1"
-  - "balanced_workspace_3_squares_cutout_v2"
-  - "balanced_workspace_3_pure_contact"
-  - "balanced_workspace_3_pure_no_contact"
+  # Workspace 3 - 3-class datasets
+  - "balanced_workspace_3_3class_squares_cutout_v1"
+  - "balanced_workspace_3_3class_squares_cutout_v2"
+  - "balanced_workspace_3_3class_pure_contact"
+  - "balanced_workspace_3_3class_pure_no_contact"
 
-  # Workspace 1
-  - "balanced_workspace_1_squares_cutout"
-  - "balanced_workspace_1_pure_no_contact"
-  - "balanced_workspace_1_pure_contact"
+  # Workspace 1 - 3-class datasets
+  - "balanced_workspace_1_3class_squares_cutout"
+  - "balanced_workspace_1_3class_pure_no_contact"
+  - "balanced_workspace_1_3class_pure_contact"
   
 # Optional: Specify datasets to use for validation (holdout)
 # Leave empty [] to combine all datasets for train/test split
 # These datasets have sweep.csv with position info for reconstruction
 validation_datasets: [
-  # VALIDATION: Holdout dataset (new object in new workspace - completely unseen)
-  # "balanced_holdout_undersample"
-  "balanced_workspace_2_squares_cutout",
-  "balanced_workspace_2_pure_no_contact",
-  "balanced_workspace_2_pure_contact"
+  # VALIDATION: Workspace 2 - 3-class datasets (completely unseen workspace)
+  "balanced_workspace_2_3class_squares_cutout",
+  "balanced_workspace_2_3class_pure_no_contact",
+  "balanced_workspace_2_3class_pure_contact"
 ]
 
 # Reconstruction Configuration
@@ -46,16 +40,21 @@ reconstruction:
   # Each validation dataset will be reconstructed separately using its sweep.csv
 
 # Class Filtering Configuration
-# NOTE: Already applied during balancing (--exclude-edge), but kept for pipeline compatibility
+# NOTE: 3-CLASS MODE ENABLED - Datasets now include edge samples
 class_filtering:
-  enabled: false  # Already filtered during balance_dataset.py
-  classes_to_exclude_train: ["edge"]
-  classes_to_exclude_validation: ["edge"]
+  enabled: false  # No filtering needed - balanced datasets already include all 3 classes
+  classes_to_exclude_train: []  # Empty = include all (contact, no_contact, edge)
+  classes_to_exclude_validation: []  # Empty = include all (contact, no_contact, edge)
   
-  # Options:
-  # 1. Exclude edge from both train & validation: Clean binary problem (contact vs no_contact)
-  # 2. Exclude edge from train, include in validation: Test if model generalizes to edge cases
-  # 3. Include edge in both: Full 3-class problem (more data needed)
+  # Current configuration: FULL 3-CLASS PROBLEM
+  # - Training: contact, no_contact, edge
+  # - Validation: contact, no_contact, edge
+  # - Expected: Lower accuracy (harder problem) but more robust system
+  
+  # To revert to binary mode:
+  # 1. Set enabled: true
+  # 2. Set classes_to_exclude_train: ["edge"]
+  # 3. Set classes_to_exclude_validation: ["edge"]
 
 # Domain Adaptation Configuration
 # Test hypothesis: Does adding hold-out data to training improve generalization?
@@ -163,6 +162,6 @@ experiments:
 
 # Output Configuration
 output:
-  base_dir: "rerun_reconstruction_poc_workspace2"  # Train: W1&W2&W3 all surfaces, Validate: Holdout dataset
+  base_dir: "test_pipeline_3class_v1"  # Train: W1&W3 (3-class), Validate: W2 (3-class)
 
 # Analysis Experiments (Standard Pipeline)

@@ -1,0 +1,5 @@
+usage: run_modular_experiments.py [-h] [--validate-only] [--list-experiments]
+                                  [--verbose]
+                                  [config_file] [output_dir]
+run_modular_experiments.py: error: unrecognized arguments: --config --output test_pipeline_3class_v1_RETRAIN
+GPU acceleration available: True

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2026.1.30)  6 FEB 2026 21:46
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2026.1.30)  8 FEB 2026 14:06
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -532,99 +532,138 @@ LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 50
  (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
-LaTeX Font Info:    Trying to load font information for OT1+ztmcm on input line 57.
- (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ztmcm.fd
-File: ot1ztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OT1/ztmcm.
-)
-LaTeX Font Info:    Trying to load font information for OML+ztmcm on input line 57.
- (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omlztmcm.fd
-File: omlztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OML/ztmcm.
-)
-LaTeX Font Info:    Trying to load font information for OMS+ztmcm on input line 57.
- (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omsztmcm.fd
-File: omsztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/ztmcm.
-)
-LaTeX Font Info:    Trying to load font information for OMX+ztmcm on input line 57.
- (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omxztmcm.fd
-File: omxztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMX/ztmcm.
+LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 57.
+ (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ptm.fd
+File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 ) [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
 
 ]
+LaTeX Font Info:    Trying to load font information for OT1+ztmcm on input line 92.
+ (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ztmcm.fd
+File: ot1ztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OT1/ztmcm.
+)
+LaTeX Font Info:    Trying to load font information for OML+ztmcm on input line 92.
+ (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omlztmcm.fd
+File: omlztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OML/ztmcm.
+)
+LaTeX Font Info:    Trying to load font information for OMS+ztmcm on input line 92.
+ (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omsztmcm.fd
+File: omsztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/ztmcm.
+)
+LaTeX Font Info:    Trying to load font information for OMX+ztmcm on input line 92.
+ (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omxztmcm.fd
+File: omxztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMX/ztmcm.
+)
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7.4> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 90.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 92.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 90.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 92.
 
-Underfull \hbox (badness 1412) in paragraph at lines 96--97
-\OT1/ptm/m/n/10 sults through acous-tic eigen-fre-quency anal-y-sis and
+Underfull \hbox (badness 4144) in paragraph at lines 94--95
+[]\OT1/ptm/b/n/10 Systematic gen-er-al-iza-tion anal-y-sis \OT1/ptm/m/n/10 re-veal-ing (1)
  []
 
-[2]
-<../ml_analysis_figures/figure11_feature_dimensions.png, id=124, 857.604pt x 566.5968pt>
+
+Underfull \hbox (badness 3312) in paragraph at lines 98--99
+\OT1/ptm/m/n/10 ge-o-met-ric sig-na-tures, while dif-fer-ent ob-jects pro-
+ []
+
+[2] [3]
+<../ml_analysis_figures/figure11_feature_dimensions.png, id=131, 857.604pt x 566.5968pt>
 File: ../ml_analysis_figures/figure11_feature_dimensions.png Graphic file (type png)
 <use ../ml_analysis_figures/figure11_feature_dimensions.png>
-Package pdftex.def Info: ../ml_analysis_figures/figure11_feature_dimensions.png  used on input line 172.
+Package pdftex.def Info: ../ml_analysis_figures/figure11_feature_dimensions.png  used on input line 174.
 (pdftex.def)             Requested size: 245.71811pt x 162.33768pt.
- [3]
-<../ml_analysis_figures/figure6_experimental_setup.png, id=140, 1144.7568pt x 568.0422pt>
+
+Underfull \hbox (badness 1521) in paragraph at lines 191--192
+\OT1/ptm/m/n/10 dif-fer-ent robot con-fig-u-ra-tions and sur-face com-bi-na-tions
+ []
+
+
+Underfull \hbox (badness 3758) in paragraph at lines 201--202
+[]\OT1/ptm/m/n/10 Dataset con-struc-tion en-sures bal-anced rep-re-sen-ta-tion
+ []
+
+<../ml_analysis_figures/figure6_experimental_setup.png, id=138, 1144.7568pt x 568.0422pt>
 File: ../ml_analysis_figures/figure6_experimental_setup.png Graphic file (type png)
 <use ../ml_analysis_figures/figure6_experimental_setup.png>
-Package pdftex.def Info: ../ml_analysis_figures/figure6_experimental_setup.png  used on input line 203.
+Package pdftex.def Info: ../ml_analysis_figures/figure6_experimental_setup.png  used on input line 205.
 (pdftex.def)             Requested size: 505.89pt x 251.0228pt.
- [4 <../ml_analysis_figures/figure11_feature_dimensions.png>]
-<../pattern_a_summary/pattern_a_visual_comparison.png, id=149, 1149.093pt x 994.917pt>
-File: ../pattern_a_summary/pattern_a_visual_comparison.png Graphic file (type png)
-<use ../pattern_a_summary/pattern_a_visual_comparison.png>
-Package pdftex.def Info: ../pattern_a_summary/pattern_a_visual_comparison.png  used on input line 222.
-(pdftex.def)             Requested size: 505.89pt x 438.02292pt.
+[4 <../ml_analysis_figures/figure11_feature_dimensions.png>]
+<../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.png, id=149, 773.289pt x 1297.9692pt>
+File: ../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.png Graphic file (type png)
+<use ../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.png>
+Package pdftex.def Info: ../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.png  used on input line 224.
+(pdftex.def)             Requested size: 404.71353pt x 679.30505pt.
 
-Underfull \hbox (badness 1540) in paragraph at lines 251--251
- \OT1/ptm/m/it/10 C. Ob-ject Gen-er-al-iza-tion: Fun-da-men-tal Lim-i-ta-tions Re-
- []
 
+LaTeX Warning: Float too large for page by 73.30505pt on input line 227.
+
+<../comprehensive_3class_reconstruction/test_reconstruction_combined.png, id=150, 602.9727pt x 640.794pt>
+File: ../comprehensive_3class_reconstruction/test_reconstruction_combined.png Graphic file (type png)
+<use ../comprehensive_3class_reconstruction/test_reconstruction_combined.png>
+Package pdftex.def Info: ../comprehensive_3class_reconstruction/test_reconstruction_combined.png  used on input line 231.
+(pdftex.def)             Requested size: 505.89pt x 537.61797pt.
 [5 <../ml_analysis_figures/figure6_experimental_setup.png>]
-Underfull \vbox (badness 1406) has occurred while \output is active []
+LaTeX Info: Symbol \textrightarrow not provided by
+            font family ptm in TS1 encoding.
+            Default family used instead on input line 278.
+LaTeX Info: Symbol \textrightarrow not provided by
+            font family ptm in TS1 encoding.
+            Default family used instead on input line 278.
 
-<../ml_analysis_figures/figure1_v4_vs_v6_main_comparison.png, id=165, 1000.4577pt x 443.0151pt>
-File: ../ml_analysis_figures/figure1_v4_vs_v6_main_comparison.png Graphic file (type png)
-<use ../ml_analysis_figures/figure1_v4_vs_v6_main_comparison.png>
-Package pdftex.def Info: ../ml_analysis_figures/figure1_v4_vs_v6_main_comparison.png  used on input line 279.
-(pdftex.def)             Requested size: 505.89pt x 224.01491pt.
-<../ml_analysis_figures/figure8_confidence_calibration.png, id=166, 836.4048pt x 443.7378pt>
-File: ../ml_analysis_figures/figure8_confidence_calibration.png Graphic file (type png)
-<use ../ml_analysis_figures/figure8_confidence_calibration.png>
-Package pdftex.def Info: ../ml_analysis_figures/figure8_confidence_calibration.png  used on input line 286.
-(pdftex.def)             Requested size: 505.89pt x 268.39787pt.
- [6 <../pattern_a_summary/pattern_a_visual_comparison.png>]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [7 <../ml_analysis_figures/figure1_v4_vs_v6_main_comparison.png> <../ml_analysis_figures/figure8_confidence_calibration.png>]
-<../ml_analysis_figures/figure10_surface_type_effect.png, id=182, 1000.4577pt x 443.0151pt>
-File: ../ml_analysis_figures/figure10_surface_type_effect.png Graphic file (type png)
-<use ../ml_analysis_figures/figure10_surface_type_effect.png>
-Package pdftex.def Info: ../ml_analysis_figures/figure10_surface_type_effect.png  used on input line 301.
-(pdftex.def)             Requested size: 245.71811pt x 108.80666pt.
- [8 <../ml_analysis_figures/figure10_surface_type_effect.png>]
-Underfull \hbox (badness 5260) in paragraph at lines 350--351
-[]\OT1/ptm/m/it/10 Long-term paradigm shifts \OT1/ptm/m/n/10 re-quire mov-ing be-yond
+Overfull \hbox (15.85083pt too wide) in paragraph at lines 281--293
+ [][] 
  []
 
 
-Underfull \hbox (badness 7704) in paragraph at lines 366--367
+Overfull \hbox (43.84332pt too wide) in paragraph at lines 310--320
+ [][] 
+ []
+
+<../comprehensive_3class_reconstruction/holdout_reconstruction_combined.png, id=164, 890.6073pt x 428.5611pt>
+File: ../comprehensive_3class_reconstruction/holdout_reconstruction_combined.png Graphic file (type png)
+<use ../comprehensive_3class_reconstruction/holdout_reconstruction_combined.png>
+Package pdftex.def Info: ../comprehensive_3class_reconstruction/holdout_reconstruction_combined.png  used on input line 330.
+(pdftex.def)             Requested size: 505.89pt x 243.43225pt.
+[6]
+Underfull \hbox (badness 6493) in paragraph at lines 364--365
+[]\OT1/ptm/b/n/10 (2) In-for-ma-tion: \OT1/ptm/m/n/10 Edge pre-dic-tions pro-vide use-ful
+ []
+
+
+Underfull \hbox (badness 1735) in paragraph at lines 370--370
+ \OT1/ptm/m/it/10 E. Physics-Based In-ter-pre-ta-tion: Ob-ject and Workspace
+ []
+
+
+Underfull \hbox (badness 1721) in paragraph at lines 384--385
+\OT1/ptm/m/n/10 om-e-try changes al-ter the fun-da-men-tal fre-quency spec-
+ []
+
+
+Underfull \hbox (badness 7595) in paragraph at lines 412--413
+[]\OT1/ptm/b/n/10 RQ2 (Po-si-tion Gen-er-al-iza-tion): \OT1/ptm/m/n/10 Val-i-da-tion across
+ []
+
+[7]
+Underfull \hbox (badness 2065) in paragraph at lines 426--427
+\OT1/ptm/m/n/10 with fixed ob-ject types and workspace con-fig-u-ra-tions,
+ []
+
+[8]
+Underfull \hbox (badness 7704) in paragraph at lines 448--449
 \OT1/ptm/m/n/10 publication-ready vi-su-al-iza-tions are pub-licly avail-able
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 366--367
+Underfull \hbox (badness 10000) in paragraph at lines 448--449
 \OT1/ptm/m/n/10 at: []$\OT1/pcr/m/n/10 https : / / github . com / wolnik-[]georg /
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 366--367
+Underfull \hbox (badness 10000) in paragraph at lines 448--449
 \OT1/ptm/m/n/10 im-ple-men-ta-tion of data col-lec-tion pro-to-cols, fea-ture
  []
 
@@ -640,23 +679,25 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the US letter (8.5in X 11in) paper size.
 
-[9] (./final_report.aux)
+[9
+
+] [10 <../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.png>] [11 <../comprehensive_3class_reconstruction/test_reconstruction_combined.png>] [12 <../comprehensive_3class_reconstruction/holdout_reconstruction_combined.png>] (./final_report.aux)
 Package rerunfilecheck Info: File `final_report.out' has not changed.
-(rerunfilecheck)             Checksum: 4B0BD7C5F881B20814A856BC9FE63C46;4036.
+(rerunfilecheck)             Checksum: AE29D70AD69A5C6C56CA5A5BF1541F8B;4185.
  ) 
 Here is how much of TeX's memory you used:
- 12279 strings out of 480247
- 199856 string characters out of 5896151
- 499891 words of memory out of 5000000
- 29983 multiletter control sequences out of 15000+600000
- 526980 words of font info for 145 fonts, out of 8000000 for 9000
+ 12309 strings out of 480247
+ 200397 string characters out of 5896151
+ 507148 words of memory out of 5000000
+ 30004 multiletter control sequences out of 15000+600000
+ 527142 words of font info for 149 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 69i,9n,79p,1950b,358s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on final_report.pdf (9 pages, 1664156 bytes).
+ 69i,9n,79p,2495b,358s stack positions out of 5000i,500n,10000p,200000b,80000s
+ </home/georg/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1000.600pk>{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on final_report.pdf (12 pages, 1493643 bytes).
 PDF statistics:
- 270 PDF objects out of 1000 (max. 8388607)
- 222 compressed objects within 3 object streams
- 52 named destinations out of 1000 (max. 500000)
- 207 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 287 PDF objects out of 1000 (max. 8388607)
+ 237 compressed objects within 3 object streams
+ 56 named destinations out of 1000 (max. 500000)
+ 202 words of extra memory for PDF output out of 10000 (max. 10000000)
 

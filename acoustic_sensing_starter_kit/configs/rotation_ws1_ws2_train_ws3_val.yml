@@ -1,0 +1,113 @@
+# Dataset Rotation 3: Train on WS1+WS2, Validate on WS3
+# 3-CLASS MODE (contact, no_contact, edge)
+#
+# This rotation tests generalization to Workspace 3
+# WS3 has more data (v1 + v2 cutouts) so good test of robustness
+
+# Base data directory
+base_data_dir: "data"
+
+# TRAINING: Workspaces 1 & 2 (all surfaces)
+datasets:
+  # Workspace 1 - 3-class datasets
+  - "balanced_workspace_1_3class_squares_cutout"
+  - "balanced_workspace_1_3class_pure_no_contact"
+  - "balanced_workspace_1_3class_pure_contact"
+
+  # Workspace 2 - 3-class datasets  
+  - "balanced_workspace_2_3class_squares_cutout"
+  - "balanced_workspace_2_3class_pure_no_contact"
+  - "balanced_workspace_2_3class_pure_contact"
+
+# VALIDATION: Workspace 3 (completely unseen workspace)
+validation_datasets: [
+  "balanced_workspace_3_3class_squares_cutout_v1",
+  "balanced_workspace_3_3class_squares_cutout_v2",
+  "balanced_workspace_3_3class_pure_contact",
+  "balanced_workspace_3_3class_pure_no_contact"
+]
+
+# Reconstruction Configuration
+reconstruction:
+  enabled: false
+  output_dir: "reconstruction_results"
+
+# Class Filtering Configuration - 3-CLASS MODE
+class_filtering:
+  enabled: false
+  classes_to_exclude_train: []  # Include all: contact, no_contact, edge
+  classes_to_exclude_validation: []
+
+# Domain Adaptation
+domain_adaptation:
+  enabled: false
+  holdout_train_split: 0.3
+
+# Feature Extraction Mode
+feature_extraction:
+  modes:
+    - "features"  # Hand-crafted features (65 dimensions)
+  mode: "features"
+  
+  spectrogram:
+    n_fft: 512
+    hop_length: 128
+    n_mels: 80
+    time_bins: 128
+    fmin: 100
+    fmax: 20000
+    use_log_scale: true
+    n_mfcc: 13
+    n_chroma: 12
+    
+  normalization:
+    enabled: false
+    method: "zscore"
+
+# Analysis Experiments
+experiments:
+  data_processing:
+    enabled: true
+    apply_audio_smoothing: false
+    use_workspace_invariant_features: true
+    use_impulse_features: true
+    use_data_augmentation: true
+    augmentation_factor: 2
+    enhanced_augmentation: false
+    motion_artifact_removal:
+      enabled: false
+
+  dimensionality_reduction:
+    enabled: true
+
+  discrimination_analysis:
+    enabled: true
+    feature_selection:
+      enabled: false
+      top_k_features: 50
+      method: "ensemble"
+    
+    confidence_filtering:
+      enabled: true
+      threshold: 0.8
+      mode: "reject"
+      default_class: "no_contact"
+
+  saliency_analysis:
+    enabled: false
+
+  feature_ablation:
+    enabled: false
+
+  impulse_response:
+    enabled: false
+
+  frequency_band_ablation:
+    enabled: false
+
+  surface_reconstruction:
+    enabled: false
+
+# Output Configuration
+output:
+  base_dir: "test_pipeline_3class_rotation3_ws1ws2_train_ws3_val"

@@ -1048,45 +1048,88 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
             f"    Validation distribution: {dict(zip(*np.unique(y_val, return_counts=True)))}"
         )
 
-        # Split training data into train/test
-        X_train_split, X_test_split, y_train_split, y_test_split = train_test_split(
-            X_train, y_train, test_size=0.2, random_state=42, stratify=y_train
-        )
-
-        self.logger.info(f"Training set: {len(X_train_split)} samples")
-        self.logger.info(f"Test set: {len(X_test_split)} samples")
-        self.logger.info(f"Validation set: {len(X_val)} samples")
-
-        # DEBUG: Log data after split
-        self.logger.info("📊 DEBUG - DATA AFTER TRAIN/TEST SPLIT:")
-        self.logger.info(f"    Train split classes: {sorted(list(set(y_train_split)))}")
-        self.logger.info(
-            f"    Train split distribution: {dict(zip(*np.unique(y_train_split, return_counts=True)))}"
-        )
-        self.logger.info(f"    Test split classes: {sorted(list(set(y_test_split)))}")
-        self.logger.info(
-            f"    Test split distribution: {dict(zip(*np.unique(y_test_split, return_counts=True)))}"
-        )
+        # Use 5-fold stratified cross-validation on training data
         self.logger.info("=" * 80)
+        self.logger.info("🔄 Using 5-Fold Stratified Cross-Validation on Training Data")
+        self.logger.info("=" * 80)
+        self.logger.info(f"Training set: {len(X_train)} samples (all data used in CV)")
+        self.logger.info(
+            f"Validation set: {len(X_val)} samples (held-out for final eval)"
+        )
 
-        # Scale features
+        # Scale features - fit scaler on ALL training data
         scaler = StandardScaler()
-        X_train_scaled = scaler.fit_transform(X_train_split)
-        X_test_scaled = scaler.transform(X_test_split)
+        X_train_scaled = scaler.fit_transform(X_train)
         X_val_scaled = scaler.transform(X_val)
 
         # Get classifiers
         classifiers = self._get_classifiers()
 
-        # Train and evaluate each classifier
+        # Setup cross-validation
+        from sklearn.model_selection import cross_validate, cross_val_predict
+
+        cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+
+        # Train and evaluate each classifier with cross-validation
         results_dict = {}
         trained_classifiers = {}  # Store trained classifier objects for saving
+
         for clf_name, clf in classifiers.items():
-            self.logger.info(f"\nTraining: {clf_name}")
+            self.logger.info(f"\n{'='*60}")
+            self.logger.info(f"Evaluating: {clf_name}")
+            self.logger.info(f"{'='*60}")
 
             try:
-                # Train
-                clf.fit(X_train_scaled, y_train_split)
+                # Perform 5-fold cross-validation on training data
+                self.logger.info(f"  Running 5-fold cross-validation...")
+
+                cv_results = cross_validate(
+                    clf,
+                    X_train_scaled,
+                    y_train,
+                    cv=cv,
+                    scoring=["accuracy", "f1_weighted"],
+                    return_train_score=True,
+                    n_jobs=-1,  # Use all CPU cores
+                )
+
+                # Calculate CV statistics
+                train_accuracy_cv = cv_results["train_accuracy"].mean()
+                train_accuracy_std = cv_results["train_accuracy"].std()
+                test_accuracy_cv = cv_results[
+                    "test_accuracy"
+                ].mean()  # This is the CV test score
+                test_accuracy_std = cv_results["test_accuracy"].std()
+                train_f1_cv = cv_results["train_f1_weighted"].mean()
+                test_f1_cv = cv_results["test_f1_weighted"].mean()
+                test_f1_std = cv_results["test_f1_weighted"].std()
+
+                self.logger.info(f"  ✓ Cross-Validation Results (5 folds):")
+                self.logger.info(
+                    f"    Train Accuracy: {train_accuracy_cv:.4f} ± {train_accuracy_std:.4f}"
+                )
+                self.logger.info(
+                    f"    CV Test Accuracy: {test_accuracy_cv:.4f} ± {test_accuracy_std:.4f}"
+                )
+                self.logger.info(f"    Train F1: {train_f1_cv:.4f}")
+                self.logger.info(
+                    f"    CV Test F1: {test_f1_cv:.4f} ± {test_f1_std:.4f}"
+                )
+
+                # Get CV predictions for confusion matrix
+                self.logger.info(f"  Collecting CV predictions for confusion matrix...")
+                y_train_cv_pred = cross_val_predict(
+                    clf,
+                    X_train_scaled,
+                    y_train,
+                    cv=cv,
+                    n_jobs=-1,
+                )
+                self.logger.info(f"  ✓ Collected {len(y_train_cv_pred)} CV predictions")
+
+                # Now train final model on ALL training data for validation set evaluation
+                self.logger.info(f"  Training final model on all training data...")
+                clf.fit(X_train_scaled, y_train)
 
                 # Store the trained classifier
                 trained_classifiers[clf_name] = clf
@@ -1098,7 +1141,7 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
                 conf_mode = conf_config.get("mode", "reject")
                 conf_default_class = conf_config.get("default_class", "no_contact")
 
-                # Predict on train set (for overfitting analysis)
+                # Predict on FULL training set (for overfitting analysis)
                 y_train_pred = clf.predict(X_train_scaled)
                 y_train_proba = clf.predict_proba(X_train_scaled)
 
@@ -1108,7 +1151,7 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
                     )
                     y_train_filtered, y_train_pred_filtered, train_conf_stats = (
                         self.apply_confidence_filtering(
-                            y_train_split,
+                            y_train,  # Full training labels
                             y_train_pred,
                             y_train_proba,
                             threshold=conf_threshold,
@@ -1117,39 +1160,13 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
                         )
                     )
                 else:
-                    y_train_filtered = y_train_split
+                    y_train_filtered = y_train  # Full training labels
                     y_train_pred_filtered = y_train_pred
                     train_conf_stats = None
 
                 train_accuracy = accuracy_score(y_train_filtered, y_train_pred_filtered)
                 train_f1 = f1_score(
                     y_train_filtered, y_train_pred_filtered, average="weighted"
-                )
-
-                # Predict on test set
-                y_test_pred = clf.predict(X_test_scaled)
-                y_test_proba = clf.predict_proba(X_test_scaled)
-
-                if conf_enabled:
-                    self.logger.info(f"  🔍 Applying confidence filtering to TEST set:")
-                    y_test_filtered, y_test_pred_filtered, test_conf_stats = (
-                        self.apply_confidence_filtering(
-                            y_test_split,
-                            y_test_pred,
-                            y_test_proba,
-                            threshold=conf_threshold,
-                            mode=conf_mode,
-                            default_class=conf_default_class,
-                        )
-                    )
-                else:
-                    y_test_filtered = y_test_split
-                    y_test_pred_filtered = y_test_pred
-                    test_conf_stats = None
-
-                test_accuracy = accuracy_score(y_test_filtered, y_test_pred_filtered)
-                test_f1 = f1_score(
-                    y_test_filtered, y_test_pred_filtered, average="weighted"
                 )
 
                 # Predict on validation set
@@ -1180,63 +1197,70 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
                     y_val_filtered, y_val_pred_filtered, average="weighted"
                 )
 
+                self.logger.info(f"  ✓ Final Model Performance:")
                 self.logger.info(
-                    f"  Train Accuracy: {train_accuracy:.4f} | F1: {train_f1:.4f}"
+                    f"    Train Accuracy (all data): {train_accuracy:.4f} | F1: {train_f1:.4f}"
                 )
                 self.logger.info(
-                    f"  Test Accuracy: {test_accuracy:.4f} | F1: {test_f1:.4f}"
-                )
-                self.logger.info(
-                    f"  Validation Accuracy: {val_accuracy:.4f} | F1: {val_f1:.4f}"
+                    f"    Validation Accuracy: {val_accuracy:.4f} | F1: {val_f1:.4f}"
                 )
 
+                # Store results with CV metrics
                 results_dict[clf_name] = {
                     "train_accuracy": train_accuracy,
                     "train_f1": train_f1,
-                    "test_accuracy": test_accuracy,
-                    "test_f1": test_f1,
-                    "validation_accuracy": val_accuracy,
+                    "cv_test_accuracy": test_accuracy_cv,  # Cross-validation test accuracy
+                    "cv_test_accuracy_std": test_accuracy_std,  # Standard deviation across folds
+                    "cv_test_f1": test_f1_cv,
+                    "cv_test_f1_std": test_f1_std,
+                    "cv_train_accuracy": train_accuracy_cv,
+                    "cv_train_accuracy_std": train_accuracy_std,
+                    "validation_accuracy": val_accuracy,  # Held-out validation set
                     "validation_f1": val_f1,
-                    "test_predictions": y_test_pred,
                     "validation_predictions": y_val_pred,
+                    "cv_predictions": y_train_cv_pred,  # NEW: Store CV predictions
                     "train_confidence_stats": train_conf_stats,
-                    "test_confidence_stats": test_conf_stats,
                     "validation_confidence_stats": val_conf_stats,
                 }
             except Exception as e:
                 self.logger.warning(f"  ⚠ Failed to train {clf_name}: {e}")
+                import traceback
+
+                self.logger.warning(traceback.format_exc())
                 continue
 
         # Create summary
         results = {
             "validation_mode": True,
+            "cross_validation_enabled": True,  # NEW: Flag that we used CV
+            "cv_folds": 5,  # NEW: Number of CV folds
             "training_datasets": training_datasets,
             "validation_datasets": validation_datasets,
             "classifier_results": results_dict,
-            "num_train_samples": len(X_train_split),
-            "num_test_samples": len(X_test_split),
+            "num_train_samples": len(X_train),  # Full training set
             "num_val_samples": len(X_val),
             "batch_performance_results": {},  # For compatibility
             "cross_batch_results": {},  # For compatibility
         }
 
-        # Find best classifier
+        # Find best classifier based on CV test accuracy
         best_clf_name = max(
-            results_dict.keys(), key=lambda k: results_dict[k]["validation_accuracy"]
+            results_dict.keys(), key=lambda k: results_dict[k]["cv_test_accuracy"]
         )
         results["best_classifier"] = {
             "name": best_clf_name,
             "train_accuracy": results_dict[best_clf_name]["train_accuracy"],
-            "test_accuracy": results_dict[best_clf_name]["test_accuracy"],
+            "cv_test_accuracy": results_dict[best_clf_name]["cv_test_accuracy"],
+            "cv_test_accuracy_std": results_dict[best_clf_name]["cv_test_accuracy_std"],
             "validation_accuracy": results_dict[best_clf_name]["validation_accuracy"],
         }
 
-        self.logger.info(f"\n🏆 Best Classifier: {best_clf_name}")
+        self.logger.info(f"\n🏆 Best Classifier (by CV accuracy): {best_clf_name}")
         self.logger.info(
             f"  Train Accuracy: {results_dict[best_clf_name]['train_accuracy']:.4f}"
         )
         self.logger.info(
-            f"  Test Accuracy: {results_dict[best_clf_name]['test_accuracy']:.4f}"
+            f"  CV Test Accuracy: {results_dict[best_clf_name]['cv_test_accuracy']:.4f} ± {results_dict[best_clf_name]['cv_test_accuracy_std']:.4f}"
         )
         self.logger.info(
             f"  Validation Accuracy: {results_dict[best_clf_name]['validation_accuracy']:.4f}"
@@ -1245,10 +1269,8 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
         # Save validation results
         self._save_validation_results(
             results,
-            X_train_split,
-            y_train_split,
-            X_test_split,
-            y_test_split,
+            X_train,  # Full training set
+            y_train,
             X_val,
             y_val,
             scaler,
@@ -1259,8 +1281,8 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
             trained_classifiers=trained_classifiers,
             results_dict=results_dict,
             scaler=scaler,
-            classes=sorted(list(set(y_train_split))),
-            metric_key="validation_accuracy",
+            classes=sorted(list(set(y_train))),  # Use full training labels
+            metric_key="cv_test_accuracy",  # Use CV test accuracy for ranking
             top_n=3,
         )
 
@@ -2529,106 +2551,106 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
         # Found via Optuna Bayesian optimization (50 trials)
         # Optimized for validation accuracy (cross-workspace generalization)
 
-        if GPU_AVAILABLE:
-            # GPU-accelerated optimized MLP
-            # classifiers["GPU-MLP (Tuned)"] = GPUMLPClassifier(
-            #     hidden_layer_sizes=(256, 192, 160),
-            #     dropout=0.162,
-            #     learning_rate=0.000131,
-            #     weight_decay=0.000294,
-            #     batch_size=32,
-            #     max_epochs=500,
-            #     early_stopping=True,
-            #     patience=25,
-            #     use_batch_norm=False,
-            #     random_state=42,
-            # )
+        # if GPU_AVAILABLE:
+        # GPU-accelerated optimized MLP
+        # classifiers["GPU-MLP (Tuned)"] = GPUMLPClassifier(
+        #     hidden_layer_sizes=(256, 192, 160),
+        #     dropout=0.162,
+        #     learning_rate=0.000131,
+        #     weight_decay=0.000294,
+        #     batch_size=32,
+        #     max_epochs=500,
+        #     early_stopping=True,
+        #     patience=25,
+        #     use_batch_norm=False,
+        #     random_state=42,
+        # )
 
-            # # Variant with slightly higher regularization
-            # classifiers["GPU-MLP (Tuned-HighReg)"] = GPUMLPClassifier(
-            #     hidden_layer_sizes=(256, 192, 160),
-            #     dropout=0.25,
-            #     learning_rate=0.000131,
-            #     weight_decay=0.001,
-            #     batch_size=32,
-            #     max_epochs=500,
-            #     early_stopping=True,
-            #     patience=30,
-            #     use_batch_norm=False,
-            #     random_state=42,
-            # )
+        # # Variant with slightly higher regularization
+        # classifiers["GPU-MLP (Tuned-HighReg)"] = GPUMLPClassifier(
+        #     hidden_layer_sizes=(256, 192, 160),
+        #     dropout=0.25,
+        #     learning_rate=0.000131,
+        #     weight_decay=0.001,
+        #     batch_size=32,
+        #     max_epochs=500,
+        #     early_stopping=True,
+        #     patience=30,
+        #     use_batch_norm=False,
+        #     random_state=42,
+        # )
 
-            # ========================================================================
-            # CNN CLASSIFIERS FOR SPECTROGRAM DATA
-            # ========================================================================
-            # These classifiers expect 2D spectrogram input (n_mels × time_bins)
-            # They work with flattened spectrograms and automatically reshape them
+        # ========================================================================
+        # CNN CLASSIFIERS FOR SPECTROGRAM DATA
+        # ========================================================================
+        # These classifiers expect 2D spectrogram input (n_mels × time_bins)
+        # They work with flattened spectrograms and automatically reshape them
 
-            # SIMPLIFIED CNN: Standard Conv2D for small dataset generalization
-            # WHY SIMPLIFIED: Depthwise separable + attention was TOO COMPLEX for 968 samples
-            # New approach: Fewer parameters, more regularization, can actually learn
-            classifiers["CNN-Spectrogram"] = SpectrogramCNNClassifier(
-                input_shape=(80, 128),  # Match spectrogram size
-                dropout=0.5,  # INCREASED: Strong dropout in simple architecture
-                learning_rate=0.001,  # INCREASED: Can learn faster with simpler model
-                weight_decay=0.01,  # INCREASED: Need strong L2 with small dataset
-                batch_size=16,
-                max_epochs=200,  # REDUCED: Simpler model converges faster
-                early_stopping=True,
-                patience=30,  # REDUCED: Expect faster convergence
-                random_state=42,
-                verbose=True,
-            )
+        # SIMPLIFIED CNN: Standard Conv2D for small dataset generalization
+        # WHY SIMPLIFIED: Depthwise separable + attention was TOO COMPLEX for 968 samples
+        # New approach: Fewer parameters, more regularization, can actually learn
+        # classifiers["CNN-Spectrogram"] = SpectrogramCNNClassifier(
+        #     input_shape=(80, 128),  # Match spectrogram size
+        #     dropout=0.5,  # INCREASED: Strong dropout in simple architecture
+        #     learning_rate=0.001,  # INCREASED: Can learn faster with simpler model
+        #     weight_decay=0.01,  # INCREASED: Need strong L2 with small dataset
+        #     batch_size=16,
+        #     max_epochs=200,  # REDUCED: Simpler model converges faster
+        #     early_stopping=True,
+        #     patience=30,  # REDUCED: Expect faster convergence
+        #     random_state=42,
+        #     verbose=True,
+        # )
 
-            # ADVANCED CNN: Depthwise Separable + Attention (previously achieved 65% training)
-            # This was removed but user wants it back to compare
-            # MORE COMPLEX: Needs larger datasets (3K+ samples) to shine
-            # Use case: When simple CNN plateaus and you have enough data
-            classifiers["CNN-Advanced-Spectrogram"] = SpectrogramCNN_AdvancedClassifier(
-                input_shape=(80, 128),
-                dropout=0.4,  # Moderate dropout (complex architecture provides regularization)
-                learning_rate=0.0003,  # Moderate LR for complex model
-                weight_decay=0.005,  # Light L2 (attention mechanism helps prevent overfitting)
-                batch_size=16,
-                max_epochs=200,
-                early_stopping=True,
-                patience=40,  # More patience for complex architecture
-                random_state=42,
-                verbose=True,
-            )
+        # ADVANCED CNN: Depthwise Separable + Attention (previously achieved 65% training)
+        # This was removed but user wants it back to compare
+        # MORE COMPLEX: Needs larger datasets (3K+ samples) to shine
+        # Use case: When simple CNN plateaus and you have enough data
+        # classifiers["CNN-Advanced-Spectrogram"] = SpectrogramCNN_AdvancedClassifier(
+        #     input_shape=(80, 128),
+        #     dropout=0.4,  # Moderate dropout (complex architecture provides regularization)
+        #     learning_rate=0.0003,  # Moderate LR for complex model
+        #     weight_decay=0.005,  # Light L2 (attention mechanism helps prevent overfitting)
+        #     batch_size=16,
+        #     max_epochs=200,
+        #     early_stopping=True,
+        #     patience=40,  # More patience for complex architecture
+        #     random_state=42,
+        #     verbose=True,
+        # )
 
-            # CNN + MLP Hybrid: RESTORED to v1 settings that achieved 93.6% train accuracy
-            # Original settings from successful run - keeping capacity for learning
-            classifiers["CNN-MLP-Spectrogram"] = SpectrogramCNN_MLPClassifier(
-                input_shape=(80, 128),
-                cnn_channels=[32, 64, 128],
-                mlp_hidden_dims=[96, 48],  # RESTORED: Original capacity (not [64,32])
-                dropout=0.6,  # RESTORED: Original dropout (not 0.7)
-                learning_rate=0.00003,  # RESTORED: Original LR (not 0.00002)
-                weight_decay=0.02,  # RESTORED: Original L2 (not 0.03)
-                batch_size=8,
-                max_epochs=400,  # RESTORED: Original max epochs (not 200)
-                early_stopping=True,
-                patience=50,  # RESTORED: Original patience (not 30)
-                random_state=42,
-                verbose=True,
-            )
+        # # CNN + MLP Hybrid: RESTORED to v1 settings that achieved 93.6% train accuracy
+        # # Original settings from successful run - keeping capacity for learning
+        # classifiers["CNN-MLP-Spectrogram"] = SpectrogramCNN_MLPClassifier(
+        #     input_shape=(80, 128),
+        #     cnn_channels=[32, 64, 128],
+        #     mlp_hidden_dims=[96, 48],  # RESTORED: Original capacity (not [64,32])
+        #     dropout=0.6,  # RESTORED: Original dropout (not 0.7)
+        #     learning_rate=0.00003,  # RESTORED: Original LR (not 0.00002)
+        #     weight_decay=0.02,  # RESTORED: Original L2 (not 0.03)
+        #     batch_size=8,
+        #     max_epochs=400,  # RESTORED: Original max epochs (not 200)
+        #     early_stopping=True,
+        #     patience=50,  # RESTORED: Original patience (not 30)
+        #     random_state=42,
+        #     verbose=True,
+        # )
 
-            # RESIDUAL CNN (ResNet-style): DISABLED - Performed poorly (50% random guessing)
-            # Issue: Too deep for small dataset, massive validation loss spikes
-            # Skip connections didn't help - model couldn't learn at all
-            # classifiers["CNN-ResNet-Spectrogram"] = SpectrogramResNetClassifier(
-            #     input_shape=(80, 128),
-            #     dropout=0.5,
-            #     learning_rate=0.0005,
-            #     weight_decay=0.01,
-            #     batch_size=16,
-            #     max_epochs=250,
-            #     early_stopping=True,
-            #     patience=40,
-            #     random_state=42,
-            #     verbose=True,
-            # )
+        # RESIDUAL CNN (ResNet-style): DISABLED - Performed poorly (50% random guessing)
+        # Issue: Too deep for small dataset, massive validation loss spikes
+        # Skip connections didn't help - model couldn't learn at all
+        # classifiers["CNN-ResNet-Spectrogram"] = SpectrogramResNetClassifier(
+        #     input_shape=(80, 128),
+        #     dropout=0.5,
+        #     learning_rate=0.0005,
+        #     weight_decay=0.01,
+        #     batch_size=16,
+        #     max_epochs=250,
+        #     early_stopping=True,
+        #     patience=40,
+        #     random_state=42,
+        #     verbose=True,
+        # )
 
         # ========================================================================
         # TREE-BASED GRADIENT BOOSTING MODELS
@@ -3082,13 +3104,11 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
         results: dict,
         X_train: np.ndarray,
         y_train: np.ndarray,
-        X_test: np.ndarray,
-        y_test: np.ndarray,
         X_val: np.ndarray,
         y_val: np.ndarray,
         scaler,
     ):
-        """Save validation mode results to disk."""
+        """Save validation mode results to disk (with cross-validation)."""
         import json
         import matplotlib.pyplot as plt
         from sklearn.metrics import confusion_matrix
@@ -3102,10 +3122,11 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
         classifier_results = results["classifier_results"]
         serializable_results = {
             "validation_mode": True,
+            "cross_validation_enabled": results.get("cross_validation_enabled", False),
+            "cv_folds": results.get("cv_folds", 5),
             "training_datasets": results["training_datasets"],
             "validation_datasets": results["validation_datasets"],
             "num_train_samples": results["num_train_samples"],
-            "num_test_samples": results["num_test_samples"],
             "num_val_samples": results["num_val_samples"],
             "best_classifier": results["best_classifier"],
             "classifier_performance": {},
@@ -3113,14 +3134,25 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
 
         # Store performance for each classifier
         for clf_name, clf_results in classifier_results.items():
-            serializable_results["classifier_performance"][clf_name] = {
+            perf_dict = {
                 "train_accuracy": float(clf_results["train_accuracy"]),
                 "train_f1": float(clf_results["train_f1"]),
-                "test_accuracy": float(clf_results["test_accuracy"]),
-                "test_f1": float(clf_results["test_f1"]),
                 "validation_accuracy": float(clf_results["validation_accuracy"]),
                 "validation_f1": float(clf_results["validation_f1"]),
             }
+            # Add CV metrics if available
+            if "cv_test_accuracy" in clf_results:
+                perf_dict.update(
+                    {
+                        "cv_test_accuracy": float(clf_results["cv_test_accuracy"]),
+                        "cv_test_accuracy_std": float(
+                            clf_results["cv_test_accuracy_std"]
+                        ),
+                        "cv_test_f1": float(clf_results["cv_test_f1"]),
+                        "cv_test_f1_std": float(clf_results["cv_test_f1_std"]),
+                    }
+                )
+            serializable_results["classifier_performance"][clf_name] = perf_dict
 
         # Save JSON results
         results_path = os.path.join(output_dir, "discrimination_summary.json")
@@ -3136,7 +3168,7 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
         best_clf_name = results["best_classifier"]["name"]
         self._create_validation_confusion_matrices(
             classifier_results[best_clf_name],
-            y_test,
+            y_train,  # Use full training set
             y_val,
             best_clf_name,
             output_dir,
@@ -3211,12 +3243,16 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
     def _create_validation_performance_plot(
         self, classifier_results: dict, output_dir: str
     ):
-        """Create bar plot comparing test and validation performance."""
+        """Create bar plot comparing CV test and validation performance."""
         import matplotlib.pyplot as plt
 
         clf_names = list(classifier_results.keys())
         train_accs = [r["train_accuracy"] for r in classifier_results.values()]
-        test_accs = [r["test_accuracy"] for r in classifier_results.values()]
+        # Use CV test accuracy instead of single test split
+        cv_test_accs = [r["cv_test_accuracy"] for r in classifier_results.values()]
+        cv_test_stds = [
+            r.get("cv_test_accuracy_std", 0) for r in classifier_results.values()
+        ]
         val_accs = [r["validation_accuracy"] for r in classifier_results.values()]
 
         fig, ax = plt.subplots(figsize=(16, 8))
@@ -3231,7 +3267,17 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
             alpha=0.7,
             color="lightblue",
         )
-        ax.bar(x, test_accs, width, label="Test Accuracy", alpha=0.8, color="orange")
+        # Plot CV test accuracy with error bars
+        ax.bar(
+            x,
+            cv_test_accs,
+            width,
+            label="CV Test Accuracy (5-fold)",
+            alpha=0.8,
+            color="orange",
+            yerr=cv_test_stds,
+            capsize=5,
+        )
         ax.bar(
             x + width,
             val_accs,
@@ -3242,7 +3288,7 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
         )
 
         ax.set_ylabel("Accuracy")
-        ax.set_title("Classifier Performance: Train vs Test vs Validation")
+        ax.set_title("Classifier Performance: Train vs CV Test vs Validation")
         ax.set_xticks(x)
         ax.set_xticklabels(clf_names, rotation=45, ha="right")
         ax.legend()
@@ -3372,12 +3418,12 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
     def _create_validation_confusion_matrices(
         self,
         clf_results: dict,
-        y_test: np.ndarray,
-        y_val: np.ndarray,
+        y_train: np.ndarray,  # Training labels for CV confusion matrix
+        y_val: np.ndarray,  # Validation labels
         clf_name: str,
         output_dir: str,
     ):
-        """Create confusion matrices for test and validation sets."""
+        """Create confusion matrices for CV test folds and validation set (side-by-side)."""
         import matplotlib.pyplot as plt
         from sklearn.metrics import confusion_matrix
         import seaborn as sns
@@ -3385,80 +3431,129 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
         # DEBUG: Log label information
         self.logger.info("=" * 80)
         self.logger.info(f"📊 DEBUG - CONFUSION MATRIX DATA for {clf_name}:")
-        self.logger.info(f"    Test set:")
-        self.logger.info(f"      Unique classes in y_test: {sorted(list(set(y_test)))}")
+        self.logger.info(f"    Training set (for CV):")
         self.logger.info(
-            f"      Distribution: {dict(zip(*np.unique(y_test, return_counts=True)))}"
+            f"      Unique classes in y_train: {sorted(list(set(y_train)))}"
+        )
+        self.logger.info(
+            f"      Distribution: {dict(zip(*np.unique(y_train, return_counts=True)))}"
         )
         self.logger.info(f"    Validation set:")
         self.logger.info(f"      Unique classes in y_val: {sorted(list(set(y_val)))}")
         self.logger.info(
             f"      Distribution: {dict(zip(*np.unique(y_val, return_counts=True)))}"
         )
+
+        # Check if we have CV predictions
+        has_cv_preds = "cv_predictions" in clf_results
+        self.logger.info(f"    Has CV predictions: {has_cv_preds}")
+        if has_cv_preds:
+            self.logger.info(
+                f"      CV predictions shape: {len(clf_results['cv_predictions'])}"
+            )
         self.logger.info("=" * 80)
 
-        fig, axes = plt.subplots(1, 2, figsize=(14, 5))
-
-        # Get unique labels from actual data (should only be 2 classes if filtering worked)
-        test_labels = sorted(list(set(y_test)))
+        # Get unique labels from actual data
+        train_labels = sorted(list(set(y_train)))
         val_labels = sorted(list(set(y_val)))
 
-        # DEBUG: Verify we only have 2 classes
-        if len(test_labels) != 2:
-            self.logger.warning(
-                f"⚠️  WARNING: Expected 2 classes in test set, got {len(test_labels)}: {test_labels}"
+        # Create side-by-side confusion matrices if we have both CV and validation predictions
+        if has_cv_preds and "validation_predictions" in clf_results:
+            fig, axes = plt.subplots(1, 2, figsize=(16, 6))
+
+            # LEFT: CV Test Confusion Matrix (aggregated across folds)
+            y_train_cv_pred = clf_results["cv_predictions"]
+            cm_cv = confusion_matrix(y_train, y_train_cv_pred, labels=train_labels)
+
+            self.logger.info(f"📊 CV test confusion matrix shape: {cm_cv.shape}")
+            self.logger.info(f"    Labels used: {train_labels}")
+
+            sns.heatmap(
+                cm_cv,
+                annot=True,
+                fmt="d",
+                cmap="Blues",
+                ax=axes[0],
+                xticklabels=train_labels,
+                yticklabels=train_labels,
+                cbar=True,
             )
-        if len(val_labels) != 2:
-            self.logger.warning(
-                f"⚠️  WARNING: Expected 2 classes in validation set, got {len(val_labels)}: {val_labels}"
+            axes[0].set_title(
+                f"{clf_name}\nCross-Validation Test (5-Fold Aggregated)",
+                fontsize=12,
+                fontweight="bold",
+            )
+            axes[0].set_ylabel("True Label", fontsize=11)
+            axes[0].set_xlabel("Predicted Label", fontsize=11)
+
+            # RIGHT: Validation Confusion Matrix (hold-out set)
+            y_val_pred = clf_results["validation_predictions"]
+            cm_val = confusion_matrix(y_val, y_val_pred, labels=val_labels)
+
+            self.logger.info(f"📊 Validation confusion matrix shape: {cm_val.shape}")
+            self.logger.info(f"    Labels used: {val_labels}")
+
+            sns.heatmap(
+                cm_val,
+                annot=True,
+                fmt="d",
+                cmap="Greens",
+                ax=axes[1],
+                xticklabels=val_labels,
+                yticklabels=val_labels,
+                cbar=True,
+            )
+            axes[1].set_title(
+                f"{clf_name}\nValidation Set (Hold-out)", fontsize=12, fontweight="bold"
+            )
+            axes[1].set_ylabel("True Label", fontsize=11)
+            axes[1].set_xlabel("Predicted Label", fontsize=11)
+
+            plt.suptitle(
+                "Confusion Matrix Comparison: CV Test vs Validation",
+                fontsize=14,
+                fontweight="bold",
+                y=1.02,
+            )
+            plt.tight_layout()
+            plot_path = os.path.join(
+                output_dir, "confusion_matrix_cv_vs_validation.png"
+            )
+            plt.savefig(plot_path, dpi=300, bbox_inches="tight")
+            plt.close()
+
+            self.logger.info(
+                f"CV + Validation confusion matrices saved to: {plot_path}"
             )
 
-        # Test confusion matrix
-        y_test_pred = clf_results["test_predictions"]
-        cm_test = confusion_matrix(y_test, y_test_pred, labels=test_labels)
+        # Also save individual validation confusion matrix (for backwards compatibility)
+        if "validation_predictions" in clf_results:
+            fig, ax = plt.subplots(1, 1, figsize=(8, 6))
 
-        self.logger.info(f"📊 Test confusion matrix shape: {cm_test.shape}")
-        self.logger.info(f"    Labels used: {test_labels}")
+            # Validation confusion matrix
+            y_val_pred = clf_results["validation_predictions"]
+            cm_val = confusion_matrix(y_val, y_val_pred, labels=val_labels)
 
-        sns.heatmap(
-            cm_test,
-            annot=True,
-            fmt="d",
-            cmap="Blues",
-            ax=axes[0],
-            xticklabels=test_labels,
-            yticklabels=test_labels,
-        )
-        axes[0].set_title(f"{clf_name} - Test Set")
-        axes[0].set_ylabel("True Label")
-        axes[0].set_xlabel("Predicted Label")
+            sns.heatmap(
+                cm_val,
+                annot=True,
+                fmt="d",
+                cmap="Greens",
+                ax=ax,
+                xticklabels=val_labels,
+                yticklabels=val_labels,
+            )
+            ax.set_title(f"{clf_name} - Validation Set (Hold-out)")
+            ax.set_ylabel("True Label")
+            ax.set_xlabel("Predicted Label")
 
-        # Validation confusion matrix
-        y_val_pred = clf_results["validation_predictions"]
-        cm_val = confusion_matrix(y_val, y_val_pred, labels=val_labels)
+            plt.tight_layout()
+            plot_path = os.path.join(output_dir, "confusion_matrix_validation.png")
+            plt.savefig(plot_path, dpi=300, bbox_inches="tight")
+            plt.close()
 
-        self.logger.info(f"📊 Validation confusion matrix shape: {cm_val.shape}")
-        self.logger.info(f"    Labels used: {val_labels}")
+            self.logger.info(f"Validation confusion matrix saved to: {plot_path}")
 
-        sns.heatmap(
-            cm_val,
-            annot=True,
-            fmt="d",
-            cmap="Greens",
-            ax=axes[1],
-            xticklabels=val_labels,
-            yticklabels=val_labels,
-        )
-        axes[1].set_title(f"{clf_name} - Validation Set")
-        axes[1].set_ylabel("True Label")
-        axes[1].set_xlabel("Predicted Label")
-
-        plt.tight_layout()
-        plot_path = os.path.join(output_dir, "confusion_matrices.png")
-        plt.savefig(plot_path, dpi=300, bbox_inches="tight")
-        plt.close()
-
-        self.logger.info(f"Confusion matrices saved to: {plot_path}")
         self.logger.info("=" * 80)
 
     def _save_batch_discrimination_results(self, batch_results: dict, batch_name: str):
