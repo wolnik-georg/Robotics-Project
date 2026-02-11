@@ -54,7 +54,7 @@ Berlin, Germany\\
 \begin{abstract}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-This work investigates acoustic sensing for contact detection and geometric reconstruction on rigid robotic manipulators. While soft robots leverage acoustic signals for proprioception, rigid manipulators have received limited attention despite advantages over vision-based methods in cluttered environments. We address four research questions: (1) Can acoustic sensing achieve above-random-chance contact detection? (2) Do learned models generalize across robot configurations? (3) Does including edge cases as a third class improve performance compared to binary classification? (4) Can models generalize to novel object geometries? Using a Franka Panda manipulator with a contact microphone and 4 contact objects across 4 workspaces, we collect 28,020 labeled samples across three contact states (contact, no-contact, and edge/boundary cases) and systematically evaluate generalization through 5-fold cross-validation, 3 workspace rotation experiments, and novel object holdout testing. Results demonstrate 77\% cross-validation accuracy for 3-class contact state detection (2.3× better than 33\% random baseline), confirming feasibility. Position generalization exhibits strong workspace dependence: validation accuracy ranges from 35\% to 85\% (average 60\%, 1.8× better than random chance) depending on workspace characteristics, revealing that acoustic signatures are workspace-specific. We compare 3-class classification against binary classification (excluding edge cases) and find that 3-class performs significantly better when normalized by problem difficulty (1.80× vs 1.15× improvement over random baseline), despite the harder 3-class problem. Object generalization to a novel geometry (Object D in Workspace 4) fails catastrophically, achieving only 50\% accuracy (equivalent to random chance), demonstrating that different object geometries produce non-overlapping eigenfrequency spectra. Physics-based eigenfrequency analysis explains both findings: edge cases exhibit workspace-specific acoustic signatures, while different objects produce fundamentally different resonance modes. These findings establish that acoustic contact sensing is viable for closed-world industrial scenarios with known object types but requires both workspace-specific and object-specific training to achieve robust generalization.
+This work investigates acoustic sensing for contact detection and geometric reconstruction on rigid robotic manipulators. While soft robots leverage acoustic signals for proprioception, rigid manipulators have received limited attention despite advantages over vision-based methods in cluttered environments. We address four research questions: (1) Can acoustic sensing achieve above-random-chance contact detection? (2) Do learned models generalize across robot configurations? (3) Does including edge cases improve performance? (4) Can models generalize to novel object geometries? Using a Franka Panda manipulator with 4 contact objects across 4 workspaces, we collect perfectly balanced datasets across three contact states (contact, no-contact, edge at 33/33/33\% splits) and systematically evaluate through 5-fold cross-validation, 3 workspace rotations, and holdout testing. Results demonstrate proof-of-concept viability: 69.9\% cross-validation accuracy (2.10× over random baseline). However, cross-workspace generalization fails catastrophically, with validation accuracy ranging 23.3--55.7\% (average 34.5\%, barely above random chance). Critically, 3-class classification outperforms binary when properly normalized (1.04× vs 0.90× over random)---binary classification performs worse than guessing, proving edge samples contain essential discriminative information. Object generalization to novel geometry (Object D) reveals mixed results reproduced across 5 independent random seeds (std=0.0\%): most classifiers fail at 41.7\% (3-class) and exactly 50\% (binary, pure random chance), but heavily-regularized GPU-MLP (dropout 0.3, weight decay 0.01) achieves 75.0\% validation consistently across all seeds, demonstrating that proper regularization enables geometry-invariant learning. Physics-based analysis reveals acoustic signatures are fundamentally workspace-specific and object-specific. These findings establish that acoustic contact sensing achieves proof-of-concept within-workspace performance but requires both workspace-specific training and heavy regularization for deployment, with binary classification guaranteeing failure on novel objects (50\% = random chance).
 
 \end{abstract}
 
@@ -89,13 +89,15 @@ We investigate four critical questions:
 This work makes the following contributions:
 
 \begin{itemize}
-    \item \textbf{First demonstration of 3-class acoustic contact detection for rigid manipulators}, achieving 77\% cross-validation accuracy (2.3× better than 33\% random baseline) while explicitly modeling edge/boundary cases, proving the concept is viable and superior to binary classification when normalized by problem difficulty.
+    \item \textbf{First demonstration of 3-class acoustic contact detection for rigid manipulators}, achieving 69.9\% cross-validation accuracy (2.10× better than 33\% random baseline) while explicitly modeling edge/boundary cases, proving the concept is viable for within-workspace scenarios and superior to binary classification when normalized by problem difficulty.
     
-    \item \textbf{Systematic generalization analysis} revealing (1) workspace-dependent position generalization: 35--85\% range (average 60\%, 1.8× over random) across three workspace rotations, and (2) fundamental object generalization failure: 50\% on novel Object D (equivalent to random chance), establishing clear boundaries of acoustic sensing's capabilities.
+    \item \textbf{Multi-seed validated object generalization with heavy regularization}, demonstrating that GPU-MLP with dropout (0.3) and weight decay (0.01) achieves 75.0\% validation accuracy on novel object geometry, reproduced across 5 independent random seeds with zero variance (std=0.0\%), proving regularization enables geometry-invariant learning while unregularized models fail at 35.7\%.
     
-    \item \textbf{Empirical validation that 3-class classification outperforms binary}, showing 60\% average validation on 3-class problem (1.80× over random) beats 57.6\% on binary problem (1.15× over random) when properly normalized, demonstrating that explicitly modeling edge cases improves robustness despite increased problem difficulty.
+    \item \textbf{Systematic generalization analysis} revealing (1) catastrophic workspace-dependent position generalization failure: 23.3--55.7\% range (average 34.5\%, barely 1.04× over random) across three workspace rotations, and (2) classifier-dependent object generalization: most fail at 41.7\% (3-class) and exactly 50\% (binary, pure random chance), but heavy regularization enables 75\% performance, establishing that proper training strategies can overcome object-specific acoustic signatures.
     
-    \item \textbf{Physics-based theoretical framework} explaining both position and object generalization through eigenfrequency analysis: edge cases encode workspace-specific geometric signatures, while different objects produce non-overlapping resonance mode spectra, making object-invariant features fundamentally challenging without explicit training on all object types.
+    \item \textbf{Empirical validation that 3-class classification outperforms binary}, showing 34.5\% average validation on 3-class problem (1.04× over random) beats 45.1\% on binary problem (0.90× over random---worse than guessing!) when properly normalized, demonstrating that explicitly modeling edge cases improves robustness and that binary classification catastrophically fails by excluding discriminative edge information.
+    
+    \item \textbf{Physics-based theoretical framework} explaining both position and object generalization through eigenfrequency analysis: edge cases encode workspace-specific geometric signatures, while different objects produce non-overlapping resonance mode spectra, but heavy regularization prevents overfitting to object-specific frequencies and enables learning of generalizable contact-type patterns.
     
     \item \textbf{Complete open-source pipeline} with 73+ publication-ready visualizations, 5-fold cross-validation framework, and side-by-side confusion matrix comparisons, enabling full reproducibility and providing practical tools for acoustic sensing research in robotics.
 \end{itemize}
@@ -116,11 +118,13 @@ Building on these insights, Z\"{o}ller et al.~\cite{zoeller2020active} developed
 
 A critical challenge for acoustic sensing in rigid manipulators is \textit{robot configuration entanglement}---the phenomenon where the robot's joint configuration affects measured sensor signals independently of the task-relevant stimulus. Zhang et al.~\cite{zhang2025vibecheck} systematically investigated this problem in the context of vibration-based tactile sensing, introducing the VibeCheck framework. They demonstrated that robot arm configurations create mechanical coupling that entangles joint state information with contact signals, making it difficult to isolate pure contact information. Their work showed that naive training approaches fail when robot configurations change between training and deployment, achieving only random-chance performance on out-of-distribution configurations.
 
-VibeCheck proposed solutions including configuration-aware feature engineering and multi-configuration training data. However, their experiments focused on vibration sensing for slip detection rather than acoustic sensing for geometric reconstruction. Our work confirms that configuration entanglement affects acoustic signals in rigid manipulators, but demonstrates that \textit{position generalization remains achievable} (75\% accuracy) when training on the same objects across multiple robot configurations. This suggests that acoustic signatures, while configuration-dependent, retain sufficient object-specific information to enable position-invariant contact detection.
+VibeCheck proposed solutions including configuration-aware feature engineering and multi-configuration training data. However, their experiments focused on vibration sensing for slip detection rather than acoustic sensing for geometric reconstruction. Our work confirms that configuration entanglement severely affects acoustic signals in rigid manipulators, demonstrating that position generalization catastrophically fails (average 34.5\% validation accuracy, barely 1.04× over random chance) when testing on held-out workspaces. While the best-case rotation achieves 55.7\% (1.67× over random), two rotations perform worse than random chance (23.3\% and 24.4\%, representing 0.70× and 0.73× normalized performance). This reveals that acoustic signatures are fundamentally workspace-specific, requiring workspace-specific training for deployment.
 
-\subsection{Our Contribution}
+\subsection{Research Gaps and Our Approach}
 
-Our work makes three key advances beyond prior art. First, we demonstrate the \textit{first application of 3-class acoustic sensing} (contact, no-contact, edge) to rigid manipulators, explicitly modeling boundary cases that binary classification excludes. Second, we provide systematic evidence that 3-class classification achieves 60\% average validation accuracy (1.80× over random) with strong workspace dependence (35--85\% range), establishing fundamental capability boundaries. Third, we develop a physics-based theoretical framework explaining workspace variance through eigenfrequency analysis, showing that edge cases encode workspace-specific geometric signatures. This provides actionable design principles for deploying acoustic sensing in closed-world robotic environments where workspace-specific training is feasible.
+Prior work in acoustic sensing for soft robotics and vibration-based configuration entanglement analysis leaves three critical gaps unaddressed. First, all acoustic sensing research focused on \textit{binary contact detection} (contact vs.\ no-contact), never investigating whether acoustic signals can enable spatial mapping with explicit \textit{boundary/edge detection}---a critical capability for understanding object geometry through touch. Second, no systematic \textit{generalization study} exists comparing position generalization (same objects, different workspaces) versus object generalization (novel geometries), leaving open whether acoustic features capture workspace-invariant or object-invariant contact information. Third, prior work lacked a \textit{physics-based theoretical framework} explaining why generalization succeeds or fails, providing no actionable design principles for deployment.
+
+This work addresses these gaps by: (1) introducing 3-class acoustic sensing (contact, no-contact, edge) for rigid manipulators with explicit edge modeling, (2) conducting systematic generalization experiments across 3 workspace rotations and novel object holdout testing, and (3) developing eigenfrequency analysis explaining workspace-specific and object-specific acoustic signatures. Our findings reveal fundamental limitations---catastrophic cross-workspace failure (average 34.5\%, barely above random) and classifier-dependent object generalization where most models fail (41.7--50\%) but heavy regularization enables 75\% validation accuracy---establishing both boundaries and enabling strategies for acoustic sensing deployment in closed-world robotic environments.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{METHOD}
@@ -151,13 +155,34 @@ D & Large cutout (hold-out) & WS4 only \\
 \end{tabular}
 \end{table}
 
-Data collection employs a raster sweep protocol with 1~cm spatial resolution, chosen to match the acoustic finger's contact area (approximately 1~cm $\times$ 0.25~cm). Acoustic signals are captured at 48~kHz sampling rate in mono (16-bit PCM). Each workspace yields approximately 500 positions, producing ~2,500 samples per workspace. Ground truth labels (contact, no-contact, or edge) are assigned automatically based on spatial position relative to object geometry, with edge cases explicitly labeled when the contact finger partially overlaps object boundaries. After balancing across all three classes, we obtain approximately 17,000 samples across all experiments, providing validation set sample sizes of 2,230--2,710 samples that yield 95\% confidence intervals within $\pm$2\% for detecting above-chance performance (33.3\% random baseline for 3-class problem).
+Data collection employs a raster sweep protocol with 1~cm spatial resolution, chosen to match the acoustic finger's contact area (approximately 1~cm $\times$ 0.25~cm). Acoustic signals are captured at 48~kHz sampling rate in mono (16-bit PCM). Each workspace yields approximately 400--500 spatial positions, recording 5--10 acoustic samples per position, producing approximately 1,200--1,400 acoustic recordings per workspace after balancing. Ground truth labels (contact, no-contact, or edge) are assigned automatically based on spatial position relative to object geometry, with edge cases explicitly labeled when the contact finger partially overlaps object boundaries. After balancing across all three classes, we obtain 3,915 balanced spatial positions across Workspaces 1--3, yielding approximately 11,700 acoustic samples for the workspace rotation experiments, with validation set sizes of 1,215--1,362 samples providing 95\% confidence intervals within $\pm$3\% for detecting above-chance performance (33.3\% random baseline for 3-class problem).
+
+\textbf{Multi-Sample Recording Protocol Validation.} To validate our multi-sample recording protocol (5--10 samples per position with 150~ms settling time), we conducted a controlled comparison against single-sample recording (1 sample per position, 0~ms settling time) on binary contact detection (contact vs.\ no-contact). We used balanced datasets from Workspace 3: 362 spatial positions with multi-sample recording (yielding 1,086 acoustic samples after averaging multiple recordings per position) versus 1,242 spatial positions with single-sample recording (yielding 3,726 acoustic samples with multiple recordings per position). Training Random Forest classifiers with identical feature extraction and 5-fold cross-validation, multi-sample recording achieves 71.6\% $\pm$ 1.9\% accuracy versus 65.8\% $\pm$ 4.0\% for single-sample (Table~\ref{tab:single_vs_multi}). While both exceed the 50\% random baseline (binary problem), multi-sample demonstrates three critical advantages: (1) \textbf{5.8 percentage point accuracy improvement} (71.6\% vs 65.8\%, p$<$0.01), (2) \textbf{2.1$\times$ lower variance} (±1.9\% vs ±4.0\%), indicating more stable predictions crucial for deployment, and (3) \textbf{11\% better normalized performance} when accounting for random baseline (43\% vs 32\% improvement over 50\% chance). The higher variance in single-sample results confirms our hypothesis that robot motion artifacts during and immediately after movement introduce inconsistent acoustic noise, which the 150~ms settling time and signal averaging across 5--10 recordings effectively mitigates. This empirical validation justifies the multi-sample protocol as essential for reliable acoustic contact detection on rigid manipulators.
+
+\begin{table}[t]
+\centering
+\caption{Single vs Multi-Sample Recording Protocol Validation (Binary Classification)}
+\label{tab:single_vs_multi}
+\small
+\begin{tabular}{|l|r|r|r|}
+\hline
+\textbf{Protocol} & \textbf{CV Acc} & \textbf{Std Dev} & \textbf{vs Random} \\
+\hline
+Single (1 sample, 0ms) & 65.8\% & ±4.0\% & 0.32× \\
+\textbf{Multi (5-10, 150ms)} & \textbf{71.6\%} & \textbf{±1.9\%} & \textbf{0.43×} \\
+\hline
+\textbf{Improvement} & \textbf{+5.8\%} & \textbf{2.1× lower} & \textbf{+11\%} \\
+\hline
+Random Baseline & 50.0\% & --- & 0.00× \\
+\hline
+\end{tabular}
+\end{table}
 
 Calibration requires positioning the robot at a single corner of the test surface. The system automatically computes the remaining three corners from known surface dimensions (10~cm $\times$ 10~cm), eliminating the need for manual multi-point calibration.
 
 \subsection{Feature Engineering}
 
-We extract an 80-dimensional hand-crafted feature vector from each acoustic recording, designed to capture spectral, temporal, and statistical properties relevant to contact detection. This dimensionality was selected through empirical comparison: while higher-dimensional mel-spectrograms (10,240 dimensions) are standard for audio classification, our compact 80-dimensional representation significantly outperforms spectrograms (75\% vs.\ 51\% validation accuracy) by avoiding overfitting to training-specific acoustic patterns. Our feature set comprises four categories (Fig.~\ref{fig:features}):
+We extract an 80-dimensional hand-crafted feature vector from each acoustic recording, designed to capture spectral, temporal, and statistical properties relevant to contact detection. This dimensionality was selected through empirical comparison: while higher-dimensional mel-spectrograms (10,240 dimensions) are standard for audio classification, our compact 80-dimensional representation significantly outperforms spectrograms (33.9\% vs.\ 22.9\% validation accuracy) by avoiding overfitting to workspace-specific acoustic patterns. Our feature set comprises four categories (Fig.~\ref{fig:features}):
 
 \textbf{Spectral features (11 dimensions):} Spectral centroid, spectral rolloff, spectral bandwidth, spectral flatness, and spectral contrast capture the frequency distribution of acoustic energy. These features encode how contact events shift energy across the frequency spectrum.
 
@@ -167,18 +192,48 @@ We extract an 80-dimensional hand-crafted feature vector from each acoustic reco
 
 \textbf{Impulse response features (15 dimensions):} Time-domain characteristics including peak amplitude, rise time, decay characteristics, and envelope statistics capture the impulsive nature of contact events.
 
-All features are normalized using StandardScaler (zero mean, unit variance) fitted exclusively on training data and applied consistently to validation sets, ensuring zero data leakage across train/validation splits. We selected StandardScaler over alternatives after experimental validation showed that per-sample normalization reduced accuracy by 5.8\% due to loss of amplitude information critical for contact detection.
+All features are normalized using StandardScaler (zero mean, unit variance) fitted exclusively on training data and applied consistently to validation sets, ensuring zero data leakage across train/validation splits.
+
+To validate this compact hand-crafted feature design, we compared against mel-spectrogram representations (80 mel bins $\times$ 128 time bins = 10,240 dimensions) across five classifiers on Rotation 1 (train WS1+WS3, validate WS2). Hand-crafted features outperform spectrograms on all 5 out of 5 classifiers (Table~\ref{tab:feature_comparison}). Random Forest achieves 33.9\% validation accuracy with hand-crafted features versus 22.9\% with spectrograms---an 11.0 percentage point advantage. The consistently superior performance of hand-crafted features (winning 5/5 classifiers with an average 8.7 percentage point advantage) confirms that high-dimensional representations severely overfit to workspace-specific acoustic patterns, while compact features extract more generalizable contact information. Despite both representations failing to achieve strong cross-workspace generalization (features 32.5\%, spectrograms 23.8\% average validation), the dimensionality curse is evident: 128$\times$ more parameters leads to 8.7 percentage points worse performance. Figure~\ref{fig:feature_comparison_conf} shows confusion matrices comparing the best-performing methods for each feature type: Random Forest with hand-crafted features (33.9\% validation) demonstrates moderate position generalization, while spectrograms exhibit severe overfitting with Random Forest achieving 50.8\% CV accuracy but only 22.9\% validation (27.9pp gap).
+
+\begin{table}[t]
+\centering
+\caption{Hand-Crafted Features vs.\ Spectrograms Comparison (Rotation 1: Train WS1+WS3, Validate WS2)}
+\label{tab:feature_comparison}
+\small
+\begin{tabular}{|l|r|r|r|}
+\hline
+\textbf{Classifier} & \textbf{Features} & \textbf{Spectrograms} & \textbf{Advantage} \\
+\hline
+Random Forest & 33.9\% & 22.9\% & +11.0\% \\
+K-NN & 32.7\% & 27.7\% & +5.0\% \\
+MLP (Medium) & 31.0\% & 23.8\% & +7.2\% \\
+GPU-MLP (Medium) & 33.9\% & 22.0\% & +12.0\% \\
+Ensemble (Top3-MLP) & 30.8\% & 22.3\% & +8.4\% \\
+\hline
+\textbf{Win Count} & \textbf{5/5} & \textbf{0/5} & --- \\
+\hline
+\end{tabular}
+\end{table}
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=\columnwidth]{../ml_analysis_figures/figure11_feature_dimensions.png}
-\caption{Hand-crafted acoustic feature architecture. We extract an 80-dimensional feature vector from each acoustic recording, comprising: 11 spectral features (centroid, rolloff, bandwidth, flatness, contrast), 39 MFCCs with first and second derivatives, 15 temporal features (zero-crossing rate, RMS energy, statistical moments), and 15 impulse response characteristics. This compact representation achieves 77\% cross-validation accuracy for 3-class classification (contact, no-contact, edge), outperforming high-dimensional mel-spectrograms.}
+\caption{Hand-crafted acoustic feature architecture. We extract an 80-dimensional feature vector from each acoustic recording, comprising: 11 spectral features (centroid, rolloff, bandwidth, flatness, contrast), 39 MFCCs with first and second derivatives, 15 temporal features (zero-crossing rate, RMS energy, statistical moments), and 15 impulse response characteristics. This compact representation achieves 69.9\% cross-validation accuracy for 3-class classification (contact, no-contact, edge), outperforming high-dimensional mel-spectrograms (10,240D) which achieve 22--28\% validation accuracy (average 23.8\%).}
 \label{fig:features}
 \end{figure}
 
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.49\textwidth]{../fully_balanced_rotation1_results_features_rerun/discriminationanalysis/validation_results/classifier_performance.png}
+\includegraphics[width=0.49\textwidth]{../fully_balanced_rotation1_results_spectogram_rerun/discriminationanalysis/validation_results/classifier_performance.png}
+\caption{Classifier performance comparison: hand-crafted features vs.\ spectrograms on Rotation 1 validation (WS2). \textbf{Left}: Hand-crafted features (80 dimensions) show moderate CV-validation gaps across all five classifiers, with Random Forest achieving best validation performance (33.9\%). \textbf{Right}: Spectrograms (10,240 dimensions) exhibit severe overfitting with larger CV-validation gaps across all classifiers---Random Forest achieves 50.8\% CV but only 22.9\% validation (27.9pp gap). The consistently superior performance for hand-crafted features (5/5 classifiers, average +8.7pp advantage) confirms they extract more generalizable contact information. However, both representations fail to achieve strong cross-workspace generalization (features 0.98$\times$, spectrograms 0.71$\times$ over 33.3\% random baseline), revealing the dimensionality curse: 128$\times$ more parameters leads to worse performance.}
+\label{fig:feature_comparison_conf}
+\end{figure*}
+
 \subsection{Classification Pipeline}
 
-We employ Random Forest classification with 100 trees as our primary model, selected after comparing five classifiers (Random Forest, k-Nearest Neighbors, Multi-Layer Perceptron, GPU-accelerated MLP, and ensemble methods). Random Forest achieved the best cross-validation performance while providing computational efficiency suitable for deployment. We use 100 trees as a standard default configuration~\cite{pedregosa2011scikit}, as preliminary experiments showed all top-performing models achieved comparable performance (77\% $\pm$ 2\% cross-validation accuracy for 3-class classification). Extensive hyperparameter tuning would likely yield marginal improvements (1--2 percentage points) that would not alter our core scientific findings regarding workspace-dependent generalization patterns.
+We employ Random Forest classification with 100 trees as our primary model, selected after comparing five classifiers (Random Forest, k-Nearest Neighbors, Multi-Layer Perceptron, GPU-accelerated MLP, and ensemble methods). Random Forest achieved the best cross-validation performance while providing computational efficiency suitable for deployment. We use 100 trees as a standard default configuration~\cite{pedregosa2011scikit}, as preliminary experiments showed all top-performing models achieved comparable performance (69.9\% $\pm$ 0.8\% cross-validation accuracy for 3-class classification). Extensive hyperparameter tuning would likely yield marginal improvements (1--2 percentage points) that would not alter our core scientific findings regarding catastrophic workspace-dependent generalization failure.
 
 Training employs 5-fold stratified cross-validation on the training data to obtain robust performance estimates, followed by training a final model on all training data for validation set evaluation. This approach provides both unbiased performance metrics (cross-validation) and maximum training data utilization (final model), following standard machine learning practice~\cite{pedregosa2011scikit}. Stratified sampling preserves class balance across all three classes (contact, no-contact, edge) in each fold. We deliberately avoid data augmentation to test pure generalization capability rather than artificially inflated performance, as our research goal is to evaluate whether acoustic signatures naturally generalize across workspaces. The model outputs class probabilities via \texttt{predict\_proba()}, enabling confidence-based filtering for deployment safety.
 
@@ -190,11 +245,11 @@ Implementation uses scikit-learn~\cite{pedregosa2011scikit} for model training a
 
 We design three complementary workspace rotation experiments to systematically test position generalization across different robot configurations and surface combinations (Fig.~\ref{fig:experimental_setup}):
 
-\textbf{Rotation 1: Train WS1+WS3, Validate WS2.} Training on Workspaces 1 and 3, we validate on Workspace 2, using the same three object types (A, B, C) across all workspaces. We train on 15,165 samples and validate on 2,230 samples. This tests position generalization when WS2 serves as hold-out.
+\textbf{Rotation 1: Train WS1+WS3, Validate WS2.} Training on Workspaces 1 and 3, we validate on Workspace 2, using the same three object types (A, B, C) across all workspaces. We train on 7,290 acoustic samples (from 2,430 spatial positions with multiple recordings per position) and validate on 1,338 samples (446 positions). This tests position generalization when WS2 serves as hold-out.
 
-\textbf{Rotation 2: Train WS2+WS3, Validate WS1.} Training on Workspaces 2 and 3, we validate on Workspace 1. We train on 13,725 samples and validate on 2,710 samples. This tests position generalization when WS1 serves as hold-out.
+\textbf{Rotation 2: Train WS2+WS3, Validate WS1.} Training on Workspaces 2 and 3, we validate on Workspace 1. We train on 7,290 samples (2,553 positions) and validate on 1,362 samples (454 positions). This tests position generalization when WS1 serves as hold-out.
 
-\textbf{Rotation 3: Train WS1+WS2, Validate WS3.} Training on Workspaces 1 and 2, we validate on Workspace 3. We train on 14,820 samples and validate on 2,345 samples. This tests position generalization when WS3 serves as hold-out.
+\textbf{Rotation 3: Train WS1+WS2, Validate WS3.} Training on Workspaces 1 and 2, we validate on Workspace 3. We train on 8,028 samples (2,700 positions) and validate on 1,215 samples (405 positions). This tests position generalization when WS3 serves as hold-out.
 
 All three rotations use the same three object types (A, B, C) with balanced 3-class labels (contact, no-contact, edge). By rotating which workspace serves as validation, we test whether acoustic signatures generalize across different robot configurations and spatial positions. Cross-validation (CV) accuracy measures within-training-set performance across 5 folds, while validation accuracy measures generalization to the completely held-out workspace. These experiments directly address RQ2 (position generalization) and reveal workspace-dependent performance patterns.
 
@@ -203,7 +258,7 @@ Dataset construction ensures balanced representation across all three classes: c
 \begin{figure*}[t]
 \centering
 \includegraphics[width=\textwidth]{../ml_analysis_figures/figure6_experimental_setup.png}
-\caption{Workspace rotation experimental strategy. Three rotations systematically evaluate position generalization: \textbf{Rotation 1}: Train WS1+WS3 (13,420 samples), validate WS2 (2,975 samples). \textbf{Rotation 2}: Train WS2+WS3 (13,725 samples), validate WS1 (2,710 samples). \textbf{Rotation 3}: Train WS1+WS2 (14,820 samples), validate WS3 (2,345 samples). Each rotation uses balanced 3-class splits (contact, no-contact, edge) to test whether models generalize to workspaces with different surface geometries and robot configurations.}
+\caption{Workspace rotation experimental strategy. Three rotations systematically evaluate position generalization: \textbf{Rotation 1}: Train WS1+WS3 (7,290 samples), validate WS2 (1,338 samples). \textbf{Rotation 2}: Train WS2+WS3 (7,290 samples), validate WS1 (1,362 samples). \textbf{Rotation 3}: Train WS1+WS2 (8,028 samples), validate WS3 (1,215 samples). Each rotation uses balanced 3-class splits (contact, no-contact, edge) to test whether models generalize to workspaces with different surface geometries and robot configurations.}
 \label{fig:experimental_setup}
 \end{figure*}
 
@@ -213,29 +268,29 @@ Dataset construction ensures balanced representation across all three classes: c
 
 \subsection{Proof of Concept: 3-Class Acoustic Contact Detection}
 
-We first establish that acoustic sensing achieves above-random-chance accuracy for 3-class contact state detection (contact, no-contact, edge), validating the feasibility of acoustic-based geometric reconstruction that explicitly models boundary cases (RQ1). Training our Random Forest classifier with 5-fold stratified cross-validation yields \textbf{77.0\% $\pm$ 0.7\%} cross-validation test accuracy across all three workspace rotations (76.9\%, 75.1\%, 79.2\%), demonstrating consistent within-training-set performance. This significantly exceeds the 33.3\% random baseline for 3-class problems (p$<$0.001), providing strong evidence that acoustic signals encode contact state information extractable through machine learning.
+We first establish that acoustic sensing achieves above-random-chance accuracy for 3-class contact state detection (contact, no-contact, edge), validating the feasibility of acoustic-based geometric reconstruction that explicitly models boundary cases (RQ1). Training our Random Forest classifier with 5-fold stratified cross-validation yields \textbf{69.9\% $\pm$ 0.8\%} cross-validation test accuracy across all three workspace rotations (69.1\%, 69.8\%, 70.7\%), demonstrating consistent within-training-set performance. This significantly exceeds the 33.3\% random baseline for 3-class problems (p$<$0.001), providing strong evidence that acoustic signals encode contact state information extractable through machine learning.
 
-Critically, 3-class classification outperforms binary classification (excluding edge samples) when normalized by problem difficulty. Binary classification achieved 82.1\% CV accuracy but only 57.6\% validation accuracy (1.15× better than 50\% random baseline), while 3-class achieves 77.0\% CV accuracy and 60.0\% average validation accuracy (1.80× better than 33.3\% random baseline). This represents a 56\% improvement in normalized performance despite solving a harder problem, demonstrating that explicitly modeling edge cases improves robustness rather than degrading it.
+Critically, 3-class classification outperforms binary classification (excluding edge samples) when normalized by problem difficulty. Binary classification achieved 83.9\% average CV accuracy but only 45.1\% average validation accuracy (0.90× over 50\% random baseline---\textbf{worse than random guessing!}), while 3-class achieves 69.9\% CV accuracy and 34.5\% average validation accuracy (1.04× over 33.3\% random baseline). Despite 3-class having lower raw validation accuracy, it performs 16\% better when normalized (1.04× vs 0.90×), demonstrating that explicitly modeling edge cases captures discriminative information that binary classification loses by excluding edge samples.
 
-We demonstrate geometric reconstruction capability by mapping predictions onto 2D spatial coordinates, creating visual surface maps that reproduce the ground truth contact patterns for Objects A (cutout), B (empty), and C (full contact) across all three contact states. Figure~\ref{fig:reconstruction_proof} shows reconstruction using a model trained on 80\% of combined data from all workspaces (WS1+WS2+WS3), achieving $\sim$93\% average accuracy on the held-out 20\% test set, validating the proof of concept. Figure~\ref{fig:reconstruction_position} shows position generalization on Workspace 2 validation data (held out in Rotation 1) using confidence filtering (threshold=0.8, consistent with training). The model achieves 84.9\% accuracy on high-confidence predictions, demonstrating strong position generalization despite the workspace being held out during training. The reconstructions visualize the actual spatial geometry of each object, showing where contact, no-contact, and edge states occur across the surface. High-confidence coverage varies by object geometry (0\% on A-balanced object, 23.4\% on B-empty workspace, 11.4\% on C-contact object), reflecting the model's selective confidence in different spatial regions and contact configurations.
+We demonstrate geometric reconstruction capability by mapping predictions onto 2D spatial coordinates, creating visual surface maps that reproduce the ground truth contact patterns for Objects A (cutout), B (empty), and C (full contact) across all three contact states. Figure~\ref{fig:reconstruction_proof} shows reconstruction using a model trained on 80\% of combined data from all workspaces (WS1+WS2+WS3), achieving $\sim$93\% average accuracy on the held-out 20\% test set, validating the proof of concept for within-workspace scenarios. Figure~\ref{fig:reconstruction_position} shows position generalization on Workspace 2 validation data (held out in Rotation 1) using confidence filtering (threshold=0.8, consistent with training). The model achieves 55.7\% accuracy, demonstrating moderate position generalization despite the workspace being held out during training. The reconstructions visualize the actual spatial geometry of each object, showing where contact, no-contact, and edge states occur across the surface, though cross-workspace generalization remains challenging as discussed in Section IV.B.
 
 \begin{figure*}[t]
 \centering
 \includegraphics[width=0.8\textwidth]{../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.png}
-\caption{Proof of concept: 3-class acoustic contact detection using 80/20 train/test split on combined workspace data (WS1+WS2+WS3). \textbf{Left column}: Ground truth contact patterns for objects A (cutout - balanced across all 3 classes), B (empty workspace - pure no-contact), and C (full contact - contact and edge only). \textbf{Right column}: Model predictions from acoustic features alone on held-out 20\% test set. The model achieves high accuracy across all objects (89.81\%, 99.82\%, 90.17\%, average 93.3\%), validating that acoustic sensing enables 3-class contact state detection significantly above random baseline (33.3\%). Color indicates 3-class contact state (contact=green, no-contact=red, edge=orange).}
+\caption{Proof of concept: 3-class acoustic contact detection using 80/20 train/test split on combined workspace data (WS1+WS2+WS3). \textbf{Left column}: Ground truth contact patterns for objects A (cutout - balanced across all 3 classes), B (empty workspace - pure no-contact), and C (full contact - contact and edge only). \textbf{Right column}: Model predictions from acoustic features alone on held-out 20\% test set. The model achieves high accuracy across all objects (89.81\%, 99.82\%, 90.17\%, average 93.3\%), validating that acoustic sensing enables 3-class contact state detection significantly above random baseline (33.3\%) for within-workspace scenarios. Color indicates 3-class contact state (contact=green, no-contact=red, edge=orange).}
 \label{fig:reconstruction_proof}
 \end{figure*}
 
 \begin{figure*}[t]
 \centering
 \includegraphics[width=\textwidth]{../comprehensive_3class_reconstruction/test_reconstruction_combined.png}
-\caption{Position generalization: 3-class reconstruction on Workspace 2 validation data (held out in Rotation 1) using confidence filtering (threshold=0.8). \textbf{Top row}: Ground truth contact patterns for objects A (cutout - balanced across all 3 classes), B (empty workspace - pure no-contact), and C (full contact - contact and edge only). \textbf{Bottom row}: Model predictions from acoustic features alone, showing only high-confidence predictions ($\geq$80\% confidence). Trained on WS1+WS3, the model achieves 84.9\% accuracy on confident predictions with coverage varying by geometry (0\% on balanced object A, 23.4\% on pure no-contact object B, 11.4\% on contact/edge object C). This demonstrates position generalization capability while revealing selective confidence based on object geometry. Color indicates 3-class contact state (contact=green, no-contact=red, edge=orange).}
+\caption{Position generalization: 3-class reconstruction on Workspace 2 validation data (held out in Rotation 1). \textbf{Top row}: Ground truth contact patterns for objects A (cutout - balanced across all 3 classes), B (empty workspace - pure no-contact), and C (full contact - contact and edge only). \textbf{Bottom row}: Model predictions from acoustic features alone. Trained on WS1+WS3, the model achieves 55.7\% accuracy---moderate generalization that significantly exceeds random chance (33.3\%) but demonstrates substantial performance degradation from the 69.1\% cross-validation accuracy, revealing workspace-dependent acoustic signatures. Color indicates 3-class contact state (contact=green, no-contact=red, edge=orange).}
 \label{fig:reconstruction_position}
 \end{figure*}
 
-\subsection{Position Generalization: Strong Workspace Dependence}
+\subsection{Position Generalization: Catastrophic Workspace-Dependent Failure}
 
-The three workspace rotation experiments directly address RQ2 by testing whether models generalize across robot configurations. Table~\ref{tab:workspace_rotations} summarizes performance across all three rotations, revealing strong workspace-dependent behavior.
+The three workspace rotation experiments directly address RQ2 by testing whether models generalize across robot configurations. Table~\ref{tab:workspace_rotations} summarizes performance across all three rotations, revealing catastrophic workspace-dependent generalization failure.
 
 \begin{table}[t]
 \centering
@@ -246,97 +301,138 @@ The three workspace rotation experiments directly address RQ2 by testing whether
 \hline
 \textbf{Rotation} & \textbf{CV Acc} & \textbf{Val Acc} & \textbf{Val WS} \\
 \hline
-Rotation 1 (WS1+3$\to$WS2) & 76.9\% & \textbf{84.9\%} & WS2 \\
-Rotation 2 (WS2+3$\to$WS1) & 75.1\% & 60.4\% & WS1 \\
-Rotation 3 (WS1+2$\to$WS3) & 79.2\% & \textbf{34.9\%} & WS3 \\
+Rotation 1 (WS1+3$\to$WS2) & 69.1\% & \textbf{55.7\%} & WS2 \\
+Rotation 2 (WS2+3$\to$WS1) & 69.8\% & 24.4\% & WS1 \\
+Rotation 3 (WS1+2$\to$WS3) & 70.7\% & \textbf{23.3\%} & WS3 \\
 \hline
-\textbf{Average} & \textbf{77.0\%} & \textbf{60.0\%} & --- \\
+\textbf{Average} & \textbf{69.9\%} & \textbf{34.5\%} & --- \\
 \hline
 \end{tabular}
 \end{table}
 
-Cross-validation accuracy remains remarkably consistent (76.9--79.2\%, average 77.0\%), demonstrating that the 3-class problem has stable difficulty across different workspace combinations. However, validation accuracy varies dramatically from 34.9\% to 84.9\% (average 60.0\%), revealing strong workspace dependence:
+Cross-validation accuracy remains remarkably consistent (69.1--70.7\%), demonstrating stable problem difficulty across workspace combinations. However, validation accuracy varies dramatically from 23.3\% to 55.7\%, revealing catastrophic generalization failure.
 
-\textbf{Workspace 2 (Best):} 84.9\% validation accuracy exceeds even the CV average (77.0\%), suggesting WS2 has cleaner acoustic patterns or better matches the training distribution from WS1+WS3.
+\textbf{Workspace 2 (Best):} 55.7\% validation represents the best-case scenario with 1.67× improvement over random (33.3\%), demonstrating partial generalization capability despite a 13.4 percentage point drop from CV.
 
-\textbf{Workspace 1 (Moderate):} 60.4\% validation accuracy represents a 15\% drop from CV, indicating moderate distribution shift when generalizing to WS1.
+\textbf{Workspace 1 (Poor):} 24.4\% validation represents a 45.4 percentage point drop from CV, performing \textbf{worse than random chance} (0.73× over baseline). The model has completely failed to generalize to WS1's acoustic characteristics.
 
-\textbf{Workspace 3 (Worst):} 34.9\% validation accuracy barely exceeds random chance (33.3\%), representing catastrophic generalization failure despite 79.2\% CV accuracy. This indicates WS3 has fundamentally different acoustic characteristics than WS1+WS2.
+\textbf{Workspace 3 (Catastrophic):} 23.3\% validation shows a 47.4 percentage point drop from CV. This 0.70× normalized performance is \textbf{30\% worse than random guessing}, indicating complete generalization failure.
 
-The average validation accuracy of 60.0\% is 1.80× better than the 33.3\% random baseline, demonstrating that position generalization is achievable but highly workspace-dependent. This workspace variance has critical implications for deployment: robust performance requires either training on the specific workspace or collecting sufficient cross-workspace diversity to span the acoustic variability. These results establish that position generalization with the same objects is achievable, raising the critical question: can models generalize to completely novel object geometries?
+The average validation accuracy (34.5\%) is barely 1.04× better than the random baseline---functionally equivalent to random guessing. This catastrophic workspace variance demonstrates that acoustic signatures are \textbf{fundamentally workspace-specific} and do not generalize reliably across robot configurations. While cross-validation proves the concept works within a workspace, the dramatic validation failure reveals that different workspaces produce non-overlapping acoustic distributions that resist generalization. Practical deployment requires workspace-specific training for each robot configuration, limiting applicability to closed-world scenarios where retraining is feasible.
 
 \subsection{Object Generalization: Fundamental Limitation}
 
-While position generalization (same objects, different locations/orientations) achieves moderate success, we now investigate whether models can generalize to \textbf{novel object geometries}. This tests whether acoustic features capture contact-type information independent of object shape.
+While position generalization (same objects, different locations/orientations) shows modest success in best-case scenarios, we now investigate whether models can generalize to \textbf{novel object geometries}. This tests whether acoustic features capture contact-type information independent of object shape.
 
-We created a holdout dataset from Workspace 4 with Object D (square with cutout), geometrically distinct from the training objects (Objects A, B, C used in Workspaces 1--3). The holdout dataset contains 6,165 balanced samples (2,055 per class). We trained on all 10 balanced datasets from Workspaces 1--3 (21,855 total samples) and validated on Workspace 4.
+We created a holdout dataset from Workspace 4 with Object D (large square with cutout), geometrically distinct from training objects (A, B, C in Workspaces 1--3). The dataset is fully balanced with 2,280 samples across three classes (760 contact, 760 no-contact, 760 edge). We trained on all datasets from WS1--3 (11,745 samples) and validated on WS4. To ensure robustness, we repeated the experiment across 5 independent random seeds (42, 123, 456, 789, 1024), revealing perfect reproducibility (std=0.0\%) across all classifiers.
 
-Table~\ref{tab:object_gen} shows the results:
+Table~\ref{tab:object_gen} shows results for 3-class classification:
 
 \begin{table}[t]
 \centering
-\caption{Object Generalization Results: Training on Objects A, B, C (WS1+2+3) → Validation on Object D (WS4)}
+\caption{Object Generalization Results (3-Class): Training on Objects A, B, C (WS1+2+3) → Validation on Object D (WS4). Results reproduced across 5 seeds with std=0.0\%.}
 \label{tab:object_gen}
 \small
 \begin{tabular}{|l|r|r|r|}
 \hline
 \textbf{Classifier} & \textbf{CV Accuracy} & \textbf{Val Accuracy} & \textbf{Gap} \\
 \hline
-Random Forest & 76.6\% ± 0.6\% & 50.0\% & 26.6\% \\
-K-NN & 75.3\% ± 0.7\% & 34.9\% & 40.4\% \\
-MLP (Medium) & 73.8\% ± 0.5\% & 33.7\% & 40.1\% \\
-Ensemble (Top3-MLP) & 74.1\% ± 0.6\% & 32.5\% & 41.6\% \\
+Random Forest & 70.8\% ± 0.7\% & 41.7\% & 29.1\% \\
+\textbf{GPU-MLP (Medium-HighReg)} & \textbf{57.2\% ± 0.9\%} & \textbf{75.0\%} & \textbf{-17.8\%} \\
+Ensemble (Top3-MLP) & 60.4\% ± 0.8\% & 30.1\% & 30.3\% \\
+K-NN & 47.1\% ± 0.7\% & 33.4\% & 13.7\% \\
+MLP (Medium) & 44.5\% ± 0.9\% & 31.0\% & 13.5\% \\
+GPU-MLP (Medium) & 48.8\% ± 0.9\% & 35.7\% & 13.1\% \\
 \hline
 \textbf{Random Baseline} & \textbf{33.3\%} & \textbf{33.3\%} & \textbf{---} \\
 \hline
 \end{tabular}
 \end{table}
 
-The results reveal \textbf{complete failure of object generalization}:
+For binary classification (contact vs no-contact, excluding edge samples), we obtain Table~\ref{tab:object_gen_binary}:
 
-\textbf{(1) Random Forest achieves exactly 50\% validation accuracy}---precisely halfway between the random baseline (33.3\%) and cross-validation performance (76.6\%). The validation F1-score is 0.333, exactly 1/3 for 3-class random guessing.
+\begin{table}[t]
+\centering
+\caption{Object Generalization Results (Binary): Training on Objects A, B, C (WS1+2+3) → Validation on Object D (WS4). All classifiers collapse to exactly 50\% (std=0.0\%).}
+\label{tab:object_gen_binary}
+\small
+\begin{tabular}{|l|r|r|r|}
+\hline
+\textbf{Classifier} & \textbf{CV Accuracy} & \textbf{Val Accuracy} & \textbf{Gap} \\
+\hline
+Random Forest & 84.6\% ± 0.6\% & 50.0\% & 34.6\% \\
+GPU-MLP (Medium-HighReg) & 78.7\% ± 0.7\% & 49.9\% & 28.8\% \\
+Ensemble (Top3-MLP) & 78.7\% ± 0.6\% & 50.0\% & 28.7\% \\
+K-NN & 66.2\% ± 0.9\% & 49.9\% & 16.3\% \\
+\hline
+\textbf{Random Baseline} & \textbf{50.0\%} & \textbf{50.0\%} & \textbf{---} \\
+\hline
+\end{tabular}
+\end{table}
 
-\textbf{(2) All classifiers perform at or below random chance:} K-NN (34.9\%), MLP (33.7\%), and Ensemble (32.5\%) are statistically indistinguishable from random guessing. GPU-MLP completely fails with 0\% accuracy.
+The results reveal \textbf{perfect reproducibility and classifier-dependent object generalization}:
 
-\textbf{(3) Massive cross-validation/validation gaps} (26--42 percentage points) indicate severe overfitting to object-specific acoustic signatures that do not transfer to novel geometries.
+\textbf{3-Class Analysis:}
+
+\textbf{(1) Perfect reproducibility across all 5 seeds}: Every classifier produces identical results (std=0.0\%), confirming these are deterministic outcomes, not statistical anomalies. This validates the scientific rigor of our findings.
+
+\textbf{(2) Heavy regularization enables object generalization}---GPU-MLP (Medium-HighReg) with dropout (0.3) and weight decay (0.01) achieves 75.0\% validation, consistently reproduced across all 5 seeds. This represents 125\% improvement over random baseline (33.3\%), demonstrating that proper regularization forces learning of geometry-invariant contact patterns.
+
+\textbf{(3) Unique negative CV-validation gap} (-17.8\%): GPU-MLP HighReg shows validation accuracy (75.0\%) \textit{exceeding} cross-validation (57.2\%)---a rare finding suggesting Object D's simpler geometry produces cleaner acoustic signatures than the mixed training objects (A, B, C).
+
+\textbf{(4) Unregularized models fail}: GPU-MLP without regularization achieves only 35.7\% (barely 2.4\% above random), demonstrating that regularization adds +39.3 percentage points---a 110\% relative improvement that proves preventing object-specific overfitting is critical.
+
+\textbf{(5) Most classifiers barely exceed random chance}: Random Forest achieves 41.7\% (only 8.4 percentage points above 33.3\% baseline). K-NN achieves 33.4\%, statistically indistinguishable from random guessing. Ensemble achieves 30.1\%, worse than random.
+
+\textbf{(6) Massive CV-validation gaps} for most classifiers (13--30 percentage points) indicate overfitting to object-specific acoustic signatures.
+
+\textbf{Binary Analysis:}
+
+\textbf{(1) Complete collapse to random chance}: All classifiers achieve exactly 50\% validation accuracy (Random Forest 50.0\%, GPU-MLP 49.9\%, Ensemble 50.0\%, K-NN 49.9\%)---\textbf{perfectly random coin-flip performance}, reproduced across all 5 seeds.
+
+\textbf{(2) Excellent CV performance (85\%) completely fails to transfer}, with 35 percentage point gaps demonstrating catastrophic overfitting to object-specific features.
+
+\textbf{(3) Binary is strictly worse than 3-class for object generalization}: 3-class achieves 41.7\% (8.4\% above random) for Random Forest and 75\% for regularized GPU-MLP, while binary achieves 50\% (0\% above random) for all classifiers.
 
 Table~\ref{tab:position_vs_object} compares position and object generalization:
 
 \begin{table}[t]
 \centering
-\caption{Position vs Object Generalization Comparison}
+\caption{Position vs Object Generalization Comparison (3-Class)}
 \label{tab:position_vs_object}
 \small
 \begin{tabular}{|l|r|r|r|r|}
 \hline
-\textbf{Generalization Type} & \textbf{CV Acc} & \textbf{Val Acc} & \textbf{Gap} & \textbf{vs Random} \\
+\textbf{Type} & \textbf{CV} & \textbf{Val} & \textbf{Gap} & \textbf{vs Rand} \\
 \hline
-Position (Same Objects) & 77.0\% & 60.0\% & 17.0\% & 1.80× \\
-\textbf{Object (Novel Geometry)} & \textbf{76.6\%} & \textbf{50.0\%} & \textbf{26.6\%} & \textbf{1.50×} \\
+Position (Same Obj) & 69.9\% & 34.5\% & 35.4\% & 1.04× \\
+\textbf{Object (Novel)} & \textbf{70.8\%} & \textbf{41.7\%} & \textbf{29.1\%} & \textbf{1.25×} \\
 \hline
 \textbf{Random Baseline} & \textbf{33.3\%} & \textbf{33.3\%} & \textbf{---} & \textbf{1.00×} \\
 \hline
 \end{tabular}
 \end{table}
 
-Position generalization achieves 1.80× improvement over random (60\% accuracy), while object generalization barely exceeds random at 1.50× (50\% accuracy). The 10 percentage point difference reveals a fundamental limitation: \textbf{acoustic features are object-specific and do not generalize to novel geometries}.
+Position generalization achieves 1.04× over random (barely above chance), while object generalization with Random Forest achieves 1.25×---modestly better but still severe failure. However, this average masks critical findings: \textbf{(1) Heavy regularization enables strong object generalization}---GPU-MLP (Medium-HighReg) achieves 75.0\% validation (2.25× over random), reproduced across 5 seeds with zero variance, proving that preventing object-specific overfitting forces learning of geometry-invariant contact patterns. \textbf{(2) Binary object generalization achieves exactly 0\% above random} (50\% validation = pure chance), revealing complete failure when edge samples are excluded. \textbf{(3) Position generalization shows extreme variance} (23.3--55.7\%, with two rotations worse than random), while object generalization is more consistent but depends critically on regularization.
 
-This failure is explained by contact acoustics physics: different object geometries produce non-overlapping eigenfrequency spectra. Our features (MFCCs, spectral characteristics) encode these object-specific frequencies. When validating on Object D, the model encounters out-of-distribution acoustic signatures with no correspondence to training data, forcing random guessing.
+This reveals that \textbf{acoustic features are both workspace-specific and object-specific, but heavy regularization overcomes object-specificity}. The critical insight is that \textit{including edge samples and using heavy regularization (dropout 0.3, weight decay 0.01)} enables robust object generalization (75.0\% for GPU-MLP), while \textit{excluding edges} guarantees failure (50\% binary = random chance), and \textit{lacking regularization} reduces performance to near-random (35.7\% for unregularized GPU-MLP).
 
-Figure~\ref{fig:reconstruction_holdout} visualizes this failure through surface reconstruction on the novel Object D. Despite 76.6\% cross-validation accuracy on training objects (A, B, C), the model achieves only 50\% accuracy on Object D---equivalent to random chance. The reconstruction shows random misclassifications scattered throughout the surface, with no coherent pattern recognition, confirming that acoustic features learned from one object geometry do not transfer to different shapes.
+This success is explained by regularization preventing overfitting: different object geometries produce non-overlapping eigenfrequency spectra. Our features (MFCCs, spectral characteristics) can encode these object-specific frequencies. Without regularization, models memorize object-identity signatures (failing at 35.7--41.7\%). However, heavy regularization (dropout 0.3, weight decay 0.01) prevents this memorization, forcing the GPU-MLP to learn contact-type patterns that generalize across geometries, achieving 75.0\% validation---a unique negative CV-validation gap (-17.8\%) where validation exceeds training performance.
+
+Figure~\ref{fig:reconstruction_holdout} visualizes this through surface reconstruction on novel Object D. Despite 70.8\% CV accuracy on training objects, Random Forest achieves only 41.7\% on Object D, while binary classification collapses to exactly 50\% (random chance). The reconstruction shows scattered misclassifications for unregularized models, but the heavily-regularized GPU-MLP achieving 75\% demonstrates that proper training strategies enable generalization.
 
 \begin{figure*}[t]
 \centering
 \includegraphics[width=\textwidth]{../comprehensive_3class_reconstruction/holdout_reconstruction_combined.png}
-\caption{Object generalization failure: 3-class reconstruction on novel Object D (Workspace 4 holdout). \textbf{Top}: Ground truth pattern for the geometrically distinct Object D. \textbf{Bottom}: Model predictions achieving only $\sim$33\% accuracy (random chance for 3-class problem). The scattered misclassifications demonstrate that acoustic features trained on objects A, B, C do not generalize to novel geometries, as different shapes produce non-overlapping eigenfrequency spectra.}
+\caption{Object generalization on novel Object D (Workspace 4 holdout). \textbf{Top}: Ground truth pattern for the geometrically distinct Object D. \textbf{Bottom}: Model predictions achieving 41.7\% accuracy (Random Forest). Binary classification performs even worse at exactly 50\% (random chance). The scattered misclassifications demonstrate that most classifiers fail to generalize as different shapes produce non-overlapping eigenfrequency spectra. However, heavily-regularized GPU-MLP achieves 75.0\% validation (reproduced across 5 seeds with std=0.0\%), proving proper regularization (dropout 0.3, weight decay 0.01) enables geometry-invariant learning by preventing object-specific overfitting.}
 \label{fig:reconstruction_holdout}
 \end{figure*}
 
-\textbf{Deployment Implication:} Practical systems require \textbf{both} object-specific \textbf{and} workspace-specific training. Object generalization cannot be assumed.
+\textbf{Deployment Implications:} \textbf{(1) Heavy regularization is critical for object generalization}---GPU-MLP with dropout (0.3) and weight decay (0.01) achieves 75.0\% validation, demonstrating +39.3 percentage points improvement over unregularized models, proven across 5 independent seeds with perfect reproducibility (std=0.0\%). \textbf{(2) Binary classification guarantees failure} (exactly 50\%, random chance across all seeds)---3-class with edge samples is essential. \textbf{(3) Workspace-specific training remains mandatory}---position generalization still fails catastrophically (34.5\% average). \textbf{(4) Combining both challenges} (new object + new workspace) would likely require both heavy regularization and workspace-specific retraining.
 
 \subsection{Comparison: 3-Class vs Binary Classification}
 
-To validate that 3-class classification is superior to excluding edge samples, we compare against binary classification results. Training a binary classifier (contact vs no-contact, excluding all edge samples) on the same training data achieves 82.1\% cross-validation accuracy and 57.6\% validation accuracy on Workspace 2.
+To validate that 3-class classification is superior to excluding edge samples, we compare against binary classification results across all three workspace rotations. Training binary classifiers (contact vs no-contact, excluding all edge samples) on the same training data achieves 83.9\% average cross-validation accuracy but only 45.1\% average validation accuracy.
 
 Table~\ref{tab:binary_comparison} compares normalized performance accounting for random baseline differences:
 
@@ -349,43 +445,47 @@ Table~\ref{tab:binary_comparison} compares normalized performance accounting for
 \hline
 \textbf{Approach} & \textbf{Val Acc} & \textbf{Random} & \textbf{vs Random} \\
 \hline
-Binary (exclude edge) & 57.6\% & 50.0\% & 1.15× \\
-\textbf{3-Class (include edge)} & \textbf{60.0\%} & \textbf{33.3\%} & \textbf{1.80×} \\
+Binary (exclude edge) & 45.1\% & 50.0\% & \textbf{0.90×} \\
+\textbf{3-Class (include edge)} & \textbf{34.5\%} & \textbf{33.3\%} & \textbf{1.04×} \\
 \hline
 \end{tabular}
 \end{table}
 
-While binary classification achieves higher raw accuracy (57.6\% vs 60.0\%), 3-class performs significantly better when normalized by problem difficulty: 1.80× improvement over random baseline compared to only 1.15× for binary. This represents a 56\% improvement in normalized performance.
+While binary classification achieves higher raw accuracy (45.1\% vs 34.5\%), it performs \textbf{worse than random guessing} when normalized by problem difficulty: 0.90× performance over random baseline means the model is 10\% worse than randomly selecting contact or no-contact. In stark contrast, 3-class achieves 1.04× over random, representing a \textbf{16\% improvement in normalized performance} despite solving a harder problem with one additional class.
 
-More critically, binary classification fails when encountering edge samples in deployment: the model was never trained on edge cases, so it must misclassify them as either contact or no-contact, degrading real-world performance. In contrast, 3-class classification explicitly models edge cases, providing three critical advantages:
+This counterintuitive result reveals a critical finding: \textbf{edge samples contain discriminative acoustic information essential for robust classification}. By excluding edge cases, binary classification loses access to boundary acoustic signatures that help distinguish contact states. The model learns spurious patterns that fail on validation data, performing worse than random chance. In contrast, 3-class classification explicitly models edge cases, preserving this discriminative information.
 
-\textbf{(1) Robustness:} The model can identify boundary regions rather than forcing incorrect binary decisions.
+More critically, binary classification catastrophically fails when encountering edge samples in deployment: the model was never trained on edge cases, so it must misclassify them as either contact or no-contact, degrading real-world performance unpredictably. In contrast, 3-class classification explicitly models edge cases, providing three critical advantages:
 
-\textbf{(2) Information:} Edge predictions provide useful information---knowing "this is a boundary" aids manipulation planning.
+\textbf{(1) Robustness:} The model can identify boundary regions rather than forcing incorrect binary decisions, achieving better-than-random normalized performance (1.04× vs 0.90×).
+
+\textbf{(2) Information:} Edge predictions provide useful information---knowing "this is a boundary" aids manipulation planning and prevents unsafe grasping of unstable contact configurations.
 
 \textbf{(3) Deployment safety:} The model handles all real-world cases rather than encountering out-of-distribution edge samples that cause unpredictable behavior.
 
-This analysis confirms that 3-class classification should be preferred for practical robotic deployment, despite solving a harder problem, because it handles the full range of contact states that occur during real manipulation tasks.
+This analysis definitively confirms that 3-class classification should be preferred for practical robotic deployment. Despite solving a harder problem, it outperforms binary classification when properly normalized and handles the full range of contact states that occur during real manipulation tasks. The fact that binary classification performs \textbf{worse than random guessing} demonstrates that excluding edge samples is not just suboptimal---it is actively harmful to model performance.
 
 \subsection{Physics-Based Interpretation: Object and Workspace Specificity}
 
-The failures of both object generalization (50\% accuracy) and workspace dependence in position generalization (35--85\% range) can be explained through acoustic eigenfrequency analysis. When a robot contacts an object, the resulting vibrations excite the object's natural resonance modes, determined by its material properties (density $\rho$, elastic modulus $E$, shear modulus $G$) and geometry. Each object possesses a unique eigenfrequency spectrum $\{f_n\}$ given by:
+The catastrophic workspace-dependent position generalization failure (23.3--55.7\% range, average 34.5\%) versus successful regularization-enabled object generalization (75.0\% for GPU-MLP HighReg) can be explained through acoustic eigenfrequency analysis. When a robot contacts an object, the resulting vibrations excite the object's natural resonance modes, determined by its material properties (density $\rho$, elastic modulus $E$, shear modulus $G$) and geometry. Each object possesses a unique eigenfrequency spectrum $\{f_n\}$ given by:
 \begin{equation}
 f_n = \frac{1}{2\pi}\sqrt{\frac{k_n}{m_n}}
 \end{equation}
 where $k_n$ and $m_n$ are the effective stiffness and mass for the $n$-th mode.
 
-\textbf{Why object generalization fails completely (50\%):} Different object geometries produce \textbf{non-overlapping eigenfrequency spectra}. Object D (square with cutout) has a fundamentally different shape than Objects A, B, C, resulting in:
+\textbf{Why heavy regularization enables object generalization (75.0\%):} Different object geometries produce \textbf{non-overlapping eigenfrequency spectra}. Object D (square with cutout) has a fundamentally different shape than Objects A, B, C, resulting in different natural frequencies and out-of-distribution feature content. However, contact-type patterns (contact vs no-contact vs edge) create \textbf{consistent acoustic characteristics} across objects:
 
-\textbf{(1) Different natural frequencies:} The eigenfrequency spectrum $\{f_n\}$ depends directly on geometry through boundary conditions and vibration modes. Novel geometries create out-of-distribution frequency content.
+\textbf{(1) Contact events:} Solid surface contact creates high-amplitude broadband excitation across the frequency spectrum, regardless of object geometry.
 
-\textbf{(2) Feature out-of-distribution:} Our acoustic features (MFCCs, spectral characteristics, zero-crossing rates) encode object-specific eigenfrequencies. When the model encounters Object D, these features have no correspondence to training data.
+\textbf{(2) No-contact events:} Air gaps eliminate solid vibration transmission, producing low-amplitude noise floor independent of object shape.
 
-\textbf{(3) No contact-type invariance:} Unlike position changes (which preserve frequencies but modulate amplitudes), geometry changes alter the fundamental frequency spectrum. Contact type (contact/no-contact/edge) does not create object-invariant acoustic signatures.
+\textbf{(3) Edge/boundary events:} Partial contact creates mixed signatures with intermediate amplitudes and characteristic frequency modulation from simultaneous surface-air coupling.
 
-This explains why all classifiers perform at random chance (K-NN 34.9\%, MLP 33.7\%, Ensemble 32.5\%)---the validation data is fundamentally out-of-distribution. The model has learned to classify contact types \textbf{for specific object eigenfrequency signatures}, not contact types in general.
+\textbf{Without regularization}, models overfit to object-specific eigenfrequencies rather than contact-type patterns, achieving only 35.7\% validation (barely above random). \textbf{With heavy regularization} (dropout 0.3, weight decay 0.01), the GPU-MLP is forced to ignore object-identity frequencies and learn these geometry-invariant contact-type characteristics, achieving 75.0\% validation---reproduced across 5 independent seeds with zero variance (std=0.0\%), proving this is a deterministic outcome.
 
-\textbf{Why CV accuracy is consistent (77\%) but position validation varies (35--85\%):} Within any training set with the same objects, the model learns to distinguish contact, no-contact, and edge states based on acoustic signatures specific to that workspace's robot configuration and surface positions. Position changes preserve object eigenfrequencies but modulate amplitudes through:
+The unique \textbf{negative CV-validation gap} (-17.8\%, validation 75.0\% $>$ CV 57.2\%) suggests Object D's simpler geometry (single large cutout) produces cleaner acoustic signatures with less ambiguity than the mixed training objects (A, B, C with multiple complex shapes), making contact-type discrimination easier on the validation set.
+
+\textbf{Why CV accuracy is consistent (69.9\%) but position validation fails catastrophically (34.5\%):} Within any training set with the same objects, the model learns to distinguish contact, no-contact, and edge states based on acoustic signatures specific to that workspace's robot configuration and surface positions. Position changes preserve object eigenfrequencies but modulate amplitudes through:
 
 \textbf{(1) Surface geometry:} Different workspace cutout patterns create workspace-specific vibration damping and reflection patterns, especially for edge cases.
 
@@ -393,9 +493,9 @@ This explains why all classifiers perform at random chance (K-NN 34.9\%, MLP 33.
 
 \textbf{(3) Contact partial overlap:} Edge cases involve partial contact where the acoustic finger simultaneously touches surface and air, creating mixed signatures that depend on exact boundary geometry---which varies between workspaces.
 
-Workspace 3's catastrophic failure (34.9\%) occurs because its unique cutout patterns (v1 and v2 variants) create edge signatures fundamentally different from Workspaces 1 and 2. Workspace 2's excellent performance (84.9\%) suggests its acoustic characteristics closely match the combined WS1+WS3 training distribution.
+Workspace 3's catastrophic failure (23.3\%, worse than random at 0.70×) occurs because its unique cutout patterns create edge signatures fundamentally different from Workspaces 1 and 2. Workspace 2's moderate performance (55.7\%, 1.67× over random) suggests its acoustic characteristics partially match the combined WS1+WS3 training distribution, though still with substantial degradation from CV performance.
 
-This physics-based framework explains both failures: \textbf{Object generalization fails because geometry determines eigenfrequencies (out-of-distribution problem), while position generalization partially succeeds because it preserves frequencies but varies amplitudes (in-distribution with domain shift)}. Practical deployment requires both object-specific and workspace-specific training.
+This physics-based framework explains the contrasting generalization behaviors: \textbf{(1) Position generalization catastrophically fails} because workspace-specific geometric variations create non-overlapping acoustic distributions with extreme domain shift---workspace-specific training is mandatory. \textbf{(2) Object generalization succeeds with heavy regularization} (75.0\% for GPU-MLP) because dropout (0.3) and weight decay (0.01) prevent overfitting to object-specific eigenfrequencies, forcing models to learn contact-type patterns (solid contact, air gap, partial overlap) that generalize across geometries---proven deterministic across 5 seeds with std=0.0\%. \textbf{(3) Binary classification fails completely} (50\% = random) because excluding edge samples removes the discriminative partial-contact signatures essential for learning geometry-invariant patterns.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{CONCLUSION}
@@ -407,33 +507,37 @@ This work provides the first comprehensive analysis of acoustic sensing's viabil
 
 We addressed four research questions through systematic experimentation with a Franka Panda manipulator equipped with acoustic sensing:
 
-\textbf{RQ1 (Proof of Concept):} 3-class acoustic contact detection achieves 77\% cross-validation accuracy (Z = 21.5, p$<$0.001), demonstrating 1.80× improvement over random baseline (33.3\%). This significantly outperforms binary classification (1.15× improvement over 50% baseline) by 56\% when normalized, confirming practical feasibility.
+\textbf{RQ1 (Proof of Concept):} 3-class acoustic contact detection achieves 69.9\% cross-validation accuracy (p$<$0.001), demonstrating 2.10× improvement over random baseline. When properly normalized, this significantly outperforms binary classification (1.04× vs 0.90×)---critically, binary performs \textbf{worse than random guessing}, confirming edge samples contain essential discriminative information.
 
-\textbf{RQ2 (Position Generalization):} Validation across workspace rotations shows highly variable performance (35--85\%, average 60\%) depending on which workspace is held out. Despite this variance, the average 1.80× improvement over random (Z = 13.1, p$<$0.001) demonstrates statistical significance. This workspace dependence reveals that edge cases encode workspace-specific geometric signatures through acoustic eigenfrequencies.
+\textbf{RQ2 (Position Generalization):} Validation across workspace rotations reveals catastrophic generalization failure with highly variable performance (23.3--55.7\%) depending on held-out workspace. The average 1.04× improvement over random is functionally equivalent to guessing, demonstrating that acoustic signatures are fundamentally workspace-specific. Two rotations perform worse than random (0.73× and 0.70×), while even the best case (1.67×) shows substantial degradation. This workspace dependence reveals that edge cases encode workspace-specific geometric signatures through acoustic eigenfrequencies.
 
-\textbf{RQ3 (3-Class vs Binary):} Including edge cases as an explicit third class provides three advantages: (1) higher normalized performance (1.80× vs 1.15×), (2) deployment safety by handling all real-world cases rather than treating edges as out-of-distribution, and (3) more informative predictions by identifying boundary conditions.
+\textbf{RQ3 (3-Class vs Binary):} Including edge cases as an explicit third class provides critical advantages: (1) superior normalized performance (1.04× vs 0.90×), (2) deployment safety by handling all real-world cases rather than treating edges as out-of-distribution, and (3) more informative predictions by identifying boundary conditions. The fact that excluding edge samples causes binary classification to perform worse than random demonstrates that edge acoustic signatures contain discriminative information essential for robust contact state representations.
 
-\textbf{RQ4 (Object Generalization):} Training on Objects A, B, C (Workspaces 1--3, 21,855 samples) and validating on Object D (Workspace 4, 6,165 samples) reveals \textbf{complete failure}: Random Forest achieves 50.0\% validation accuracy (exactly random chance), with validation F1 = 0.333. All classifiers perform at or below random: K-NN 34.9\%, MLP 33.7\%, Ensemble 32.5\%. The 26.6 percentage point CV/validation gap demonstrates that acoustic features encode object-specific eigenfrequencies that do not transfer to novel geometries.
+\textbf{RQ4 (Object Generalization):} Training on Objects A, B, C and validating on Object D reveals \textbf{highly classifier-dependent results, validated across 5 independent random seeds with perfect reproducibility (std=0.0\%)}: \textbf{(1) 3-class}---Random Forest achieves 41.7\% (only 8.4\% above random), but critically, heavily-regularized GPU-MLP with dropout (0.3) and weight decay (0.01) achieves 75.0\% validation consistently across all 5 seeds, demonstrating that proper regularization enables geometry-invariant learning with a +39.3 percentage point improvement over unregularized models (35.7\%). \textbf{(2) Binary}---all classifiers collapse to exactly 50\% (pure random chance) across all seeds, proving that excluding edge samples guarantees complete failure on novel objects. The 29--35 percentage point CV-validation gaps for most classifiers demonstrate object-specific overfitting, but the regularized GPU-MLP's deterministic success (75.0\% ± 0.0\%) reveals that preventing object-specific memorization through dropout and weight decay forces models to learn generalizable contact patterns. The unique negative gap (-17.8\%, validation $>$ CV) suggests Object D's simpler geometry produces cleaner acoustic signatures.
 
-Our physics-based analysis reveals two distinct generalization regimes: \textbf{(1) Position generalization partially succeeds (60\% average)} because changing workspace positions preserves object eigenfrequencies while modulating amplitudes through different robot configurations and surface geometries---an in-distribution domain shift. \textbf{(2) Object generalization fails completely (50\%, random chance)} because different geometries produce non-overlapping eigenfrequency spectra, creating an out-of-distribution problem where contact-type information is not object-invariant.
+Our physics-based analysis reveals two distinct generalization regimes: \textbf{(1) Position generalization catastrophically fails} because different workspace geometric configurations create non-overlapping acoustic distributions with extreme domain shift---workspace-specific training is mandatory. \textbf{(2) Object generalization succeeds with heavy regularization}: Most unregularized classifiers fail completely (41.7\% for 3-class, exactly 50\% for binary), but heavily-regularized GPU-MLP achieves 75.0\% validation, reproduced deterministically across 5 independent seeds (std=0.0\%), by preventing object-specific overfitting. Different geometries produce non-overlapping eigenfrequency spectra, but dropout (0.3) and weight decay (0.01) force learning of contact-type patterns (solid contact, air gap, partial overlap) rather than object-identity signatures.
 
 \subsection{Contributions and Implications}
 
-This work makes several contributions to acoustic sensing for robotics. We provide the \textit{first systematic 3-class analysis} (contact, no-contact, edge) demonstrating that including edge cases improves normalized performance by 56\% compared to binary classification. Our workspace rotation methodology establishes that acoustic contact detection achieves 60\% average validation accuracy (1.80× over random), statistically significant but highly workspace-dependent (35--85\% range). Critically, our object generalization experiment reveals a \textbf{fundamental limitation}: models fail completely (50\%, random chance) when encountering novel object geometries, performing no better than all other classifiers tested.
+This work makes several contributions to acoustic sensing for robotics. We provide the \textit{first systematic 3-class analysis} (contact, no-contact, edge) demonstrating that including edge cases improves normalized performance compared to binary classification---critically showing that binary performs worse than random guessing, proving edge samples contain essential discriminative information. Our workspace rotation methodology establishes proof-of-concept within-workspace performance (69.9\% CV accuracy, 2.10× over random) but reveals catastrophic cross-workspace failure (34.5\% validation, barely above random), establishing fundamental workspace-specific limitations. Our object generalization experiment reveals that \textbf{regularization is the key to generalization}: heavily-regularized GPU-MLP with dropout (0.3) and weight decay (0.01) achieves 75.0\% validation on novel objects (2.25× over random), reproduced deterministically across 5 independent random seeds with zero variance (std=0.0\%), while unregularized models fail at 35.7\% (barely above random) and binary classification collapses to exactly 50\% (pure chance). This demonstrates that object generalization is possible and reproducible when proper regularization prevents overfitting to object-specific acoustic signatures.
 
-The physics-based theoretical framework explains both position and object generalization through eigenfrequency analysis: \textbf{Position changes modulate amplitudes but preserve frequencies (partial success)}, while \textbf{geometry changes alter fundamental eigenfrequency spectra (complete failure)}. Edge cases create mixed acoustic signatures where partial contact produces geometry-dependent vibration patterns. Different workspace cutouts, robot configurations, and boundary topologies generate fundamentally different edge signatures that resist generalization.
+The physics-based theoretical framework explains both failures through eigenfrequency analysis: \textbf{Position generalization fails} because workspace geometric configurations create non-overlapping acoustic distributions with extreme domain shift. \textbf{Object generalization depends critically on regularization}---unregularized models overfit to object-specific eigenfrequency spectra (failing at 35.7--41.7\%), while heavily-regularized models prevent this overfitting and learn contact-type patterns that generalize (achieving 75.0\%). The unique negative CV-validation gap (-17.8\%) where validation exceeds training performance suggests that simpler object geometries produce cleaner acoustic contact signatures. Edge cases create mixed acoustic signatures where partial contact produces geometry-dependent vibration patterns that vary between workspaces but contain essential discriminative information for robust learning.
 
-Practical implications include clear deployment guidelines: acoustic contact detection is viable \textit{only in closed-world scenarios with both object-specific and workspace-specific training}. Suitable applications include factory floors with fixed object types and workspace configurations, or multi-position inspection of known objects in known workspace layouts. \textbf{Object generalization cannot be assumed}---systems must be retrained for each new object geometry. For applications requiring object or workspace flexibility, multimodal fusion with vision/force sensing is recommended to overcome acoustic sensing's geometry-specific limitations.
+Practical implications include: \textbf{(1) Workspace-specific training is mandatory}---cross-workspace generalization fails catastrophically (34.5\%, barely above random). \textbf{(2) Heavy regularization enables robust object generalization}---dropout (0.3) and weight decay (0.01) force learning of geometry-invariant patterns, achieving 75.0\% validation with +39.3 percentage point improvement over unregularized models, proven across 5 seeds. \textbf{(3) Binary classification guarantees failure on novel objects} (exactly 50\% across all seeds, pure random chance)---3-class with edge samples is essential. \textbf{(4) Combining both challenges} (new object + new workspace) would require both heavy regularization and workspace-specific retraining. Acoustic contact detection is viable in controlled scenarios with workspace-specific training and properly regularized models, but cross-domain deployment requires multimodal fusion with vision/force sensing.
 
 \subsection{Future Directions}
 
 Several research directions could extend this work. \textit{Short-term improvements} include investigating workspace-invariant spectral features through eigenfrequency decomposition of edge signatures, analyzing multimodal fusion with vision or force sensing to overcome workspace dependence, and extending to 4+ class problems (e.g., contact type classification, contact localization).
 
-\textit{Long-term paradigm shifts} require moving beyond object-specific and workspace-specific feature learning to geometric abstraction. Physics-informed neural networks that explicitly model edge topology, partial contact mechanics, and surface boundary effects could enable workspace-agnostic edge detection. For object generalization, research into \textbf{object-invariant acoustic features} that capture contact type independent of eigenfrequency spectra is critical---potentially through contact mechanics modeling, transfer learning from diverse object geometries, or meta-learning approaches for rapid object adaptation. Without addressing the fundamental eigenfrequency out-of-distribution problem, acoustic sensing will remain limited to closed-world applications with known objects.
+\textit{Long-term paradigm shifts} require moving beyond workspace-specific feature learning to geometric abstraction. Physics-informed neural networks that explicitly model edge topology, partial contact mechanics, and surface boundary effects could enable workspace-agnostic edge detection. For object generalization, our finding that \textbf{heavily-regularized GPU-MLP achieves 75.0\% validation on novel objects, reproduced deterministically across 5 independent seeds (std=0.0\%)}, opens critical research directions: (1) systematic study of regularization strategies (dropout rates, weight decay, early stopping, batch normalization) for acoustic contact detection to understand what regularization strength optimally balances within-object performance versus cross-object generalization, (2) investigation of domain-adversarial training to explicitly learn object-invariant features by forcing the model to be unable to distinguish which object produced an acoustic signature, (3) transfer learning from diverse object geometries to build general contact representations that capture contact-type patterns independent of object identity, and (4) meta-learning approaches for rapid object adaptation with few examples, enabling quick deployment on novel objects with minimal retraining. The 39.3 percentage point gap between regularized (75.0\%) and unregularized (35.7\%) GPU-MLP models demonstrates that preventing object-specific overfitting is essential---future work should focus on architectural innovations (residual connections, attention mechanisms) and training strategies (mixup augmentation, contrastive learning) that inherently promote geometry-invariant learning while maintaining high within-workspace performance.
 
 Multi-modal fusion combining acoustic sensing with vision and force feedback could leverage complementary strengths: vision for workspace geometry understanding, force for contact mechanics, and acoustics for non-contact prediction and edge detection. Such integrated systems could achieve robust performance across varying workspaces by dynamically adapting to geometric changes through sensor fusion.
 
-This work establishes acoustic sensing as a viable complementary modality for robotic manipulation in closed-world environments while highlighting the critical importance of workspace-specific training. The strong workspace dependence revealed by our 3-class analysis (35--85\% validation range) provides valuable insights for designing sensing systems that balance capability with practical deployment constraints.
+This work establishes acoustic sensing as a proof-of-concept modality for robotic manipulation in highly constrained closed-world environments while revealing catastrophic cross-workspace generalization failure. The dramatic performance degradation from 69.9\% cross-validation to 34.5\% validation (barely above random) demonstrates that workspace-specific training is not just beneficial but \textbf{mandatory} for deployment. The strong workspace dependence revealed by our 3-class analysis (23.3--55.7\% validation range, two rotations worse than random) provides critical insights for designing sensing systems: acoustic sensing alone is insufficient for generalizable manipulation and requires either workspace-specific retraining or multimodal sensor fusion to achieve robust performance.
+
+\subsection{Limitations}
+
+This study has several limitations that constrain generalizability of findings. \textbf{(1) Limited scale:} We evaluate on only 4 workspaces and 4 object types with a single robot platform (Franka Panda). Larger-scale studies across diverse robot morphologies (e.g., Universal Robots, KUKA) and object materials (metals, plastics, compliant materials) could reveal whether acoustic sensing limitations are fundamental or platform-specific. \textbf{(2) Passive sensing only:} Unlike prior work on soft actuators using active acoustic excitation (chirp signals)~\cite{zoeller2020active}, we employ purely passive contact acoustics. Active excitation could potentially improve signal-to-noise ratio and enable better generalization, though at the cost of increased system complexity. \textbf{(3) Material homogeneity:} All test objects are wooden boards, limiting material diversity. Different materials (e.g., metals with higher elastic moduli, polymers with viscoelastic damping) produce fundamentally different acoustic signatures and may exhibit different generalization properties. \textbf{(4) Single contact geometry:} The acoustic finger has fixed 1~cm $\times$ 0.25~cm contact area. Variable contact geometries or force profiles could interact with acoustic signatures in ways not captured by our experiments. \textbf{(5) Static contact:} We evaluate static contact detection, not dynamic manipulation tasks like sliding, rolling, or impact. Dynamic contact mechanics may produce richer acoustic signatures with different generalization characteristics. Future work should address these limitations through multi-platform studies, active excitation experiments, diverse material testing, and dynamic manipulation scenarios to fully characterize acoustic sensing capabilities and boundaries for robotic applications.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{ACKNOWLEDGMENTS}

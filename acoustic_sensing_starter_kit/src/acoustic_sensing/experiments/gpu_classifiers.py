@@ -16,15 +16,25 @@ from sklearn.model_selection import train_test_split
 from typing import Tuple, Optional, List
 import warnings
 
+# Suppress CUDA initialization warnings
+warnings.filterwarnings("ignore", message=".*CUDA initialization.*")
+
 
 def get_device() -> torch.device:
     """Get the best available device (CUDA if available, else CPU)."""
-    if torch.cuda.is_available():
-        return torch.device("cuda")
-    elif hasattr(torch.backends, "mps") and torch.backends.mps.is_available():
-        return torch.device("mps")  # Apple Silicon
-    else:
-        return torch.device("cpu")
+    try:
+        if torch.cuda.is_available():
+            return torch.device("cuda")
+    except Exception:
+        pass  # Silently fallback to CPU if CUDA fails
+
+    try:
+        if hasattr(torch.backends, "mps") and torch.backends.mps.is_available():
+            return torch.device("mps")  # Apple Silicon
+    except Exception:
+        pass
+
+    return torch.device("cpu")
 
 
 class NumpyDataset(Dataset):

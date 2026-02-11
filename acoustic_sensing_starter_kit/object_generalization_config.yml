@@ -1,0 +1,71 @@
+# Object Generalization Experiment Configuration
+# Train on WS1+2+3 (Objects A, B, C), Test on WS4 (Object D)
+
+experiments:
+  object_generalization_ws4_3class:
+    name: "Object Generalization - WS4 Holdout (3-class)"
+    description: "Train on workspaces 1-3 (Objects A, B, C), validate on workspace 4 (Object D) - 3-class classification"
+    
+    training_datasets:
+      - "data/fully_balanced_datasets/workspace_1_balanced"
+      - "data/fully_balanced_datasets/workspace_2_balanced"
+      - "data/fully_balanced_datasets/workspace_3_balanced"
+    
+    validation_dataset: "data/fully_balanced_datasets/workspace_4_balanced"
+    
+    num_classes: 3
+    include_edge: true
+    
+    classifiers:
+      - "RandomForest"
+      - "LogisticRegression"
+      - "SVM"
+      - "KNN"
+    
+    cross_validation:
+      enabled: true
+      folds: 5
+      random_seed: 42
+    
+    feature_config:
+      use_handcrafted: true
+      use_spectrograms: false
+    
+    output_subdir: "object_generalization_ws4_holdout_3class_fully_balanced"
+
+  object_generalization_ws4_binary:
+    name: "Object Generalization - WS4 Holdout (Binary)"
+    description: "Train on workspaces 1-3 (Objects A, B, C), validate on workspace 4 (Object D) - Binary classification (contact vs no_contact)"
+    
+    training_datasets:
+      - "data/fully_balanced_datasets/workspace_1_balanced"
+      - "data/fully_balanced_datasets/workspace_2_balanced"
+      - "data/fully_balanced_datasets/workspace_3_balanced"
+    
+    validation_dataset: "data/fully_balanced_datasets/workspace_4_balanced"
+    
+    num_classes: 2
+    include_edge: false
+    
+    classifiers:
+      - "RandomForest"
+      - "LogisticRegression"
+      - "SVM"
+      - "KNN"
+    
+    cross_validation:
+      enabled: true
+      folds: 5
+      random_seed: 42
+    
+    feature_config:
+      use_handcrafted: true
+      use_spectrograms: false
+    
+    output_subdir: "object_generalization_ws4_holdout_binary_fully_balanced"
+
+global:
+  output_directory: "experiments"
+  save_models: true
+  generate_plots: true
+  random_seed: 42

@@ -1,0 +1,109 @@
+# Object Generalization Experiment - 3-Class
+# Train on WS1+2+3 (Objects A, B, C), Validate on WS4 (Object D)
+# 3-class: contact, no_contact, edge
+
+# Base data directory
+base_data_dir: "data"
+
+# Datasets to process (will be combined for training/testing)
+# OBJECT GENERALIZATION: Train on WS1+2+3 (Objects A, B, C), Validate on WS4 (Object D)
+datasets:
+  - "fully_balanced_datasets/workspace_1_balanced"
+  - "fully_balanced_datasets/workspace_2_balanced"
+  - "fully_balanced_datasets/workspace_3_balanced"
+  
+# Optional: Specify datasets to use for validation (holdout)
+# WS4 holdout - Object D (never seen during training)
+validation_datasets:
+  - "fully_balanced_datasets/workspace_4_balanced"
+
+# Reconstruction Configuration
+reconstruction:
+  enabled: false
+  output_dir: "reconstruction_results"
+
+# Class Filtering Configuration
+# 3-CLASS MODE: contact, no_contact, edge
+class_filtering:
+  enabled: false  # false = 3-class mode
+  classes_to_exclude_train: []
+  classes_to_exclude_validation: []
+
+# Domain Adaptation Configuration
+domain_adaptation:
+  enabled: false
+  holdout_train_split: 0.3
+
+# Feature Extraction Mode Configuration
+feature_extraction:
+  modes:
+    - "features"  # Hand-crafted features only
+  
+  mode: "features"
+  
+  spectrogram:
+    n_fft: 512
+    hop_length: 128
+    n_mels: 80
+    time_bins: 128
+    fmin: 100
+    fmax: 20000
+    use_log_scale: true
+    n_mfcc: 13
+    n_chroma: 12
+    
+  normalization:
+    enabled: false
+    method: "zscore"
+
+# Analysis Experiments
+experiments:
+  data_processing:
+    enabled: true
+    apply_audio_smoothing: false
+    use_workspace_invariant_features: true
+    use_impulse_features: true
+    use_data_augmentation: true
+    augmentation_factor: 2
+    enhanced_augmentation: false
+    motion_artifact_removal:
+      enabled: false
+
+  feature_normalization:
+    enabled: true
+    method: "standard"
+
+  dimensionality_reduction:
+    enabled: true
+
+  discrimination_analysis:
+    enabled: true
+    feature_selection:
+      enabled: false
+      top_k_features: 50
+      method: "ensemble"
+    
+    confidence_filtering:
+      enabled: true
+      threshold: 0.7
+      mode: "reject"
+      default_class: "no_contact"
+
+  saliency_analysis:
+    enabled: false
+
+  feature_ablation:
+    enabled: false
+
+  impulse_response:
+    enabled: false
+
+  frequency_band_ablation:
+    enabled: false
+
+  surface_reconstruction:
+    enabled: false
+
+# Output Configuration
+output:
+  base_dir: "object_generalization_ws4_holdout_3class_fully_balanced"

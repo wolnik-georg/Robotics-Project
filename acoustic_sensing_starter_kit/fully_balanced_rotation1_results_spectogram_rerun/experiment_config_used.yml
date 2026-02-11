@@ -1,0 +1,73 @@
+base_data_dir: data
+class_filtering:
+  classes_to_exclude_train:
+  - edge
+  classes_to_exclude_validation:
+  - edge
+  enabled: false
+datasets:
+- fully_balanced_datasets/rotation1_train
+domain_adaptation:
+  enabled: false
+  holdout_train_split: 0.3
+experiments:
+  data_processing:
+    apply_audio_smoothing: false
+    augmentation_factor: 2
+    enabled: true
+    enhanced_augmentation: false
+    motion_artifact_removal:
+      enabled: false
+    use_data_augmentation: true
+    use_impulse_features: true
+    use_workspace_invariant_features: true
+  dimensionality_reduction:
+    enabled: true
+  discrimination_analysis:
+    confidence_filtering:
+      default_class: no_contact
+      enabled: false
+      mode: reject
+      threshold: 0.5
+    enabled: true
+    feature_selection:
+      enabled: false
+      method: ensemble
+      top_k_features: 50
+  feature_ablation:
+    enabled: false
+  feature_normalization:
+    enabled: true
+    method: standard
+  frequency_band_ablation:
+    enabled: false
+  impulse_response:
+    enabled: false
+  saliency_analysis:
+    enabled: false
+  surface_reconstruction:
+    enabled: false
+feature_extraction:
+  mode: spectrogram
+  modes:
+  - spectrogram
+  normalization:
+    enabled: false
+    method: zscore
+  spectrogram:
+    fmax: 20000
+    fmin: 100
+    hop_length: 128
+    n_chroma: 12
+    n_fft: 512
+    n_mels: 80
+    n_mfcc: 13
+    time_bins: 128
+    use_log_scale: true
+output:
+  base_dir: fully_balanced_rotation1_results_spectogram_rerun
+reconstruction:
+  enabled: false
+  output_dir: reconstruction_results
+validation_datasets:
+- fully_balanced_datasets/rotation1_val

@@ -1,11 +1,12 @@
 {
   "dataset_name": "runs_2025_12_11_v2_2",
-  "total_samples": 650,
+  "total_samples": 540,
   "samples_per_label": {
-    "edge": 443,
-    "contact": 126,
-    "no_contact": 81
+    "edge": 291,
+    "no_surface": 146,
+    "surface": 103
   },
   "created_by": "collect_data.py",
-  "labeling_logic": "ground_truth_v2.py"
+  "relabeled": false,
+  "labeling_logic": "original_labels"
 }

@@ -2330,20 +2330,20 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
             self.logger.info(f"✓ GPU classifiers enabled (device: {get_device()})")
 
             # GPU MLP (Medium) - GPU-accelerated version of best performer
-            # classifiers["GPU-MLP (Medium)"] = GPUMLPClassifier(
-            #     hidden_layer_sizes=(128, 64, 32),
-            #     dropout=0.3,
-            #     learning_rate=0.001,
-            #     weight_decay=0.01,
-            #     batch_size=64,
-            #     max_epochs=500,
-            #     early_stopping=True,
-            #     patience=25,
-            #     validation_fraction=0.15,
-            #     use_batch_norm=True,
-            #     random_state=42,
-            #     verbose=False,
-            # )
+            classifiers["GPU-MLP (Medium)"] = GPUMLPClassifier(
+                hidden_layer_sizes=(128, 64, 32),
+                dropout=0.3,
+                learning_rate=0.001,
+                weight_decay=0.01,
+                batch_size=64,
+                max_epochs=500,
+                early_stopping=True,
+                patience=25,
+                validation_fraction=0.15,
+                use_batch_norm=True,
+                random_state=42,
+                verbose=False,
+            )
 
             # GPU MLP (Medium-HighReg) - Higher regularization for generalization
             classifiers["GPU-MLP (Medium-HighReg)"] = GPUMLPClassifier(
@@ -2551,34 +2551,34 @@ class DiscriminationAnalysisExperiment(BaseExperiment):
         # Found via Optuna Bayesian optimization (50 trials)
         # Optimized for validation accuracy (cross-workspace generalization)
 
-        # if GPU_AVAILABLE:
-        # GPU-accelerated optimized MLP
-        # classifiers["GPU-MLP (Tuned)"] = GPUMLPClassifier(
-        #     hidden_layer_sizes=(256, 192, 160),
-        #     dropout=0.162,
-        #     learning_rate=0.000131,
-        #     weight_decay=0.000294,
-        #     batch_size=32,
-        #     max_epochs=500,
-        #     early_stopping=True,
-        #     patience=25,
-        #     use_batch_norm=False,
-        #     random_state=42,
-        # )
+        if GPU_AVAILABLE:
+            # GPU-accelerated optimized MLP
+            classifiers["GPU-MLP (Tuned)"] = GPUMLPClassifier(
+                hidden_layer_sizes=(256, 192, 160),
+                dropout=0.162,
+                learning_rate=0.000131,
+                weight_decay=0.000294,
+                batch_size=32,
+                max_epochs=500,
+                early_stopping=True,
+                patience=25,
+                use_batch_norm=False,
+                random_state=42,
+            )
 
-        # # Variant with slightly higher regularization
-        # classifiers["GPU-MLP (Tuned-HighReg)"] = GPUMLPClassifier(
-        #     hidden_layer_sizes=(256, 192, 160),
-        #     dropout=0.25,
-        #     learning_rate=0.000131,
-        #     weight_decay=0.001,
-        #     batch_size=32,
-        #     max_epochs=500,
-        #     early_stopping=True,
-        #     patience=30,
-        #     use_batch_norm=False,
-        #     random_state=42,
-        # )
+            # Variant with slightly higher regularization
+            classifiers["GPU-MLP (Tuned-HighReg)"] = GPUMLPClassifier(
+                hidden_layer_sizes=(256, 192, 160),
+                dropout=0.25,
+                learning_rate=0.000131,
+                weight_decay=0.001,
+                batch_size=32,
+                max_epochs=500,
+                early_stopping=True,
+                patience=30,
+                use_batch_norm=False,
+                random_state=42,
+            )
 
         # ========================================================================
         # CNN CLASSIFIERS FOR SPECTROGRAM DATA

@@ -7,30 +7,14 @@
 base_data_dir: "data"
 
 # Datasets to process (will be combined for training/testing)
-# Using NEW 3-CLASS balanced datasets (contact, no_contact, edge)
+# ROTATION 1: Train on WS1+WS3, Validate on WS2 (for spectrogram comparison)
 datasets:
-  # TRAINING: Workspaces 3 & 1 (all surfaces - cutout + pure contact + pure no-contact)
-  
-  # Workspace 3 - 3-class datasets
-  - "balanced_workspace_3_3class_squares_cutout_v1"
-  - "balanced_workspace_3_3class_squares_cutout_v2"
-  - "balanced_workspace_3_3class_pure_contact"
-  - "balanced_workspace_3_3class_pure_no_contact"
-
-  # Workspace 1 - 3-class datasets
-  - "balanced_workspace_1_3class_squares_cutout"
-  - "balanced_workspace_1_3class_pure_no_contact"
-  - "balanced_workspace_1_3class_pure_contact"
+  - "fully_balanced_datasets/rotation1_train"
   
 # Optional: Specify datasets to use for validation (holdout)
-# Leave empty [] to combine all datasets for train/test split
-# These datasets have sweep.csv with position info for reconstruction
-validation_datasets: [
-  # VALIDATION: Workspace 2 - 3-class datasets (completely unseen workspace)
-  "balanced_workspace_2_3class_squares_cutout",
-  "balanced_workspace_2_3class_pure_no_contact",
-  "balanced_workspace_2_3class_pure_contact"
-]
+# Rotation 1 validation: WS2 held out
+validation_datasets:
+  - "fully_balanced_datasets/rotation1_val"
 
 # Reconstruction Configuration
 # After training, run surface reconstruction on validation datasets
@@ -40,21 +24,24 @@ reconstruction:
   # Each validation dataset will be reconstructed separately using its sweep.csv
 
 # Class Filtering Configuration
-# NOTE: 3-CLASS MODE ENABLED - Datasets now include edge samples
+# Switch between 3-class and binary modes
 class_filtering:
-  enabled: false  # No filtering needed - balanced datasets already include all 3 classes
-  classes_to_exclude_train: []  # Empty = include all (contact, no_contact, edge)
-  classes_to_exclude_validation: []  # Empty = include all (contact, no_contact, edge)
+  enabled: false  # false = 3-class mode (contact, no_contact, edge)
+  classes_to_exclude_train: ["edge"]  # Exclude edge class for binary mode
+  classes_to_exclude_validation: ["edge"]  # Exclude edge class for binary mode
+  # NOTE: Filtering multi-sample to binary (contact/no_contact only) for fair comparison
   
-  # Current configuration: FULL 3-CLASS PROBLEM
+  # BINARY MODE (enabled: true):
+  # - Training: contact, no_contact only
+  # - Validation: contact, no_contact only
+  # - Random baseline: 50% (instead of 33.3%)
+  # - Expected: Higher raw accuracy but need to normalize (val_acc - 50%) / 50%
+  
+  # 3-CLASS MODE (enabled: false):
   # - Training: contact, no_contact, edge
   # - Validation: contact, no_contact, edge
-  # - Expected: Lower accuracy (harder problem) but more robust system
-  
-  # To revert to binary mode:
-  # 1. Set enabled: true
-  # 2. Set classes_to_exclude_train: ["edge"]
-  # 3. Set classes_to_exclude_validation: ["edge"]
+  # - Random baseline: 33.3%
+  # - Expected: Lower raw accuracy but better normalized performance
 
 # Domain Adaptation Configuration
 # Test hypothesis: Does adding hold-out data to training improve generalization?
@@ -71,8 +58,8 @@ domain_adaptation:
 # Now supports multiple modes for comparison
 feature_extraction:
   modes:  # NEW: List of modes to test sequentially
-    # - "spectrogram"        # Mel spectrograms (128×256 = 32,768 dimensions)
-    - "features"           # Hand-crafted features (65 dimensions)
+    - "features"           # Hand-crafted features (80 dimensions) - use for multi-sample experiment
+    # - "spectrogram"        # Mel spectrograms (80×128 = 10,240 dimensions)
     # - "mfcc"              # MFCC features (13 × time_frames)
     # - "magnitude_spectrum" # Raw magnitude spectrum
     # - "power_spectrum"     # Power spectrum
@@ -123,6 +110,12 @@ experiments:
     motion_artifact_removal:
       enabled: false
 
+  # Feature Normalization (StandardScaler)
+  # Applied to training features (fit on train, transform train/test/validation)
+  feature_normalization:
+    enabled: true  # TESTING: Disabled to test no normalization
+    method: "standard"  # Options: "standard" (StandardScaler), "minmax", "robust", "none"
+
   dimensionality_reduction:
     enabled: true
 
@@ -136,8 +129,8 @@ experiments:
     # Confidence-Based Prediction Filtering
     # Filter out predictions with low confidence to reduce false positives
     confidence_filtering:
-      enabled: true  # Set to true to enable confidence thresholding
-      threshold: 0.8  # Minimum confidence (0.0-1.0) to accept prediction
+      enabled: false  # Set to true to enable confidence thresholding
+      threshold: 0.5  # Minimum confidence (0.0-1.0) to accept prediction
       # If confidence < threshold:
       #   mode: "reject" → Mark as "uncertain" (excluded from metrics)
       #   mode: "default" → Use default class (e.g., "no_contact" as safe default)
@@ -162,6 +155,6 @@ experiments:
 
 # Output Configuration
 output:
-  base_dir: "test_pipeline_3class_v1"  # Train: W1&W3 (3-class), Validate: W2 (3-class)
+  base_dir: "fully_balanced_rotation1_results_features_rerun"  # Rerun of hand-crafted features experiment (Feb 11, 2026)
 
 # Analysis Experiments (Standard Pipeline)

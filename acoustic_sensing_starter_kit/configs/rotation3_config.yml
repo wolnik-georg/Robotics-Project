@@ -1,0 +1,162 @@
+# Standard Pipeline with Multiple Datasets
+# ROTATION 3: Train on WS1+WS2, Validate on WS3
+# 
+# All balanced datasets include sweep.csv with position info for reconstruction
+
+# Base data directory
+base_data_dir: "data"
+
+# Datasets to process (will be combined for training/testing)
+# Using FULLY BALANCED datasets (33/33/33 classes, 50/50 workspaces)
+datasets:
+  # ROTATION 3: Train on WS1+WS2 (fully balanced, 2,676 samples)
+  # - Classes: 892/892/892 (contact/no_contact/edge) = 33.3/33.3/33.3%
+  # - Workspaces: 1,338/1,338 (WS1/WS2) = 50.0/50.0%
+  - "fully_balanced_datasets/rotation3_train"
+  
+# Optional: Specify datasets to use for validation (holdout)
+# These datasets have sweep.csv with position info for reconstruction
+validation_datasets:
+  # ROTATION 3: Validate on WS3 (fully balanced, 1,215 samples)
+  # - Classes: 405/405/405 (contact/no_contact/edge) = 33.3/33.3/33.3%
+  - "fully_balanced_datasets/rotation3_val"
+
+# Reconstruction Configuration
+# After training, run surface reconstruction on validation datasets
+reconstruction:
+  enabled: false
+  output_dir: "reconstruction_results"
+  # Each validation dataset will be reconstructed separately using its sweep.csv
+
+# Class Filtering Configuration
+# NOTE: 3-CLASS MODE ENABLED - Datasets now include edge samples
+class_filtering:
+  enabled: false  # No filtering needed - balanced datasets already include all 3 classes
+  classes_to_exclude_train: []  # Empty = include all (contact, no_contact, edge)
+  classes_to_exclude_validation: []  # Empty = include all (contact, no_contact, edge)
+  
+  # Current configuration: FULL 3-CLASS PROBLEM
+  # - Training: contact, no_contact, edge
+  # - Validation: contact, no_contact, edge
+  # - Expected: Lower accuracy (harder problem) but more robust system
+  
+  # To revert to binary mode:
+  # 1. Set enabled: true
+  # 2. Set classes_to_exclude_train: ["edge"]
+  # 3. Set classes_to_exclude_validation: ["edge"]
+
+# Domain Adaptation Configuration
+# Test hypothesis: Does adding hold-out data to training improve generalization?
+domain_adaptation:
+  enabled: false  # Enable to mix hold-out data into training
+  holdout_train_split: 0.3  # Fraction of hold-out data to add to training (0.0-1.0)
+  # When enabled:
+  #   - holdout_train_split (e.g., 0.3) goes to training
+  #   - (1 - holdout_train_split) (e.g., 0.7) stays for validation
+  # This tests if models memorized surface patterns vs learning general contact detection
+
+# Feature Extraction Mode Configuration
+# Choose between hand-crafted features, spectrograms, or both
+# Now supports multiple modes for comparison
+feature_extraction:
+  modes:  # NEW: List of modes to test sequentially
+    - "features"           # Hand-crafted features (65 dimensions)
+    # - "spectrogram"        # Mel spectrograms (128×256 = 32,768 dimensions)
+    # - "mfcc"              # MFCC features (13 × time_frames)
+    # - "magnitude_spectrum" # Raw magnitude spectrum
+    # - "power_spectrum"     # Power spectrum
+    # - "chroma"             # Chroma features (12 bins)
+    # - "both"               # Hand-crafted + full spectrograms
+  
+  # Default mode (for backward compatibility - will be overridden by modes list)
+  mode: "features"  # Options: "features" | "spectrogram" | "mfcc" | "magnitude_spectrum" | "power_spectrum" | "chroma" | "both"
+  
+  # Spectrogram extraction parameters (used for spectrogram, mfcc, magnitude_spectrum, power_spectrum, chroma, both modes)
+  # Optimized for CONTACT DETECTION: High-freq transients, short duration events
+  spectrogram:
+    n_fft: 512           # REDUCED: Shorter window for better time resolution (10.6ms @ 48kHz)
+                         # Contact events are SHORT - need fine temporal detail
+    hop_length: 128      # REDUCED: 75% overlap for smooth transitions (2.7ms hop)
+                         # Catches fast transients that longer hops would miss
+    n_mels: 80           # INCREASED: More frequency bands to capture contact harmonics
+                         # Contact has rich frequency content across spectrum
+    time_bins: 128       # INCREASED: More time detail to see impact onset
+                         # Result: 80×128 = 10,240 features (2.5× larger BUT better for transients)
+    fmin: 100            # INCREASED: Skip very low freq (robot motor noise)
+    fmax: 20000          # Keep high freq where contact transients live
+    use_log_scale: true  # dB scale emphasizes transients
+    
+    # MFCC-specific parameters
+    n_mfcc: 13           # Number of MFCC coefficients
+    
+    # Chroma-specific parameters  
+    n_chroma: 12         # Number of chroma bins
+    
+  # Per-sample normalization options
+  # NOTE: Testing showed this HURTS performance (-5.8% validation accuracy)
+  # The absolute magnitude of features carries discriminative information
+  normalization:
+    enabled: false       # DISABLED - hurt validation accuracy
+    method: "zscore"     # Options: "zscore" (mean=0, std=1), "minmax" (0-1), "robust" (median/IQR), "l2" (unit norm)
+
+# Analysis Experiments
+experiments:
+  data_processing:
+    enabled: true
+    apply_audio_smoothing: false
+    use_workspace_invariant_features: true  # Enable workspace-invariant features for better generalization
+    use_impulse_features: true  # NEW: Enable transfer function / impulse response features
+    use_data_augmentation: true  # NEW: Enable data augmentation for training data
+    augmentation_factor: 2  # How many augmented copies per original sample
+    enhanced_augmentation: false  # DISABLED: Enhanced augmentation hurt performance (-2.9%)
+    motion_artifact_removal:
+      enabled: false
+
+  # Feature Normalization (StandardScaler)
+  # Applied to training features (fit on train, transform train/test/validation)
+  feature_normalization:
+    enabled: true
+    method: "standard"  # Options: "standard" (StandardScaler), "minmax", "robust", "none"
+
+  dimensionality_reduction:
+    enabled: true
+
+  discrimination_analysis:
+    enabled: true
+    feature_selection:
+      enabled: false  # DISABLED: Feature selection hurt performance (-1.0%) - all 80 features needed
+      top_k_features: 50  # Number of top features to select (out of 80 total)
+      method: "ensemble"  # Method: "ensemble" (RF+GB+XGB average ranks)
+    
+    # Confidence-Based Prediction Filtering
+    # Filter out predictions with low confidence to reduce false positives
+    confidence_filtering:
+      enabled: true  # Set to true to enable confidence thresholding
+      threshold: 0.7  # Minimum confidence (0.0-1.0) to accept prediction
+      # If confidence < threshold:
+      #   mode: "reject" → Mark as "uncertain" (excluded from metrics)
+      #   mode: "default" → Use default class (e.g., "no_contact" as safe default)
+      mode: "reject"  # Options: "reject" (exclude) or "default" (assign default class)
+      default_class: "no_contact"  # Default class for low-confidence predictions (if mode="default")
+      # Use case: In robotics, uncertain predictions → safer to assume no_contact than false contact
+
+  saliency_analysis:
+    enabled: false
+
+  feature_ablation:
+    enabled: false
+
+  impulse_response:
+    enabled: false
+
+  frequency_band_ablation:
+    enabled: false
+
+  surface_reconstruction:
+    enabled: false
+
+# Output Configuration
+output:
+  base_dir: "fully_balanced_rotation3_results"  # Train: WS1+WS2 (balanced), Validate: WS3 (balanced)
+
+# Analysis Experiments (Standard Pipeline)

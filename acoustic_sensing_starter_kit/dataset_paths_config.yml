@@ -1,0 +1,27 @@
+# Dataset Paths Configuration
+# Edit these paths to point to your raw collected datasets
+
+workspace_1:
+  cutout: "data/collected_data_runs_2026_01_15_workspace_1_squares_cutout_relabeled"
+  contact: "data/collected_data_runs_2026_01_15_workspace_1_pure_contact_relabeled"
+  no_contact: "data/collected_data_runs_2026_01_15_workspace_1_pure_no_contact"
+
+workspace_2:
+  cutout: "data/collected_data_runs_2026_01_15_workspace_2_squares_cutout_relabeled"
+  contact: "data/collected_data_runs_2026_01_15_workspace_2_pure_contact_relabeled"
+  no_contact: "data/collected_data_runs_2026_01_15_workspace_2_pure_no_contact"
+
+workspace_3:
+  cutout: "data/collected_data_runs_2025_12_17_v2_workspace_3_squares_cutout_relabeled"
+  contact: "data/collected_data_runs_2026_01_14_workspace_3_pure_contact_relabeled"
+  no_contact: "data/collected_data_runs_2026_01_14_workspace_3_pure_no_contact"
+
+workspace_4:
+  holdout: "data/collected_data_runs_2026_01_27_hold_out_dataset_relabeled"
+
+output:
+  directory: "data/fully_balanced_datasets"
+  
+options:
+  random_seed: 42
+  skip_rotations: false  # Set to true to only create individual workspace datasets

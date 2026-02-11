@@ -1,0 +1,7 @@
+Rotation,Type,Total,Workspaces,Contact %,No-Contact %,Edge %,Max Deviation
+Rotation 1,Train,2430,"WS1, WS3",33.3,0.0,33.3,33.3
+Rotation 1,Val,1338,WS2,33.3,0.0,33.3,33.3
+Rotation 2,Train,2430,"WS2, WS3",33.3,0.0,33.3,33.3
+Rotation 2,Val,1362,WS1,33.3,0.0,33.3,33.3
+Rotation 3,Train,2676,"WS1, WS2",33.3,0.0,33.3,33.3
+Rotation 3,Val,1215,WS3,33.3,0.0,33.3,33.3

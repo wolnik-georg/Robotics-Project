@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2026.1.30)  8 FEB 2026 14:06
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2026.1.30)  11 FEB 2026 20:32
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -560,110 +560,169 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7.4> not available
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 92.
 
-Underfull \hbox (badness 4144) in paragraph at lines 94--95
-[]\OT1/ptm/b/n/10 Systematic gen-er-al-iza-tion anal-y-sis \OT1/ptm/m/n/10 re-veal-ing (1)
+Underfull \hbox (badness 1648) in paragraph at lines 92--93
+[]\OT1/ptm/b/n/10 First demon-stra-tion of 3-class acous-tic con-tact
  []
 
 
-Underfull \hbox (badness 3312) in paragraph at lines 98--99
-\OT1/ptm/m/n/10 ge-o-met-ric sig-na-tures, while dif-fer-ent ob-jects pro-
+Underfull \hbox (badness 2818) in paragraph at lines 92--93
+\OT1/ptm/m/n/10 cases, prov-ing the con-cept is vi-able for within-
+ []
+
+
+Underfull \hbox (badness 2538) in paragraph at lines 94--95
+[]\OT1/ptm/b/n/10 Multi-seed val-i-dated ob-ject gen-er-al-iza-tion with
+ []
+
+
+Underfull \hbox (badness 1546) in paragraph at lines 96--97
+\OT1/ptm/m/n/10 trophic workspace-dependent po-si-tion gen-er-al-iza-tion
  []
 
 [2] [3]
-<../ml_analysis_figures/figure11_feature_dimensions.png, id=131, 857.604pt x 566.5968pt>
+Overfull \hbox (4.37535pt too wide) in paragraph at lines 167--179
+ [][] 
+ []
+
+
+Overfull \hbox (14.53625pt too wide) in paragraph at lines 204--217
+ [][] 
+ []
+
+<../ml_analysis_figures/figure11_feature_dimensions.png, id=135, 857.604pt x 566.5968pt>
 File: ../ml_analysis_figures/figure11_feature_dimensions.png Graphic file (type png)
 <use ../ml_analysis_figures/figure11_feature_dimensions.png>
-Package pdftex.def Info: ../ml_analysis_figures/figure11_feature_dimensions.png  used on input line 174.
+Package pdftex.def Info: ../ml_analysis_figures/figure11_feature_dimensions.png  used on input line 221.
 (pdftex.def)             Requested size: 245.71811pt x 162.33768pt.
-
-Underfull \hbox (badness 1521) in paragraph at lines 191--192
+<../fully_balanced_rotation1_results_features_rerun/discriminationanalysis/validation_results/classifier_performance.png, id=137, 1149.093pt x 569.9694pt>
+File: ../fully_balanced_rotation1_results_features_rerun/discriminationanalysis/validation_results/classifier_performance.png Graphic file (type png)
+<use ../fully_balanced_rotation1_results_features_rerun/discriminationanalysis/validation_results/classifier_performance.png>
+Package pdftex.def Info: ../fully_balanced_rotation1_results_features_rerun/discriminationanalysis/validation_results/classifier_performance.png  used on input line 228.
+(pdftex.def)             Requested size: 247.88887pt x 122.94978pt.
+<../fully_balanced_rotation1_results_spectogram_rerun/discriminationanalysis/validation_results/classifier_performance.png, id=138, 1149.093pt x 569.9694pt>
+File: ../fully_balanced_rotation1_results_spectogram_rerun/discriminationanalysis/validation_results/classifier_performance.png Graphic file (type png)
+<use ../fully_balanced_rotation1_results_spectogram_rerun/discriminationanalysis/validation_results/classifier_performance.png>
+Package pdftex.def Info: ../fully_balanced_rotation1_results_spectogram_rerun/discriminationanalysis/validation_results/classifier_performance.png  used on input line 229.
+(pdftex.def)             Requested size: 247.88887pt x 122.94978pt.
+[4]
+Underfull \hbox (badness 1521) in paragraph at lines 246--247
 \OT1/ptm/m/n/10 dif-fer-ent robot con-fig-u-ra-tions and sur-face com-bi-na-tions
  []
 
 
-Underfull \hbox (badness 3758) in paragraph at lines 201--202
+Underfull \hbox (badness 3758) in paragraph at lines 256--257
 []\OT1/ptm/m/n/10 Dataset con-struc-tion en-sures bal-anced rep-re-sen-ta-tion
  []
 
-<../ml_analysis_figures/figure6_experimental_setup.png, id=138, 1144.7568pt x 568.0422pt>
+<../ml_analysis_figures/figure6_experimental_setup.png, id=156, 1144.7568pt x 568.0422pt>
 File: ../ml_analysis_figures/figure6_experimental_setup.png Graphic file (type png)
 <use ../ml_analysis_figures/figure6_experimental_setup.png>
-Package pdftex.def Info: ../ml_analysis_figures/figure6_experimental_setup.png  used on input line 205.
+Package pdftex.def Info: ../ml_analysis_figures/figure6_experimental_setup.png  used on input line 260.
 (pdftex.def)             Requested size: 505.89pt x 251.0228pt.
-[4 <../ml_analysis_figures/figure11_feature_dimensions.png>]
-<../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.png, id=149, 773.289pt x 1297.9692pt>
+[5 <../ml_analysis_figures/figure11_feature_dimensions.png>] [6 <../fully_balanced_rotation1_results_features_rerun/discriminationanalysis/validation_results/classifier_performance.png> <../fully_balanced_rotation1_results_spectogram_rerun/discriminationanalysis/validation_results/classifier_performance.png> <../ml_analysis_figures/figure6_experimental_setup.png>]
+<../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.png, id=174, 773.289pt x 1297.9692pt>
 File: ../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.png Graphic file (type png)
 <use ../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.png>
-Package pdftex.def Info: ../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.png  used on input line 224.
+Package pdftex.def Info: ../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.png  used on input line 279.
 (pdftex.def)             Requested size: 404.71353pt x 679.30505pt.
 
 
-LaTeX Warning: Float too large for page by 73.30505pt on input line 227.
+LaTeX Warning: Float too large for page by 85.30505pt on input line 282.
 
-<../comprehensive_3class_reconstruction/test_reconstruction_combined.png, id=150, 602.9727pt x 640.794pt>
+<../comprehensive_3class_reconstruction/test_reconstruction_combined.png, id=175, 602.9727pt x 640.794pt>
 File: ../comprehensive_3class_reconstruction/test_reconstruction_combined.png Graphic file (type png)
 <use ../comprehensive_3class_reconstruction/test_reconstruction_combined.png>
-Package pdftex.def Info: ../comprehensive_3class_reconstruction/test_reconstruction_combined.png  used on input line 231.
+Package pdftex.def Info: ../comprehensive_3class_reconstruction/test_reconstruction_combined.png  used on input line 286.
 (pdftex.def)             Requested size: 505.89pt x 537.61797pt.
-[5 <../ml_analysis_figures/figure6_experimental_setup.png>]
-LaTeX Info: Symbol \textrightarrow not provided by
-            font family ptm in TS1 encoding.
-            Default family used instead on input line 278.
-LaTeX Info: Symbol \textrightarrow not provided by
-            font family ptm in TS1 encoding.
-            Default family used instead on input line 278.
 
-Overfull \hbox (15.85083pt too wide) in paragraph at lines 281--293
- [][] 
+Underfull \hbox (badness 10000) in paragraph at lines 291--291
+ \OT1/ptm/m/it/10 B. Po-si-tion Gen-er-al-iza-tion: Catas-trophic Workspace-
  []
 
 
-Overfull \hbox (43.84332pt too wide) in paragraph at lines 310--320
+Underfull \hbox (badness 1546) in paragraph at lines 313--314
+[]\OT1/ptm/m/n/10 Cross-validation ac-cu-racy re-mains re-mark-ably con-sis-
+ []
+
+
+Underfull \hbox (badness 1360) in paragraph at lines 321--322
+\OT1/ptm/m/n/10 to ran-dom guess-ing. This catas-trophic workspace vari-
+ []
+
+LaTeX Info: Symbol \textrightarrow not provided by
+            font family ptm in TS1 encoding.
+            Default family used instead on input line 333.
+LaTeX Info: Symbol \textrightarrow not provided by
+            font family ptm in TS1 encoding.
+            Default family used instead on input line 333.
+
+Overfull \hbox (60.30132pt too wide) in paragraph at lines 336--350
  [][] 
  []
 
-<../comprehensive_3class_reconstruction/holdout_reconstruction_combined.png, id=164, 890.6073pt x 428.5611pt>
+LaTeX Info: Symbol \textrightarrow not provided by
+            font family ptm in TS1 encoding.
+            Default family used instead on input line 356.
+LaTeX Info: Symbol \textrightarrow not provided by
+            font family ptm in TS1 encoding.
+            Default family used instead on input line 356.
+
+Overfull \hbox (45.93755pt too wide) in paragraph at lines 359--371
+ [][] 
+ []
+
+[7]
+Underfull \hbox (badness 3108) in paragraph at lines 416--417
+[]\OT1/ptm/m/n/10 Position gen-er-al-iza-tion achieves 1.04\TS1/ptm/m/n/10 Ö \OT1/ptm/m/n/10 over ran-dom
+ []
+
+
+Underfull \hbox (badness 1715) in paragraph at lines 420--421
+[]\OT1/ptm/m/n/10 This suc-cess is ex-plained by reg-u-lar-iza-tion pre-vent-
+ []
+
+<../comprehensive_3class_reconstruction/holdout_reconstruction_combined.png, id=192, 890.6073pt x 428.5611pt>
 File: ../comprehensive_3class_reconstruction/holdout_reconstruction_combined.png Graphic file (type png)
 <use ../comprehensive_3class_reconstruction/holdout_reconstruction_combined.png>
-Package pdftex.def Info: ../comprehensive_3class_reconstruction/holdout_reconstruction_combined.png  used on input line 330.
+Package pdftex.def Info: ../comprehensive_3class_reconstruction/holdout_reconstruction_combined.png  used on input line 426.
 (pdftex.def)             Requested size: 505.89pt x 243.43225pt.
-[6]
-Underfull \hbox (badness 6493) in paragraph at lines 364--365
+[8]
+Underfull \hbox (badness 6493) in paragraph at lines 462--463
 []\OT1/ptm/b/n/10 (2) In-for-ma-tion: \OT1/ptm/m/n/10 Edge pre-dic-tions pro-vide use-ful
  []
 
 
-Underfull \hbox (badness 1735) in paragraph at lines 370--370
+Underfull \hbox (badness 1735) in paragraph at lines 468--468
  \OT1/ptm/m/it/10 E. Physics-Based In-ter-pre-ta-tion: Ob-ject and Workspace
  []
 
-
-Underfull \hbox (badness 1721) in paragraph at lines 384--385
-\OT1/ptm/m/n/10 om-e-try changes al-ter the fun-da-men-tal fre-quency spec-
- []
-
-
-Underfull \hbox (badness 7595) in paragraph at lines 412--413
+[9]
+Underfull \hbox (badness 7595) in paragraph at lines 512--513
 []\OT1/ptm/b/n/10 RQ2 (Po-si-tion Gen-er-al-iza-tion): \OT1/ptm/m/n/10 Val-i-da-tion across
  []
 
-[7]
-Underfull \hbox (badness 2065) in paragraph at lines 426--427
-\OT1/ptm/m/n/10 with fixed ob-ject types and workspace con-fig-u-ra-tions,
+[10]
+Underfull \hbox (badness 1831) in paragraph at lines 526--527
+\OT1/ptm/b/n/10 train-ing is manda-tory\OT1/ptm/m/n/10 ---cross-workspace gen-er-al-iza-tion
  []
 
-[8]
-Underfull \hbox (badness 7704) in paragraph at lines 448--449
+
+Underfull \hbox (badness 5260) in paragraph at lines 532--533
+[]\OT1/ptm/m/it/10 Long-term paradigm shifts \OT1/ptm/m/n/10 re-quire mov-ing be-yond
+ []
+
+[11]
+Underfull \hbox (badness 7704) in paragraph at lines 552--553
 \OT1/ptm/m/n/10 publication-ready vi-su-al-iza-tions are pub-licly avail-able
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 448--449
+Underfull \hbox (badness 10000) in paragraph at lines 552--553
 \OT1/ptm/m/n/10 at: []$\OT1/pcr/m/n/10 https : / / github . com / wolnik-[]georg /
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 448--449
+Underfull \hbox (badness 10000) in paragraph at lines 552--553
 \OT1/ptm/m/n/10 im-ple-men-ta-tion of data col-lec-tion pro-to-cols, fea-ture
  []
 
@@ -679,25 +738,23 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the US letter (8.5in X 11in) paper size.
 
-[9
-
-] [10 <../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.png>] [11 <../comprehensive_3class_reconstruction/test_reconstruction_combined.png>] [12 <../comprehensive_3class_reconstruction/holdout_reconstruction_combined.png>] (./final_report.aux)
+[12] [13 <../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.png>] [14 <../comprehensive_3class_reconstruction/test_reconstruction_combined.png>] [15 <../comprehensive_3class_reconstruction/holdout_reconstruction_combined.png>] (./final_report.aux)
 Package rerunfilecheck Info: File `final_report.out' has not changed.
-(rerunfilecheck)             Checksum: AE29D70AD69A5C6C56CA5A5BF1541F8B;4185.
+(rerunfilecheck)             Checksum: 5FEEBB8BD0C5EA6695DA0684B9D08770;4442.
  ) 
 Here is how much of TeX's memory you used:
- 12309 strings out of 480247
- 200397 string characters out of 5896151
- 507148 words of memory out of 5000000
- 30004 multiletter control sequences out of 15000+600000
+ 12337 strings out of 480247
+ 202330 string characters out of 5896151
+ 508728 words of memory out of 5000000
+ 30021 multiletter control sequences out of 15000+600000
  527142 words of font info for 149 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 69i,9n,79p,2495b,358s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 69i,9n,79p,2361b,358s stack positions out of 5000i,500n,10000p,200000b,80000s
  </home/georg/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1000.600pk>{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on final_report.pdf (12 pages, 1493643 bytes).
+Output written on final_report.pdf (15 pages, 2029605 bytes).
 PDF statistics:
- 287 PDF objects out of 1000 (max. 8388607)
- 237 compressed objects within 3 object streams
- 56 named destinations out of 1000 (max. 500000)
- 202 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 318 PDF objects out of 1000 (max. 8388607)
+ 261 compressed objects within 3 object streams
+ 64 named destinations out of 1000 (max. 500000)
+ 220 words of extra memory for PDF output out of 10000 (max. 10000000)
 

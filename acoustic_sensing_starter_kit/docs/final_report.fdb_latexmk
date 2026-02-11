@@ -1,20 +1,22 @@
 # Fdb version 3
-["bibtex final_report"] 1770555238 "final_report.aux" "final_report.bbl" "final_report" 1770555975
+["bibtex final_report"] 1770838319 "final_report.aux" "final_report.bbl" "final_report" 1770838322
   "./IEEEtranN.bst" 1474547888 63465 52e4631827d9e4cab8ed25dc93fa95dd ""
-  "final_report.aux" 1770555974 13615 d7446a40f336ea96e66add1ac3bdbe41 "pdflatex"
+  "final_report.aux" 1770838322 17566 97d7ed1622935141da6ac523805b4db4 "pdflatex"
   "project_scientific_report.bib" 1770314999 4990 4079b80482a3ae19a1d12784d0c070f2 ""
   (generated)
   "final_report.bbl"
   "final_report.blg"
-["pdflatex"] 1770555973 "/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/docs/final_report.tex" "final_report.pdf" "final_report" 1770555975
+["pdflatex"] 1770838320 "/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/docs/final_report.tex" "final_report.pdf" "final_report" 1770838322
   "../comprehensive_3class_reconstruction/holdout_reconstruction_combined.png" 1770555179 300655 4dec22f860a370ffccccc07f8dff6028 ""
   "../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.png" 1770555761 329837 f8457924222bd5802bdb2ebf53a761ab ""
   "../comprehensive_3class_reconstruction/test_reconstruction_combined.png" 1770555176 338178 ff45ac512da9a2b9f2102d5cacfd7bc6 ""
+  "../fully_balanced_rotation1_results_features_rerun/discriminationanalysis/validation_results/classifier_performance.png" 1770835321 276570 a1a7b6fc3d5b8f7462417cafd84ca7e1 ""
+  "../fully_balanced_rotation1_results_spectogram_rerun/discriminationanalysis/validation_results/classifier_performance.png" 1770834143 276327 263c88a8e3d0e0eea34e377b856f4d56 ""
   "../ml_analysis_figures/figure11_feature_dimensions.png" 1769877051 216914 7e6827f4c673d57480e44f4c233574f1 ""
   "../ml_analysis_figures/figure6_experimental_setup.png" 1769876934 284051 cdb3820fe43adc7ba3afafab4760b219 ""
   "/etc/texmf/web2c/texmf.cnf" 1762805783 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/home/georg/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1000.600pk" 1765275676 11524 ebc490d6c0fe88da212d6240b07ea492 ""
-  "/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/docs/final_report.tex" 1770555972 51610 f65c3aee7f237c418f3b5c5fd141a21f ""
+  "/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/docs/final_report.tex" 1770838316 72458 908d52f3d126b3777f42354d477a0af6 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/adobe/courier/pcrr7t.tfm" 1136768653 960 379cc0019370a9e0208a0a3f949f847a ""
@@ -135,10 +137,10 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1644012257 39432 7155514e09a3d69036fac785183a21c2 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1762807214 4036811 4cb80868003c86b962b6b5ae1e1e2902 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1769750550 1405649 bd6a92006b7f89a7d7aac5356c98b36e ""
-  "final_report.aux" 1770555974 13615 d7446a40f336ea96e66add1ac3bdbe41 "pdflatex"
-  "final_report.bbl" 1770555238 3595 8e44d17525b7c720ca9fb2aff2c8fabb "bibtex final_report"
-  "final_report.out" 1770555974 4185 ae29d70ad69a5c6c56ca5a5bf1541f8b "pdflatex"
-  "final_report.tex" 1770555972 51610 f65c3aee7f237c418f3b5c5fd141a21f ""
+  "final_report.aux" 1770838322 17566 97d7ed1622935141da6ac523805b4db4 "pdflatex"
+  "final_report.bbl" 1770838320 3595 8e44d17525b7c720ca9fb2aff2c8fabb "bibtex final_report"
+  "final_report.out" 1770838322 4442 5feebb8bd0c5ea6695da0684b9d08770 "pdflatex"
+  "final_report.tex" 1770838316 72458 908d52f3d126b3777f42354d477a0af6 ""
   "ieeeconf.cls" 1364296568 202029 d53d4f19efa3eda33600344887a4bb20 ""
   (generated)
   "final_report.aux"

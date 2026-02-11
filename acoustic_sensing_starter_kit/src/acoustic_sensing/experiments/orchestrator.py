@@ -79,6 +79,7 @@ class ExperimentOrchestrator:
             handler.setFormatter(formatter)
             logger.addHandler(handler)
             logger.setLevel(logging.INFO)
+            logger.propagate = False  # Prevent duplicate logging
         return logger
 
     def run_experiments(self) -> Dict[str, Any]:

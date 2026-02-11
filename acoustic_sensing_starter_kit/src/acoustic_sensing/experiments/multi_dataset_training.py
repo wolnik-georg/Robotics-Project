@@ -253,14 +253,30 @@ class MultiDatasetTrainingExperiment(BaseExperiment):
         self.logger.info("Step 4: Feature Scaling")
         self.logger.info("=" * 80)
 
-        scaler = StandardScaler()
-        X_train_scaled = scaler.fit_transform(X_train)
-        X_test_scaled = scaler.transform(X_test)
-        X_validation_scaled = scaler.transform(X_validation)
-
-        self.logger.info(
-            "✅ Features scaled using StandardScaler (fit on training data only)"
+        # Check if normalization is enabled in config
+        normalization_config = self.config.get("experiments", {}).get(
+            "feature_normalization", {}
         )
+        normalization_enabled = normalization_config.get(
+            "enabled", True
+        )  # Default to True
+
+        if normalization_enabled:
+            scaler = StandardScaler()
+            X_train_scaled = scaler.fit_transform(X_train)
+            X_test_scaled = scaler.transform(X_test)
+            X_validation_scaled = scaler.transform(X_validation)
+            self.logger.info(
+                "✅ Features scaled using StandardScaler (fit on training data only)"
+            )
+        else:
+            # No normalization - use raw features
+            X_train_scaled = X_train
+            X_test_scaled = X_test
+            X_validation_scaled = X_validation
+            self.logger.info(
+                "⚠️  Normalization DISABLED - using raw features (no scaling)"
+            )
 
         # Train multiple classifiers
         self.logger.info("\n" + "=" * 80)

@@ -1,0 +1,25 @@
+# Generated Config for Balanced Datasets
+# Use these datasets in your multi_dataset_config.yml
+
+# ROTATION 1: Train WS1+WS3, Validate WS2
+datasets:
+  - "fully_balanced_datasets/rotation1_train"
+validation_datasets:
+  - "fully_balanced_datasets/rotation1_val"
+
+# ROTATION 2: Train WS2+WS3, Validate WS1
+# datasets:
+#   - "fully_balanced_datasets/rotation2_train"
+# validation_datasets:
+#   - "fully_balanced_datasets/rotation2_val"
+
+# ROTATION 3: Train WS1+WS2, Validate WS3
+# datasets:
+#   - "fully_balanced_datasets/rotation3_train"
+# validation_datasets:
+#   - "fully_balanced_datasets/rotation3_val"
+
+# All datasets are balanced:
+# - Classes: 33/33/33 (contact/no_contact/edge)
+# - Objects: 33/33/33 (A_cutout/B_empty/C_full)
+# - Workspaces: 50/50 (in training sets)

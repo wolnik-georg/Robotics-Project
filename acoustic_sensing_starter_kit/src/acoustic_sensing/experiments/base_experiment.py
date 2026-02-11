@@ -39,6 +39,7 @@ class BaseExperiment(ABC):
             handler.setFormatter(formatter)
             logger.addHandler(handler)
             logger.setLevel(logging.INFO)
+            logger.propagate = False  # Prevent duplicate logging to parent loggers
         return logger
 
     @abstractmethod
