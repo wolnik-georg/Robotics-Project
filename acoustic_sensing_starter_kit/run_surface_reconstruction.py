@@ -281,6 +281,10 @@ class SurfaceReconstructor:
         # Apply confidence filtering if specified (only on included samples)
         filtered_accuracy = None
         confidence_stats = None
+        low_confidence_mask = np.zeros(
+            len(features), dtype=bool
+        )  # Track low-confidence samples
+
         if confidence_threshold is not None and np.sum(included_mask) > 0:
             # Only consider included samples for confidence filtering
             high_conf_mask = (confidences >= confidence_threshold) & included_mask
@@ -312,6 +316,12 @@ class SurfaceReconstructor:
                         f"     Kept: {high_conf_count}/{np.sum(included_mask)} ({confidence_stats['high_confidence_pct']:.1f}%)"
                     )
                     logger.info(f"     🎯 Filtered Accuracy: {filtered_accuracy:.2%}")
+
+                    # Mark low-confidence predictions to be skipped in visualization
+                    low_confidence_mask = ~high_conf_mask & included_mask
+                    logger.info(
+                        f"     ℹ️  Visualization: {low_conf_count} low-confidence predictions will be skipped (not shown)"
+                    )
                 else:
                     logger.warning(
                         f"  ⚠ No predictions above threshold {confidence_threshold}"
@@ -356,6 +366,7 @@ class SurfaceReconstructor:
             probabilities,
             accuracy,
             excluded_mask=excluded_mask,
+            low_confidence_mask=low_confidence_mask,  # Skip these in visualization
         )
 
         # Build results dictionary
@@ -514,6 +525,7 @@ class SurfaceReconstructor:
         probabilities: np.ndarray,
         accuracy: float,
         excluded_mask: Optional[np.ndarray] = None,
+        low_confidence_mask: Optional[np.ndarray] = None,
     ):
         """Generate all surface reconstruction visualizations.
 
@@ -521,6 +533,8 @@ class SurfaceReconstructor:
             excluded_mask: Boolean array indicating which samples are from excluded
                           classes (e.g., edge). These will be shown with special
                           styling but not counted in accuracy.
+            low_confidence_mask: Boolean array indicating which samples have low
+                          confidence and should be skipped (not visualized at all).
         """
         output_subdir = self.output_dir / dataset_name
         output_subdir.mkdir(parents=True, exist_ok=True)
@@ -532,7 +546,11 @@ class SurfaceReconstructor:
         if excluded_mask is None:
             excluded_mask = np.zeros(len(true_labels), dtype=bool)
 
-        # 1. Ground truth grid
+        # If no low_confidence_mask provided, show all predictions
+        if low_confidence_mask is None:
+            low_confidence_mask = np.zeros(len(true_labels), dtype=bool)
+
+        # 1. Ground truth grid (always show all, no low-confidence filtering)
         self._create_grid_heatmap(
             coords,
             true_labels,
@@ -540,9 +558,12 @@ class SurfaceReconstructor:
             "Ground Truth Surface",
             output_subdir / "01_ground_truth_grid.png",
             excluded_mask=excluded_mask,
+            low_confidence_mask=np.zeros(
+                len(true_labels), dtype=bool
+            ),  # Always show ground truth
         )
 
-        # 2. Predicted grid
+        # 2. Predicted grid (skip low-confidence predictions)
         self._create_grid_heatmap(
             coords,
             predictions,
@@ -550,9 +571,10 @@ class SurfaceReconstructor:
             f"Predicted Surface ({self.classifier_name})",
             output_subdir / "02_predicted_grid.png",
             excluded_mask=excluded_mask,
+            low_confidence_mask=low_confidence_mask,  # Skip low-confidence
         )
 
-        # 3. Side-by-side comparison
+        # 3. Side-by-side comparison (skip low-confidence in predictions only)
         self._create_side_by_side(
             coords,
             true_labels,
@@ -561,9 +583,10 @@ class SurfaceReconstructor:
             accuracy,
             output_subdir / "03_comparison.png",
             excluded_mask=excluded_mask,
+            low_confidence_mask=low_confidence_mask,  # Skip low-confidence
         )
 
-        # 4. Error map
+        # 4. Error map (skip low-confidence)
         self._create_error_map(
             coords,
             true_labels,
@@ -571,9 +594,10 @@ class SurfaceReconstructor:
             all_classes,
             output_subdir / "04_error_map.png",
             excluded_mask=excluded_mask,
+            low_confidence_mask=low_confidence_mask,
         )
 
-        # 5. Confidence map
+        # 5. Confidence map (always show all to see confidence distribution)
         self._create_confidence_map(
             coords,
             true_labels,
@@ -581,9 +605,12 @@ class SurfaceReconstructor:
             all_classes,
             output_subdir / "05_confidence_map.png",
             excluded_mask=excluded_mask,
+            low_confidence_mask=np.zeros(
+                len(true_labels), dtype=bool
+            ),  # Show all for confidence viz
         )
 
-        # 6. Presentation summary
+        # 6. Presentation summary (skip low-confidence in predictions)
         self._create_presentation_summary(
             coords,
             true_labels,
@@ -594,6 +621,7 @@ class SurfaceReconstructor:
             dataset_name,
             output_subdir / "06_presentation_summary.png",
             excluded_mask=excluded_mask,
+            low_confidence_mask=low_confidence_mask,
         )
 
         logger.info(f"  ✓ Saved 6 visualizations to: {output_subdir}")
@@ -644,12 +672,15 @@ class SurfaceReconstructor:
         title: str,
         save_path: Path,
         excluded_mask: Optional[np.ndarray] = None,
+        low_confidence_mask: Optional[np.ndarray] = None,
     ):
         """Create a grid-based heatmap with filled cells.
 
         Args:
             excluded_mask: Boolean array marking excluded samples (e.g., edge class).
                           These will be shown with a hatched pattern.
+            low_confidence_mask: Boolean array marking low-confidence samples.
+                          These will be skipped (not visualized at all).
         """
         fig, ax = plt.subplots(figsize=(10, 10))
 
@@ -659,8 +690,16 @@ class SurfaceReconstructor:
         if excluded_mask is None:
             excluded_mask = np.zeros(len(labels), dtype=bool)
 
+        if low_confidence_mask is None:
+            low_confidence_mask = np.zeros(len(labels), dtype=bool)
+
         # Plot each point as a filled rectangle
         for i, (coord, label) in enumerate(zip(coords, labels)):
+            # Skip low-confidence predictions entirely
+            if low_confidence_mask[i]:
+                continue
+
+            x, y = coord
             x, y = coord
             is_excluded = excluded_mask[i]
 
@@ -692,7 +731,7 @@ class SurfaceReconstructor:
                 label=c.replace("_", " ").title(),
             )
             for c in classes
-            if c not in ["edge"]  # Regular classes
+            if c not in ["edge"]  # Regular classes (skip edge for special handling)
         ]
         # Add edge legend if present
         if "edge" in classes:
@@ -726,6 +765,7 @@ class SurfaceReconstructor:
         accuracy: float,
         save_path: Path,
         excluded_mask: Optional[np.ndarray] = None,
+        low_confidence_mask: Optional[np.ndarray] = None,
     ):
         """Create side-by-side comparison of ground truth vs predictions."""
         fig, axes = plt.subplots(1, 2, figsize=(18, 8))
@@ -736,11 +776,20 @@ class SurfaceReconstructor:
         if excluded_mask is None:
             excluded_mask = np.zeros(len(true_labels), dtype=bool)
 
-        for ax, labels, title in [
-            (axes[0], true_labels, "Ground Truth"),
-            (axes[1], predictions, f"Predicted (Accuracy: {accuracy:.1%})"),
-        ]:
+        if low_confidence_mask is None:
+            low_confidence_mask = np.zeros(len(true_labels), dtype=bool)
+
+        for ax_idx, (ax, labels, title) in enumerate(
+            [
+                (axes[0], true_labels, "Ground Truth"),
+                (axes[1], predictions, f"Predicted (Accuracy: {accuracy:.1%})"),
+            ]
+        ):
             for i, (coord, label) in enumerate(zip(coords, labels)):
+                # Skip low-confidence predictions in the prediction panel (ax_idx==1)
+                if ax_idx == 1 and low_confidence_mask[i]:
+                    continue
+
                 x, y = coord
                 is_excluded = excluded_mask[i]
                 color = self.class_colors.get(label, "gray")
@@ -772,7 +821,7 @@ class SurfaceReconstructor:
                 label=c.replace("_", " ").title(),
             )
             for c in classes
-            if c != "edge"
+            if c not in ["edge"]
         ]
         if "edge" in classes:
             legend_patches.append(
@@ -804,6 +853,7 @@ class SurfaceReconstructor:
         classes: List[str],
         save_path: Path,
         excluded_mask: Optional[np.ndarray] = None,
+        low_confidence_mask: Optional[np.ndarray] = None,
     ):
         """Create error map highlighting misclassifications."""
         fig, ax = plt.subplots(figsize=(10, 10))
@@ -811,8 +861,11 @@ class SurfaceReconstructor:
         if excluded_mask is None:
             excluded_mask = np.zeros(len(true_labels), dtype=bool)
 
-        # Only count errors on non-excluded samples
-        included_mask = ~excluded_mask
+        if low_confidence_mask is None:
+            low_confidence_mask = np.zeros(len(true_labels), dtype=bool)
+
+        # Only count errors on non-excluded, high-confidence samples
+        included_mask = ~excluded_mask & ~low_confidence_mask
         errors = (true_labels != predictions) & included_mask
         correct = (true_labels == predictions) & included_mask
 
@@ -821,6 +874,9 @@ class SurfaceReconstructor:
 
         # Plot excluded samples first (background)
         for i in np.where(excluded_mask)[0]:
+            # Skip if also low confidence
+            if low_confidence_mask[i]:
+                continue
             x, y = coords[i]
             color = self.class_colors.get(true_labels[i], "gray")
             rect = Rectangle(
@@ -910,12 +966,16 @@ class SurfaceReconstructor:
         classes: List[str],
         save_path: Path,
         excluded_mask: Optional[np.ndarray] = None,
+        low_confidence_mask: Optional[np.ndarray] = None,
     ):
         """Create confidence map showing prediction certainty."""
         fig, ax = plt.subplots(figsize=(10, 10))
 
         if excluded_mask is None:
             excluded_mask = np.zeros(len(true_labels), dtype=bool)
+
+        if low_confidence_mask is None:
+            low_confidence_mask = np.zeros(len(true_labels), dtype=bool)
 
         # Get max probability (confidence) for each sample
         max_probs = np.max(probabilities, axis=1)
@@ -925,6 +985,8 @@ class SurfaceReconstructor:
 
         # Plot cells with confidence-based coloring
         for i, (coord, confidence) in enumerate(zip(coords, max_probs)):
+            # For confidence map, we can show all (including low confidence) to visualize the distribution
+            # The low_confidence_mask is informational only here
             x, y = coord
             is_excluded = excluded_mask[i]
 
@@ -1013,12 +1075,17 @@ class SurfaceReconstructor:
         dataset_name: str,
         save_path: Path,
         excluded_mask: Optional[np.ndarray] = None,
+        low_confidence_mask: Optional[np.ndarray] = None,
     ):
         """Create a presentation-ready summary figure (2x2 grid)."""
         fig, axes = plt.subplots(2, 2, figsize=(16, 16))
 
         if excluded_mask is None:
             excluded_mask = np.zeros(len(true_labels), dtype=bool)
+
+        if low_confidence_mask is None:
+            low_confidence_mask = np.zeros(len(true_labels), dtype=bool)
+
         included_mask = ~excluded_mask
 
         # Calculate cell size using robust method
@@ -1034,7 +1101,7 @@ class SurfaceReconstructor:
             ax.set_aspect("equal")
             ax.grid(True, alpha=0.2)
 
-        # 1. Ground truth (top-left)
+        # 1. Ground truth (top-left) - always show all
         ax = axes[0, 0]
         for i, (coord, label) in enumerate(zip(coords, true_labels)):
             x, y = coord
@@ -1053,9 +1120,13 @@ class SurfaceReconstructor:
             ax.add_patch(rect)
         setup_ax(ax, "Ground Truth")
 
-        # 2. Predictions (top-right)
+        # 2. Predictions (top-right) - skip low-confidence predictions
         ax = axes[0, 1]
         for i, (coord, label) in enumerate(zip(coords, predictions)):
+            # Skip low-confidence predictions
+            if low_confidence_mask[i]:
+                continue
+
             x, y = coord
             is_excluded = excluded_mask[i]
             color = self.class_colors.get(label, "gray")
@@ -1072,11 +1143,14 @@ class SurfaceReconstructor:
             ax.add_patch(rect)
         setup_ax(ax, f"Predicted ({self.classifier_name})")
 
-        # 3. Error map (bottom-left) - only count errors on included samples
+        # 3. Error map (bottom-left) - only count errors on included, high-confidence samples
         ax = axes[1, 0]
-        errors = (true_labels != predictions) & included_mask
-        num_included = np.sum(included_mask)
+        errors = (true_labels != predictions) & included_mask & ~low_confidence_mask
+        num_included = np.sum(included_mask & ~low_confidence_mask)
         for i, (coord, true_label) in enumerate(zip(coords, true_labels)):
+            # Skip low-confidence predictions
+            if low_confidence_mask[i]:
+                continue
             x, y = coord
             is_excluded = excluded_mask[i]
             is_error = errors[i]
@@ -1170,7 +1244,7 @@ class SurfaceReconstructor:
                 label=c.replace("_", " ").title(),
             )
             for c in classes
-            if c != "edge"
+            if c not in ["edge"]
         ]
         if "edge" in classes:
             legend_patches.append(
