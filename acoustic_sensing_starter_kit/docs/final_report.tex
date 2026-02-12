@@ -276,8 +276,8 @@ We demonstrate geometric reconstruction capability by mapping predictions onto 2
 
 \begin{figure*}[t]
 \centering
-\includegraphics[width=0.8\textwidth]{../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.png}
-\caption{Proof of concept: 3-class acoustic contact detection using 80/20 train/test split on combined workspace data (WS1+WS2+WS3). \textbf{Left column}: Ground truth contact patterns for objects A (cutout - balanced across all 3 classes), B (empty workspace - pure no-contact), and C (full contact - contact and edge only). \textbf{Right column}: Model predictions from acoustic features alone on held-out 20\% test set. The model achieves high accuracy across all objects (89.81\%, 99.82\%, 90.17\%, average 93.3\%), validating that acoustic sensing enables 3-class contact state detection significantly above random baseline (33.3\%) for within-workspace scenarios. Color indicates 3-class contact state (contact=green, no-contact=red, edge=orange).}
+\includegraphics[width=\textwidth]{../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.png}
+\caption{Proof of concept: 3-class acoustic contact detection using 80/20 train/test split on combined workspace data (WS1+WS2+WS3). \textbf{Top row}: Objects A (cutout - balanced across all 3 classes) and B (empty workspace - pure no-contact). \textbf{Bottom}: Object C (full contact - contact and edge only). Each object shows ground truth (left) and predictions (right) with confusion matrix. The model achieves high accuracy across all objects (89.81\%, 99.82\%, 90.17\%, average 93.3\%), validating that acoustic sensing enables 3-class contact state detection significantly above random baseline (33.3\%) for within-workspace scenarios. All confusion matrices display 3×3 grids showing the complete 3-class problem (contact, edge, no-contact). Color indicates contact state (contact=green, no-contact=red, edge=orange).}
 \label{fig:reconstruction_proof}
 \end{figure*}
 

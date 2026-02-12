@@ -1115,8 +1115,9 @@ class SurfaceReconstructor:
         # Filter to only included samples for confusion matrix
         included_true = true_labels[included_mask]
         included_pred = predictions[included_mask]
-        # Get classes that are actually present (exclude edge from confusion matrix)
-        cm_classes = [c for c in classes if c != "edge"]
+        # Use ALL classes from the model to show complete confusion matrix
+        # even if some classes have zero samples in this specific object
+        cm_classes = self.model.classes_
         cm = confusion_matrix(included_true, included_pred, labels=cm_classes)
 
         # Normalize for display

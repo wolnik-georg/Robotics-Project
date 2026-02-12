@@ -768,12 +768,12 @@ def create_training_datasets_figure(
     v4_results: Dict, v6_results: Dict, output_dir: Path
 ):
     """
-    Figure 6: Training vs Validation Dataset Diagram
-    Visual explanation of the experimental setup.
+    Figure 6: Workspace Rotation Experimental Strategy
+    Shows the 3 rotation experiments for position generalization.
     """
-    fig, axes = plt.subplots(1, 2, figsize=(16, 8))
+    fig, axes = plt.subplots(1, 3, figsize=(18, 6))
 
-    # === V4 Diagram ===
+    # === Rotation 1: Train WS1+WS3, Validate WS2 ===
     ax1 = axes[0]
     ax1.set_xlim(0, 10)
     ax1.set_ylim(0, 10)
@@ -793,16 +793,16 @@ def create_training_datasets_figure(
     ax1.text(
         2.25,
         7.25,
-        "WS2 + WS3\n(Training)",
+        "WS1 + WS3\n(Training)",
         ha="center",
         va="center",
-        fontsize=14,
+        fontsize=13,
         fontweight="bold",
     )
     ax1.text(
         2.25,
         6,
-        "Objects A, B, C\nPositions 2 & 3",
+        "7,290 samples",
         ha="center",
         va="center",
         fontsize=11,
@@ -815,7 +815,7 @@ def create_training_datasets_figure(
         xytext=(4.5, 7.25),
         arrowprops=dict(arrowstyle="->", lw=3, color="black"),
     )
-    ax1.text(5.25, 8, "Train Model", ha="center", fontsize=12, fontweight="bold")
+    ax1.text(5.25, 8, "Train", ha="center", fontsize=11, fontweight="bold")
 
     # Validation workspace
     ax1.add_patch(
@@ -831,17 +831,17 @@ def create_training_datasets_figure(
     ax1.text(
         7.75,
         7.25,
-        "WS1\n(Validation)",
+        "WS2\n(Validate)",
         ha="center",
         va="center",
-        fontsize=14,
+        fontsize=13,
         fontweight="bold",
         color="white",
     )
     ax1.text(
         7.75,
         6,
-        "Same Objects A, B, C\nPosition 1 (NEW)",
+        "1,338 samples",
         ha="center",
         va="center",
         fontsize=11,
@@ -854,27 +854,29 @@ def create_training_datasets_figure(
             (2, 1),
             6,
             2.5,
-            facecolor="#d5f4e6",
-            edgecolor=COLORS["success"],
-            linewidth=3,
+            facecolor="#fadbd8",
+            edgecolor=COLORS["failure"],
+            linewidth=2,
         )
     )
     ax1.text(
         5,
         2.25,
-        "75% Accuracy ✓\nPosition generalization WORKS",
+        "CV: 69.1%\nVal: 55.7%",
         ha="center",
         va="center",
-        fontsize=14,
+        fontsize=12,
         fontweight="bold",
-        color=COLORS["success"],
     )
 
     ax1.set_title(
-        "V4: Position Generalization Setup", fontsize=16, fontweight="bold", pad=20
+        "Rotation 1: Train WS1+WS3 → Validate WS2",
+        fontsize=14,
+        fontweight="bold",
+        pad=10,
     )
 
-    # === V6 Diagram ===
+    # === Rotation 2: Train WS2+WS3, Validate WS1 ===
     ax2 = axes[1]
     ax2.set_xlim(0, 10)
     ax2.set_ylim(0, 10)
@@ -894,16 +896,16 @@ def create_training_datasets_figure(
     ax2.text(
         2.25,
         7.25,
-        "WS1+WS2+WS3\n(Training)",
+        "WS2 + WS3\n(Training)",
         ha="center",
         va="center",
-        fontsize=14,
+        fontsize=13,
         fontweight="bold",
     )
     ax2.text(
         2.25,
         6,
-        "Objects A, B, C\nPositions 1, 2, 3",
+        "7,290 samples",
         ha="center",
         va="center",
         fontsize=11,
@@ -916,15 +918,15 @@ def create_training_datasets_figure(
         xytext=(4.5, 7.25),
         arrowprops=dict(arrowstyle="->", lw=3, color="black"),
     )
-    ax2.text(5.25, 8, "Train Model", ha="center", fontsize=12, fontweight="bold")
+    ax2.text(5.25, 8, "Train", ha="center", fontsize=11, fontweight="bold")
 
-    # Holdout workspace
+    # Validation workspace
     ax2.add_patch(
         plt.Rectangle(
             (6, 5.5),
             3.5,
             3.5,
-            facecolor=COLORS["holdout"],
+            facecolor=COLORS["validation"],
             edgecolor="black",
             linewidth=2,
         )
@@ -932,17 +934,17 @@ def create_training_datasets_figure(
     ax2.text(
         7.75,
         7.25,
-        "WS4\n(Holdout)",
+        "WS1\n(Validate)",
         ha="center",
         va="center",
-        fontsize=14,
+        fontsize=13,
         fontweight="bold",
         color="white",
     )
     ax2.text(
         7.75,
         6,
-        "NEW Object D\nPosition 4 (NEW)",
+        "1,362 samples",
         ha="center",
         va="center",
         fontsize=11,
@@ -957,27 +959,132 @@ def create_training_datasets_figure(
             2.5,
             facecolor="#fadbd8",
             edgecolor=COLORS["failure"],
-            linewidth=3,
+            linewidth=2,
         )
     )
     ax2.text(
         5,
         2.25,
-        "50% Accuracy ✗\nObject generalization FAILS",
+        "CV: 69.8%\nVal: 24.4%",
         ha="center",
         va="center",
-        fontsize=14,
+        fontsize=12,
         fontweight="bold",
-        color=COLORS["failure"],
     )
 
     ax2.set_title(
-        "V6: Object Generalization Setup", fontsize=16, fontweight="bold", pad=20
+        "Rotation 2: Train WS2+WS3 → Validate WS1",
+        fontsize=14,
+        fontweight="bold",
+        pad=10,
+    )
+
+    # === Rotation 3: Train WS1+WS2, Validate WS3 ===
+    ax3 = axes[2]
+    ax3.set_xlim(0, 10)
+    ax3.set_ylim(0, 10)
+    ax3.axis("off")
+
+    # Training workspaces
+    ax3.add_patch(
+        plt.Rectangle(
+            (0.5, 5.5),
+            3.5,
+            3.5,
+            facecolor=COLORS["train"],
+            edgecolor="black",
+            linewidth=2,
+        )
+    )
+    ax3.text(
+        2.25,
+        7.25,
+        "WS1 + WS2\n(Training)",
+        ha="center",
+        va="center",
+        fontsize=13,
+        fontweight="bold",
+    )
+    ax3.text(
+        2.25,
+        6,
+        "8,028 samples",
+        ha="center",
+        va="center",
+        fontsize=11,
+    )
+
+    # Arrow
+    ax3.annotate(
+        "",
+        xy=(6, 7.25),
+        xytext=(4.5, 7.25),
+        arrowprops=dict(arrowstyle="->", lw=3, color="black"),
+    )
+    ax3.text(5.25, 8, "Train", ha="center", fontsize=11, fontweight="bold")
+
+    # Validation workspace
+    ax3.add_patch(
+        plt.Rectangle(
+            (6, 5.5),
+            3.5,
+            3.5,
+            facecolor=COLORS["validation"],
+            edgecolor="black",
+            linewidth=2,
+        )
+    )
+    ax3.text(
+        7.75,
+        7.25,
+        "WS3\n(Validate)",
+        ha="center",
+        va="center",
+        fontsize=13,
+        fontweight="bold",
+        color="white",
+    )
+    ax3.text(
+        7.75,
+        6,
+        "1,215 samples",
+        ha="center",
+        va="center",
+        fontsize=11,
+        color="white",
+    )
+
+    # Result
+    ax3.add_patch(
+        plt.Rectangle(
+            (2, 1),
+            6,
+            2.5,
+            facecolor="#fadbd8",
+            edgecolor=COLORS["failure"],
+            linewidth=2,
+        )
+    )
+    ax3.text(
+        5,
+        2.25,
+        "CV: 70.7%\nVal: 23.3%",
+        ha="center",
+        va="center",
+        fontsize=12,
+        fontweight="bold",
+    )
+
+    ax3.set_title(
+        "Rotation 3: Train WS1+WS2 → Validate WS3",
+        fontsize=14,
+        fontweight="bold",
+        pad=10,
     )
 
     plt.suptitle(
-        "Experimental Setup: Why V4 Succeeds and V6 Fails",
-        fontsize=18,
+        "Workspace Rotation Experimental Strategy",
+        fontsize=16,
         fontweight="bold",
         y=0.98,
     )
