@@ -1,11 +1,34 @@
-librosa
-numpy
-matplotlib
+# Core scientific computing and data manipulation
+numpy>=1.19.0
 pandas>=0.20.2
+scipy>=1.5.0
+
+# Audio processing
+librosa>=0.9.0
+soundfile>=0.10.0
+pyaudio>=0.2.11
+
+# Machine learning
 scikit-learn>=0.20.0
-jacktools~=1.0.1  # install via pip install zita-tools/zita-jacktools
-scipy
-soundfile
-torch>=2.0.0  # For GPU acceleration
-torchaudio>=2.0.0  # GPU-accelerated audio processing
-cupy-cuda12x  # GPU-accelerated numpy operations (adjust cuda version as needed)
+xgboost>=1.5.0
+imbalanced-learn>=0.8.0
+
+# Deep learning (GPU acceleration - optional but recommended)
+torch>=2.0.0
+torchaudio>=2.0.0
+cupy-cuda12x  # For CUDA 12.x; use cupy-cuda11x for CUDA 11.x
+
+# Visualization
+matplotlib>=3.3.0
+seaborn>=0.11.0
+
+# Hyperparameter optimization
+optuna>=3.0.0
+
+# Configuration and utilities
+pyyaml>=5.4.0
+pillow>=8.0.0
+imageio>=2.9.0
+
+# Audio signal processing (optional)
+jacktools~=1.0.1  # install via: pip install zita-tools/zita-jacktools (adjust cuda version as needed)
