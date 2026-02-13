@@ -1,14 +1,40 @@
 #!/usr/bin/env python3
 """
-Generate comprehensive surface reconstructions for 3-class classification.
+Generate All 3 Main Reconstruction Figures for the Paper
 
-This script creates reconstructions for:
-1. Validation sets (WS2) - same distribution as training (Objects A, B, C)
-2. Holdout set (WS4) - novel object geometry (Object D)
+Creates the three key 2D spatial reconstruction figures used in the final report:
+    1. Proof of Concept (80/20 train/test on combined WS1+WS2+WS3)
+    2. Position Generalization (Rotation 1 validation on WS2)
+    3. Object Generalization (WS4 Object D holdout, with/without confidence filtering)
 
-This demonstrates:
-- High accuracy on same-distribution validation data
-- Failure on out-of-distribution novel object
+USAGE:
+------
+    python generate_comprehensive_reconstructions.py
+
+WHAT IT DOES:
+-------------
+    Calls specialized reconstruction scripts for each figure:
+        - generate_proof_of_concept_reconstruction.py → Figure: Proof of Concept
+        - run_final_reconstruction.py → Figure: Position Generalization (WS2)
+        - run_holdout_reconstruction.py → Figure: Object Generalization (WS4)
+
+    Each script loads trained models, applies them to spatial grid positions,
+    and generates ground truth vs prediction visualizations.
+
+OUTPUTS:
+--------
+    comprehensive_3class_reconstruction/
+        proof_of_concept_reconstruction_combined.png  # ~93% accuracy
+        test_reconstruction_combined.png              # 34.89% accuracy (failure)
+        holdout_reconstruction_combined.png           # Without/with confidence filtering
+
+DEMONSTRATES:
+-------------
+    - Within-workspace success (~93% on proof of concept)
+    - Position generalization failure (34.89% on WS2)
+    - Object generalization failure (33% → 75% with confidence filtering tradeoff)
+
+See README.md Section "Figure Generation" for complete documentation.
 """
 
 import subprocess

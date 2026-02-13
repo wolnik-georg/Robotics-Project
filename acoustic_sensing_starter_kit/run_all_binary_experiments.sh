@@ -1,6 +1,34 @@
 #!/bin/bash
-# Run all 3 rotation experiments in BINARY mode (contact vs no_contact, excluding edge)
-# This compares against the 3-class results to see if binary classification performs better
+###############################################################################
+# Run All 3 Binary Classification Experiments (for 3-Class vs Binary Comparison)
+###############################################################################
+#
+# USAGE:
+#   bash run_all_binary_experiments.sh
+#
+# WHAT IT DOES:
+#   Runs all 3 workspace rotations in BINARY mode (contact vs no_contact, 
+#   excluding edge samples) for comparison against 3-class results.
+#
+#   Uses binary-specific configs:
+#       - configs/rotation1_binary.yml
+#       - configs/rotation2_binary.yml
+#       - configs/rotation3_binary.yml
+#
+# OUTPUTS:
+#   fully_balanced_rotation1_binary/
+#   fully_balanced_rotation2_binary/
+#   fully_balanced_rotation3_binary/
+#
+# KEY FINDING:
+#   Binary performs WORSE than random guessing!
+#       - 3-class: 34.5% validation (1.04× over 33.3% random)
+#       - Binary: 45.1% validation (0.90× over 50.0% random) ⚠️
+#   
+#   Proves edge samples contain essential discriminative information.
+#
+# See README.md Section "Performance Summary → 3-Class vs Binary"
+###############################################################################
 
 echo "=================================================="
 echo "Running Binary Classification Experiments"

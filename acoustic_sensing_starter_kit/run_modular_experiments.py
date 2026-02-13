@@ -1,13 +1,46 @@
 #!/usr/bin/env python3
 """
-Main entry point for running modular acoustic sensing experiments.
-This script replaces the monolithic batch analysis with a clean, modular approach.
+Main Pipeline Script for Acoustic Contact Detection Experiments
 
-Usage:
-    python run_modular_experiments.py [config_file] [output_dir]
+This is the HEART OF THE PIPELINE - the primary script for running all acoustic
+sensing experiments. It loads YAML configurations, orchestrates multi-dataset
+training, performs cross-validation, validates on held-out workspaces, and
+generates all results and figures.
 
-Example:
-    python run_modular_experiments.py configs/experiment_config.yml modular_results
+USAGE:
+------
+    # Run with configuration file
+    python run_modular_experiments.py <config_file> [output_dir]
+
+    # Position generalization (workspace rotations)
+    python run_modular_experiments.py configs/multi_dataset_config.yml
+
+    # Validate configuration only
+    python run_modular_experiments.py --validate-only
+
+WHAT IT DOES:
+-------------
+    1. Loads YAML configuration (datasets, features, classifiers, experiments)
+    2. Initializes ExperimentOrchestrator
+    3. Loads data via geometric_data_loader.py
+    4. Extracts features (hand-crafted 80D or spectrograms 10,240D)
+    5. Trains classifiers via multi_dataset_training.py (5-fold CV)
+    6. Evaluates on validation data (held-out workspaces)
+    7. Generates confusion matrices and metrics
+    8. (Optional) Performs 2D surface reconstruction
+
+OUTPUTS:
+--------
+    <output_dir>/
+        discriminationanalysis/
+            cv_results/               # Cross-validation results
+            validation_results/       # Validation results
+                classifier_performance.png
+                confusion_matrix_*.png
+                metrics.json
+        model.pkl                     # Trained Random Forest model
+
+See README.md for complete pipeline documentation.
 """
 
 import sys

@@ -1,12 +1,37 @@
 #!/usr/bin/env python3
 """
-Dataset Balance Investigation Script
+Dataset Balance Verification and Analysis Tool
 
-Analyzes class balance, workspace balance, and object balance across all 3-class datasets.
-Investigates potential causes of performance variation (WS1: 85%, WS2: 60%, WS3: 35%).
+Verifies that balanced datasets have correct class, object, and workspace distributions.
+Used to validate the output of create_fully_balanced_datasets.py before running
+experiments.
 
-Usage:
+USAGE:
+------
     python analyze_dataset_balance.py
+
+WHAT IT DOES:
+-------------
+    For each balanced dataset (rotation*_train, rotation*_val, holdout):
+        1. Counts samples per class (contact, no_contact, edge)
+        2. Counts samples per object (A_cutout, B_empty, C_full)
+        3. Counts samples per workspace (WS1, WS2, WS3)
+        4. Verifies 33/33/33 class balance
+        5. Generates balance visualization plots
+        6. Reports any imbalances found
+
+OUTPUTS:
+--------
+    Console output with balance statistics
+    Optional: Balance visualization plots
+
+VERIFICATION CRITERIA:
+----------------------
+    ✓ Class balance: 33.33% ± 1% for each class
+    ✓ Object balance: 33.33% ± 1% for each object (training sets)
+    ✓ Workspace balance: 50/50 for combined training sets
+
+See README.md Section "Quick Start → 1. Dataset Balancing" for usage.
 """
 
 import os

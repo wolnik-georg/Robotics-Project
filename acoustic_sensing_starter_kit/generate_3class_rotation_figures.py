@@ -1,23 +1,41 @@
 #!/usr/bin/env python3
 """
-Generate Publication-Ready 3-Class Workspace Rotation Figures
-==============================================================
+Generate Position Generalization (Workspace Rotation) Comparison Figures
 
-Creates comprehensive visualizations for the 3-class workspace rotation experiments:
-- Rotation 1: Train WS1+3 → Validate WS2 (84.9% validation)
-- Rotation 2: Train WS2+3 → Validate WS1 (60.4% validation)
-- Rotation 3: Train WS1+2 → Validate WS3 (34.9% validation)
+Creates comparative visualizations across all 3 workspace rotations to analyze
+position generalization performance and identify workspace-specific patterns.
 
-Generates figures for:
-1. Workspace Rotation Performance Comparison (Main Result)
-2. 3x3 Confusion Matrix Grid (All 3 rotations)
-3. CV vs Validation Accuracy Comparison
-4. Class-wise Performance Breakdown
-5. Classifier Performance Across Rotations
-6. Workspace-Specific Challenges Visualization
+USAGE:
+------
+    python generate_3class_rotation_figures.py
 
-Author: Georg Wolnik
-Date: February 7, 2026
+WHAT IT DOES:
+-------------
+    Analyzes results from all 3 rotations:
+        - Rotation 1: Train WS1+WS3 → Validate WS2 (55.7% validation)
+        - Rotation 2: Train WS2+WS3 → Validate WS1 (24.4% validation)
+        - Rotation 3: Train WS1+WS2 → Validate WS3 (23.3% validation)
+
+    Generates comparison figures:
+        1. Performance across rotations (CV vs validation)
+        2. 3×3 confusion matrix grid (all rotations)
+        3. Class-wise accuracy breakdown
+        4. Normalized performance vs random baseline
+
+OUTPUTS:
+--------
+    Various comparison figures showing:
+        - Catastrophic workspace-dependent failure
+        - Average 34.5% validation (barely above 33.3% random)
+        - Two rotations worse than random (0.70× and 0.73× normalized)
+
+DEMONSTRATES:
+-------------
+    - Position generalization failure
+    - Workspace-specific acoustic signatures
+    - Need for workspace-specific training
+
+See README.md Section "Performance Summary → Position Generalization" for details.
 """
 
 import json

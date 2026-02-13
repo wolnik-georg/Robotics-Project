@@ -1,20 +1,51 @@
 #!/usr/bin/env python3
 """
-Surface Reconstruction Runner
+2D Surface Reconstruction from Trained Models
 
-Standalone script to run surface reconstruction using pre-trained models
-on collected datasets with sweep.csv (spatial coordinates).
+Standalone script to generate 2D spatial contact state maps from trained
+classification models. Maps predictions back to (x, y) spatial coordinates
+from sweep.csv to visualize ground truth vs predicted contact states.
 
-Usage:
-    python run_surface_reconstruction.py --model path/to/model.pkl --dataset collected_data_folder
+USAGE:
+------
+    # Basic reconstruction
+    python run_surface_reconstruction.py \\
+        --model fully_balanced_rotation1_results/model.pkl \\
+        --dataset data/fully_balanced_datasets/rotation1_val \\
+        --output reconstruction_output/
+    
+    # With confidence filtering
+    python run_surface_reconstruction.py \\
+        --model model.pkl \\
+        --dataset validation_data/ \\
+        --confidence-threshold 0.7 \\
+        --output filtered_reconstruction/
 
-    # To replicate validation accuracy, filter to balanced dataset subset:
-    python run_surface_reconstruction.py --model path/to/model.pkl \\
-        --dataset collected_data_runs_2026_01_15_workspace_1_squares_cutout \\
-        --use-balanced-subset balanced_collected_data_runs_2026_01_15_workspace_1_squares_cutout_relabeled_undersample
+WHAT IT DOES:
+-------------
+    1. Loads pre-trained Random Forest model
+    2. Loads dataset with spatial positions (sweep.csv)
+    3. Extracts features from audio samples
+    4. Predicts contact states (contact, no_contact, edge)
+    5. Maps predictions to 2D (x, y) coordinates
+    6. Generates visualization: Ground Truth | Predicted | Error Map
+    7. (Optional) Applies confidence filtering
+    8. Saves reconstruction figure
 
-Author: Georg Wolnik
-Date: January 2026
+OUTPUTS:
+--------
+    <output_dir>/
+        reconstruction.png               # GT vs Predicted comparison
+        reconstruction_with_errors.png   # Includes error map
+        metrics.json                     # Accuracy, coverage (if filtered)
+
+USED FOR:
+---------
+    - Generating Figures 7, 8, 9 in final report
+    - Visualizing spatial patterns of classification errors
+    - Demonstrating confidence filtering tradeoff
+
+See README.md Section "Advanced Usage → Surface Reconstruction" for details.
 """
 
 import argparse

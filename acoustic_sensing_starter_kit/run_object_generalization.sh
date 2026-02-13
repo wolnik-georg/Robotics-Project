@@ -1,8 +1,36 @@
 #!/bin/bash
-
-# Run Object Generalization Experiments
-# Train on WS1+2+3 (Objects A, B, C), Validate on WS4 (Object D)
-# Runs both 3-class and binary experiments sequentially
+###############################################################################
+# Single-Seed Object Generalization Experiment (Shell Wrapper)
+###############################################################################
+#
+# USAGE:
+#   bash run_object_generalization.sh
+#
+# WHAT IT DOES:
+#   Runs object generalization experiment with single seed (default):
+#       Training: WS1 + WS2 + WS3 (Objects A, B, C)
+#       Validation: WS4 (Object D - novel geometry, held-out)
+#
+#   Runs both:
+#       1. 3-class mode (configs/object_generalization_3class.yml)
+#       2. Binary mode (configs/object_generalization_binary.yml)
+#
+# OUTPUTS:
+#   object_generalization_ws4_holdout_3class_fully_balanced/
+#   object_generalization_ws4_holdout_binary_fully_balanced/
+#
+# NOTE:
+#   For multi-seed reproducibility validation, use instead:
+#       python run_object_generalization_multiseed.py
+#
+# KEY FINDING:
+#   Classifier-dependent performance:
+#       - GPU-MLP HighReg: 75% validation (with high regularization)
+#       - Other classifiers: 35.7-41.7% (all fail)
+#       - Binary mode: 50% (pure random chance)
+#
+# See README.md Section "Quick Start → 3. Object Generalization"
+###############################################################################
 
 set -e  # Exit on error
 

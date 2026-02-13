@@ -1,22 +1,53 @@
 #!/usr/bin/env python3
 """
-Regenerate ALL Figures Using Fully Balanced Datasets
-====================================================
+Regenerate All Figures from Fully Balanced Datasets
 
-This script regenerates all figures referenced in final_report.tex using
-the correct fully balanced datasets to ensure consistency with the reported
-numbers.
+Master script that orchestrates regeneration of ALL figures used in the final
+report to ensure consistency with reported numbers. Calls all figure generation
+scripts in the correct order.
 
-Figures to regenerate:
-1. ✓ Proof-of-concept reconstruction (80/20 split on WS1+2+3) → ~93% accuracy
-2. ✓ Position generalization (Rotation 1: WS2 validation) → 55.7% accuracy
-3. ✓ Object generalization (WS4 holdout, Object D) → 50% accuracy
-4. Feature vs Spectrogram comparison (Rotation 1) → 55.7% vs 0.0%
-5. Feature architecture diagram (conceptual - verify numbers only)
-6. Experimental setup diagram (conceptual - verify numbers only)
+USAGE:
+------
+    python regenerate_all_figures_fully_balanced.py
 
-Author: Georg Wolnik
-Date: February 10, 2026
+WHAT IT DOES:
+-------------
+    Regenerates all figures in correct order:
+        1. Proof-of-concept reconstruction (80/20 on WS1+WS2+WS3)
+        2. Position generalization reconstruction (Rotation 1 → WS2)
+        3. Object generalization reconstruction (WS4 Object D holdout)
+        4. Feature vs Spectrogram comparison
+        5. ML analysis figures (experimental setup, feature architecture)
+        6. Rotation comparison figures
+        7. Additional supporting figures
+
+    Calls these scripts:
+        - generate_comprehensive_reconstructions.py
+        - generate_ml_analysis_figures.py
+        - generate_3class_rotation_figures.py
+        - (Others as needed)
+
+OUTPUTS:
+--------
+    comprehensive_3class_reconstruction/  # Main reconstruction figures
+    ml_analysis_figures/                  # Experimental setup & features
+    (Various other figure directories)
+
+WHEN TO USE:
+------------
+    - After re-running experiments with updated configs
+    - To ensure all figures match final reported numbers
+    - Before final report compilation
+
+VERIFICATION:
+-------------
+    Checks that generated figures match expected accuracy values:
+        - Proof of concept: ~93%
+        - Position gen (Rotation 1): 55.7%
+        - Object gen (no filter): 33.03%
+        - Object gen (with filter): 75% on 0.2% coverage
+
+See README.md Section "Figure Generation" for complete documentation.
 """
 
 import subprocess

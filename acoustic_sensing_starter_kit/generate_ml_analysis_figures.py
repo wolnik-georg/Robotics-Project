@@ -1,22 +1,42 @@
 #!/usr/bin/env python3
 """
-Generate Publication-Ready ML Analysis Figures
-==============================================
+Generate ML Analysis Figures for Final Report
 
-Creates comprehensive visualizations to support the key insights from:
-- V4: Position Generalization (75% accuracy) ✅
-- V6: Object Generalization (50% accuracy) ❌
+Creates the supporting figures used in the paper to explain the experimental
+setup and feature architecture:
+    - Figure 6: Experimental Setup (workspace rotation strategy)
+    - Figure 11: Feature Architecture (80D hand-crafted features breakdown)
 
-Generates figures for:
-1. V4 vs V6 Accuracy Comparison (Main Result)
-2. Confusion Matrix Comparison (V4 vs V6)
-3. Confidence Calibration Analysis
-4. Feature Importance Ranking
-5. Classifier Performance Comparison
-6. Key Metrics Summary Table
+USAGE:
+------
+    python generate_ml_analysis_figures.py
 
-Author: Georg Wolnik
-Date: January 31, 2026
+WHAT IT DOES:
+-------------
+    1. Creates workspace rotation experimental strategy visualization
+       - Shows 3 workspace rotations with train/validation splits
+       - Illustrates position generalization approach
+
+    2. Creates hand-crafted feature architecture diagram
+       - 80-dimensional feature vector breakdown:
+         • 11 spectral features (centroid, bandwidth, rolloff, etc.)
+         • 39 MFCCs (13 + Δ + ΔΔ)
+         • 15 temporal features (ZCR, RMS, etc.)
+         • 15 impulse response features
+
+OUTPUTS:
+--------
+    ml_analysis_figures/
+        figure6_experimental_setup.png      # Workspace rotation strategy
+        figure11_feature_dimensions.png     # Feature architecture breakdown
+
+USED IN:
+--------
+    Final report (docs/final_report.tex):
+        - Figure 6: Illustrates position generalization experimental design
+        - Figure 11: Explains hand-crafted feature extraction pipeline
+
+See README.md Section "ML Analysis Figures" for details.
 """
 
 import json

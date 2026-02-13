@@ -1,5 +1,32 @@
 #!/bin/bash
-# Quick launcher script for creating fully balanced datasets
+###############################################################################
+# Dataset Balancing Shell Wrapper
+###############################################################################
+#
+# USAGE:
+#   bash run_balance_datasets.sh
+#
+# WHAT IT DOES:
+#   Wrapper script that calls create_fully_balanced_datasets.py to create
+#   perfectly balanced 3-class datasets for all workspace rotations.
+#
+# OUTPUTS:
+#   data/fully_balanced_datasets/
+#       rotation1_train/  (WS1+WS3 combined, balanced)
+#       rotation1_val/    (WS2, balanced)
+#       rotation2_train/  (WS2+WS3 combined, balanced)
+#       rotation2_val/    (WS1, balanced)
+#       rotation3_train/  (WS1+WS2 combined, balanced)
+#       rotation3_val/    (WS3, balanced)
+#       holdout/          (WS4 Object D, balanced)
+#
+# BALANCE CRITERIA:
+#   ✓ Classes: 33/33/33 (contact/no_contact/edge)
+#   ✓ Objects: 33/33/33 (A_cutout/B_empty/C_full) in training sets
+#   ✓ Workspaces: 50/50 in combined training sets
+#
+# See README.md Section "Quick Start → 1. Dataset Balancing"
+###############################################################################
 
 echo "=============================================================================="
 echo "CREATING FULLY BALANCED DATASETS"

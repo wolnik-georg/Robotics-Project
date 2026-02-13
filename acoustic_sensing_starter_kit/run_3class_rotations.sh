@@ -1,11 +1,39 @@
 #!/bin/bash
-# Run complete 3-class experimental suite with dataset rotations
-# This script runs 3 different train/validation splits to test generalization
+###############################################################################
+# Run All 3 Position Generalization (Workspace Rotation) Experiments
+###############################################################################
+#
+# USAGE:
+#   bash run_3class_rotations.sh
+#
+# WHAT IT DOES:
+#   Runs all 3 workspace rotations for position generalization analysis:
+#       Rotation 1: Train WS1+WS3 → Validate WS2
+#       Rotation 2: Train WS2+WS3 → Validate WS1
+#       Rotation 3: Train WS1+WS2 → Validate WS3
+#
+#   For each rotation:
+#       1. Runs run_modular_experiments.py with rotation-specific config
+#       2. Performs 5-fold stratified cross-validation on training data
+#       3. Evaluates on held-out validation workspace
+#       4. Generates confusion matrices, metrics, and figures
+#
+# OUTPUTS:
+#   fully_balanced_rotation1_results/
+#   fully_balanced_rotation2_results/
+#   fully_balanced_rotation3_results/
+#
+# RESULTS:
+#   Average validation accuracy: 34.5% (barely above 33.3% random baseline)
+#   Demonstrates catastrophic position generalization failure
+#
+# See README.md Section "Quick Start → 2. Position Generalization"
+###############################################################################
 
 set -e  # Exit on error
 
 echo "=========================================="
-echo "3-CLASS EXPERIMENTAL SUITE"
+echo "3-CLASS POSITION GENERALIZATION SUITE"
 echo "=========================================="
 echo ""
 echo "This will run 3 dataset rotations:"
