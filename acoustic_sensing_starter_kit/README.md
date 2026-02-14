@@ -12,6 +12,7 @@ This repository contains the complete implementation of acoustic sensing for con
 - [Key Findings](#key-findings)
 - [Installation](#installation)
 - [Quick Start](#quick-start)
+- [Reproducing Main Results](#reproducing-main-results)
 - [Pipeline Architecture](#pipeline-architecture)
 - [Dataset Structure](#dataset-structure)
 - [Configuration Files](#configuration-files)
@@ -20,6 +21,9 @@ This repository contains the complete implementation of acoustic sensing for con
 - [Experimental Results](#experimental-results)
 - [Figure Generation](#figure-generation)
 - [Documentation](#documentation)
+- [Advanced Usage](#advanced-usage)
+- [Performance Summary](#performance-summary)
+- [Troubleshooting](#troubleshooting)
 - [Citation](#citation)
 
 ---
@@ -127,21 +131,37 @@ python run_modular_experiments.py --validate-only
 
 ## 🚀 Quick Start
 
-### 1. Dataset Balancing
+### Complete Pipeline (One Command)
+
+**Reproduce all main results** with a single command:
+
+```bash
+bash run_complete_pipeline.sh
+```
+
+This runs the entire pipeline end-to-end (~4-5 hours):
+1. ✅ Dataset balancing
+2. ✅ Position generalization (3 rotations)
+3. ✅ Object generalization (5 seeds)
+4. ✅ Figure generation
+
+**For step-by-step execution**, see [Reproducing Main Results](#reproducing-main-results).
+
+---
+
+### Individual Components
+
+#### 1. Dataset Balancing
 
 Create perfectly balanced 3-class datasets (33/33/33 splits):
 
 ```bash
-# Edit dataset paths in dataset_paths_config.yml first
-python create_fully_balanced_datasets.py
-
-# Or use the shell wrapper:
 bash run_balance_datasets.sh
 ```
 
 **Output:** `data/fully_balanced_datasets/rotation*_{train,val}/`
 
-### 2. Position Generalization (3 Workspace Rotations)
+#### 2. Position Generalization (3 Workspace Rotations)
 
 Run all 3 workspace rotations:
 
@@ -156,7 +176,7 @@ This executes:
 
 **Output:** `fully_balanced_rotation{1,2,3}_results/`
 
-### 3. Object Generalization (Multi-Seed Validation)
+#### 3. Object Generalization (Multi-Seed Validation)
 
 Run object generalization with 5 independent seeds:
 
@@ -168,7 +188,7 @@ Seeds tested: 42, 123, 456, 789, 1024
 
 **Output:** `object_generalization_ws4_holdout_3class_seed_*/`
 
-### 4. Generate Figures
+#### 4. Generate Figures
 
 Create all reconstruction visualizations and ML analysis figures:
 
@@ -421,6 +441,18 @@ output:
 ---
 
 ## 🎯 Main Execution Scripts
+
+### Master Pipeline Script
+
+| Script | Purpose | Usage |
+|--------|---------|-------|
+| `run_complete_pipeline.sh` | **Complete end-to-end pipeline** | `bash run_complete_pipeline.sh` |
+
+**Recommended:** Use this script to reproduce all main results with one command.
+
+Runs: Dataset balancing → Position generalization → Object generalization → Figure generation
+
+---
 
 ### Data Preparation
 
@@ -737,82 +769,215 @@ pdflatex final_report.tex
 
 ---
 
-## 🔬 Reproducing Experiments
+## 🔬 Reproducing Main Results
 
-### Complete Workflow
+This section provides the **exact workflow** to reproduce all main experimental results from the paper.
 
-#### 1. Prepare Datasets
+### Option 1: Complete Reproduction (Recommended)
+
+Run the entire pipeline end-to-end with one command:
 
 ```bash
-# Edit dataset paths in dataset_paths_config.yml
-nano dataset_paths_config.yml
+bash run_complete_pipeline.sh
+```
 
-# Create balanced datasets
+**What happens:**
+1. ✅ Creates timestamped output directory: `results_YYYYMMDD_HHMMSS/`
+2. ✅ Checks if balanced datasets exist → Option to reuse (saves ~5 minutes)
+3. ✅ Runs all experiments → Results saved to timestamped directory
+4. ✅ **NEVER overwrites existing results** - everything goes to new directory
+
+**Output structure:**
+```
+results_20260214_143022/           # Timestamped directory
+├── rotation1_results/             # Position gen: WS1+WS3 → WS2
+├── rotation2_results/             # Position gen: WS2+WS3 → WS1  
+├── rotation3_results/             # Position gen: WS1+WS2 → WS3
+├── object_generalization_seed_42/
+├── object_generalization_seed_123/
+├── object_generalization_seed_456/
+├── object_generalization_seed_789/
+├── object_generalization_seed_1024/
+└── figures/
+    ├── reconstruction/            # Main figures
+    └── analysis/                  # ML analysis figures
+
+data/fully_balanced_datasets/      # Balanced datasets (reusable)
+```
+
+**Total estimated time:** ~4-5 hours (or ~4 hours if reusing datasets)
+
+---
+
+### Option 2: Step-by-Step Reproduction
+
+For better understanding, run each step manually:
+
+#### Step 1: Dataset Preparation (~5 minutes)
+
+```bash
+# Create perfectly balanced 3-class datasets (33/33/33 splits)
 python create_fully_balanced_datasets.py
 
 # Verify balance
 python analyze_dataset_balance.py
 ```
 
-#### 2. Run Position Generalization
+**Verify:** Check that `data/fully_balanced_datasets/` contains:
+- `rotation1_train/`, `rotation1_val/`
+- `rotation2_train/`, `rotation2_val/`
+- `rotation3_train/`, `rotation3_val/`
+- Each with 33/33/33 class balance
+
+---
+
+#### Step 2: Position Generalization (~3 hours)
+
+**Run all 3 workspace rotations** to test position generalization:
 
 ```bash
-# Run all 3 workspace rotations
 bash run_3class_rotations.sh
+```
 
-# Or run individually:
+**Or run individually:**
+```bash
+# Rotation 1: Train WS1+WS3 → Validate WS2
 python run_modular_experiments.py configs/multi_dataset_config.yml
+
+# Rotation 2: Train WS2+WS3 → Validate WS1
 python run_modular_experiments.py configs/rotation_ws2_ws3_train_ws1_val.yml
+
+# Rotation 3: Train WS1+WS2 → Validate WS3
 python run_modular_experiments.py configs/rotation_ws1_ws2_train_ws3_val.yml
 ```
 
-**Results:**
-- `fully_balanced_rotation1_results/`
-- `fully_balanced_rotation2_results/`
-- `fully_balanced_rotation3_results/`
+**Verify results:**
+```bash
+# Check that results directories exist
+ls -d fully_balanced_rotation{1,2,3}_results/
 
-#### 3. Run Object Generalization (Multi-Seed)
+# Check validation accuracy (should average ~34.5%)
+cat fully_balanced_rotation1_results/discriminationanalysis/validation_results/metrics.json
+cat fully_balanced_rotation2_results/discriminationanalysis/validation_results/metrics.json
+cat fully_balanced_rotation3_results/discriminationanalysis/validation_results/metrics.json
+```
+
+**Expected validation accuracies:**
+- Rotation 1 (WS2): ~55.7%
+- Rotation 2 (WS1): ~24.4%
+- Rotation 3 (WS3): ~23.3%
+- **Average: ~34.5%** (barely above 33.3% random baseline)
+
+---
+
+#### Step 3: Object Generalization (~1.5 hours)
+
+**Run multi-seed validation** to verify reproducibility:
 
 ```bash
-# Run 5 independent seeds
 python run_object_generalization_multiseed.py
 ```
 
-**Results:**
-- `object_generalization_ws4_holdout_3class_seed_42/`
-- `object_generalization_ws4_holdout_3class_seed_123/`
-- `object_generalization_ws4_holdout_3class_seed_456/`
-- `object_generalization_ws4_holdout_3class_seed_789/`
-- `object_generalization_ws4_holdout_3class_seed_1024/`
+This runs 5 independent experiments with seeds: 42, 123, 456, 789, 1024
 
-#### 4. Run Binary Classification (for comparison)
+**Verify results:**
+```bash
+# Check that all 5 seed directories exist
+ls -d object_generalization_ws4_holdout_3class_seed_*/
+
+# Check GPU-MLP HighReg performance (should be 75.0% with std=0.0%)
+grep -r "GPU_MLP_Medium_HighReg" object_generalization_ws4_holdout_3class_seed_*/discriminationanalysis/validation_results/metrics.json
+```
+
+**Expected key finding:**
+- GPU-MLP HighReg: **75.0% validation** (dropout=0.3, weight_decay=0.01)
+- Standard deviation: **0.0%** across all 5 seeds (perfect reproducibility)
+
+---
+
+#### Step 4: Binary Classification Comparison (~3 hours, optional)
+
+**Compare 3-class vs binary** to validate edge class importance:
 
 ```bash
 bash run_all_binary_experiments.sh
 ```
 
-**Results:**
-- `fully_balanced_rotation1_binary/`
-- `fully_balanced_rotation2_binary/`
-- `fully_balanced_rotation3_binary/`
+**Verify results:**
+```bash
+# Check binary results
+ls -d fully_balanced_rotation{1,2,3}_binary/
 
-#### 5. Generate All Figures
+# Compare binary vs 3-class performance
+cat fully_balanced_rotation1_binary/discriminationanalysis/validation_results/metrics.json
+```
+
+**Expected finding:**
+- Binary average: ~45.1% (0.90× vs 50% random baseline)
+- 3-class average: ~34.5% (1.04× vs 33.3% random baseline)
+- **Binary performs worse than random guessing!**
+
+---
+
+#### Step 5: Figure Generation (~10 minutes)
+
+**Generate all figures** used in the paper:
 
 ```bash
-# Main reconstruction figures
+# Main reconstruction figures (Figures 7, 8, 9)
 python generate_comprehensive_reconstructions.py
 
-# ML analysis figures
+# ML analysis figures (Figures 6, 11)
 python generate_ml_analysis_figures.py
 
-# Additional figures
+# Position generalization comparison figures
 python generate_3class_rotation_figures.py
+
+# (Optional) Regenerate all figures from scratch
 python regenerate_all_figures_fully_balanced.py
 ```
 
-**Output:**
-- `comprehensive_3class_reconstruction/`
-- `ml_analysis_figures/`
+**Verify outputs:**
+```bash
+# Check main reconstruction figures
+ls comprehensive_3class_reconstruction/*.png
+
+# Check ML analysis figures
+ls ml_analysis_figures/*.png
+```
+
+**Expected figures:**
+1. `proof_of_concept_reconstruction_combined.png` - ~93% accuracy (within-workspace)
+2. `test_reconstruction_combined.png` - ~34.89% accuracy (position generalization failure)
+3. `holdout_reconstruction_combined.png` - 33% → 75% with confidence filtering
+4. `figure6_experimental_setup.png` - Workspace rotation strategy
+5. `figure11_feature_dimensions.png` - Feature architecture (80D)
+
+---
+
+### Verification Checklist
+
+After running the complete workflow, verify:
+
+- [ ] **Dataset balance:** All datasets have 33/33/33 class distribution
+- [ ] **Position generalization:** Average validation ~34.5% (catastrophic failure)
+- [ ] **Object generalization:** GPU-MLP HighReg achieves 75.0% (std=0.0%)
+- [ ] **Binary comparison:** Binary performs worse than random (0.90× normalized)
+- [ ] **Figures generated:** All main figures present in output directories
+- [ ] **Results match paper:** Key metrics align with reported values
+
+### Troubleshooting
+
+**If experiments fail:**
+1. Check dataset paths in `dataset_paths_config.yml`
+2. Verify balanced datasets exist: `ls data/fully_balanced_datasets/`
+3. Check Python environment: `pip install -r requirements.txt`
+4. Review experiment logs in results directories
+
+**If figures don't generate:**
+1. Check that results directories exist
+2. Verify matplotlib backend: `export MPLBACKEND=Agg`
+3. Re-run experiments if metrics.json files are missing
 
 ---
 
