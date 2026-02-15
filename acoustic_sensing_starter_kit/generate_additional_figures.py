@@ -799,10 +799,10 @@ def main():
     figures.append(
         create_confidence_calibration_figure(v4_results, v6_results, output_dir)
     )
-    figures.append(
-        create_per_class_performance_figure(v4_results, v6_results, output_dir)
-    )
-    figures.append(create_surface_type_effect_figure(output_dir))
+    # figures.append(
+    #     create_per_class_performance_figure(v4_results, v6_results, output_dir)
+    # )  # DISABLED: per_class_performance
+    # figures.append(create_surface_type_effect_figure(output_dir))  # DISABLED: surface_type_effect
     figures.append(create_feature_dimensions_figure(output_dir))
     figures.append(
         create_key_findings_summary_figure(v4_results, v6_results, output_dir)

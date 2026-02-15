@@ -1322,15 +1322,15 @@ def main():
     print("\n🎨 Generating figures...")
 
     figures = []
-    figures.append(create_main_comparison_figure(v4_results, v6_results, output_dir))
-    figures.append(
-        create_all_classifiers_comparison(v4_results, v6_results, output_dir)
-    )
-    figures.append(create_generalization_gap_figure(v4_results, v6_results, output_dir))
+    # figures.append(create_main_comparison_figure(v4_results, v6_results, output_dir))  # DISABLED: v4_vs_v6_main_comparison
+    # figures.append(
+    #     create_all_classifiers_comparison(v4_results, v6_results, output_dir)
+    # )  # DISABLED: all_classifiers_comparison
+    # figures.append(create_generalization_gap_figure(v4_results, v6_results, output_dir))  # DISABLED: generalization_gap
     figures.append(
         create_sample_distribution_figure(v4_results, v6_results, output_dir)
     )
-    figures.append(create_key_metrics_summary(v4_results, v6_results, output_dir))
+    # figures.append(create_key_metrics_summary(v4_results, v6_results, output_dir))  # DISABLED: key_metrics_summary
     figures.append(create_training_datasets_figure(v4_results, v6_results, output_dir))
     figures.append(create_entanglement_concept_figure(output_dir))
 

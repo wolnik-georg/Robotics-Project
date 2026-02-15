@@ -786,6 +786,7 @@ bash run_complete_pipeline.sh
 2. ✅ Checks if balanced datasets exist → Option to reuse (saves ~5 minutes)
 3. ✅ Runs all experiments → Results saved to timestamped directory
 4. ✅ **NEVER overwrites existing results** - everything goes to new directory
+5. ✅ Command-line output paths override config files (protection guarantee)
 
 **Output structure:**
 ```
@@ -804,6 +805,11 @@ results_20260214_143022/           # Timestamped directory
 
 data/fully_balanced_datasets/      # Balanced datasets (reusable)
 ```
+
+**Protection Mechanism:**  
+The pipeline uses `run_modular_experiments.py` with custom output directories. The script
+prioritizes command-line arguments over config file settings, ensuring results always go
+to the timestamped directory and never overwrite your existing results.
 
 **Total estimated time:** ~4-5 hours (or ~4 hours if reusing datasets)
 

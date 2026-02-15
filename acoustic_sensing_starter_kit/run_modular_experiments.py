@@ -181,13 +181,19 @@ def main():
         with open(config_file, "r") as f:
             config = yaml.safe_load(f)
 
-        # Use output directory from config if specified, otherwise use command line arg
-        if "output" in config and "base_dir" in config["output"]:
-            output_dir = os.path.abspath(config["output"]["base_dir"])
-            Path(output_dir).mkdir(parents=True, exist_ok=True)
-            print(f"📂 Output directory (from config): {output_dir}")
+        # PRIORITY: Command-line argument overrides config file
+        # Only use config's base_dir if no command-line argument was provided
+        if args.output_dir == "modular_analysis_results":  # Default value
+            # No custom output specified, use config if available
+            if "output" in config and "base_dir" in config["output"]:
+                output_dir = os.path.abspath(config["output"]["base_dir"])
+                Path(output_dir).mkdir(parents=True, exist_ok=True)
+                print(f"📂 Output directory (from config): {output_dir}")
+            else:
+                print(f"📂 Output directory (default): {output_dir}")
         else:
-            print(f"📂 Output directory: {output_dir}")
+            # Custom output specified on command line - USE IT!
+            print(f"📂 Output directory (command-line): {output_dir}")
 
         # Initialize orchestrator
         print(f"🚀 Initializing Experiment Orchestrator...")
