@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2026.1.30)  18 FEB 2026 23:13
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2026.1.30)  22 FEB 2026 13:33
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/docs/final_report.tex
-(/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/docs/final_report.tex
+**/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/docs/final_report_condensed.tex
+(/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/docs/final_report_condensed.tex
 LaTeX2e <2021-11-15> patch level 1
 L3 programming layer <2022-01-21> (./ieeeconf.cls
 Document Class: ieeeconf 2004/1/15 revision V1.6b by Pradeep Misra
@@ -462,8 +462,8 @@ LaTeX Info: Redefining \cite on input line 694.
 File: l3backend-pdftex.def 2022-01-12 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count305
 \l__pdf_internal_box=\box98
-) (./final_report.aux)
-\openout1 = `final_report.aux'.
+) (./final_report_condensed.aux)
+\openout1 = `final_report_condensed.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 47.
 LaTeX Font Info:    ... okay on input line 47.
@@ -521,9 +521,9 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 47.
 LaTeX Info: Redefining \pageref on input line 47.
 LaTeX Info: Redefining \nameref on input line 47.
- (./final_report.out) (./final_report.out)
+ (./final_report_condensed.out) (./final_report_condensed.out)
 \@outlinefile=\write3
-\openout3 = `final_report.out'.
+\openout3 = `final_report_condensed.out'.
 
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: subfig package v1.3 is loaded.
@@ -532,273 +532,91 @@ LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 50
  (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
-LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 59.
- (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ptm.fd
-File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
-) [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
-
-
-]
-LaTeX Font Info:    Trying to load font information for OT1+ztmcm on input line 96.
+LaTeX Font Info:    Trying to load font information for OT1+ztmcm on input line 90.
  (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ztmcm.fd
 File: ot1ztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OT1/ztmcm.
 )
-LaTeX Font Info:    Trying to load font information for OML+ztmcm on input line 96.
+LaTeX Font Info:    Trying to load font information for OML+ztmcm on input line 90.
  (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omlztmcm.fd
 File: omlztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OML/ztmcm.
 )
-LaTeX Font Info:    Trying to load font information for OMS+ztmcm on input line 96.
+LaTeX Font Info:    Trying to load font information for OMS+ztmcm on input line 90.
  (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omsztmcm.fd
 File: omsztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/ztmcm.
 )
-LaTeX Font Info:    Trying to load font information for OMX+ztmcm on input line 96.
+LaTeX Font Info:    Trying to load font information for OMX+ztmcm on input line 90.
  (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omxztmcm.fd
 File: omxztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMX/ztmcm.
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7.4> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 96.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 90.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 96.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 90.
 
-Underfull \hbox (badness 1648) in paragraph at lines 96--97
-[]\OT1/ptm/b/n/10 First demon-stra-tion of 3-class acous-tic con-tact
+Underfull \hbox (badness 4353) in paragraph at lines 90--91
+[]\OT1/ptm/b/n/10 3-class acous-tic con-tact sce-nario clas-si-fi-ca-tion\OT1/ptm/m/n/10 ,
  []
 
+[1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
-Underfull \hbox (badness 2818) in paragraph at lines 96--97
-\OT1/ptm/m/n/10 cases, prov-ing the con-cept is vi-able for within-
+
+]
+Underfull \hbox (badness 3701) in paragraph at lines 113--114
+[]\OT1/ptm/m/n/10 Our work con-firms that con-fig-u-ra-tion en-tan-gle-ment
  []
 
-
-Underfull \hbox (badness 2538) in paragraph at lines 98--99
-[]\OT1/ptm/b/n/10 Multi-seed val-i-dated ob-ject gen-er-al-iza-tion with
- []
-
-
-Underfull \hbox (badness 1546) in paragraph at lines 100--101
-\OT1/ptm/m/n/10 trophic workspace-dependent po-si-tion gen-er-al-iza-tion
- []
-
-[2]
-<big_setup.jpeg, id=124, 1606.0pt x 1204.5pt>
+LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 129.
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ptm.fd
+File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
+)
+<big_setup.jpeg, id=121, 1606.0pt x 1204.5pt>
 File: big_setup.jpeg Graphic file (type jpg)
 <use big_setup.jpeg>
-Package pdftex.def Info: big_setup.jpeg  used on input line 145.
+Package pdftex.def Info: big_setup.jpeg  used on input line 134.
 (pdftex.def)             Requested size: 76.17201pt x 57.12244pt.
-
-Underfull \hbox (badness 2635) in paragraph at lines 145--145
-[]\OT1/ptm/m/n/8 (a) |Full ex-per-i-men-tal
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 145--145
-\OT1/ptm/m/n/8 plat-form show-ing
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 145--145
-\OT1/ptm/m/n/8 Franka Panda robot
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 145--145
-\OT1/ptm/m/n/8 with acous-tic fin-ger
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 145--145
-\OT1/ptm/m/n/8 po-si-tioned over test
- []
-
-<mounting_setup.jpeg, id=125, 1204.5pt x 1606.0pt>
+<mounting_setup.jpeg, id=122, 1204.5pt x 1606.0pt>
 File: mounting_setup.jpeg Graphic file (type jpg)
 <use mounting_setup.jpeg>
-Package pdftex.def Info: mounting_setup.jpeg  used on input line 147.
+Package pdftex.def Info: mounting_setup.jpeg  used on input line 136.
 (pdftex.def)             Requested size: 76.17201pt x 101.55101pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 147--147
-[]\OT1/ptm/m/n/8 (b) |Acous-tic fin-ger
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 147--147
-\OT1/ptm/m/n/8 mount-ing on robot
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 147--147
-\OT1/ptm/m/n/8 mi-cro-phone and
- []
-
-<close_setup.jpeg, id=126, 1204.5pt x 1606.0pt>
+<close_setup.jpeg, id=123, 1204.5pt x 1606.0pt>
 File: close_setup.jpeg Graphic file (type jpg)
 <use close_setup.jpeg>
-Package pdftex.def Info: close_setup.jpeg  used on input line 149.
+Package pdftex.def Info: close_setup.jpeg  used on input line 138.
 (pdftex.def)             Requested size: 76.17201pt x 101.55101pt.
+<objects.jpeg, id=124, 1204.5pt x 1606.0pt>
+File: objects.jpeg Graphic file (type jpg)
+<use objects.jpeg>
+Package pdftex.def Info: objects.jpeg  used on input line 145.
+(pdftex.def)             Requested size: 122.85905pt x 163.79512pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 149--149
-\OT1/ptm/m/n/8 area (ap-prox-i-mately
- []
-
-[3 <./big_setup.jpeg> <./mounting_setup.jpeg> <./close_setup.jpeg>]
-Overfull \hbox (4.37535pt too wide) in paragraph at lines 182--194
+Overfull \hbox (14.53625pt too wide) in paragraph at lines 176--189
  [][] 
  []
 
-
-Overfull \hbox (14.53625pt too wide) in paragraph at lines 219--232
- [][] 
- []
-
-<../ml_analysis_figures/figure11_feature_dimensions.png, id=142, 857.604pt x 566.5968pt>
-File: ../ml_analysis_figures/figure11_feature_dimensions.png Graphic file (type png)
-<use ../ml_analysis_figures/figure11_feature_dimensions.png>
-Package pdftex.def Info: ../ml_analysis_figures/figure11_feature_dimensions.png  used on input line 236.
-(pdftex.def)             Requested size: 245.71811pt x 162.33768pt.
-<../fully_balanced_rotation1_results_features_rerun/discriminationanalysis/validation_results/classifier_performance.png, id=144, 1149.093pt x 569.9694pt>
-File: ../fully_balanced_rotation1_results_features_rerun/discriminationanalysis/validation_results/classifier_performance.png Graphic file (type png)
-<use ../fully_balanced_rotation1_results_features_rerun/discriminationanalysis/validation_results/classifier_performance.png>
-Package pdftex.def Info: ../fully_balanced_rotation1_results_features_rerun/discriminationanalysis/validation_results/classifier_performance.png  used on input line 243.
-(pdftex.def)             Requested size: 247.88887pt x 122.94978pt.
-<../fully_balanced_rotation1_results_spectogram_rerun/discriminationanalysis/validation_results/classifier_performance.png, id=145, 1149.093pt x 569.9694pt>
-File: ../fully_balanced_rotation1_results_spectogram_rerun/discriminationanalysis/validation_results/classifier_performance.png Graphic file (type png)
-<use ../fully_balanced_rotation1_results_spectogram_rerun/discriminationanalysis/validation_results/classifier_performance.png>
-Package pdftex.def Info: ../fully_balanced_rotation1_results_spectogram_rerun/discriminationanalysis/validation_results/classifier_performance.png  used on input line 244.
-(pdftex.def)             Requested size: 247.88887pt x 122.94978pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [4]
-Underfull \hbox (badness 1521) in paragraph at lines 261--262
-\OT1/ptm/m/n/10 dif-fer-ent robot con-fig-u-ra-tions and sur-face com-bi-na-tions
- []
-
-[5 <../ml_analysis_figures/figure11_feature_dimensions.png>]
-Underfull \hbox (badness 3758) in paragraph at lines 271--272
-[]\OT1/ptm/m/n/10 Dataset con-struc-tion en-sures bal-anced rep-re-sen-ta-tion
- []
-
-<../ml_analysis_figures/figure6_experimental_setup.png, id=171, 1289.2968pt x 426.393pt>
+[2 <./big_setup.jpeg> <./mounting_setup.jpeg> <./close_setup.jpeg> <./objects.jpeg>]
+<../ml_analysis_figures/figure6_experimental_setup.png, id=138, 1289.2968pt x 426.393pt>
 File: ../ml_analysis_figures/figure6_experimental_setup.png Graphic file (type png)
 <use ../ml_analysis_figures/figure6_experimental_setup.png>
-Package pdftex.def Info: ../ml_analysis_figures/figure6_experimental_setup.png  used on input line 275.
+Package pdftex.def Info: ../ml_analysis_figures/figure6_experimental_setup.png  used on input line 202.
 (pdftex.def)             Requested size: 505.89pt x 167.30757pt.
-<../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.png, id=174, 910.602pt x 1051.7694pt>
+
+Overfull \hbox (4.37535pt too wide) in paragraph at lines 223--233
+ [][] 
+ []
+
+<../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.png, id=142, 2561.61015pt x 913.4928pt>
 File: ../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.png Graphic file (type png)
 <use ../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.png>
-Package pdftex.def Info: ../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.png  used on input line 294.
-(pdftex.def)             Requested size: 505.89pt x 584.31668pt.
-<../comprehensive_3class_reconstruction/test_reconstruction_combined.png, id=175, 910.602pt x 1051.7694pt>
-File: ../comprehensive_3class_reconstruction/test_reconstruction_combined.png Graphic file (type png)
-<use ../comprehensive_3class_reconstruction/test_reconstruction_combined.png>
-Package pdftex.def Info: ../comprehensive_3class_reconstruction/test_reconstruction_combined.png  used on input line 301.
-(pdftex.def)             Requested size: 505.89pt x 584.31668pt.
-
-LaTeX Warning: Float too large for page by 14.31668pt on input line 304.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 306--306
- \OT1/ptm/m/it/10 B. Po-si-tion Gen-er-al-iza-tion: Catas-trophic Workspace-
- []
-
-
-Underfull \hbox (badness 1546) in paragraph at lines 328--329
-[]\OT1/ptm/m/n/10 Cross-validation ac-cu-racy re-mains re-mark-ably con-sis-
- []
-
-[6 <../fully_balanced_rotation1_results_features_rerun/discriminationanalysis/validation_results/classifier_performance.png> <../fully_balanced_rotation1_results_spectogram_rerun/discriminationanalysis/validation_results/classifier_performance.png>]
-Underfull \hbox (badness 1360) in paragraph at lines 336--337
-\OT1/ptm/m/n/10 to ran-dom guess-ing. This catas-trophic workspace vari-
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-LaTeX Info: Symbol \textrightarrow not provided by
-            font family ptm in TS1 encoding.
-            Default family used instead on input line 348.
-LaTeX Info: Symbol \textrightarrow not provided by
-            font family ptm in TS1 encoding.
-            Default family used instead on input line 348.
-
-Overfull \hbox (23.30269pt too wide) in paragraph at lines 351--365
- [][] 
- []
-
-LaTeX Info: Symbol \textrightarrow not provided by
-            font family ptm in TS1 encoding.
-            Default family used instead on input line 371.
-LaTeX Info: Symbol \textrightarrow not provided by
-            font family ptm in TS1 encoding.
-            Default family used instead on input line 371.
-
-Overfull \hbox (9.93791pt too wide) in paragraph at lines 374--386
- [][] 
- []
-
-[7 <../ml_analysis_figures/figure6_experimental_setup.png>]
-
-LaTeX Warning: Text page 8 contains only floats.
-
-
-Overfull \vbox (22.71664pt too high) has occurred while \output is active []
-
-
-
-LaTeX Warning: Text page 8 contains only floats.
-
-
-Overfull \vbox (22.71664pt too high) has occurred while \output is active []
-
-
-Overfull \vbox (5.91673pt too high) has occurred while \output is active []
-
- [8 <../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.png>]
-Underfull \hbox (badness 3108) in paragraph at lines 431--432
-[]\OT1/ptm/m/n/10 Position gen-er-al-iza-tion achieves 1.04\TS1/ptm/m/n/10 Ö \OT1/ptm/m/n/10 over ran-dom
- []
-
-
-Underfull \hbox (badness 1715) in paragraph at lines 435--436
-[]\OT1/ptm/m/n/10 This suc-cess is ex-plained by reg-u-lar-iza-tion pre-vent-
- []
-
-[9]
-Underfull \hbox (badness 4819) in paragraph at lines 439--440
-[]\OT1/ptm/m/n/10 Figure []7[] vi-su-al-izes this accuracy-coverage trade-off
- []
-
-<../comprehensive_3class_reconstruction/holdout_reconstruction_combined.png, id=210, 1234.3716pt x 640.794pt>
+Package pdftex.def Info: ../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.png  used on input line 243.
+(pdftex.def)             Requested size: 505.89pt x 180.39542pt.
+[3] [4 <../ml_analysis_figures/figure6_experimental_setup.png> <../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.png (PNG copy)>]
+<../comprehensive_3class_reconstruction/holdout_reconstruction_combined.png, id=163, 1234.3716pt x 640.794pt>
 File: ../comprehensive_3class_reconstruction/holdout_reconstruction_combined.png Graphic file (type png)
 <use ../comprehensive_3class_reconstruction/holdout_reconstruction_combined.png>
-Package pdftex.def Info: ../comprehensive_3class_reconstruction/holdout_reconstruction_combined.png  used on input line 443.
-(pdftex.def)             Requested size: 505.89pt x 262.61969pt.
-
-Underfull \hbox (badness 6493) in paragraph at lines 479--480
-[]\OT1/ptm/b/n/10 (2) In-for-ma-tion: \OT1/ptm/m/n/10 Edge pre-dic-tions pro-vide use-ful
- []
-
-
-Underfull \hbox (badness 1735) in paragraph at lines 485--485
- \OT1/ptm/m/it/10 E. Physics-Based In-ter-pre-ta-tion: Ob-ject and Workspace
- []
-
-[10]
-Underfull \hbox (badness 7595) in paragraph at lines 529--530
-[]\OT1/ptm/b/n/10 RQ2 (Po-si-tion Gen-er-al-iza-tion): \OT1/ptm/m/n/10 Val-i-da-tion across
- []
-
-[11]
-Underfull \hbox (badness 1831) in paragraph at lines 543--544
-\OT1/ptm/b/n/10 train-ing is manda-tory\OT1/ptm/m/n/10 ---cross-workspace gen-er-al-iza-tion
- []
-
-
-Underfull \hbox (badness 5260) in paragraph at lines 549--550
-[]\OT1/ptm/m/it/10 Long-term paradigm shifts \OT1/ptm/m/n/10 re-quire mov-ing be-yond
- []
-
-[12] (./final_report.bbl)
+Package pdftex.def Info: ../comprehensive_3class_reconstruction/holdout_reconstruction_combined.png  used on input line 334.
+(pdftex.def)             Requested size: 245.71811pt x 127.55031pt.
+ [5 <../comprehensive_3class_reconstruction/holdout_reconstruction_combined.png>] [6] (./final_report_condensed.bbl)
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -810,23 +628,25 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the US letter (8.5in X 11in) paper size.
 
-[13] [14 <../comprehensive_3class_reconstruction/test_reconstruction_combined.png>] [15 <../comprehensive_3class_reconstruction/holdout_reconstruction_combined.png>] (./final_report.aux)
-Package rerunfilecheck Info: File `final_report.out' has not changed.
-(rerunfilecheck)             Checksum: 5FEEBB8BD0C5EA6695DA0684B9D08770;4442.
+[7
+
+] (./final_report_condensed.aux)
+Package rerunfilecheck Info: File `final_report_condensed.out' has not changed.
+(rerunfilecheck)             Checksum: 4E4F7D7FBFB9894EBA429627B31A0D3A;3974.
  ) 
 Here is how much of TeX's memory you used:
- 12368 strings out of 480247
- 202894 string characters out of 5896151
- 507666 words of memory out of 5000000
- 30043 multiletter control sequences out of 15000+600000
- 527894 words of font info for 152 fonts, out of 8000000 for 9000
+ 12306 strings out of 480247
+ 199982 string characters out of 5896151
+ 504405 words of memory out of 5000000
+ 30009 multiletter control sequences out of 15000+600000
+ 525375 words of font info for 142 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 69i,10n,79p,1938b,434s stack positions out of 5000i,500n,10000p,200000b,80000s
- </home/georg/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1000.600pk>{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on final_report.pdf (15 pages, 2433244 bytes).
+ 69i,10n,79p,1685b,381s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on final_report_condensed.pdf (7 pages, 1572200 bytes).
 PDF statistics:
- 324 PDF objects out of 1000 (max. 8388607)
- 263 compressed objects within 3 object streams
- 66 named destinations out of 1000 (max. 500000)
- 235 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 250 PDF objects out of 1000 (max. 8388607)
+ 209 compressed objects within 3 object streams
+ 51 named destinations out of 1000 (max. 500000)
+ 220 words of extra memory for PDF output out of 10000 (max. 10000000)
 
