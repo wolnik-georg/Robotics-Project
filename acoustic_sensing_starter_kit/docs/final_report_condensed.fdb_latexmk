@@ -1,17 +1,17 @@
 # Fdb version 3
-["bibtex final_report_condensed"] 1771871918 "final_report_condensed.aux" "final_report_condensed.bbl" "final_report_condensed" 1771872360
+["bibtex final_report_condensed"] 1771968752 "final_report_condensed.aux" "final_report_condensed.bbl" "final_report_condensed" 1771968753
   "./IEEEtranN.bst" 1474547888 63465 52e4631827d9e4cab8ed25dc93fa95dd ""
-  "final_report_condensed.aux" 1771872360 10175 1a6c1c5a00a6352d9563c099e29faa0d "pdflatex"
+  "final_report_condensed.aux" 1771968753 10175 1a6c1c5a00a6352d9563c099e29faa0d "pdflatex"
   "project_scientific_report.bib" 1770314999 4990 4079b80482a3ae19a1d12784d0c070f2 ""
   (generated)
   "final_report_condensed.bbl"
   "final_report_condensed.blg"
-["pdflatex"] 1771872359 "/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/docs/final_report_condensed.tex" "final_report_condensed.pdf" "final_report_condensed" 1771872360
-  "../comprehensive_3class_reconstruction/holdout_reconstruction_combined.png" 1770923412 286642 f125d9c75a44a4dbfee9b78c3b03fc31 ""
-  "../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.png" 1771757860 314551 9fc58904b3a814ab8ac88b779a1832bb ""
+["pdflatex"] 1771968752 "/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/docs/final_report_condensed.tex" "final_report_condensed.pdf" "final_report_condensed" 1771968753
+  "../comprehensive_3class_reconstruction/holdout_reconstruction_combined.png" 1771968497 631708 499d43952b61b26a10a1d1122becdda1 ""
+  "../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.pdf" 1771757801 2419498 0284941dbda425567a257c8c388c7e10 ""
   "../ml_analysis_figures/figure6_experimental_setup.png" 1771112809 196113 7a409a07b367d73f602f4d9d019481a9 ""
   "/etc/texmf/web2c/texmf.cnf" 1762805783 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/docs/final_report_condensed.tex" 1771872359 32992 d3fa682e7930e047b70781356fcca50c ""
+  "/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/docs/final_report_condensed.tex" 1771968751 32956 1826a64538a488473d5684de3d7855ce ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/adobe/courier/pcrr7t.tfm" 1136768653 960 379cc0019370a9e0208a0a3f949f847a ""
@@ -133,10 +133,10 @@
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1769750550 1405649 bd6a92006b7f89a7d7aac5356c98b36e ""
   "big_setup.jpeg" 1769882128 207386 114c6b75940aed313ff1e24c0c022326 ""
   "close_setup.jpeg" 1769882133 156434 fcef78b4b53e91fd6c4f55e1bbb6c756 ""
-  "final_report_condensed.aux" 1771872360 10175 1a6c1c5a00a6352d9563c099e29faa0d "pdflatex"
-  "final_report_condensed.bbl" 1771871918 2571 4059060f2ae9e429e52d0c120f15d0c0 "bibtex final_report_condensed"
-  "final_report_condensed.out" 1771872360 3697 bb5b4650f5a12cad4316c79ee7bb083d "pdflatex"
-  "final_report_condensed.tex" 1771872359 32992 d3fa682e7930e047b70781356fcca50c ""
+  "final_report_condensed.aux" 1771968753 10175 1a6c1c5a00a6352d9563c099e29faa0d "pdflatex"
+  "final_report_condensed.bbl" 1771968752 2571 4059060f2ae9e429e52d0c120f15d0c0 "bibtex final_report_condensed"
+  "final_report_condensed.out" 1771968753 3697 bb5b4650f5a12cad4316c79ee7bb083d "pdflatex"
+  "final_report_condensed.tex" 1771968751 32956 1826a64538a488473d5684de3d7855ce ""
   "ieeeconf.cls" 1364296568 202029 d53d4f19efa3eda33600344887a4bb20 ""
   "mounting_setup.jpeg" 1769882131 152892 9d5bc5a41e8b30664d246fb1ea5d5b32 ""
   "objects.jpeg" 1769882124 195394 b436e08f3a724b7ee3a2cd0120e8df83 ""

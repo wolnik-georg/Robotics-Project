@@ -810,11 +810,11 @@ INPUT ../ml_analysis_figures/figure6_experimental_setup.png
 INPUT ../ml_analysis_figures/figure6_experimental_setup.png
 INPUT ../ml_analysis_figures/figure6_experimental_setup.png
 INPUT ../ml_analysis_figures/figure6_experimental_setup.png
-INPUT ../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.png
-INPUT ../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.png
-INPUT ../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.png
-INPUT ../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.png
-INPUT ../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.png
+INPUT ../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.pdf
+INPUT ../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.pdf
+INPUT ../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.pdf
+INPUT ../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.pdf
+INPUT ../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.pdf
 INPUT /usr/share/texlive/texmf-dist/fonts/vf/adobe/times/zptmcm7m.vf
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/adobe/times/psyro.tfm
 INPUT ../comprehensive_3class_reconstruction/holdout_reconstruction_combined.png

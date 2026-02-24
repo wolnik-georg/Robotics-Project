@@ -1,0 +1,93 @@
+
+================================================================================
+COMPREHENSIVE 3-CLASS SURFACE RECONSTRUCTION
+================================================================================
+
+================================================================================
+PART 1: VALIDATION DATA (Same Distribution)
+Training: WS1+WS3 | Validation: WS2 | Objects: A, B, C
+Expected: High accuracy (~85%)
+================================================================================
+
+================================================================================
+Running reconstruction: Validation - Object A (Cutout)
+Model: model_rank1_random_forest.pkl
+Dataset: balanced_workspace_2_3class_squares_cutout
+Output: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/comprehensive_3class_reconstruction/validation/balanced_workspace_2_3class_squares_cutout
+================================================================================
+
+✗ Failed: Validation - Object A (Cutout)
+Error: Traceback (most recent call last):
+  File "/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/run_surface_reconstruction.py", line 28, in <module>
+    import librosa
+ModuleNotFoundError: No module named 'librosa'
+
+
+================================================================================
+Running reconstruction: Validation - Object B (Empty)
+Model: model_rank1_random_forest.pkl
+Dataset: balanced_workspace_2_3class_pure_no_contact
+Output: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/comprehensive_3class_reconstruction/validation/balanced_workspace_2_3class_pure_no_contact
+================================================================================
+
+✗ Failed: Validation - Object B (Empty)
+Error: Traceback (most recent call last):
+  File "/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/run_surface_reconstruction.py", line 28, in <module>
+    import librosa
+ModuleNotFoundError: No module named 'librosa'
+
+
+================================================================================
+Running reconstruction: Validation - Object C (Full Contact)
+Model: model_rank1_random_forest.pkl
+Dataset: balanced_workspace_2_3class_pure_contact
+Output: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/comprehensive_3class_reconstruction/validation/balanced_workspace_2_3class_pure_contact
+================================================================================
+
+✗ Failed: Validation - Object C (Full Contact)
+Error: Traceback (most recent call last):
+  File "/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/run_surface_reconstruction.py", line 28, in <module>
+    import librosa
+ModuleNotFoundError: No module named 'librosa'
+
+
+================================================================================
+PART 2: HOLDOUT DATA (Novel Object)
+Training: WS1+WS2+WS3 Objects A,B,C | Validation: WS4 Object D
+Expected: Random chance (~33% for 3-class)
+================================================================================
+
+================================================================================
+Running reconstruction: Holdout - Object D (Novel Geometry)
+Model: model_rank1_random_forest.pkl
+Dataset: balanced_holdout_3class
+Output: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/comprehensive_3class_reconstruction/holdout/balanced_holdout_3class
+================================================================================
+
+✗ Failed: Holdout - Object D (Novel Geometry)
+Error: Traceback (most recent call last):
+  File "/home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/run_surface_reconstruction.py", line 28, in <module>
+    import librosa
+ModuleNotFoundError: No module named 'librosa'
+
+
+================================================================================
+RECONSTRUCTION SUMMARY
+================================================================================
+
+Validation Data (Same Distribution):
+  ✗ FAILED: Object A (Cutout)
+  ✗ FAILED: Object B (Empty)
+  ✗ FAILED: Object C (Full Contact)
+
+Holdout Data (Novel Object):
+  ✗ FAILED: Object D (Novel)
+
+All reconstructions saved to: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/comprehensive_3class_reconstruction
+
+Next steps:
+1. Create combined validation figure (3 objects side-by-side)
+2. Create holdout figure (showing failure on novel object)
+3. Update final_report.tex with both figures
+
+Results saved to: /home/georg/Desktop/Robotics-Project/acoustic_sensing_starter_kit/comprehensive_3class_reconstruction/reconstruction_results.json

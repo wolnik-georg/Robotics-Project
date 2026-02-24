@@ -665,8 +665,8 @@ class SurfaceReconstructor:
         rounds coordinates to 3 decimal places before computing grid spacing.
         """
         # Round to reduce floating point noise from robot positioning
-        rounded_x = np.round(coords[:, 0], 3)
-        rounded_y = np.round(coords[:, 1], 3)
+        rounded_x = np.round(coords[:, 0], 2)
+        rounded_y = np.round(coords[:, 1], 2)
 
         unique_x = np.sort(np.unique(rounded_x))
         unique_y = np.sort(np.unique(rounded_y))
@@ -692,6 +692,10 @@ class SurfaceReconstructor:
         # Ensure reasonable minimum size
         dx = max(dx, 0.02)
         dy = max(dy, 0.02)
+
+        # Scale up cells to fill grid spacing exactly
+        dx = dx * 1.0
+        dy = dy * 1.0
 
         return dx, dy
 
@@ -751,9 +755,11 @@ class SurfaceReconstructor:
             )
             ax.add_patch(rect)
 
-        # Set limits to FULL surface (0 to 1) with small padding
-        ax.set_xlim(-0.02, 1.02)
-        ax.set_ylim(-0.02, 1.02)
+        # Set limits tightly around the actual data extent
+        pad_x = dx * 1.0
+        pad_y = dy * 1.0
+        ax.set_xlim(coords[:, 0].min() - pad_x, coords[:, 0].max() + pad_x)
+        ax.set_ylim(coords[:, 1].min() - pad_y, coords[:, 1].max() + pad_y)
 
         # Create legend (include excluded class info if present)
         legend_patches = [
@@ -784,7 +790,7 @@ class SurfaceReconstructor:
         ax.grid(True, alpha=0.2, linestyle="--")
 
         plt.tight_layout()
-        fig.savefig(save_path, dpi=150, bbox_inches="tight")
+        fig.savefig(save_path, dpi=300, bbox_inches="tight")
         plt.close(fig)
 
     def _create_side_by_side(
@@ -836,9 +842,11 @@ class SurfaceReconstructor:
                 )
                 ax.add_patch(rect)
 
-            # Set limits to FULL surface (0 to 1)
-            ax.set_xlim(-0.02, 1.02)
-            ax.set_ylim(-0.02, 1.02)
+            # Set limits tightly around the actual data extent
+            pad_x = dx * 1.0
+            pad_y = dy * 1.0
+            ax.set_xlim(coords[:, 0].min() - pad_x, coords[:, 0].max() + pad_x)
+            ax.set_ylim(coords[:, 1].min() - pad_y, coords[:, 1].max() + pad_y)
             ax.set_xlabel("Normalized X", fontsize=11)
             ax.set_ylabel("Normalized Y", fontsize=11)
             ax.set_title(title, fontsize=13, fontweight="bold")
@@ -873,7 +881,7 @@ class SurfaceReconstructor:
         )
 
         plt.tight_layout(rect=[0, 0, 1, 0.95])
-        fig.savefig(save_path, dpi=150, bbox_inches="tight")
+        fig.savefig(save_path, dpi=300, bbox_inches="tight")
         plt.close(fig)
 
     def _create_error_map(
@@ -950,9 +958,11 @@ class SurfaceReconstructor:
             )
             ax.add_patch(rect)
 
-        # Set limits to FULL surface (0 to 1)
-        ax.set_xlim(-0.02, 1.02)
-        ax.set_ylim(-0.02, 1.02)
+        # Set limits tightly around the actual data extent
+        pad_x = dx * 1.0
+        pad_y = dy * 1.0
+        ax.set_xlim(coords[:, 0].min() - pad_x, coords[:, 0].max() + pad_x)
+        ax.set_ylim(coords[:, 1].min() - pad_y, coords[:, 1].max() + pad_y)
 
         # Error rate on included samples only
         num_included = np.sum(included_mask)
@@ -986,7 +996,7 @@ class SurfaceReconstructor:
         ax.legend(handles=legend_patches, loc="upper right", fontsize=11)
 
         plt.tight_layout()
-        fig.savefig(save_path, dpi=150, bbox_inches="tight")
+        fig.savefig(save_path, dpi=300, bbox_inches="tight")
         plt.close(fig)
 
     def _create_confidence_map(
@@ -1056,9 +1066,11 @@ class SurfaceReconstructor:
                 )
             ax.add_patch(rect)
 
-        # Set limits to FULL surface (0 to 1)
-        ax.set_xlim(-0.02, 1.02)
-        ax.set_ylim(-0.02, 1.02)
+        # Set limits tightly around the actual data extent
+        pad_x = dx * 1.0
+        pad_y = dy * 1.0
+        ax.set_xlim(coords[:, 0].min() - pad_x, coords[:, 0].max() + pad_x)
+        ax.set_ylim(coords[:, 1].min() - pad_y, coords[:, 1].max() + pad_y)
 
         # Mean confidence on included samples only
         included_mask = ~excluded_mask
@@ -1092,7 +1104,7 @@ class SurfaceReconstructor:
         ax.legend(handles=legend_patches, loc="upper right", fontsize=11)
 
         plt.tight_layout()
-        fig.savefig(save_path, dpi=150, bbox_inches="tight")
+        fig.savefig(save_path, dpi=300, bbox_inches="tight")
         plt.close(fig)
 
     def _create_presentation_summary(
@@ -1122,10 +1134,15 @@ class SurfaceReconstructor:
         # Calculate cell size using robust method
         dx, dy = self._calculate_cell_size(coords)
 
+        pad_x = dx * 1.0
+        pad_y = dy * 1.0
+        xlim = (coords[:, 0].min() - pad_x, coords[:, 0].max() + pad_x)
+        ylim = (coords[:, 1].min() - pad_y, coords[:, 1].max() + pad_y)
+
         def setup_ax(ax, title):
-            # Set limits to FULL surface (0 to 1)
-            ax.set_xlim(-0.02, 1.02)
-            ax.set_ylim(-0.02, 1.02)
+            # Set limits tightly around the actual data extent
+            ax.set_xlim(*xlim)
+            ax.set_ylim(*ylim)
             ax.set_title(title, fontsize=13, fontweight="bold")
             ax.set_xlabel("Normalized X", fontsize=10)
             ax.set_ylabel("Normalized Y", fontsize=10)
@@ -1296,7 +1313,7 @@ class SurfaceReconstructor:
         )
 
         plt.tight_layout(rect=[0, 0, 1, 0.97])
-        fig.savefig(save_path, dpi=150, bbox_inches="tight")
+        fig.savefig(save_path, dpi=300, bbox_inches="tight")
         plt.close(fig)
 
 

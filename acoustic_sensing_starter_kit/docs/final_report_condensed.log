@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2026.1.30)  23 FEB 2026 19:45
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2026.1.30)  24 FEB 2026 22:32
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -565,9 +565,6 @@ Underfull \hbox (badness 3701) in paragraph at lines 113--114
 []\OT1/ptm/m/n/10 Our work con-firms that con-fig-u-ra-tion en-tan-gle-ment
  []
 
-
-LaTeX Warning: Reference `sec:multisample' on page 2 undefined on input line 127.
-
 LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 130.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
@@ -607,21 +604,21 @@ File: ../ml_analysis_figures/figure6_experimental_setup.png Graphic file (type p
 <use ../ml_analysis_figures/figure6_experimental_setup.png>
 Package pdftex.def Info: ../ml_analysis_figures/figure6_experimental_setup.png  used on input line 221.
 (pdftex.def)             Requested size: 505.89pt x 167.30757pt.
-<../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.png, id=135, 2561.61015pt x 913.4928pt>
-File: ../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.png Graphic file (type png)
-<use ../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.png>
-Package pdftex.def Info: ../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.png  used on input line 239.
-(pdftex.def)             Requested size: 505.89pt x 180.39542pt.
+<../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.pdf, id=135, 7115.58376pt x 2477.255pt>
+File: ../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.pdf Graphic file (type pdf)
+<use ../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.pdf>
+Package pdftex.def Info: ../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.pdf  used on input line 239.
+(pdftex.def)             Requested size: 505.89pt x 176.10936pt.
  [3 <./objects.jpeg>]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [4 <../ml_analysis_figures/figure6_experimental_setup.png> <../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.png (PNG copy)>]
-<../comprehensive_3class_reconstruction/holdout_reconstruction_combined.png, id=156, 1234.3716pt x 640.794pt>
+ [4 <../ml_analysis_figures/figure6_experimental_setup.png> <../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.pdf>]
+<../comprehensive_3class_reconstruction/holdout_reconstruction_combined.png, id=159, 1234.3716pt x 641.0349pt>
 File: ../comprehensive_3class_reconstruction/holdout_reconstruction_combined.png Graphic file (type png)
 <use ../comprehensive_3class_reconstruction/holdout_reconstruction_combined.png>
 Package pdftex.def Info: ../comprehensive_3class_reconstruction/holdout_reconstruction_combined.png  used on input line 330.
-(pdftex.def)             Requested size: 245.71811pt x 127.55031pt.
- [5 <../comprehensive_3class_reconstruction/holdout_reconstruction_combined.png>] [6] (./final_report_condensed.bbl)
+(pdftex.def)             Requested size: 245.71811pt x 127.59825pt.
+ [5 <../comprehensive_3class_reconstruction/holdout_reconstruction_combined.png (PNG copy)>] [6] (./final_report_condensed.bbl)
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -636,25 +633,22 @@ Before submitting the final camera ready copy, remember to:
 [7
 
 ] (./final_report_condensed.aux)
-
-LaTeX Warning: There were undefined references.
-
 Package rerunfilecheck Info: File `final_report_condensed.out' has not changed.
 (rerunfilecheck)             Checksum: BB5B4650F5A12CAD4316C79EE7BB083D;3697.
  ) 
 Here is how much of TeX's memory you used:
- 12304 strings out of 480247
- 199952 string characters out of 5896151
+ 12303 strings out of 480247
+ 199959 string characters out of 5896151
  501332 words of memory out of 5000000
- 30008 multiletter control sequences out of 15000+600000
+ 30007 multiletter control sequences out of 15000+600000
  525375 words of font info for 142 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  69i,10n,79p,1685b,381s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on final_report_condensed.pdf (7 pages, 1572063 bytes).
+Output written on final_report_condensed.pdf (7 pages, 4068287 bytes).
 PDF statistics:
- 244 PDF objects out of 1000 (max. 8388607)
- 203 compressed objects within 3 object streams
+ 245 PDF objects out of 1000 (max. 8388607)
+ 204 compressed objects within 3 object streams
  50 named destinations out of 1000 (max. 500000)
  212 words of extra memory for PDF output out of 10000 (max. 10000000)
 

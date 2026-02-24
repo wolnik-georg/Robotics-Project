@@ -10,3 +10,4 @@ acoustic_sensing_starter_kit/material_tapping_demo/
 *.json
 *.npy
 *.pkl
+/docs/

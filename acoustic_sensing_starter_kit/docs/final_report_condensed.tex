@@ -124,7 +124,7 @@ This work introduces 3-class acoustic sensing with explicit edge modeling for ro
 
 \subsection{Experimental Setup}
 
-Our setup consists of a Franka Panda robot with an acoustic tactile finger (integrated speaker and microphone) mounted on the end effector. The robot moves in a raster pattern across 3D-printed objects with different cutout patterns, recording acoustic data at each position. We label each sample with its contact state (contact, no-contact, edge) based on object geometry and robot position. The acoustic signal sweeps from 20 Hz to 20 kHz, exciting the full frequency spectrum. We record 5-10 samples per position to reduce motion artifacts (see Section~\ref{sec:multisample}). 
+Our setup consists of a Franka Panda robot with an acoustic tactile finger (integrated speaker and microphone) mounted on the end effector. The robot moves in a raster pattern across 3D-printed objects with different cutout patterns, recording acoustic data at each position. We label each sample with its contact state (contact, no-contact, edge) based on object geometry and robot position. The acoustic signal sweeps from 20 Hz to 20 kHz, exciting the full frequency spectrum. We record 5-10 samples per position to reduce motion artifacts. 
 
 
 The acoustic finger has approximately 1 cm × 0.25 cm contact area with 1 cm raster step size. We collect data from four objects across four workspaces (Table~\ref{tab:objects})—different positions of objects relative to the robot base.
@@ -236,7 +236,7 @@ To demonstrate geometric reconstruction, we map the predictions onto 2D spatial 
 
 \begin{figure*}[t]
 \centering
-\includegraphics[width=\textwidth]{../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.png}
+\includegraphics[width=\textwidth]{../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.pdf}
 \caption{Proof of concept: 3-class acoustic contact detection using 80/20 train/test split on combined workspace data (WS1+WS2+WS3). Left to right: Object A (cutout, 89.81\%), Object B (empty workspace, 99.82\%), Object C (full contact, 90.17\%). Each panel shows ground truth and predictions with confusion matrix. Average accuracy 93.3\%, well above the 33.3\% random baseline. Color indicates contact state (contact=green, no-contact=red, edge=orange).}
 \label{fig:reconstruction_proof}
 \end{figure*}
