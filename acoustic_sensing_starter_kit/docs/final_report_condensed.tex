@@ -66,7 +66,7 @@ Furthermore, we compare the performance between 3-class and binary classificatio
 
 Contact detection is fundamental for robotic manipulation. Force sensors provide little geometric detail about contact, while visual-tactile sensors like GelSight can capture fine geometry but are complex and expensive to deploy. Vision systems struggle with occlusions and lighting conditions. Acoustic sensing offers a middle ground: a single acoustic finger with integrated speaker and microphone mounted on the robot captures rich spectral and temporal information about contact events, at low hardware cost.
 
-Despite these advantages, acoustic sensing for rigid manipulators remains largely unexplored. Prior work focused on soft pneumatic actuators~\cite{wall2019morphological,wall2022passive,zoeller2020active}, where compliant air-filled chambers create favorable acoustic properties. Rigid manipulators present new challenges, particularly \textit{configuration entanglement}~\cite{zhang2025vibecheck} - where the robot's joint configuration affects acoustic signals independently of contact. Furthermore, prior work focused exclusively on binary contact detection, leaving open whether acoustic signals can support 2D spatial mapping with explicit edge detection, which is necessary for understanding object geometry through touch.
+Despite these advantages, using an acoustic finger with a robot arm remains largely unexplored. Prior work focused on soft pneumatic actuators~\cite{wall2019morphological,wall2022passive,zoeller2020active}, where compliant air-filled chambers create favorable acoustic properties. Combining a robot arm with an acoustic finger presents new challenges, particularly \textit{configuration entanglement}~\cite{zhang2025vibecheck}—where the robot's joint configuration affects acoustic signals independently of contact. Furthermore, prior work focused exclusively on binary contact detection, leaving open whether acoustic signals can support 2D spatial mapping with explicit edge detection, which is necessary for understanding object geometry through touch.
 
 We investigate acoustic sensing for contact detection and geometric reconstruction using a custom acoustic tactile finger on a Franka Panda robot. The robot moves in a raster pattern across 3D-printed objects with different cutout patterns, recording acoustic signals to train machine learning models for contact classification. We then use predictions and robot state to reconstruct surface geometry, comparing different classifiers and input representations (hand-crafted features vs spectrograms) while evaluating generalization across workspaces and objects.
 
@@ -104,11 +104,11 @@ Our key contributions are:
 
 Wall~\cite{wall2019morphological} pioneered acoustic sensing for morphological computation in soft pneumatic actuators, showing that passive acoustic signals encode both contact information and actuator state. Wall et al.~\cite{wall2022passive} extended this by combining passive monitoring with active acoustic excitation, demonstrating that actively induced signals significantly improve signal-to-noise ratio and enable contact detection as well as material classification through frequency-domain analysis.
 
-Z\"{o}ller et al.~\cite{zoeller2020active} developed active acoustic contact sensing for soft grippers using chirp-based excitation, showing that acoustic signatures reliably distinguish contact states even in noisy environments. However, all of these approaches rely on \textit{soft pneumatic actuators}, where air-filled compliant chambers create favorable acoustic coupling properties. The application to \textit{rigid manipulators} remained unexplored, presenting new challenges: rigid structures propagate vibrations very differently, and there is no air-based coupling to amplify contact signals.
+Z\"{o}ller et al.~\cite{zoeller2020active} developed active acoustic contact sensing for soft grippers using chirp-based excitation, showing that acoustic signatures reliably distinguish contact states even in noisy environments. However, all of these approaches rely on \textit{soft pneumatic actuators}, where air-filled compliant chambers create favorable acoustic coupling properties. The application to \textit{robot arms} remained unexplored, presenting new challenges: robot arm structures propagate vibrations very differently, and there is no air-based coupling to amplify contact signals.
 
 \subsection{Robot Configuration Entanglement}
 
-A key challenge specific to rigid manipulators is \textit{configuration entanglement} - the robot's joint configuration affects measured acoustic signals independently of contact, making it difficult to isolate contact information. Zhang et al.~\cite{zhang2025vibecheck} systematically studied this with VibeCheck, showing that robot arm configurations create mechanical coupling that entangles joint state with contact signals. Naive training approaches fail when configurations change between training and deployment, achieving only random-chance performance on out-of-distribution configurations. They proposed configuration-aware feature engineering and multi-configuration training as partial mitigations, though their focus was vibration sensing for slip detection rather than acoustic sensing for geometric reconstruction.
+A key challenge specific to robot arms is \textit{configuration entanglement} - the robot's joint configuration affects measured acoustic signals independently of contact, making it difficult to isolate contact information. Zhang et al.~\cite{zhang2025vibecheck} systematically studied this with VibeCheck, showing that robot arm configurations create mechanical coupling that entangles joint state with contact signals. Naive training approaches fail when configurations change between training and deployment, achieving only random-chance performance on out-of-distribution configurations. They proposed configuration-aware feature engineering and multi-configuration training as partial mitigations, though their focus was vibration sensing for slip detection rather than acoustic sensing for geometric reconstruction.
 
 Our work confirms that configuration entanglement severely affects acoustic signals: cross-workspace validation averages only 34.5\%, barely above random, with two rotations performing worse than chance. This directly extends VibeCheck's findings from slip detection to 3-class contact state mapping.
 
@@ -116,7 +116,7 @@ Our work confirms that configuration entanglement severely affects acoustic sign
 
 Prior acoustic sensing work leaves three gaps this paper addresses. First, all existing work focuses on \textit{binary contact detection} (contact vs.\ no-contact), never investigating explicit \textit{edge/boundary detection} - a critical capability for understanding object geometry. Second, no systematic comparison exists between position generalization (same objects, new workspace) and object generalization (novel geometry), leaving open whether acoustic features capture workspace-invariant or object-invariant contact information. Third, there is no physics-based explanation of why generalization succeeds or fails, providing no actionable design principles.
 
-This work introduces 3-class acoustic sensing with explicit edge modeling for rigid manipulators, conducts systematic generalization experiments across workspace rotations and novel object holdout testing, and develops an eigenfrequency framework to explain the observed generalization failures.
+This work introduces 3-class acoustic sensing with explicit edge modeling for robot arms, conducts systematic generalization experiments across workspace rotations and novel object holdout testing, and develops an eigenfrequency framework to explain the observed generalization failures.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{METHOD}
@@ -126,8 +126,27 @@ This work introduces 3-class acoustic sensing with explicit edge modeling for ri
 
 Our setup consists of a Franka Panda robot with an acoustic tactile finger (integrated speaker and microphone) mounted on the end effector. The robot moves in a raster pattern across 3D-printed objects with different cutout patterns, recording acoustic data at each position. We label each sample with its contact state (contact, no-contact, edge) based on object geometry and robot position. The acoustic signal sweeps from 20 Hz to 20 kHz, exciting the full frequency spectrum. We record 5-10 samples per position to reduce motion artifacts (see Section~\ref{sec:multisample}). 
 
-The acoustic finger has approximately 1 cm × 0.25 cm contact area with 1 cm raster step size. We collect data from four objects across four workspaces (Table~\ref{tab:objects}) - different positions of objects relative to the robot base. 
 
+The acoustic finger has approximately 1 cm × 0.25 cm contact area with 1 cm raster step size. We collect data from four objects across four workspaces (Table~\ref{tab:objects})—different positions of objects relative to the robot base.
+
+To reduce the effect of robot vibrations and motion artifacts on the acoustic signals, we record multiple samples (5-10) at each position. We hypothesize that robot motion artifacts introduce acoustic noise that can be more dominant than contact signals. For validation, we trained a Random Forest classifier (3-class: contact, no-contact, edge) using 5-fold cross-validation, comparing multi-sample and single-sample protocols. Multi-sample recordings achieved 71.6\% accuracy (±1.9\% std dev), while single-sample achieved 65.8\% (±4.0\% std dev). The higher accuracy and lower variance of multi-sample recordings indicate more stable predictions and support our hypothesis about motion artifacts.
+
+\begin{table}[t]
+\centering
+\caption{Single vs Multi-Sample Recording Protocol Validation}
+\label{tab:single_vs_multi}
+\small
+\begin{tabular}{|l|r|r|r|}
+\hline
+\textbf{Protocol} & \textbf{CV Acc} & \textbf{Std Dev} & \textbf{vs Random} \\
+\hline
+Single (1 sample, 0ms) & 65.8\% & ±4.0\% & 0.32× \\
+\textbf{Multi (5-10, 150ms)} & \textbf{71.6\%} & \textbf{±1.9\%} & \textbf{0.43×} \\
+\hline
+\textbf{Improvement} & \textbf{+5.8\%} & \textbf{2.1× lower} & \textbf{+11\%} \\
+\hline
+\end{tabular}
+\end{table}
 
 \begin{figure}[t]
 \centering
@@ -208,29 +227,6 @@ To test position generalization, we design three workspace rotation experiments:
 \section{EXPERIMENTAL RESULTS}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\subsection{Multi-Sample Recording Protocol Validation}
-\label{sec:multisample}
-
-To ensure robot vibrations don't interfere with acoustic signals, we record multiple samples (5-10) at each position. We hypothesize that robot motion artifacts introduce acoustic noise more dominant than contact signals.
-
-Training a Random Forest classifier with 5-fold cross-validation, we compare multi-sample and single-sample recordings (Table~\ref{tab:single_vs_multi}). Multi-sample achieves 71.6\% accuracy (±1.9\% std dev) while single-sample achieves 65.8\% (±4.0\% std dev). The higher accuracy and lower variance of multi-sample recordings indicate more stable predictions and support our hypothesis about motion artifacts.
-
-\begin{table}[t]
-\centering
-\caption{Single vs Multi-Sample Recording Protocol Validation}
-\label{tab:single_vs_multi}
-\small
-\begin{tabular}{|l|r|r|r|}
-\hline
-\textbf{Protocol} & \textbf{CV Acc} & \textbf{Std Dev} & \textbf{vs Random} \\
-\hline
-Single (1 sample, 0ms) & 65.8\% & ±4.0\% & 0.32× \\
-\textbf{Multi (5-10, 150ms)} & \textbf{71.6\%} & \textbf{±1.9\%} & \textbf{0.43×} \\
-\hline
-\textbf{Improvement} & \textbf{+5.8\%} & \textbf{2.1× lower} & \textbf{+11\%} \\
-\hline
-\end{tabular}
-\end{table}
 
 \subsection{RQ1: Proof of Concept}
 
@@ -354,7 +350,7 @@ where $f_n$ is the vibration frequency, $k_n$ is the stiffness, and $m_n$ is the
 \section{CONCLUSION}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-This work presents an analysis of acoustic sensing for 3-class contact detection (contact, no-contact, edge) on robot manipulators.
+This work presents an analysis of acoustic sensing for 3-class contact detection (contact, no-contact, edge) on robot arms.
 
 \subsection{Summary of Findings}
 
