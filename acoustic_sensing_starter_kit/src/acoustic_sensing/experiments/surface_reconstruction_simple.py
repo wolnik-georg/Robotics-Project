@@ -717,7 +717,7 @@ class SurfaceReconstructor:
         plt.tight_layout()
 
         comparison_path = output_dir / f"{dataset_name}_comparison.png"
-        plt.savefig(comparison_path, dpi=150, bbox_inches="tight")
+        plt.savefig(comparison_path, dpi=300, bbox_inches="tight")
         plt.close()
 
         # 2. Error Map (per-position, contact/no-contact only) with inferred edges
@@ -766,7 +766,7 @@ class SurfaceReconstructor:
         ax.set_aspect("equal")
 
         error_path = output_dir / f"{dataset_name}_error_map.png"
-        plt.savefig(error_path, dpi=150, bbox_inches="tight")
+        plt.savefig(error_path, dpi=300, bbox_inches="tight")
         plt.close()
 
         # 3. Confidence Map (per-position, contact/no-contact only) with inferred edges
@@ -800,7 +800,7 @@ class SurfaceReconstructor:
         ax.set_aspect("equal")
 
         confidence_path = output_dir / f"{dataset_name}_confidence.png"
-        plt.savefig(confidence_path, dpi=150, bbox_inches="tight")
+        plt.savefig(confidence_path, dpi=300, bbox_inches="tight")
         plt.close()
 
         self.logger.info(f"Saved visualizations to: {output_dir}")

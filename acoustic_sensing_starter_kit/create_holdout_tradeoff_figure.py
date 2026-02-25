@@ -74,7 +74,7 @@ def create_tradeoff_comparison():
     png_path = output_dir / "holdout_reconstruction_combined.png"
     pdf_path = output_dir / "holdout_reconstruction_combined.pdf"
 
-    fig.savefig(png_path, dpi=150, bbox_inches="tight")
+    fig.savefig(png_path, dpi=300, bbox_inches="tight")
     fig.savefig(pdf_path, bbox_inches="tight")
 
     print(f"✅ Created combined holdout reconstruction figure:")
