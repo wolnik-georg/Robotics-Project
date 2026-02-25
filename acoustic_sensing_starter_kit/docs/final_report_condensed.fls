@@ -817,11 +817,11 @@ INPUT ../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_com
 INPUT ../comprehensive_3class_reconstruction/proof_of_concept_reconstruction_combined.pdf
 INPUT /usr/share/texlive/texmf-dist/fonts/vf/adobe/times/zptmcm7m.vf
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/adobe/times/psyro.tfm
-INPUT ../comprehensive_3class_reconstruction/holdout_reconstruction_combined.png
-INPUT ../comprehensive_3class_reconstruction/holdout_reconstruction_combined.png
-INPUT ../comprehensive_3class_reconstruction/holdout_reconstruction_combined.png
-INPUT ../comprehensive_3class_reconstruction/holdout_reconstruction_combined.png
-INPUT ../comprehensive_3class_reconstruction/holdout_reconstruction_combined.png
+INPUT ../comprehensive_3class_reconstruction/holdout/balanced_holdout_3class/balanced_holdout_3class/06_presentation_summary.png
+INPUT ../comprehensive_3class_reconstruction/holdout/balanced_holdout_3class/balanced_holdout_3class/06_presentation_summary.png
+INPUT ../comprehensive_3class_reconstruction/holdout/balanced_holdout_3class/balanced_holdout_3class/06_presentation_summary.png
+INPUT ../comprehensive_3class_reconstruction/holdout/balanced_holdout_3class/balanced_holdout_3class/06_presentation_summary.png
+INPUT ../comprehensive_3class_reconstruction/holdout/balanced_holdout_3class/balanced_holdout_3class/06_presentation_summary.png
 INPUT /usr/share/texlive/texmf-dist/fonts/vf/adobe/times/zptmcm7m.vf
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/adobe/times/psyro.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmmi10.tfm

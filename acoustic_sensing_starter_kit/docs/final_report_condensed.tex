@@ -323,12 +323,12 @@ Random Baseline & 33.3\% & 50.0\% \\
 
 \textbf{Key findings:} (1) Binary classification completely collapses to exactly 50\% (pure random chance) across all classifiers and all 5 seeds. This shows that excluding edge samples leads to complete failure on new objects. (2) Most 3-class models barely exceed random performance (30-42\%). (3) The heavily-regularized GPU-MLP with dropout (0.3) and weight decay (0.01) also achieves only random performance (33\%) without confidence filtering - it only shows above-random accuracy on the small confident subset retained by filtering.
 
-\textbf{Confidence filtering analysis:} We additionally tested whether the model's confidence scores correlate with prediction correctness by applying a confidence threshold (0.7) that only retains high-confidence predictions. This filters down to only 4 out of 2,280 spatial positions (0.2\% coverage), on which the model happens to achieve 75\% accuracy. However, given that only 4 positions are retained, this result is not statistically meaningful and does not constitute reliable object generalization. Without filtering, the same model achieves 33.03\% (random chance). The key takeaway is that the model cannot reconstruct the full surface of new objects - it achieves random performance across all positions (Fig.~\ref{fig:reconstruction_holdout}).
+\textbf{Confidence filtering analysis:} We additionally tested whether the model's confidence scores correlate with prediction correctness by applying a confidence threshold (0.7) that only retains high-confidence predictions. This filters down to only 4 out of 2,280 spatial positions (0.2\% coverage), on which the model happens to achieve 75\% accuracy. However, given that only 4 positions are retained, this result is not statistically meaningful and does not constitute reliable object generalization. Without filtering, the same model achieves 33.03\% (random chance), as shown in Fig.~\ref{fig:reconstruction_holdout}. The key takeaway is that the model cannot reconstruct the full surface of new objects — it achieves random performance across all positions.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\columnwidth]{../comprehensive_3class_reconstruction/holdout_reconstruction_combined.png}
-\caption{Object generalization accuracy-coverage tradeoff on Object D. Left: Without confidence filtering, reconstruction achieves 33.03\% (random). Right: With filtering (threshold 0.7), accuracy increases to 75\% but only on 4/2,280 positions (0.2\% coverage).}
+\includegraphics[width=0.8\columnwidth]{../comprehensive_3class_reconstruction/holdout/balanced_holdout_3class/balanced_holdout_3class/06_presentation_summary.png}
+\caption{Object generalization reconstruction on Object D (WS4). The model trained on Objects A--C achieves 33.03\% accuracy (random chance), failing to reconstruct the surface geometry of the novel object.}
 \label{fig:reconstruction_holdout}
 \end{figure}
 
