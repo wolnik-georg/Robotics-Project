@@ -1,6 +1,12 @@
 # Robotics-Project
 
 > **Note:** The actual project lives in the [`acoustic_sensing_starter_kit/`](./acoustic_sensing_starter_kit/) subdirectory. Everything below is copied from there for convenience.
+>
+> **To reproduce all results, run the complete pipeline (recommended):**
+> ```bash
+> cd acoustic_sensing_starter_kit/
+> bash run_complete_pipeline.sh
+> ```
 
 ---
 
